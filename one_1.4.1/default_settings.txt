@@ -35,22 +35,22 @@ wlanRepInterface.transmitSpeed =20M
 wlanRepInterface.transmitRange = 600
 
 # Wlan interface for pedestrins
-wlanPedInterface.type = DistanceCapacityInterface
-wlanPedInterface.transmitSpeeds =3M, 2M, 1M, 0.5M, 0.25M
+wlanPedInterface.type = SimpleBroadcastInterface
+wlanPedInterface.transmitSpeeds =3M #, 2M, 1M, 0.5M, 0.25M
 wlanPedInterface.transmitRange = 20
 #dummy speed
 wlanPedInterface.transmitSpeed =0
 
 # Wlan interface for cars
-wlanCarInterface.type = DistanceCapacityInterface
-wlanCarInterface.transmitSpeeds =5M, 3M, 1M, 0.5M
+wlanCarInterface.type = SimpleBroadcastInterface
+wlanCarInterface.transmitSpeeds =5M #, 3M, 1M, 0.5M
 wlanCarInterface.transmitRange = 100
 #dummy speed
 wlanCarInterface.transmitSpeed =0
 
 # Wlan interface for busses
-wlanBusInterface.type = DistanceCapacityInterface
-wlanBusInterface.transmitSpeeds =10M, 5M, 3M, 1M
+wlanBusInterface.type = SimpleBroadcastInterface
+wlanBusInterface.transmitSpeeds =10M #, 5M, 3M, 1M
 wlanBusInterface.transmitRange = 200
 #dummy speed
 wlanBusInterface.transmitSpeed =0
@@ -111,7 +111,7 @@ Group.fileCapability = true
 
 ###################################
 # path to files generation input files
-FilesGenerator.filepath = files_input_examples/sample_files_distributed_in_groups.txt
+FilesGenerator.filepath = files_input_examples/1copia_a_60.txt
 FilesGenerator.rngSeed = [2; 8372; 98092; 18293; 777]
 
 # group1 (pedestrians) repositories specific settings
@@ -266,7 +266,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 5
+Report.nrofReports = 4
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 MessageLocationReport.granularity = 1
@@ -275,9 +275,8 @@ Report.reportDir = reports/
 # Report classes to load
 Report.report1 = MessageStatsReport
 Report.report2 = ContactTimesReport
-Report.report3 = BufferOccupancyReport
-Report.report4 = MessageReport
-Report.report5 = MessageLocationReport
+Report.report3 = MessageReport
+Report.report4 = MessageLocationReport
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30

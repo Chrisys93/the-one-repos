@@ -41,10 +41,20 @@ public class MessageLocationReport extends Report implements UpdateListener {
 		this.lastUpdate = 0;	
 		this.granularity = settings.getInt(GRANULARITY);
 		
-		this.reportedMessages = new HashSet<String>();
+		//The old way to determine how many messages are reported (all by default)
+		if (settings.contains(REPORTED_MESSAGES)) {
+			this.reportedMessages = new HashSet<String>();
+			for (String msgId : settings.getCsvSetting(REPORTED_MESSAGES)) {
+				this.reportedMessages.add(msgId);
+			}
+		} else {
+			this.reportedMessages = null; /* all messages */
+		}
+
+		/*this.reportedMessages = new HashSet<String>();
 		for (String msgId : settings.getCsvSetting(REPORTED_MESSAGES)) {
 			this.reportedMessages.add(msgId);
-		}
+		}*/
 		
 		init();
 	}
@@ -63,31 +73,41 @@ public class MessageLocationReport extends Report implements UpdateListener {
 		}
 	}
 	
+	// Had to re-insert this, as it was not working beforehand.
+	/**
+	 * Returns true if the given message is tracked by the report
+	 * @param m The message
+	 * @return True if the message is tracked, false if not
+	 */
+	protected boolean isTracked(Message m) {
+		return (this.reportedMessages == null ||
+				this.reportedMessages.contains(m.getId()));
+	}	
+	
+	
 	/**
 	 * Creates a snapshot of message locations 
 	 * @param hosts The list of hosts in the world
 	 */
-	private void createSnapshot(List<DTNHost> hosts) {
+	protected void createSnapshot(List<DTNHost> hosts) {
 		boolean isFirstMessage;
 		String reportLine;
 		
-		write ("[" + (int)getSimTime() + "]"); /* write sim time stamp */
-		
+		//write ("[" + (int)getSimTime() + "]"); /* write sim time stamp */
+		reportLine = (int)getSimTime() + " ";
 		for (DTNHost host : hosts) {
 			isFirstMessage = true;
-			reportLine = "";
+			//reportLine = "";
 			for (Message m : host.getMessageCollection()) {
-				if (this.reportedMessages.contains(m.getId())) {
+				if (isTracked(m)) {
 					if (isFirstMessage) {
-						/*reportLine = host.getLocation().toString();
-						isFirstMessage = false;*/
 						/* In here it would be useful to use getNrofMessages 
 						instead of printing all the messages the "name"/address 
 						of the node instead*/
 						//reportLine += " " + host.name.toString();
 						reportLine += " " + host.getNrofMessages();
+						//reportLine = host.getLocation().toString();
 						isFirstMessage = false;
-
 					}		
 					//reportLine += " " + m.getId();
 				}
