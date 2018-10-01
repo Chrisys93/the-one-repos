@@ -1,0 +1,2 @@
+#creates 50 copies of the file
+A	song.mp3	3000000	50	

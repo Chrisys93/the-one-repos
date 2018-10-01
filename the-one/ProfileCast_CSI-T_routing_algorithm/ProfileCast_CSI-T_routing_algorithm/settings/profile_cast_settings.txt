@@ -1,0 +1,49 @@
+##uses default settings file
+
+## Profile_cast, CSI:T routing algorithm settings
+
+Scenario.name = ProfileCast
+Group.router = ProfileCastRouter
+
+## ProfileCast settings
+
+#ProfileCast.matrixCreationDays = 7
+ProfileCast.matrixCreationDays = 1
+
+ProfileCast.groupSpreadThreshold = 0.60
+#da not yse#
+ProfileCast.destinationThreshold = 0.60
+
+#ProfileCast.computeMatricesDays = 7 
+ProfileCast.computeMatricesDays = 2
+
+ProfileCast.stopMessageCreationTime = 302400
+#stop 12 h 
+#ProfileCast.stopMessageCreationTime = 1771200
+#stop 24h
+#ProfileCast.stopMessageCreationTime = 1728000
+#stop 48h
+#ProfileCast.stopMessageCreationTime = 1641600
+#stop 72h
+#ProfileCast.stopMessageCreationTime = 1555200
+
+
+# how many reports to load
+Report.nrofReports = 8	
+# length of the warm up period (simulated seconds)
+Report.warmup = 0
+# default directory of reports (can be overridden per Report with output setting)
+Report.reportDir = reports/profilecast 
+# Report classes to load
+Report.report1 = CreateNodeTrace
+Report.report2 = MessageDeliveryReport
+Report.report3 = MessageStatsProfileCastReport
+#Report.report2 = MessageStatsReport
+Report.report4 = ContactTimesReport
+Report.report5 = EncountersVSUniqueEncountersReport
+Report.report6 = TotalEncountersReport
+Report.report7 = DeliveredMessagesReport
+Report.report8 = DeliveredMessagesProfileCastReport
+#Report.report9 = MessageOwnSimilarityReport
+#Report.report10 = ConnectivityListReport
+#Report.report11 = NodesSVDReport

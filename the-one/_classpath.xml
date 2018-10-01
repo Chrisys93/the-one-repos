@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/The ONE/the-one-files/one_1.4.1/lib/ECLA.jar"/>
+	<classpathentry kind="lib" path="C:/The ONE/the-one-files/one_1.4.1/lib/DTNConsoleConnection.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chrisys/Downloads/junit-4.10.jar/junit-4.10.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

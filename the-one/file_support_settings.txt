@@ -1,0 +1,10 @@
+Scenario.simulateFiles = true
+
+###################################
+### common settings for all groups
+Group.fileCapability = true
+
+###################################
+# path to files generation input files
+FilesGenerator.filepath = files_input_examples/1copy_to_60.txt
+FilesGenerator.rngSeed = [2; 8372; 98092; 18293; 777]
