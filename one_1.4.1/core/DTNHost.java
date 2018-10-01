@@ -35,7 +35,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	private ModuleCommunicationBus comBus;
 	
 	private DTNFileSystem fileSystem;
-	private boolean hasFileCapability;
+	protected boolean hasFileCapability;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -251,8 +251,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @return Buffer occupancy percentage
 	 */
 	public double getBufferOccupancy() {
-		double bSize = router.getBufferSize();
-		double freeBuffer = router.getFreeBufferSize();
+		long bSize = router.getBufferSize();
+		long freeBuffer = router.getFreeBufferSize();
 		return 100*((bSize-freeBuffer)/bSize);
 	}
 
@@ -274,7 +274,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	/**
 	 * Find the network interface based on the index
 	 */
-	protected NetworkInterface getInterface(int interfaceNo) {
+	public NetworkInterface getInterface(int interfaceNo) {
 		NetworkInterface ni = null;
 		try {
 			ni = net.get(interfaceNo-1);
@@ -536,10 +536,10 @@ public class DTNHost implements Comparable<DTNHost> {
 		return hasFileCapability;
 	}
 
-	public int getGroupId(int[] groupSizes) {
-		int groupId = 0;
+	public int getGroupId(int[] groupSizes, int nrofGroupsWithFiles) {
+		int groupId = 1;
 		int i = 0;
-		while(i < address){
+		while(i < address && groupId < nrofGroupsWithFiles){
 			i += groupSizes[groupId];
 			groupId++;
 		}
