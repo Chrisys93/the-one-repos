@@ -112,9 +112,10 @@ public class MessageLocationReport extends Report implements UpdateListener {
 					//reportLine += " " + m.getId();
 				}
 			}
-			if (reportLine.length() > 0) {
-				write(reportLine); /* write coordinate and message IDs */
-			}
+			
+		}
+		if (reportLine.length() > 0) {
+		write(reportLine); /* write coordinate and message IDs */
 		}
 	}
 	 

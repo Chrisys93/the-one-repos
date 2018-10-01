@@ -111,7 +111,7 @@ Group.fileCapability = true
 
 ###################################
 # path to files generation input files
-FilesGenerator.filepath = files_input_examples/1copia_a_60.txt
+FilesGenerator.filepath = files_input_examples/sample_files_distributed_in_groups.txt
 FilesGenerator.rngSeed = [2; 8372; 98092; 18293; 777]
 
 # group1 (pedestrians) repositories specific settings
