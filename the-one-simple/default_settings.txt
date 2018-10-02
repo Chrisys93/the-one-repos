@@ -1,0 +1,313 @@
+#
+# Default settings for the simulation
+#
+
+## Scenario settings
+Scenario.name = default_scenario
+Scenario.simulateConnections = true
+Scenario.updateInterval = 0.1
+# 43200s == 12h
+Scenario.endTime = 43200
+
+
+Scenario.simulateFiles = true
+
+
+## Interface-specific settings:
+# type : which interface class the interface belongs to
+# For different types, the sub-parameters are interface-specific
+# For DistanceCapacityInterface, the parameters are:
+# transmitSpeed : transmit speed of the interface (bytes per second)
+# transmitRange : range of the interface (meters)
+
+# # "Bluetooth" interface for all nodes
+# btInterface.type = SimpleBroadcastInterface
+# # Transmit speed of 2 Mbps = 250kBps
+# btInterface.transmitSpeed = 1M
+# btInterface.transmitRange = 50
+
+# Add different speed and range interfaces for the different types of nodes,
+# and after "addInterface" (register the) into the ConnectivityGrid.
+
+# Wlan interface for repos
+wlanRepInterface.type = SimpleBroadcastInterface
+wlanRepInterface.transmitSpeed =20M
+wlanRepInterface.transmitRange = 600
+
+# Wlan interface for pedestrins
+wlanPedInterface.type = DistanceCapacityInterface
+wlanPedInterface.transmitSpeeds =3M, 2M, 1M, 0.5M, 0.25M
+wlanPedInterface.transmitRange = 20
+#dummy speed
+wlanPedInterface.transmitSpeed =0
+
+# Wlan interface for cars
+wlanCarInterface.type = DistanceCapacityInterface
+wlanCarInterface.transmitSpeeds =5M, 3M, 1M, 0.5M
+wlanCarInterface.transmitRange = 100
+#dummy speed
+wlanCarInterface.transmitSpeed =0
+
+# Wlan interface for busses
+wlanBusInterface.type = DistanceCapacityInterface
+wlanBusInterface.transmitSpeeds =10M, 5M, 3M, 1M
+wlanBusInterface.transmitRange = 200
+#dummy speed
+wlanBusInterface.transmitSpeed =0
+
+# Define 4 different node groups
+Scenario.nrofHostGroups = 6
+
+## Group-specific settings:
+# groupID : Group's identifier. Used as the prefix of host names
+# nrofHosts: number of hosts in the group
+# movementModel: movement model of the hosts (valid class name from movement package)
+# waitTime: minimum and maximum wait times (seconds) after reaching destination
+# speed: minimum and maximum speeds (m/s) when moving on a path
+# bufferSize: size of the message buffer (bytes)
+# router: router used to route messages (valid class name from routing package)
+# activeTimes: Time intervals when the nodes in the group are active (start1, end1, start2, end2, ...)
+# msgTtl : TTL (minutes) of the messages created by this host group, default=infinite
+
+## Group and movement model specific settings
+# pois: Points Of Interest indexes and probabilities (poiIndex1, poiProb1, poiIndex2, poiProb2, ... )
+#       for ShortestPathMapBasedMovement
+# okMaps : which map nodes are OK for the group (map file indexes), default=all
+#          for all MapBasedMovent models
+# routeFile: route's file path - for MapRouteMovement
+# routeType: route's type - for MapRouteMovement
+
+
+# Common settings for all groups
+Group.movementModel = ShortestPathMapBasedMovement
+# Notes:
+#
+# 
+# MaxProp was not very good and neither was Prophet.
+# FirstContact gave among the best results (better ratio than SprayAndWait), in a host time, 
+# with proper deliveries. 
+# EpidemicRouter is decent, but not as good as the others.
+# DirectDelivery has quite a small delivery success rate. 
+# SprayAndWait has quite a bit of potential it seems. 
+# EpidemicOracle also has very good delivery rates. The only problem with it is that it returns errors 
+# from main at some point (might because of memory use. the simulation seems to be very thorough and uses the CPU to the max.
+# 
+Group.router = FirstContactRouter
+Group.bufferSize = 100M
+Group.waitTime = 0, 120
+# All nodes have the bluetooth interface
+Group.nrofInterfaces = 1
+#Group.interface1 = wlanInterface
+# Walking speeds
+Group.speed = 0.5, 1.5
+# Message TTL of 300 minutes (5 hours)
+Group.msgTtl = 300
+
+Group.nrofHosts = 40
+
+###################################
+### common settings for all groups
+Group.fileCapability = true
+
+###################################
+# path to files generation input files
+FilesGenerator.filepath = files_input_examples/sample_files_distributed_in_groups.txt
+FilesGenerator.rngSeed = [2; 8372; 98092; 18293; 777]
+
+# group1 (pedestrians) repositories specific settings
+Group1.groupID = r
+Group1.speed = 0, 0
+Group1.bufferSize = 10G
+Group1.nrofHosts = 40
+# The repositories have to have all 3 interfaces, to receive
+# information from all 3 types of traffic.
+Group1.nrofInterfaces = 4
+Group1.interface1 = wlanPedInterface
+Group1.interface2 = wlanCarInterface
+Group1.interface3 = wlanBusInterface
+Group1.interface4 = wlanRepInterface
+
+# group2 pedestrians specific settings
+Group2.groupID = p
+Group2.interface1 = wlanPedInterface
+# # cars can drive only on roads
+# Group2.okMaps = 1
+# # 10-50 km/h
+# Group2.speed = 2.7, 13.9
+
+# group3 cars specific settings
+Group3.groupID = c
+# cars can drive only on roads
+Group3.okMaps = 1
+# 10-50 km/h
+Group3.speed = 2.7, 13.9
+# Larger buffer size than pedestrians
+Group3.bufferSize = 200M
+Group3.interface1 = wlanCarInterface
+
+# The Bus groups
+Group4.groupID = b
+Group4.bufferSize = 1G
+Group4.movementModel = MapRouteMovement
+Group4.routeFile = data/tram3.wkt
+Group4.routeType = 1
+Group4.waitTime = 10, 30
+Group4.speed = 4, 10
+Group4.nrofHosts = 5
+Group4.nrofInterfaces = 2
+Group4.interface1 = wlanBusInterface
+Group4.interface2 = wlanPedInterface
+
+Group5.groupID = b
+Group5.bufferSize = 1G
+Group5.movementModel = MapRouteMovement
+Group5.routeFile = data/tram4.wkt
+Group5.routeType = 1
+Group5.waitTime = 10, 30
+Group5.speed = 4, 10
+Group5.nrofHosts = 5
+Group5.nrofInterfaces = 2
+Group5.interface1 = wlanBusInterface
+Group5.interface2 = wlanPedInterface
+
+Group6.groupID = b
+Group6.bufferSize = 1G
+Group6.movementModel = MapRouteMovement
+Group6.routeFile = data/tram10.wkt
+Group6.routeType = 1
+Group6.waitTime = 10, 30
+Group6.speed = 4, 10
+Group6.nrofHosts = 5
+Group6.nrofInterfaces = 2
+Group6.interface1 = wlanBusInterface
+Group6.interface2 = wlanPedInterface
+
+# Group5.groupID = t
+# Group5.bufferSize = 50M
+# Group5.movementModel = MapRouteMovement
+# Group5.routeFile = data/tram4.wkt
+# Group5.routeType = 2
+# Group5.waitTime = 10, 30
+# Group5.speed = 7, 10
+# Group5.nrofHosts = 2
+
+# Group6.groupID = t
+# Group6.bufferSize = 50M
+# Group6.movementModel = MapRouteMovement
+# Group6.routeFile = data/tram10.wkt
+# Group6.routeType = 2
+# Group6.waitTime = 10, 30
+# Group6.speed = 7, 10
+# Group6.nrofHosts = 2
+
+
+## Message creation parameters
+# How many event generators
+Events.nrof = 3
+# Class of the pedestrians event generator
+Events1.class = MessageEventGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.interval = 35,45
+# Message sizes (500kB - 1MB)
+Events1.size = 900k,1.1M
+# range of message source addresses
+Events1.hosts = 40,79
+# range of message destination addresses
+Events1.tohosts = 0, 39
+# Message ID prefix
+Events1.prefix = MP
+
+# Class of the cars event generator
+Events2.class = MessageEventGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events2.interval = 4,5
+# Message sizes (500kB - 1MB)
+Events2.size = 0.9M,1.1M
+# range of message source/destination addresses
+Events2.hosts = 80,119
+# range of message destination addresses
+Events2.tohosts = 0, 39
+# Message ID prefix
+Events2.prefix = MC
+
+# Class of the busses event generator
+Events3.class = MessageEventGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events3.interval = 1,2
+# Message sizes (500kB - 1MB)
+Events3.size = 0.9M,1.1M
+# range of message source/destination addresses
+Events3.hosts = 120,134
+# range of message destination addresses
+Events3.tohosts = 0, 39
+# Message ID prefix
+Events3.prefix = MB
+
+
+## Movement model settings
+# seed for movement models' pseudo random number generator (default = 0)
+MovementModel.rngSeed = 1
+# World's size for Movement Models without implicit size (width, height; meters)
+MovementModel.worldSize = 4500, 3400
+# How long time to move hosts in the world before real simulation
+MovementModel.warmup = 1000
+
+## Map based movement -movement model specific settings
+MapBasedMovement.nrofMapFiles = 4
+
+MapBasedMovement.mapFile1 = data/roads.wkt
+MapBasedMovement.mapFile2 = data/main_roads.wkt
+MapBasedMovement.mapFile3 = data/pedestrian_paths.wkt
+MapBasedMovement.mapFile4 = data/shops.wkt
+
+## Reports - all report names have to be valid report classes
+
+# how many reports to load
+Report.nrofReports = 5
+# length of the warm up period (simulated seconds)
+Report.warmup = 0
+MessageLocationReport.granularity = 1
+# default directory of reports (can be overridden per Report with output setting)
+Report.reportDir = reports/
+# Report classes to load
+Report.report1 = MessageStatsReport
+Report.report2 = ContactTimesReport
+Report.report3 = BufferOccupancyReport
+Report.report4 = MessageReport
+Report.report5 = MessageLocationReport
+
+## Default settings for some routers settings
+ProphetRouter.secondsInTimeUnit = 30
+SprayAndWaitRouter.nrofCopies = 6
+SprayAndWaitRouter.binaryMode = true
+
+## Optimization settings -- these affect the speed of the simulation
+## see World class for details.
+Optimization.cellSizeMult = 5
+Optimization.randomizeUpdateOrder = true
+
+
+## GUI settings
+
+# GUI underlay image settings
+GUI.UnderlayImage.fileName = data/helsinki_underlay.png
+# Image offset in pixels (x, y)
+GUI.UnderlayImage.offset = 64, 20
+# Scaling factor for the image
+GUI.UnderlayImage.scale = 4.75
+# Image rotation (radians)
+GUI.UnderlayImage.rotate = -0.015
+
+# how many events to show in the log panel (default = 30)
+GUI.EventLogPanel.nrofEvents = 100
+# Regular Expression log filter (see Pattern-class from the Java API for RE-matching details)
+#GUI.EventLogPanel.REfilter = .*p[1-9]<->p[1-9]$
+
+
+
+
+
+
