@@ -1,2 +1,0 @@
-#creates one file and distributes it to host with address = 60
-H	song.mp3	3.5M	60

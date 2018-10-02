@@ -112,7 +112,7 @@ public class FileLocationReport extends Report implements UpdateListener {
 						/* In here it would be useful to use getNrofMessages 
 						instead of printing all the messages the "name"/address 
 						of the node instead*/
-						//reportLine += " " + host.name.toString();
+						reportLine += " " + host.name.toString();
 						reportLine += " " + FileSystem.getNrofFiles();
 						//reportLine = host.getLocation().toString();
 						isFirstMessage = false;

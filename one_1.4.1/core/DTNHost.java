@@ -28,7 +28,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	private Path path;
 	private double speed;
 	private double nextTimeToMove;
-	private String name;
+	public String name;
 	private List<MessageListener> msgListeners;
 	private List<MovementListener> movListeners;
 	private List<NetworkInterface> net;
@@ -251,8 +251,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @return Buffer occupancy percentage
 	 */
 	public double getBufferOccupancy() {
-		long bSize = router.getBufferSize();
-		long freeBuffer = router.getFreeBufferSize();
+		double bSize = router.getBufferSize();
+		double freeBuffer = router.getFreeBufferSize();
 		return 100*((bSize-freeBuffer)/bSize);
 	}
 

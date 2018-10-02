@@ -1,4 +1,0 @@
-#Create a different number of copies of samplefile.jpg in all the producer groups
-G	samplefile.jpg	1M	40	2
-G	samplefile.jpg	1M	400	3
-G	samplefile.jpg	1M	750	4 5 6

@@ -194,7 +194,7 @@ public class DTNFileGenerator {
 	
 	private boolean isValidGroup(DTNHost tempHost, DTNFileCreationRequest request) {
 		int groupID = tempHost.getGroupId(simScenario.groupSizes, simScenario.nrofGroupsWithFiles);
-		if(request.groups[groupID-1]){
+		if(request.groups[groupID]){
 			return true;
 		}
 		return false;
