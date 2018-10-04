@@ -4,9 +4,17 @@
  */
 package routing;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import core.Connection;
 import core.Message;
 import core.Settings;
+import core.DTNHost;
+
+
 
 /**
  * First contact router which uses only a single copy of the message 
@@ -50,8 +58,14 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		super.update();
 		
 		/* get all connections and all messages (getConnections and 
-		 * requestDeliverableMessages(?) or getMessagesForConnected(?))
-		 * and isolate the CONNECTED repos.
+		 * getMessagesForConnected()) 
+		 * and isolate the CONNECTED repos. May need to modify 
+		 * getMessagesForConnected to only work with repos
+		 */
+		
+		
+		/* if there are no messages for connected (repos),
+		 * create message for connected (repos)
 		 */
 		
 
@@ -59,16 +73,43 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			return; 
 		}
 		
-		if (exchangeDeliverableMessages() != null) {
-			return; 
-		}
+		//if (exchangeDeliverableMessages() != null) {
+		//	return; 
+		//}
 
 		/* modify the following\|/ to something like tryAllMessages(), with
 		 * the arguments being only connections to repos and sending
 		 * all the messages
 		 */
 		
-		tryAllMessagesToAllConnections();
+		int i = 0;
+		List<Message> messages = 
+			new ArrayList<Message>(super.getMessageCollection());
+		super.sortByQueueMode(messages);
+		List<Connection> connections = new ArrayList<Connection>();
+		for (Connection con : getConnections()) {
+			DTNHost to = con.getOtherNode(getHost());
+			if (to.name.toString().contains("r")){
+				if (tryAllMessages(con, messages) != null){
+					connections.add(con);
+					i++;
+					return;
+				}
+				else if (createNewMessage(m)){
+					if (tryAllMessages(con, messages) != null){
+						connections.add(con);
+						i++;						
+						return;
+					}
+					return;					
+				}
+				return;
+			}
+			return;
+		}
+		tryMessagesToConnections(messages, connections);
+		
+		//tryAllMessagesToAllConnections();
 	}
 	
 	@Override
@@ -79,8 +120,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	}
 		
 	@Override
-	public FirstContactRouter replicate() {
-		return new FirstContactRouter(this);
+	public ReposFirstContactRouter replicate() {
+		return new ReposFirstContactRouter(this);
 	}
 
 }
