@@ -270,6 +270,8 @@ Report.nrofReports = 5
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 MessageLocationReport.granularity = 1
+RepoMessageLocationReport.granularity = 1
+MobileMessageLocationReport.granularity = 1
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
@@ -277,7 +279,8 @@ Report.report1 = MessageStatsReport
 Report.report2 = ContactTimesReport
 Report.report3 = BufferOccupancyReport
 Report.report4 = MessageReport
-Report.report5 = MessageLocationReport
+Report.report5 = RepoMessageLocationReport
+Report.report6 = MobileMessageLocationReport
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30

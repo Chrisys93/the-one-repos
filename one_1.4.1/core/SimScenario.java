@@ -97,7 +97,7 @@ public class SimScenario implements Serializable {
 	/** number of host groups */
 	int nrofGroups;
 	/** number of hosts in every group */
-	int[] groupSizes;
+	public int[] groupSizes;
 	/** number of host groups with file capability*/
 	public int nrofGroupsWithFiles;
 	/** Width of the world */

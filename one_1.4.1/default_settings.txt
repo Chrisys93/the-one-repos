@@ -80,18 +80,6 @@ Scenario.nrofHostGroups = 6
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-# Notes:
-#
-# 
-# MaxProp was not very good and neither was Prophet.
-# FirstContact gave among the best results (better ratio than SprayAndWait), in a host time, 
-# with proper deliveries. 
-# EpidemicRouter is decent, but not as good as the others.
-# DirectDelivery has quite a small delivery success rate. 
-# SprayAndWait has quite a bit of potential it seems. 
-# EpidemicOracle also has very good delivery rates. The only problem with it is that it returns errors 
-# from main at some point (might because of memory use. the simulation seems to be very thorough and uses the CPU to the max.
-# 
 Group.router = FirstContactRouter
 Group.bufferSize = 100M
 Group.waitTime = 0, 120
@@ -266,10 +254,11 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 5
+Report.nrofReports = 6
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
-MessageLocationReport.granularity = 1
+RepoMessageLocationReport.granularity = 1
+MobileMessageLocationReport.granularity = 1
 FileLocationReport.granularity = 5
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
@@ -277,8 +266,9 @@ Report.reportDir = reports/
 Report.report1 = MessageStatsReport
 Report.report2 = ContactTimesReport
 Report.report3 = MessageReport
-Report.report4 = MessageLocationReport
-Report.report5 = FileLocationReport
+Report.report4 = RepoMessageLocationReport
+Report.report5 = MobileMessageLocationReport
+Report.report6 = FileLocationReport
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
