@@ -82,12 +82,12 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * all the messages
 		 */
 		
-		int i = 0;
-		List<Message> messages = 
-			new ArrayList<Message>(super.getMessageCollection());
-		super.sortByQueueMode(messages);
+		
 		List<Connection> connections = new ArrayList<Connection>();
+		List<Message> messages = new ArrayList<Message>(super.getMessageCollection());
 		for (Connection con : getConnections()) {
+			int i = 0;
+			super.sortByQueueMode(messages);
 			DTNHost to = con.getOtherNode(getHost());
 			if (to.name.toString().contains("r")){
 				if (tryAllMessages(con, messages) != null){
@@ -95,18 +95,17 @@ public class ReposFirstContactRouter extends ActiveRouter {
 					i++;
 					return;
 				}
-				else if (createNewMessage(m)){
+				/*else { m_new = Message(getHost(), to, messages.size(), 1000000)
 					if (tryAllMessages(con, messages) != null){
 						connections.add(con);
 						i++;						
 						return;
-					}
-					return;					
-				}
-				return;
+					}*/
+				return;					
 			}
 			return;
 		}
+			
 		tryMessagesToConnections(messages, connections);
 		
 		//tryAllMessagesToAllConnections();
