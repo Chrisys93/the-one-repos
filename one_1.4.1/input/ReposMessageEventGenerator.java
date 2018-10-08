@@ -5,6 +5,7 @@
 package input;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 import core.Settings;
 import core.SettingsError;
@@ -14,7 +15,7 @@ import core.SettingsError;
  * message creation patterns whose message size and inter-message intervals can
  * be configured.
  */
-public class RepoMessageEventGenerator implements EventQueue {
+public class ReposMessageEventGenerator implements EventQueue {
 	/** Message size range -setting id ({@value}). Can be either a single
 	 * value or a range (min, max) of uniformly distributed random values.
 	 * Defines the message size (bytes). */
@@ -29,7 +30,7 @@ public class RepoMessageEventGenerator implements EventQueue {
 	public static final String HOST_RANGE_S = "hosts";
 
 	/* The lower bound is inclusive and upper bound exclusive. */
-	public static final ArrayList<String> HOST_NAMES_S = "hostnames";
+	public static final String HOST_NAMES_S = "hostnames";
 	/** (Optional) receiver address range -setting id ({@value}). 
 	 * If a value for this setting is defined, the destination hosts are 
 	 * selected from this range and the source hosts from the 
@@ -77,11 +78,13 @@ public class RepoMessageEventGenerator implements EventQueue {
 	 * of hosts in the network.
 	 * @param s Settings for this generator.
 	 */
-	public RepoMessageEventGenerator(Settings s){
+	public ReposMessageEventGenerator(Settings s){
 		this.sizeRange = s.getCsvInts(MESSAGE_SIZE_S);
 		this.msgInterval = s.getCsvInts(MESSAGE_INTERVAL_S);
 		this.hostRange = s.getCsvInts(HOST_RANGE_S, 2);
-		this.hostNames = HOST_NAMES_S;
+		for (int i=0; i<HOST_NAMES_S.length(); i++){
+			this.hostNames.add(Character.toString(HOST_NAMES_S.charAt(i)));
+		}		
 		this.idPrefix = s.getSetting(MESSAGE_ID_PREFIX_S);
 		
 		if (s.contains(MESSAGE_TIME_S)) {
@@ -101,7 +104,7 @@ public class RepoMessageEventGenerator implements EventQueue {
 		this.rng = new Random(idPrefix.hashCode());
 		
 		if (this.sizeRange.length == 1) {
-			convert single value to range with 0 length 
+			/*convert single value to range with 0 length*/ 
 			this.sizeRange = new int[] {this.sizeRange[0], this.sizeRange[0]};
 		}
 		else {

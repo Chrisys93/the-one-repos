@@ -8,6 +8,7 @@ import input.EventQueue;
 import input.ExternalEvent;
 import input.ScheduledUpdatesQueue;
 import interfaces.ConnectivityGrid;
+import core.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +53,10 @@ public class World {
 	private EventQueue nextEventQueue;
 	/** list of nodes; nodes are indexed by their network address */
 	private List<DTNHost> hosts;
+	private DTNHost node;
+	private DTNHost tonode;
+	private Connection reposConnection;
+	//protected Connection(node, node.net.get(0), tonode, node.net.get(0));
 	private boolean simulateConnections;
 	/** nodes in the order they should be updated (if the order should be 
 	 * randomized; null value means that the order should not be randomized) */
@@ -285,26 +290,20 @@ public class World {
 	 * @return The requested node or null if it wasn't found
 	 */
 	public DTNHost getNodeByName(String name) {
-		//if (address < 0 || address >= hosts.size()) {
-		//	throw new SimError("No host for address " + address + ". Address " +
-		//			"range of 0-" + (hosts.size()-1) + " is valid");
-		//}
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * Here is where a connection check should be done, to get the proper message.
 		 * Check connection updates in here, for the opportunistic part.
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
-		for (DTNHost node = this.hosts.get(i); i<this.hosts.size(); i++){
-			if(Connection.getOtherNode(node).name.toString().contains(name)){
-				//if (node.name.toString().contains(name)){
+		for (int i=0; i<this.hosts.size(); i++){
+			DTNHost node = this.hosts.get(i);
+			DTNHost tonode = reposConnection.getOtherNode(node);
+			if(tonode.name.toString().contains(name)){
 				return node;
-				//}
 			}
 		}
-		assert node.getAddress() == address : "Node indexing failed. " + 
-			"Node " + node + " in index " + address;
 
-		 
+		return node; 
 	}
 
 	/**
