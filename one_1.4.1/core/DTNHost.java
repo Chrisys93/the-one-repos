@@ -18,7 +18,7 @@ import routing.RoutingInfo;
  */
 public class DTNHost implements Comparable<DTNHost> {
 	private static int nextAddress = 0;
-	private int address;
+	public int address;
 
 	private Coord location; 	// where is the host
 	private Coord destination;	// where is it going
@@ -31,7 +31,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	public String name;
 	private List<MessageListener> msgListeners;
 	private List<MovementListener> movListeners;
-	private List<NetworkInterface> net;
+	public List<NetworkInterface> net;
 	private ModuleCommunicationBus comBus;
 	
 	private DTNFileSystem fileSystem;
