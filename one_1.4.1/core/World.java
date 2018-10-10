@@ -9,6 +9,7 @@ import input.ExternalEvent;
 import input.ScheduledUpdatesQueue;
 import interfaces.ConnectivityGrid;
 import core.Connection;
+import core.DTNHost;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,8 +54,9 @@ public class World {
 	private EventQueue nextEventQueue;
 	/** list of nodes; nodes are indexed by their network address */
 	private List<DTNHost> hosts;
-	private DTNHost node;
-	private DTNHost tonode;
+	private List<Connection> activeConnections;
+	//private DTNHost node;
+	//private DTNHost tonode;
 	private Connection reposConnection;
 	//protected Connection(node, node.net.get(0), tonode, node.net.get(0));
 	private boolean simulateConnections;
@@ -86,7 +88,7 @@ public class World {
 		
 		this.simClock = SimClock.getInstance();
 		this.scheduledUpdates = new ScheduledUpdatesQueue();
-		this.isCancelled = false;		
+		this.isCancelled = false;
 
 		setNextEventQueue();
 		initSettings();
@@ -289,21 +291,33 @@ public class World {
 	 * @param address The address of the node
 	 * @return The requested node or null if it wasn't found
 	 */
-	public DTNHost getNodeByName(String name) {
+	public DTNHost getNodeByName(String name, DTNHost node) {
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * Here is where a connection check should be done, to get the proper message.
 		 * Check connection updates in here, for the opportunistic part.
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
-		for (int i=0; i<this.hosts.size(); i++){
-			DTNHost node = this.hosts.get(i);
-			DTNHost tonode = reposConnection.getOtherNode(node);
-			if(tonode.name.toString().contains(name)){
-				return node;
+		List <Connection> activeConnections = node.getConnections();
+		if (activeConnections.size() > 0){
+			Connection activeConnection_0 = activeConnections.get(0);
+			DTNHost tonode = activeConnection_0.getOtherNode(node);
+			for (int i=1; i<activeConnections.size(); i++){
+				if (activeConnection_0.isUp()){
+					Connection activeConnection_i = activeConnections.get(i);
+			
+					if(activeConnection_i.getOtherNode(node).name.toString().contains(name)){
+						tonode = activeConnection_i.getOtherNode(node);
+					}
+				}
 			}
+			return tonode;
 		}
-
-		return node; 
+		else {
+			return node;
+		}
+			//DTNHost node = this.hosts.get(i);
+			//DTNHost tonode = reposConnection.getOtherNode(node);
+			 
 	}
 
 	/**

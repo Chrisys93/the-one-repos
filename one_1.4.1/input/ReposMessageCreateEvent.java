@@ -38,8 +38,8 @@ public class ReposMessageCreateEvent extends ReposMessageEvent {
 	 */
 	@Override
 	public void processEvent(World world) {
-		DTNHost to = world.getNodeByName(this.toAddr);
-		DTNHost from = world.getNodeByAddress(this.fromAddr);			
+		DTNHost from = world.getNodeByAddress(this.fromAddr);
+		DTNHost to = world.getNodeByName(this.toAddr, from);			
 		
 		Message m = new Message(from, to, this.id, this.size);
 		m.setResponseSize(this.responseSize);

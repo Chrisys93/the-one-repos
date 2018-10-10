@@ -80,7 +80,7 @@ Scenario.nrofHostGroups = 6
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-Group.router = FirstContactRouter
+Group.router = ReposFirstContactRouter
 Group.bufferSize = 100M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
@@ -193,21 +193,22 @@ Group6.interface2 = wlanPedInterface
 # How many event generators
 Events.nrof = 3
 # Class of the pedestrians event generator
-Events1.class = MessageEventGenerator
+Events1.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.hostnames = p
 Events1.interval = 35,45
 # Message sizes (500kB - 1MB)
 Events1.size = 900k,1.1M
 # range of message source addresses
 Events1.hosts = 40,79
 # range of message destination addresses
-Events1.tohosts = 0, 39
+Events1.tohosts = r
 # Message ID prefix
 Events1.prefix = MP
 
 # Class of the cars event generator
-Events2.class = MessageEventGenerator
+Events2.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
 Events2.interval = 4,5
@@ -216,12 +217,12 @@ Events2.size = 0.9M,1.1M
 # range of message source/destination addresses
 Events2.hosts = 80,119
 # range of message destination addresses
-Events2.tohosts = 0, 39
+Events2.tohosts = r
 # Message ID prefix
 Events2.prefix = MC
 
 # Class of the busses event generator
-Events3.class = MessageEventGenerator
+Events3.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
 Events3.interval = 1,2
@@ -230,7 +231,7 @@ Events3.size = 0.9M,1.1M
 # range of message source/destination addresses
 Events3.hosts = 120,134
 # range of message destination addresses
-Events3.tohosts = 0, 39
+Events3.tohosts = r
 # Message ID prefix
 Events3.prefix = MB
 

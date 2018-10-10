@@ -55,7 +55,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 	/** Range of host addresses that can be senders or receivers */
 	protected int[] hostRange = {0, 0};
 	/** Range of host addresses that can be senders or receivers */
-	protected ArrayList<String> hostNames = null;
+	protected ArrayList<String> hostNames;
 	/** Range of host addresses that can be receivers */
 	protected String toHostName = null;
 	/** Next identifier for a message */
@@ -82,6 +82,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 		this.sizeRange = s.getCsvInts(MESSAGE_SIZE_S);
 		this.msgInterval = s.getCsvInts(MESSAGE_INTERVAL_S);
 		this.hostRange = s.getCsvInts(HOST_RANGE_S, 2);
+		this.hostNames = new ArrayList<String>(1);
 		for (int i=0; i<HOST_NAMES_S.length(); i++){
 			this.hostNames.add(Character.toString(HOST_NAMES_S.charAt(i)));
 		}		
