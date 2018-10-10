@@ -72,10 +72,16 @@ public class SimScenario implements Serializable {
 	public static final String INTERFACENAME_S = "interface";
 	/** application name in the group -setting id ({@value})*/
 	public static final String GAPPNAME_S = "application";
+
 	/** host's file capability in the group -setting id ({@value})*/
 	public static final String FILE_CAPABILITY_S = "fileCapability";
 	/** simulate filesystems -setting id ({@value})*/
 	public static final String SIM_FILES_S = "simulateFiles";
+
+	/** host's storage capability in the group -setting id ({@value})*/
+	public static final String STORAGE_CAPABILITY_S = "storageCapability";
+	/** simulate message storage in repos -setting id ({@value})*/
+	public static final String SIM_STORE_S = "simulateStorage";
 
 	/** package where to look for movement models */
 	private static final String MM_PACKAGE = "movement.";
@@ -98,8 +104,10 @@ public class SimScenario implements Serializable {
 	int nrofGroups;
 	/** number of hosts in every group */
 	public int[] groupSizes;
+
 	/** number of host groups with file capability*/
 	public int nrofGroupsWithFiles;
+
 	/** Width of the world */
 	private int worldSizeX;
 	/** Height of the world */
@@ -114,10 +122,15 @@ public class SimScenario implements Serializable {
 	private EventQueueHandler eqHandler;
 	/** Should connections between hosts be simulated */
 	private boolean simulateConnections;
+
 	/** Should filesystem in hosts be simulated */
 	private boolean simulateFiles;
 	/** The file generator used by the Scenario */
 	private DTNFileGenerator filesGenerator;
+
+	/** Should repo storage in hosts be simulated */
+	private boolean simulateRepos;
+
 
 	/** Map used for host movement (if any) */
 	private SimMap simMap;
@@ -162,6 +175,12 @@ public class SimScenario implements Serializable {
 			this.simulateFiles = false;
 		}
 
+		if (s.contains(SIM_STORE_S)) {
+			this.simulateRepos = s.getBoolean(SIM_STORE_S);
+		} else {
+			this.simulateRepos = false;
+		}
+
 		ensurePositiveValue(nrofGroups, NROF_GROUPS_S);
 		ensurePositiveValue(endTime, END_TIME_S);
 		ensurePositiveValue(updateInterval, UP_INT_S);
@@ -185,7 +204,12 @@ public class SimScenario implements Serializable {
 		createHosts();
 		if(this.simulateFiles){
 			addFilesToHosts();
-		}		
+		}
+
+		//createHosts();
+		//if(this.simulateRepos){
+		//	addStorageToHosts();
+		//}		
 		
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval, 
 				updateListeners, simulateConnections, 
@@ -251,6 +275,14 @@ public class SimScenario implements Serializable {
 		return simulateFiles;
 	}
 
+	/**
+	 * Returns true if storage systems should be simulated
+	 * @return true if storage systems should be simulated (false if not)
+	 */
+	public boolean simulateStorage() {
+		return simulateStorage;
+	}
+	
 	/**
 	 * Returns the width of the world
 	 * @return the width of the world
@@ -379,7 +411,9 @@ public class SimScenario implements Serializable {
 	protected void createHosts() {
 		this.hosts = new ArrayList<DTNHost>();
 		int lastGroupWithFiles = -1;
+		int lastGroupWithStorage = -1;
 		this.nrofGroupsWithFiles = 0;
+		this.nrofGroupsWithStorage = 0;
 		this.groupSizes = new int[nrofGroups];
 
 		for (int i=1; i<=nrofGroups; i++) {
@@ -401,6 +435,18 @@ public class SimScenario implements Serializable {
 			if(hasFileCapability && i!=lastGroupWithFiles){
 				lastGroupWithFiles = i;
 				this.nrofGroupsWithFiles++;
+			}
+
+			boolean hasStorageCapability;
+			if (s.contains(STORAGE_CAPABILITY_S)) {
+				hasStorageCapability = s.getBoolean(STORAGE_CAPABILITY_S);
+			} else {
+				hasStorageCapability = false;
+			}
+			
+			if(hasStorageCapability && i!=lastGroupWithStorage){
+				lastGroupWithStoreage = i;
+				this.nrofGroupsWithStorage++;
 			}
 			
 
@@ -470,7 +516,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability);
+						mmProto, mRouterProto, hasFileCapability, hasStorageCapability);
 				hosts.add(host);
 			}
 		}

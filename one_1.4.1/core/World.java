@@ -301,7 +301,7 @@ public class World {
 		if (activeConnections.size() > 0){
 			Connection activeConnection_0 = activeConnections.get(0);
 			DTNHost tonode = activeConnection_0.getOtherNode(node);
-			for (int i=1; i<activeConnections.size(); i++){
+			for (int i=0; i<activeConnections.size(); i++){
 				if (activeConnection_0.isUp()){
 					Connection activeConnection_i = activeConnections.get(i);
 			

@@ -36,6 +36,9 @@ public class DTNHost implements Comparable<DTNHost> {
 	
 	private DTNFileSystem fileSystem;
 	protected boolean hasFileCapability;
+	
+	private RepoStorage storageSystem;
+	protected boolean hasStorageCapability;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -56,13 +59,14 @@ public class DTNHost implements Comparable<DTNHost> {
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
 			MovementModel mmProto, MessageRouter mRouterProto,
-			boolean hasFileCapability) {
+			boolean hasFileCapability, boolean hasStorageCapability) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
 		this.name = groupId+address;
 		this.net = new ArrayList<NetworkInterface>();
 		this.hasFileCapability = hasFileCapability;
+		this.hasStorageCapability = hasStorageCapability;
 
 		for (NetworkInterface i : interf) {
 			NetworkInterface ni = i.replicate();
@@ -81,6 +85,7 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.movement.setComBus(comBus);
 		setRouter(mRouterProto.replicate());
 		setFileSystem(new DTNFileSystem());
+		setStorageSystem(new RepoStorage());
 
 		this.location = movement.getInitialLocation();
 
@@ -150,6 +155,23 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public DTNFileSystem getFileSystem() {
 		return this.fileSystem;
+	}
+
+	/**
+	 * Set a storage system for this host
+	 * @param storage system The router to set
+	 */
+	private void setStorageSystem(RepoStorage storageSystem) {
+		storageSystem.init(this);
+		this.storageSystem = storageSystem;
+	}
+
+	/**
+	 * Returns the storage system of this host
+	 * @return the storage system of this host
+	 */
+	public RepoStorage getStorageSystem() {
+		return this.storageSystem;
 	}
 
 	/**
@@ -534,6 +556,10 @@ public class DTNHost implements Comparable<DTNHost> {
 
 	public boolean hasFileCapability() {
 		return hasFileCapability;
+	}
+
+	public boolean hasStorageCapability() {
+		return hasStorageCapability;
 	}
 
 	public int getGroupId(int[] groupSizes, int nrofGroupsWithFiles) {
