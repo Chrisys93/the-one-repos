@@ -114,7 +114,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	@Override
 	protected void transferDone(Connection con) {
 		/* don't leave a copy for the sender */
-		this.deleteMessage(con.getMessage().getId(), false);
+		//this.deleteMessage(con.getMessage().getId(), false);
 		/* this is where the start of the storage part could be implemented*/
 	}
 		
