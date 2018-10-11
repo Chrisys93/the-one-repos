@@ -108,6 +108,9 @@ public class SimScenario implements Serializable {
 	/** number of host groups with file capability*/
 	public int nrofGroupsWithFiles;
 
+	/** number of host groups with storage capability*/
+	public int nrofGroupsWithStorage;
+
 	/** Width of the world */
 	private int worldSizeX;
 	/** Height of the world */
@@ -279,8 +282,8 @@ public class SimScenario implements Serializable {
 	 * Returns true if storage systems should be simulated
 	 * @return true if storage systems should be simulated (false if not)
 	 */
-	public boolean simulateStorage() {
-		return simulateStorage;
+	public boolean simulateRepos() {
+		return simulateRepos;
 	}
 	
 	/**
@@ -434,7 +437,7 @@ public class SimScenario implements Serializable {
 			
 			if(hasFileCapability && i!=lastGroupWithFiles){
 				lastGroupWithFiles = i;
-				this.nrofGroupsWithFiles++;
+				this.nrofGroupsWithStorage++;
 			}
 
 			boolean hasStorageCapability;
@@ -445,7 +448,7 @@ public class SimScenario implements Serializable {
 			}
 			
 			if(hasStorageCapability && i!=lastGroupWithStorage){
-				lastGroupWithStoreage = i;
+				lastGroupWithStorage = i;
 				this.nrofGroupsWithStorage++;
 			}
 			

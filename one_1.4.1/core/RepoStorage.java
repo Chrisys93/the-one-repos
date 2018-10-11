@@ -2,9 +2,9 @@ package core;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.ArrayList
+import java.util.ArrayList;
 
-import core.Settings
+import core.Settings;
 
 /** 
  * @author Daniele Bonaldo, University of Padua
@@ -33,15 +33,15 @@ public class RepoStorage {
 
 	public void init(DTNHost dtnHost) {
 		this.host = dtnHost;
-		this.storedMessages = new ArrayList <Message> storedMessages;
-		this.messages = new Collection<Message> messages;
+		this.storedMessages = new ArrayList <Message>();
+		//this.messages = new Collection<Message>;
 	}
 	
 	/** Create message collection stored return method */
 	
 	private Collection<Message> getStoredMessagesCollection() {
-		Collection<Message> messages = new Collection<Message>(storedMessages);
-		return this.messages.values();
+		Collection<Message> messages = storedMessages;
+		return this.messages;
 	}
 	
 	/**
@@ -61,12 +61,14 @@ public class RepoStorage {
 	 * @return The file
 	 */
 	public Message getStoredMessage(String MessageId) {
+		Message storedMessage = this.storedMessages.get(0);
 		for (Message temp : storedMessages){
 			if (temp.getId() == MessageId){
-				int i = this.storedMessages.IndexOf(temp);
-				return this.storedMessages.get(i);
+				int i = this.storedMessages.indexOf(temp);
+				storedMessage = this.storedMessages.get(i);
 			}
 		}
+		return storedMessage;
 	}
 	
 	/**
@@ -92,26 +94,31 @@ public class RepoStorage {
 	 * @return true if this file system has the file
 	 */
 	public boolean hasMessage(String MessageId) {
+		boolean answer = false;
 		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
-				return true;
+				answer =  true;
 			}
 			else{
-				return false;
+				answer =  false;
 			}
 		}
+		return answer;
 	}
 	
 	public boolean deleteStoredMessage(String MessageId){
+		boolean answer = false;
 		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
 				this.storedMessages.remove(i);
-				return true;
+				answer = true;
 			}
 			else{
-				return false;
+				answer = false;
 			}
 		}
+		return answer;
+	}
 	
 	public boolean clearAllStoredMessages(){
 		this.storedMessages.clear();

@@ -13,6 +13,8 @@ import core.Connection;
 import core.Message;
 import core.Settings;
 import core.DTNHost;
+import core.SettingsError;
+import core.RepoStorage;
 
 
 
@@ -34,7 +36,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public static final String STORE_SIZE_S = "storageSize";
 
 	/** size of the storage space */
-	private int storageSize;
+	private long storageSize;
 
 	/** hosts to be used as sides of connections */
 	private DTNHost to;
@@ -57,7 +59,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public ReposFirstContactRouter(Settings s) {
 		super(s);
 		this.storageSize = 100000000; //defaults to 100M buffer
-		this.storedMessages = new arrayList<Message> storedMessages;
+		this.storedMessages = new ArrayList<Message>();
 		this.usedStorage = 0;
 		
 		/** \/ This \/ needs to be solved in the router part! */
@@ -182,11 +184,11 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			// account for message space taken in storage now
 			this.storedMessages.add(con.getMessage());
 		}
-		return storedMessages
+		return storedMessages;
 	}
 
 	public long getFreeStorageSpace(DTNHost dtnHost) {
-		for (i=0; i<this.storedMessages.size; i++){
+		for (int i=0; i<this.storedMessages.size(); i++){
 			Message temp = this.storedMessages.get(i);
 			this.usedStorage += temp.getSize();
 		}
@@ -205,14 +207,14 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	}
 
 	public void deleteMessagesForSpace(DTNHost dtnHost, boolean deleteAll){
-		if (this.isStorageFull() && deleteAll = 0){
-			for (i=0; i<100; i++){
-				this.dtnHost.getStorageSystem.deleteStoredMessage(this.getOldestMessage(true).getId);
-				
+		if (this.isStorageFull() && deleteAll == false){
+			for (int i=0; i<100; i++){
+				String messageId = this.getOldestMessage(true).getId();
+				this.dtnHost.getStorageSystem().deleteStoredMessage(messageId);
 			}
 		}
-		else if (deleteAll = 1){
-			clearAllStoredMessages()
+		else if (deleteAll == true){
+			dtnHost.getStorageSystem().clearAllStoredMessages();
 		}
 	}
 
@@ -259,8 +261,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 *		as well. 
 	 */
 	private long parseLong(String value) {
-		int number;
-		int multiplier = 1;
+		long number;
+		long multiplier = 1;
 		
 		if (value.endsWith("k")) {
 			multiplier = 1000;
