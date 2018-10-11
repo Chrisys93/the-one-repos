@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.ArrayList
 
+import core.Settings
+
 /** 
  * @author Daniele Bonaldo, University of Padua
  */
@@ -16,9 +18,12 @@ public class RepoStorage {
 	 * of messages and a certain capacity
 	 */
 	//private HashMap<String, Messages> storedMessages;
-	
+
 	/** Host where this file system belongs to */
 	private DTNHost host;
+
+	/** size of the storage space */
+	private int storageSize;
 
 	private String MessageId;
 
@@ -46,6 +51,7 @@ public class RepoStorage {
 	 */
 	public boolean addToStoredMessages(Message sm) {
 		this.storedMessages.add(sm);
+		/* add space used in the storage space */
 		return true;
 	}
 	
@@ -55,7 +61,12 @@ public class RepoStorage {
 	 * @return The file
 	 */
 	public Message getStoredMessage(String MessageId) {
-		return this.storedMessages.get(MessageId);
+		for (Message temp : storedMessages){
+			if (temp.getId() == MessageId){
+				int i = this.storedMessages.IndexOf(temp);
+				return this.storedMessages.get(i);
+			}
+		}
 	}
 	
 	/**
@@ -65,17 +76,7 @@ public class RepoStorage {
 	public int getNrofMessages() {
 		return this.storedMessages.size();
 	}
-
-	/**
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * TODO: Create methods for returning:
-	 * free storage space;
-	 * total storage space;
-	 * TODO: Create methods for obtaining:
-	 * deletion of messages from storage space;
-	 * storage space full;
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 */
+		
 	
 	/**
 	 * Returns the host this repo storage system is in
@@ -91,14 +92,33 @@ public class RepoStorage {
 	 * @return true if this file system has the file
 	 */
 	public boolean hasMessage(String MessageId) {
-		for(int i=0; i<storedMessages.size(); i++)
+		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
 				return true;
 			}
 			else{
 				return false;
 			}
+		}
 	}
+	
+	public boolean deleteStoredMessage(String MessageId){
+		for(int i=0; i<storedMessages.size(); i++){
+			if(storedMessages.get(i).getId() == MessageId){
+				this.storedMessages.remove(i);
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	
+	public boolean clearAllStoredMessages(){
+		this.storedMessages.clear();
+		return true;
+	}
+		
+		
 	
 	/**
 	 * Returns a String presentation of this file system
@@ -109,33 +129,6 @@ public class RepoStorage {
 			this.getHost().toString() + " with " + getNrofFiles() 
 			+ " files";
 	}*/
-
-	private int parseInt(String value) {
-		int number;
-		int multiplier = 1;
-		
-		if (value.endsWith("k")) {
-			multiplier = 1000;
-		}
-		else if (value.endsWith("M")) {
-			multiplier = 1000000;
-		}
-		else if (value.endsWith("G")) {
-			multiplier = 1000000000;
-		}
-		
-		if (multiplier > 1) { // take the suffix away before parsing
-			value = value.substring(0,value.length()-1);
-		}
-		
-		try {
-			number = (int) (Double.parseDouble(value) * multiplier);
-		} catch (NumberFormatException e) {
-			throw new SettingsError("Invalid numeric setting '" + value + 
-					"' for fileSize\n" + e.getMessage());
-		}
-		return number;
-}
 
 
 }

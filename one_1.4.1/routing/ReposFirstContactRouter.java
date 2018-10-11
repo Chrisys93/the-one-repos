@@ -21,6 +21,33 @@ import core.DTNHost;
  * (or fragments) and forwards it to the first available contact.
  */
 public class ReposFirstContactRouter extends ActiveRouter {
+
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * Insert storage setting for storage 
+	 * capacity.
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
+
+	
+	/** Message storage size -setting id ({@value}). Integer value in bytes.*/
+	public static final String STORE_SIZE_S = "storageSize";
+
+	/** size of the storage space */
+	private int storageSize;
+
+	/** hosts to be used as sides of connections */
+	private DTNHost to;
+	private DTNHost from;
+
+	/** host to be used in methods */
+	private DTNHost dtnHost;
+
+	/** arraylist needed for storing messages */
+	private ArrayList<Message> storedMessages;
+
+	/** value to keep track of used storage */
+	private long usedStorage;
 	
 	/**
 	 * Constructor. Creates a new message router based on the settings in
@@ -29,6 +56,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 */
 	public ReposFirstContactRouter(Settings s) {
 		super(s);
+		this.storageSize = 100000000; //defaults to 100M buffer
+		this.storedMessages = new arrayList<Message> storedMessages;
+		this.usedStorage = 0;
+		
+		/** \/ This \/ needs to be solved in the router part! */
+		if (s.contains(STORE_SIZE_S)) {
+			this.storageSize = this.parseLong(STORE_SIZE_S);
+		}
+		
 	}
 	
 	/**
@@ -110,17 +146,143 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		
 		//tryAllMessagesToAllConnections();
 	}
+
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * TODO: Create methods for returning:
+	 * free storage space;
+	 * total storage space;
+	 * add message to storage space
+	 * TODO: Create methods for obtaining:
+	 * deletion of messages from storage space;
+	 * storage space full;
+	 * free up storage if there is none left;
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
+	public long getTotalStorageSpace() {
+		return this.storageSize;
+	}
+
+	public ArrayList <Message> addMessageToStorageSpace(Connection con) {
+		/** get message collection in storage, 
+		 * from dtnHost and the number of messages,
+		 * multiply and obtain total amount of space used,
+		 * then find free space via difference.
+		 */
+		DTNHost to = this.getHost();
+		DTNHost from = con.getOtherNode(to);
+		if (!this.isStorageFull()){
+			to.getStorageSystem().addToStoredMessages(con.getMessage());
+			// account for message space taken in storage now
+			this.storedMessages.add(con.getMessage());
+		}
+		else {
+			deleteMessagesForSpace(to, false);
+			to.getStorageSystem().addToStoredMessages(con.getMessage());
+			// account for message space taken in storage now
+			this.storedMessages.add(con.getMessage());
+		}
+		return storedMessages
+	}
+
+	public long getFreeStorageSpace(DTNHost dtnHost) {
+		for (i=0; i<this.storedMessages.size; i++){
+			Message temp = this.storedMessages.get(i);
+			this.usedStorage += temp.getSize();
+		}
+		long freeStorage = this.getTotalStorageSpace() - usedStorage;
+		return freeStorage;
+	}
+
+	public boolean isStorageFull() {
+		long freeStorage = this.getFreeStorageSpace(this.getHost());
+		if (freeStorage < 900000){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public void deleteMessagesForSpace(DTNHost dtnHost, boolean deleteAll){
+		if (this.isStorageFull() && deleteAll = 0){
+			for (i=0; i<100; i++){
+				this.dtnHost.getStorageSystem.deleteStoredMessage(this.getOldestMessage(true).getId);
+				
+			}
+		}
+		else if (deleteAll = 1){
+			clearAllStoredMessages()
+		}
+	}
+
+	@Override
+	protected Message getOldestMessage(boolean excludeMsgBeingSent) {
+		Collection<Message> messages = this.storedMessages;
+		Message oldest = null;
+		for (Message m : messages) {
+			
+			if (excludeMsgBeingSent && isSending(m.getId())) {
+				continue; // skip the message(s) that router is sending
+			}
+			
+			if (oldest == null ) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		
+		return oldest;
+	}
 	
 	@Override
 	protected void transferDone(Connection con) {
 		/* don't leave a copy for the sender */
 		//this.deleteMessage(con.getMessage().getId(), false);
 		/* this is where the start of the storage part could be implemented*/
+		DTNHost from = con.getOtherNode(to);
+		DTNHost to = this.getHost();	
+		if (to.hasStorageCapability()) {
+			this.addMessageToStorageSpace(con);	
+		}
 	}
 		
 	@Override
 	public ReposFirstContactRouter replicate() {
 		return new ReposFirstContactRouter(this);
+	}
+
+	/** \/ This \/ needs to be solved in the router part!
+	 * 		And could be needed for the MessageCreateEvent,
+	 *		as well. 
+	 */
+	private long parseLong(String value) {
+		int number;
+		int multiplier = 1;
+		
+		if (value.endsWith("k")) {
+			multiplier = 1000;
+		}
+		else if (value.endsWith("M")) {
+			multiplier = 1000000;
+		}
+		else if (value.endsWith("G")) {
+			multiplier = 1000000000;
+		}
+		
+		if (multiplier > 1) { // take the suffix away before parsing
+			value = value.substring(0,value.length()-1);
+		}
+		
+		try {
+			number = (long) (Double.parseDouble(value) * multiplier);
+		} catch (NumberFormatException e) {
+			throw new SettingsError("Invalid numeric setting '" + value + 
+					"' for fileSize\n" + e.getMessage());
+		}
+		return number;
 	}
 
 }
