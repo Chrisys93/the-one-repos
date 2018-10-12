@@ -12,6 +12,7 @@ import java.util.List;
 
 import core.Connection;
 import core.Message;
+import core.MessageListener;
 import core.Settings;
 import core.DTNHost;
 import core.SettingsError;
@@ -43,9 +44,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	private DTNHost to;
 	private DTNHost from;
 
-	/** host to be used in methods */
-	private DTNHost dtnHost;
-
 	/** arraylist needed for storing messages */
 	private ArrayList<Message> storedMessages;
 
@@ -60,8 +58,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public ReposFirstContactRouter(Settings s) {
 		super(s);
 		this.storageSize = 100000000; //defaults to 100M buffer
-		this.storedMessages = new ArrayList<Message>();
-		this.usedStorage = 0;
 		
 		/** \/ This \/ needs to be solved in the router part! */
 		if (s.contains(STORE_SIZE_S)) {
@@ -76,6 +72,13 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 */
 	protected ReposFirstContactRouter(ReposFirstContactRouter r) {
 		super(r);
+	}
+
+	@Override
+	public void init(DTNHost host, List<MessageListener> mListeners) {
+		super.init(host, mListeners);
+		this.storedMessages = new ArrayList<Message>();
+		this.usedStorage = 0;
 	}
 	
 	@Override
@@ -180,7 +183,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			this.storedMessages.add(con.getMessage());
 		}
 		else {
-			deleteMessagesForSpace(to, false);
+			deleteMessagesForSpace(false);
 			to.getStorageSystem().addToStoredMessages(con.getMessage());
 			// account for message space taken in storage now
 			this.storedMessages.add(con.getMessage());
@@ -188,7 +191,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		return storedMessages;
 	}
 
-	public long getFreeStorageSpace(DTNHost dtnHost) {
+	public long getFreeStorageSpace() {
 		for (int i=0; i<this.storedMessages.size(); i++){
 			Message temp = this.storedMessages.get(i);
 			this.usedStorage += temp.getSize();
@@ -198,7 +201,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	}
 
 	public boolean isStorageFull() {
-		long freeStorage = this.getFreeStorageSpace(this.getHost());
+		long freeStorage = this.getFreeStorageSpace();
 		if (freeStorage < 900000){
 			return true;
 		}
@@ -207,15 +210,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		}
 	}
 
-	public void deleteMessagesForSpace(DTNHost dtnHost, boolean deleteAll){
+	public void deleteMessagesForSpace(boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
 			for (int i=0; i<100; i++){
 				String messageId = this.getStoredOldestMessage(true).getId();
-				this.dtnHost.getStorageSystem().deleteStoredMessage(messageId);
+				this.getHost().getStorageSystem().deleteStoredMessage(messageId);
 			}
 		}
 		else if (deleteAll == true){
-			dtnHost.getStorageSystem().clearAllStoredMessages();
+			this.getHost().getStorageSystem().clearAllStoredMessages();
 		}
 	}
 
