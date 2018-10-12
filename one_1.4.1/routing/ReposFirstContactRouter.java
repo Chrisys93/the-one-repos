@@ -4,6 +4,7 @@
  */
 package routing;
 
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,7 +65,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		
 		/** \/ This \/ needs to be solved in the router part! */
 		if (s.contains(STORE_SIZE_S)) {
-			this.storageSize = this.parseLong(STORE_SIZE_S);
+			this.storageSize = s.getLong(STORE_SIZE_S);
 		}
 		
 	}
@@ -260,7 +261,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 * 		And could be needed for the MessageCreateEvent,
 	 *		as well. 
 	 */
-	private long parseLong(String value) {
+	/*private long parseLong(String value) {
 		long number;
 		long multiplier = 1;
 		
@@ -285,6 +286,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 					"' for fileSize\n" + e.getMessage());
 		}
 		return number;
-	}
+	}*/
 
 }
