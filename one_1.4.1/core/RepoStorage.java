@@ -43,6 +43,12 @@ public class RepoStorage {
 		Collection<Message> messages = storedMessages;
 		return this.messages;
 	}
+
+	/** Create message ArrayList stored return method */
+	
+	public ArrayList<Message> getStoredMessages() {
+		return this.storedMessages;
+	}
 	
 	/**
 	 * Adds a file to the file system

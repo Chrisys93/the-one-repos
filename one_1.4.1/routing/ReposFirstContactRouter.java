@@ -210,7 +210,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public void deleteMessagesForSpace(DTNHost dtnHost, boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
 			for (int i=0; i<100; i++){
-				String messageId = this.getOldestMessage(true).getId();
+				String messageId = this.getStoredOldestMessage(true).getId();
 				this.dtnHost.getStorageSystem().deleteStoredMessage(messageId);
 			}
 		}
@@ -219,11 +219,11 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		}
 	}
 
-	@Override
-	protected Message getOldestMessage(boolean excludeMsgBeingSent) {
+	
+	protected Message getStoredOldestMessage(boolean excludeMsgBeingSent) {
 		Collection<Message> messages = this.storedMessages;
 		Message oldest = null;
-		for (Message m : messages) {
+		for (Message m : this.storedMessages) {
 			
 			if (excludeMsgBeingSent && isSending(m.getId())) {
 				continue; // skip the message(s) that router is sending
