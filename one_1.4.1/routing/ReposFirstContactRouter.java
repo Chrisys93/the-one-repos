@@ -182,10 +182,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 */
 	public long getTotalStorageSpace() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
-		} catch(Exception e) {}
-		System.out.println("There is "+storageSize+" total storage space");
 		return this.storageSize;
 	}
 

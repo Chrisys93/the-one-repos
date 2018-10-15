@@ -227,9 +227,9 @@ public class SimScenario implements Serializable {
 	}
 
 	private void addStorageToHosts() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
-		} catch(Exception e) {System.out.println("Error");}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
+		//} catch(Exception e) {System.out.println("Error");}
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * there should be smth here, like in the DTNFileGenerator, to initiate the
 		 * message storage system and be initialized by the scenatrio initialization
@@ -237,10 +237,10 @@ public class SimScenario implements Serializable {
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
 		for(DTNHost host:hosts){
-			System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
+			//System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
 			if (host.hasStorageCapability()){
 				host.setStorageSystem(host.getStorageSystem());
-				System.out.println("Host " + host.name + " has storage");
+			//	System.out.println("Host " + host.name + " has storage");
 			}
 		}
 	}
