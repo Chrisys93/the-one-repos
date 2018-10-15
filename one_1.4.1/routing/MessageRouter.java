@@ -17,6 +17,7 @@ import core.Connection;
 import core.DTNHost;
 import core.Message;
 import core.MessageListener;
+import core.RepoStorage;
 import core.Settings;
 import core.SettingsError;
 import core.SimClock;
@@ -575,6 +576,15 @@ public abstract class MessageRouter {
 			ri.addMoreInfo(files);
 			for(DTNFile file : host.getFileSystem().getFileCollection()){
 				files.addMoreInfo(new RoutingInfo(file.getFilename()));
+			}
+		}
+
+		if(SimScenario.getInstance().simulateRepos() && host.hasStorageCapability()){
+			RoutingInfo stored = new RoutingInfo(host.getStorageSystem().getNrofMessages() + 
+			" stored message(s)");
+			ri.addMoreInfo(stored);
+			for(Message storedMessage : host.getStorageSystem().getStoredMessagesCollection()){
+				stored.addMoreInfo(new RoutingInfo(storedMessage.getId()));
 			}
 		}
 

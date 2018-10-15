@@ -161,7 +161,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * Set a storage system for this host
 	 * @param storage system The router to set
 	 */
-	private void setStorageSystem(RepoStorage storageSystem) {
+	public void setStorageSystem(RepoStorage storageSystem) {
 		storageSystem.init(this);
 		this.storageSystem = storageSystem;
 	}

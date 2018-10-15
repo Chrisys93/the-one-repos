@@ -7,6 +7,8 @@ package core;
 import input.EventQueue;
 import input.EventQueueHandler;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -209,10 +211,10 @@ public class SimScenario implements Serializable {
 			addFilesToHosts();
 		}
 
-		//createHosts();
-		//if(this.simulateRepos){
-		//	addStorageToHosts();
-		//}		
+	//	createHosts();
+	//	if(this.simulateRepos){
+	//		addStorageToHosts();
+	//	}		
 		
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval, 
 				updateListeners, simulateConnections, 
@@ -224,6 +226,16 @@ public class SimScenario implements Serializable {
 		filesGenerator.readFiles();
 		filesGenerator.generateFiles();		
 	}
+
+	//private void addStorageToHosts() {
+		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		 * there should be smth here, like in the DTNFileGenerator, to initiate the
+		 * message storage system and be initialized by the scenatrio initialization
+		 * in the hosts, and that's what was missing!
+		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+	//}
+		
 	
 
 	public DTNFileGenerator getFileGenerator(){
@@ -412,6 +424,9 @@ public class SimScenario implements Serializable {
 	 * Creates hosts for the scenario
 	 */
 	protected void createHosts() {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		this.hosts = new ArrayList<DTNHost>();
 		int lastGroupWithFiles = -1;
 		int lastGroupWithStorage = -1;
@@ -437,7 +452,7 @@ public class SimScenario implements Serializable {
 			
 			if(hasFileCapability && i!=lastGroupWithFiles){
 				lastGroupWithFiles = i;
-				this.nrofGroupsWithStorage++;
+				this.nrofGroupsWithFiles++;
 			}
 
 			boolean hasStorageCapability;
@@ -449,6 +464,7 @@ public class SimScenario implements Serializable {
 			
 			if(hasStorageCapability && i!=lastGroupWithStorage){
 				lastGroupWithStorage = i;
+				System.out.println("Group " + i + " has storage");
 				this.nrofGroupsWithStorage++;
 			}
 			

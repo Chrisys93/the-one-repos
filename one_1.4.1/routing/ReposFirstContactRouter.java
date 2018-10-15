@@ -5,6 +5,8 @@
 package routing;
 
 import java.lang.*;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,17 +40,17 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public static final String STORE_SIZE_S = "storageSize";
 
 	/** size of the storage space */
-	private long storageSize;
+	protected long storageSize;
 
 	/** hosts to be used as sides of connections */
 	private DTNHost to;
 	private DTNHost from;
 
 	/** arraylist needed for storing messages */
-	private ArrayList<Message> storedMessages;
+	protected ArrayList<Message> storedMessages;
 
 	/** value to keep track of used storage */
-	private long usedStorage;
+	protected long usedStorage;
 	
 	/**
 	 * Constructor. Creates a new message router based on the settings in
@@ -57,11 +59,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 */
 	public ReposFirstContactRouter(Settings s) {
 		super(s);
-		this.storageSize = 100000000; //defaults to 100M buffer
+		
 		
 		/** \/ This \/ needs to be solved in the router part! */
 		if (s.contains(STORE_SIZE_S)) {
 			this.storageSize = s.getLong(STORE_SIZE_S);
+			//this.storedMessages = new ArrayList<Message>();
+		}
+		else {
+			this.storageSize = 100000000; //defaults to 100M storage
 		}
 		
 	}
@@ -72,6 +78,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 */
 	protected ReposFirstContactRouter(ReposFirstContactRouter r) {
 		super(r);
+		this.storageSize = r.storageSize;
+		//this.storedMessages = r.storedMessages;
 	}
 
 	@Override
@@ -79,6 +87,12 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		super.init(host, mListeners);
 		this.storedMessages = new ArrayList<Message>();
 		this.usedStorage = 0;
+		if (this.getHost().hasStorageCapability()){
+			this.getHost().setStorageSystem(this.getHost().getStorageSystem());
+		}
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 	}
 	
 	@Override
@@ -123,19 +137,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * the arguments being only connections to repos and sending
 		 * all the messages
 		 */
-		
-		
+
 		List<Connection> connections = new ArrayList<Connection>();
 		List<Message> messages = new ArrayList<Message>(super.getMessageCollection());
 		for (Connection con : getConnections()) {
-			int i = 0;
 			super.sortByQueueMode(messages);
 			DTNHost to = con.getOtherNode(getHost());
 			if (to.name.toString().contains("r")){
 				if (tryAllMessages(con, messages) != null){
 					connections.add(con);
-					i++;
-					return;
 				}
 				/*else { m_new = Message(getHost(), to, messages.size(), 1000000)
 					if (tryAllMessages(con, messages) != null){
@@ -143,13 +153,19 @@ public class ReposFirstContactRouter extends ActiveRouter {
 						i++;						
 						return;
 					}*/
+				/* Here is where it might be worth checking for delivered messages 
+				 * and updating the storage!!!!!
+				 */ 
 				return;					
 			}
 			return;
 		}
 			
 		tryMessagesToConnections(messages, connections);
-		
+
+		//for (Connection con : getConnections()) {
+			
+		//}
 		//tryAllMessagesToAllConnections();
 	}
 
@@ -175,18 +191,18 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * multiply and obtain total amount of space used,
 		 * then find free space via difference.
 		 */
-		DTNHost to = this.getHost();
-		DTNHost from = con.getOtherNode(to);
 		if (!this.isStorageFull()){
-			to.getStorageSystem().addToStoredMessages(con.getMessage());
+			this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
 			// account for message space taken in storage now
 			this.storedMessages.add(con.getMessage());
+			System.out.println("Message has been added to storage, with no problem");
 		}
 		else {
 			deleteMessagesForSpace(false);
 			to.getStorageSystem().addToStoredMessages(con.getMessage());
 			// account for message space taken in storage now
 			this.storedMessages.add(con.getMessage());
+			System.out.println("Message has been added to storage, by deleting other messages");
 		}
 		return storedMessages;
 	}
@@ -202,10 +218,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 
 	public boolean isStorageFull() {
 		long freeStorage = this.getFreeStorageSpace();
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		} catch(Exception e) {}
 		if (freeStorage < 900000){
+			System.out.println("There is enough storage space");
 			return true;
 		}
 		else{
+			System.out.println("There is not enough storage space");
 			return false;
 		}
 	}
@@ -247,12 +268,26 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	protected void transferDone(Connection con) {
 		/* don't leave a copy for the sender */
 		//this.deleteMessage(con.getMessage().getId(), false);
-		/* this is where the start of the storage part could be implemented*/
-		DTNHost from = con.getOtherNode(to);
-		DTNHost to = this.getHost();	
+		/* this is where the start of the storage part could be implemented
+		 * Nope, it's not! Use isDeliveredMessage instead, to check if the
+		 * message of the connection con was delivered (to this host) and if yes,
+		 * THEN add the message to storage.
+		 * Soooo it seems like this literally only gets called when the node is 
+		 * NOT the target!
+		 */
+		boolean isFinalRepoRecipient = con.getMessage().getTo() == this.getHost();
+		boolean isFirstRepoDelivery = isFinalRepoRecipient && isDeliveredMessage(con.getMessage());
+		DTNHost from = con.getOtherNode(this.getHost());
+		DTNHost to = this.getHost();
 		if (to.hasStorageCapability()) {
-			this.addMessageToStorageSpace(con);	
+				System.out.println("Repo " + this.getHost() + " has storage");
+				//if (isFinalRepoRecipient && isFirstRepoDelivery){
+					this.addMessageToStorageSpace(con);
+					System.out.println("Message added to storage");	
+				//}		
 		}
+		//System.out.println("Transfer done " + this.getHost().name);
+		
 	}
 		
 	@Override

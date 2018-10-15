@@ -23,23 +23,23 @@ public class RepoStorage {
 	private DTNHost host;
 
 	/** size of the storage space */
-	private int storageSize;
+	private long storageSize;
 
 	private String MessageId;
 
-	private ArrayList<Message> storedMessages;
+	protected ArrayList<Message> storedMessages;
 
-	private Collection<Message> messages;
+	protected Collection<Message> messages;
 
 	public void init(DTNHost dtnHost) {
 		this.host = dtnHost;
-		this.storedMessages = new ArrayList <Message>();
-		//this.messages = new Collection<Message>;
+		//this.messages = new Collection<Message>();
+		this.storedMessages = new ArrayList<Message>();
 	}
 	
 	/** Create message collection stored return method */
 	
-	private Collection<Message> getStoredMessagesCollection() {
+	public Collection<Message> getStoredMessagesCollection() {
 		Collection<Message> messages = storedMessages;
 		return this.messages;
 	}
@@ -51,9 +51,9 @@ public class RepoStorage {
 	}
 	
 	/**
-	 * Adds a file to the file system
-	 * @param f The file to add
-	 * @return true if the file is added correctly
+	 * Adds a message to the storage system
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
 	 */
 	public boolean addToStoredMessages(Message sm) {
 		this.storedMessages.add(sm);
