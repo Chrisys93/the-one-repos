@@ -209,9 +209,10 @@ public class SimScenario implements Serializable {
 		createHosts();
 		if(this.simulateFiles){
 			addFilesToHosts();
-		
+		}
 		if(this.simulateRepos){
 			addStorageToHosts();
+			System.out.println("Repos are simulated");
 		}		
 		
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval, 
@@ -226,16 +227,20 @@ public class SimScenario implements Serializable {
 	}
 
 	private void addStorageToHosts() {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * there should be smth here, like in the DTNFileGenerator, to initiate the
 		 * message storage system and be initialized by the scenatrio initialization
 		 * in the hosts, and that's what was missing!
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
-		int nrOfHostsWithStorage=0;
 		for(DTNHost host:hosts){
+			System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
 			if (host.hasStorageCapability()){
 				host.setStorageSystem(host.getStorageSystem());
+				System.out.println("Host " + host.name + " has storage");
 			}
 		}
 	}
@@ -428,9 +433,9 @@ public class SimScenario implements Serializable {
 	 * Creates hosts for the scenario
 	 */
 	protected void createHosts() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
-		} catch(Exception e) {System.out.println("Error");}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
+		//} catch(Exception e) {System.out.println("Error");}
 		this.hosts = new ArrayList<DTNHost>();
 		int lastGroupWithFiles = -1;
 		int lastGroupWithStorage = -1;
@@ -456,19 +461,21 @@ public class SimScenario implements Serializable {
 			
 			if(hasFileCapability && i!=lastGroupWithFiles){
 				lastGroupWithFiles = i;
+			//	System.out.println("Group " + i + " has files");
 				this.nrofGroupsWithFiles++;
 			}
 
 			boolean hasStorageCapability;
 			if (s.contains(STORAGE_CAPABILITY_S)) {
 				hasStorageCapability = s.getBoolean(STORAGE_CAPABILITY_S);
+			//	System.out.println("has storage detected");
 			} else {
 				hasStorageCapability = false;
 			}
 			
 			if(hasStorageCapability && i!=lastGroupWithStorage){
 				lastGroupWithStorage = i;
-				System.out.println("Group " + i + " has storage");
+			//	System.out.println("Group " + i + " has storage");
 				this.nrofGroupsWithStorage++;
 			}
 			

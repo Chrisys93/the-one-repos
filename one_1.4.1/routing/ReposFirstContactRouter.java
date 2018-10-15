@@ -182,6 +182,10 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 */
 	public long getTotalStorageSpace() {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		} catch(Exception e) {}
+		System.out.println("There is "+storageSize+" total storage space");
 		return this.storageSize;
 	}
 
@@ -191,6 +195,13 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * multiply and obtain total amount of space used,
 		 * then find free space via difference.
 		 */
+		long freeStorage = this.getFreeStorageSpace();
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		} catch(Exception e) {}
+
+		System.out.println("There is "+freeStorage+" free storage space");
+		
 		if (!this.isStorageFull()){
 			this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
 			// account for message space taken in storage now
@@ -198,7 +209,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			System.out.println("Message has been added to storage, with no problem");
 		}
 		else {
-			deleteMessagesForSpace(false);
+			deleteMessagesForSpace(true);
 			to.getStorageSystem().addToStoredMessages(con.getMessage());
 			// account for message space taken in storage now
 			this.storedMessages.add(con.getMessage());
@@ -208,11 +219,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	}
 
 	public long getFreeStorageSpace() {
+		/*try {
+			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		} catch(Exception e) {}*/
 		for (int i=0; i<this.storedMessages.size(); i++){
 			Message temp = this.storedMessages.get(i);
 			this.usedStorage += temp.getSize();
 		}
 		long freeStorage = this.getTotalStorageSpace() - usedStorage;
+		//System.out.println("There is "+freeStorage+" free storage space");
 		return freeStorage;
 	}
 
@@ -221,25 +236,31 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		try {
 			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		} catch(Exception e) {}
-		if (freeStorage < 900000){
-			System.out.println("There is enough storage space");
+		if (freeStorage <= 1100000){
+			System.out.println("There is not enough storage space");
 			return true;
 		}
 		else{
-			System.out.println("There is not enough storage space");
+			System.out.println("There is enough storage space");
 			return false;
 		}
 	}
 
 	public void deleteMessagesForSpace(boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
-			for (int i=0; i<100; i++){
+			for (int i=0; i<1000; i++){
 				String messageId = this.getStoredOldestMessage(true).getId();
 				this.getHost().getStorageSystem().deleteStoredMessage(messageId);
+				for(int j=0; j<storedMessages.size(); j++){
+					if(storedMessages.get(j).getId() == messageId){
+						this.storedMessages.remove(j);
+					}
+				}
 			}
 		}
 		else if (deleteAll == true){
 			this.getHost().getStorageSystem().clearAllStoredMessages();
+			this.storedMessages.clear();
 		}
 	}
 
