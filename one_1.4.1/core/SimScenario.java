@@ -209,12 +209,10 @@ public class SimScenario implements Serializable {
 		createHosts();
 		if(this.simulateFiles){
 			addFilesToHosts();
-		}
-
-	//	createHosts();
-	//	if(this.simulateRepos){
-	//		addStorageToHosts();
-	//	}		
+		
+		if(this.simulateRepos){
+			addStorageToHosts();
+		}		
 		
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval, 
 				updateListeners, simulateConnections, 
@@ -227,14 +225,20 @@ public class SimScenario implements Serializable {
 		filesGenerator.generateFiles();		
 	}
 
-	//private void addStorageToHosts() {
+	private void addStorageToHosts() {
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * there should be smth here, like in the DTNFileGenerator, to initiate the
 		 * message storage system and be initialized by the scenatrio initialization
 		 * in the hosts, and that's what was missing!
-		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-
-	//}
+		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		 */
+		int nrOfHostsWithStorage=0;
+		for(DTNHost host:hosts){
+			if (host.hasStorageCapability()){
+				host.setStorageSystem(host.getStorageSystem());
+			}
+		}
+	}
 		
 	
 

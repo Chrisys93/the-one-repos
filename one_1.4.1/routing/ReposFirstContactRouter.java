@@ -87,9 +87,9 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		super.init(host, mListeners);
 		this.storedMessages = new ArrayList<Message>();
 		this.usedStorage = 0;
-		if (this.getHost().hasStorageCapability()){
-			this.getHost().setStorageSystem(this.getHost().getStorageSystem());
-		}
+		//if (this.getHost().hasStorageCapability()){
+		//	this.getHost().setStorageSystem(this.getHost().getStorageSystem());
+		//}
 		try {
 			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		} catch(Exception e) {System.out.println("Error");}
