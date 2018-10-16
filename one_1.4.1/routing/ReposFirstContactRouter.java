@@ -158,7 +158,9 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		else {
 			System.out.println("The current host is: " + this.getHost());
 			this.getHost().getStorageSystem().deleteMessagesForSpace(false);
-			to.getStorageSystem().addToStoredMessages(con.getMessage());
+			//if(con.ifUp()){
+				this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
+			//}			
 			System.out.println("Message has been added to storage, by deleting other messages");
 		}
 	}
@@ -178,7 +180,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		boolean isFirstRepoDelivery = isFinalRepoRecipient && !isDeliveredMessage(con.getMessage());
 		DTNHost from = con.getOtherNode(this.getHost());
 		DTNHost to = this.getHost();
-		if (to.hasStorageCapability()) {
+		if (this.getHost().hasStorageCapability()) {
 			System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 			
 			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);

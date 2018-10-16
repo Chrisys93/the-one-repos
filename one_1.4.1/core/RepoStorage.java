@@ -32,7 +32,7 @@ public class RepoStorage {
 	protected ArrayList<Message> storedMessages;
 
 	/** value to keep track of used storage */
-	protected long usedStorage;
+	//protected long usedStorage;
 
 	protected Collection<Message> messages;
 
@@ -41,8 +41,7 @@ public class RepoStorage {
 	public void init(DTNHost dtnHost, long storageSize) {
 		this.host = dtnHost;
 		//this.messages = new Collection<Message>();
-		this.storedMessages = new ArrayList<Message>();	
-		this.usedStorage = 0;
+		this.storedMessages = new ArrayList<Message>();
 		this.storageSize = 0;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
@@ -71,10 +70,10 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */
-	public boolean addToStoredMessages(Message sm) {
+	public void addToStoredMessages(Message sm) {
 		this.storedMessages.add(sm);
 		/* add space used in the storage space */
-		return true;
+		System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
 	}
 	
 	/**
@@ -170,9 +169,9 @@ public class RepoStorage {
 	 */
 
 	public long getFreeStorageSpace() {
-		this.usedStorage += this.getStoredMessagesSize();
-		System.out.println("There is " + this.usedStorage + " storage used");
-		long freeStorage = this.storageSize - this.usedStorage;
+		long usedStorage = this.getStoredMessagesSize();
+		System.out.println("There is " + usedStorage + " storage used");
+		long freeStorage = this.storageSize - usedStorage;
 		//System.out.println("There is "+freeStorage+" free storage space");
 		return freeStorage;
 	}
@@ -195,32 +194,23 @@ public class RepoStorage {
 	public void deleteMessagesForSpace(boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
 			for (int i=0; i<10; i++){
-				Message temp = this.getStoredOldestMessage();
-				String mId = temp.getId();
+				Message oldest = null;
+				for (Message m : this.storedMessages) {
+					
+					if (oldest == null ) {
+						oldest = m;
+					}
+					else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+						oldest = m;
+					}
+				}
+				String mId = oldest.getId();
 				this.deleteStoredMessage(mId);
 			}
 		}
 		else if (deleteAll == true){
 			this.storedMessages.clear();
-		}
-	}
-
-	
-	protected Message getStoredOldestMessage() {
-		Collection<Message> messages = this.getStoredMessagesCollection();
-		
-		Message oldest = null;
-		for (Message m : messages) {
-			
-			if (oldest == null ) {
-				oldest = m;
-			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				oldest = m;
-			}
-		}
-		
-		return oldest;
+		};
 	}
 	
 
