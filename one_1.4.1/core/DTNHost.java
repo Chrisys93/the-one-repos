@@ -39,6 +39,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	
 	private RepoStorage storageSystem;
 	protected boolean hasStorageCapability;
+	public long storageSize;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -59,7 +60,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
 			MovementModel mmProto, MessageRouter mRouterProto,
-			boolean hasFileCapability, boolean hasStorageCapability) {
+			boolean hasFileCapability, boolean hasStorageCapability, long storageSize) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
@@ -67,6 +68,7 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.net = new ArrayList<NetworkInterface>();
 		this.hasFileCapability = hasFileCapability;
 		this.hasStorageCapability = hasStorageCapability;
+		this.storageSize = storageSize;
 
 		for (NetworkInterface i : interf) {
 			NetworkInterface ni = i.replicate();
@@ -85,7 +87,7 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.movement.setComBus(comBus);
 		setRouter(mRouterProto.replicate());
 		setFileSystem(new DTNFileSystem());
-		setStorageSystem(new RepoStorage());
+		setStorageSystem(new RepoStorage(), storageSize);
 
 		this.location = movement.getInitialLocation();
 
@@ -161,8 +163,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * Set a storage system for this host
 	 * @param storage system The router to set
 	 */
-	public void setStorageSystem(RepoStorage storageSystem) {
-		storageSystem.init(this);
+	public void setStorageSystem(RepoStorage storageSystem, long storageSize) {
+		storageSystem.init(this, storageSize);
 		this.storageSystem = storageSystem;
 	}
 
@@ -172,6 +174,14 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public RepoStorage getStorageSystem() {
 		return this.storageSystem;
+	}
+
+	/**
+	 * Returns the storage system size of this host
+	 * @return the storage system size of this host
+	 */
+	public long getStorageSystemSize() {
+		return this.storageSize;
 	}
 
 	/**

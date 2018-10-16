@@ -297,27 +297,23 @@ public class World {
 		 * Check connection updates in here, for the opportunistic part.
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
+		DTNHost tonode = node;
 		List <Connection> activeConnections = node.getConnections();
 		if (activeConnections.size() > 0){
 			Connection activeConnection_0 = activeConnections.get(0);
-			DTNHost tonode = activeConnection_0.getOtherNode(node);
+			tonode = activeConnection_0.getOtherNode(node);
 			for (int i=0; i<activeConnections.size(); i++){
-				if (activeConnection_0.isUp()){
-					Connection activeConnection_i = activeConnections.get(i);
-			
+				Connection activeConnection_i = activeConnections.get(i);
+				if (activeConnection_i.isUp()){
 					if(activeConnection_i.getOtherNode(node).name.toString().contains(name)){
 						tonode = activeConnection_i.getOtherNode(node);
 					}
 				}
 			}
-			return tonode;
-		}
-		else {
-			return node;
 		}
 			//DTNHost node = this.hosts.get(i);
 			//DTNHost tonode = reposConnection.getOtherNode(node);
-			 
+		return tonode;	 
 	}
 
 	/**

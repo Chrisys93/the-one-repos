@@ -1,5 +1,7 @@
 package core;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -29,12 +31,26 @@ public class RepoStorage {
 
 	protected ArrayList<Message> storedMessages;
 
+	/** value to keep track of used storage */
+	protected long usedStorage;
+
 	protected Collection<Message> messages;
 
-	public void init(DTNHost dtnHost) {
+	private Message sm;
+
+	public void init(DTNHost dtnHost, long storageSize) {
 		this.host = dtnHost;
 		//this.messages = new Collection<Message>();
-		this.storedMessages = new ArrayList<Message>();
+		this.storedMessages = new ArrayList<Message>();	
+		this.usedStorage = 0;
+		this.storageSize = 0;
+		if (this.getHost().hasStorageCapability()){
+			this.storageSize = storageSize;
+		}	
+	}
+
+	public long getTotalStorageSpace() {
+		return this.storageSize;
 	}
 	
 	/** Create message collection stored return method */
@@ -84,6 +100,15 @@ public class RepoStorage {
 	public int getNrofMessages() {
 		return this.storedMessages.size();
 	}
+
+	public long getStoredMessagesSize() {
+		long storedMessagesSize = 0;
+		for (int i=0; i<storedMessages.size(); i++){
+			Message temp = storedMessages.get(i);
+			storedMessagesSize += temp.getSize();
+		}
+		return storedMessagesSize;
+	}
 		
 	
 	/**
@@ -131,6 +156,74 @@ public class RepoStorage {
 		return true;
 	}
 		
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * TODO: Create methods for returning:
+	 * free storage space;
+	 * total storage space;
+	 * add message to storage space
+	 * TODO: Create methods for obtaining:
+	 * deletion of messages from storage space;
+	 * storage space full;
+	 * free up storage if there is none left;
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
+
+	public long getFreeStorageSpace() {
+		this.usedStorage += this.getStoredMessagesSize();
+		System.out.println("There is " + this.usedStorage + " storage used");
+		long freeStorage = this.storageSize - this.usedStorage;
+		//System.out.println("There is "+freeStorage+" free storage space");
+		return freeStorage;
+	}
+
+	public boolean isStorageFull() {
+		long freeStorage = this.getFreeStorageSpace();
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		} catch(Exception e) {}
+		if (freeStorage >= 1100000){
+			System.out.println("There is enough storage space: " + freeStorage);
+			return false;
+		}
+		else{
+			System.out.println("There is not enough storage space: " + freeStorage);
+			return true;
+		}
+	}
+
+	public void deleteMessagesForSpace(boolean deleteAll){
+		if (this.isStorageFull() && deleteAll == false){
+			for (int i=0; i<10; i++){
+				Message temp = this.getStoredOldestMessage();
+				String mId = temp.getId();
+				this.deleteStoredMessage(mId);
+			}
+		}
+		else if (deleteAll == true){
+			this.storedMessages.clear();
+		}
+	}
+
+	
+	protected Message getStoredOldestMessage() {
+		Collection<Message> messages = this.getStoredMessagesCollection();
+		
+		Message oldest = null;
+		for (Message m : messages) {
+			
+			if (oldest == null ) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		
+		return oldest;
+	}
+	
+
 		
 	
 	/**

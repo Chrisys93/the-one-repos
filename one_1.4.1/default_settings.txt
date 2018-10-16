@@ -201,7 +201,7 @@ Events1.class = ReposMessageEventGenerator
 Events1.hostnames = p
 Events1.interval = 35,45
 # Message sizes (500kB - 1MB)
-Events1.size = 900k,1.1M
+Events1.size = 900000,1100000
 # range of message source addresses
 Events1.hosts = 40,79
 # range of message destination addresses
@@ -215,7 +215,7 @@ Events2.class = ReposMessageEventGenerator
 # Creation interval in seconds (one new message every 25 to 35 seconds)
 Events2.interval = 4,5
 # Message sizes (500kB - 1MB)
-Events2.size = 0.9M,1.1M
+Events2.size = 900000,1100000
 # range of message source/destination addresses
 Events2.hosts = 80,119
 # range of message destination addresses
@@ -229,7 +229,7 @@ Events3.class = ReposMessageEventGenerator
 # Creation interval in seconds (one new message every 25 to 35 seconds)
 Events3.interval = 1,2
 # Message sizes (500kB - 1MB)
-Events3.size = 0.9M,1.1M
+Events3.size = 900000,1100000
 # range of message source/destination addresses
 Events3.hosts = 120,134
 # range of message destination addresses

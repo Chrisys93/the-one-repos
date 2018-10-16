@@ -95,6 +95,10 @@ public class SimScenario implements Serializable {
 	
 	/** package where to look for application classes */
 	private static final String APP_PACKAGE = "applications.";
+
+	/** Message storage size -setting id ({@value}). Integer value in bytes.*/
+	public static final String STORE_SIZE_S = "storageSize";
+
 	
 	/** The world instance */
 	private World world;
@@ -227,9 +231,9 @@ public class SimScenario implements Serializable {
 	}
 
 	private void addStorageToHosts() {
-		//try {
-		//	System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
-		//} catch(Exception e) {System.out.println("Error");}
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * there should be smth here, like in the DTNFileGenerator, to initiate the
 		 * message storage system and be initialized by the scenatrio initialization
@@ -239,8 +243,8 @@ public class SimScenario implements Serializable {
 		for(DTNHost host:hosts){
 			//System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
 			if (host.hasStorageCapability()){
-				host.setStorageSystem(host.getStorageSystem());
-			//	System.out.println("Host " + host.name + " has storage");
+				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize());
+				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
 			}
 		}
 	}
@@ -466,9 +470,17 @@ public class SimScenario implements Serializable {
 			}
 
 			boolean hasStorageCapability;
+			long storageSize = 0;
 			if (s.contains(STORAGE_CAPABILITY_S)) {
 				hasStorageCapability = s.getBoolean(STORAGE_CAPABILITY_S);
 			//	System.out.println("has storage detected");
+				/** \/ This \/ needs to be solved in the router part! */
+				if (s.contains(STORE_SIZE_S)) {
+					storageSize = s.getLong(STORE_SIZE_S);
+				}
+				else {
+					storageSize = 100000000; //defaults to 100M storage
+				}
 			} else {
 				hasStorageCapability = false;
 			}
@@ -546,7 +558,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability, hasStorageCapability);
+						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, storageSize);
 				hosts.add(host);
 			}
 		}

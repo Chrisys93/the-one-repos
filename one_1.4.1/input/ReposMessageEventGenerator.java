@@ -95,7 +95,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 			this.msgTime = null;
 		}
 		if (s.contains(TO_HOST_RANGE_S)) {
-			this.toHostName = TO_HOST_RANGE_S;
+			this.toHostName = TO_HOST_RANGE_S.trim();
 		}
 		else {
 			this.toHostName = null;
@@ -130,8 +130,8 @@ public class ReposMessageEventGenerator implements EventQueue {
 		 */
 		if (this.hostRange[1] - this.hostRange[0] < 2) {
 			if (this.toHostName == null) {
-				throw new SettingsError("Host range must contain at least two " 
-						+ "nodes unless toHostRange is defined");
+				throw new SettingsError("Host range must contain at least one " 
+						+ "letter unless toHostRange is defined");
 			}
 			else if (this.hostNames.contains(toHostName)) {
 				// XXX: teemuk: Since (X,X) == (X,X+1) in drawHostAddress()
