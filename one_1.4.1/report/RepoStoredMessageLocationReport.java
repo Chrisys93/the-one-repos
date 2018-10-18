@@ -109,7 +109,7 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 							/* In here it would be useful to use getNrofMessages 
 							instead of printing all the messages the "name"/address 
 							of the node instead*/
-							//reportLine += " " + hostname;
+							reportLine += " " + hostname;
 							reportLine += " " + host.getStorageSystem().getNrofMessages();
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

@@ -36,6 +36,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 	 * selected from this range and the source hosts from the 
 	 * {@link #HOST_RANGE_S} setting's range.   
 	 * The lower bound is inclusive and upper bound exclusive. */
+	public static final String TO_HOST_NAME_S = "tohostname";
 	public static final String TO_HOST_RANGE_S = "tohosts";
 
 	/** Message ID prefix -setting id ({@value}). The value must be unique 
@@ -56,8 +57,10 @@ public class ReposMessageEventGenerator implements EventQueue {
 	protected int[] hostRange = {0, 0};
 	/** Range of host addresses that can be senders or receivers */
 	protected ArrayList<String> hostNames;
-	/** Range of host addresses that can be receivers */
+	/** Host group names that can be receivers */
 	protected String toHostName = null;
+	/** Range of host addresses that can be receivers */
+	protected int[] toHostRange = null;
 	/** Next identifier for a message */
 	private int id = 0;
 	/** Prefix for the messages */
@@ -94,11 +97,21 @@ public class ReposMessageEventGenerator implements EventQueue {
 		else {
 			this.msgTime = null;
 		}
-		if (s.contains(TO_HOST_RANGE_S)) {
-			this.toHostName = TO_HOST_RANGE_S.trim();
+
+		/** Need to select the hosts by name instead, for opportunistic transfers. */
+		if (s.contains(TO_HOST_NAME_S)) {
+			this.toHostName = TO_HOST_NAME_S.trim();
 		}
 		else {
 			this.toHostName = null;
+		}
+
+		/** Need to select the hosts by name instead, for opportunistic transfers. */
+		if (s.contains(TO_HOST_RANGE_S)) {
+			this.toHostRange = s.getCsvInts(TO_HOST_RANGE_S, 2);;
+		}
+		else {
+			this.toHostRange = null;
 		}
 		
 		/* if prefix is unique, so will be the rng's sequence */
@@ -123,7 +136,8 @@ public class ReposMessageEventGenerator implements EventQueue {
 		s.assertValidRange(this.hostRange, HOST_RANGE_S);
 		
 
-		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		/*
+		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * might actually need "hostRange" anyway, to determine which host in 
 		 * the whole group is creating a message, in order to send to a repository
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -190,7 +204,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 	 * @param from the "from" address
 	 * @return a destination address from the range, but different from "from"
 	 */
-	/*protected int drawToAddress(int hostRange[], int from) {
+	protected int drawToAddress(int hostRange[], int from) {
 		int to;
 		do {
 			to = this.toHostRange != null ? drawHostAddress(this.toHostRange):
@@ -198,7 +212,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 		} while (from==to);
 		
 		return to;
-	}*/
+	}
 	
 	/** 
 	 * Returns the next message creation event
@@ -210,17 +224,18 @@ public class ReposMessageEventGenerator implements EventQueue {
 		int interval;
 		int from;
 		String to;
+		int toAd;
 		
 		/* Get two *different* nodes randomly from the host ranges */
 		from = drawHostAddress(this.hostRange);	
-		//to = drawToAddress(hostRange, from);
+		toAd = drawToAddress(hostRange, from);
 		to = this.toHostName;
 		
 		msgSize = drawMessageSize();
 		interval = drawNextEventTimeDiff();
 		
 		/* Create event and advance to next event */
-		ReposMessageCreateEvent mce = new ReposMessageCreateEvent(from, to, this.getID(), 
+		ReposMessageCreateEvent mce = new ReposMessageCreateEvent(from, to, toAd, this.getID(), 
 				msgSize, responseSize, this.nextEventsTime);
 		this.nextEventsTime += interval;	
 		
