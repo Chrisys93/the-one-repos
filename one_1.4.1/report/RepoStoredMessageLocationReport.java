@@ -105,12 +105,12 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 				if (isTracked(m)) {
 					if (isFirstMessage) {
 						String hostname = host.name.toString();
-						if (hostname.contains("r") ){
+						if (host.hasStorageCapability()){
 							/* In here it would be useful to use getNrofMessages 
 							instead of printing all the messages the "name"/address 
 							of the node instead*/
 							reportLine += " " + hostname;
-							reportLine += " " + host.getStorageSystem().getNrofMessages();
+							reportLine += " " + host.getStorageSystem().getStoredMessagesSize();
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
 						}
