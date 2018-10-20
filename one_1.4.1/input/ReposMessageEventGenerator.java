@@ -95,7 +95,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 			this.msgTime = null;
 		}
 		if (s.contains(TO_HOST_RANGE_S)) {
-			this.toHostName = TO_HOST_RANGE_S.trim();
+			this.toHostName = s.getSetting(TO_HOST_RANGE_S).trim();
 		}
 		else {
 			this.toHostName = null;
