@@ -102,8 +102,8 @@ public class RepoStorage {
 
 	public long getStoredMessagesSize() {
 		long storedMessagesSize = 0;
-		for (int i=0; i<storedMessages.size(); i++){
-			Message temp = storedMessages.get(i);
+		for (int i=0; i<this.storedMessages.size(); i++){
+			Message temp = this.storedMessages.get(i);
 			storedMessagesSize += temp.getSize();
 		}
 		return storedMessagesSize;
