@@ -292,6 +292,7 @@ public class World {
 	 * @return The requested node or source node if it wasn't found
 	 */
 	public DTNHost getNodeByName(String name, DTNHost node, int address) {
+		System.out.println("For World, name = " + name);
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * Here is where a connection check should be done, to get the proper message.
 		 * Check connection updates in here, for the opportunistic part.
@@ -300,11 +301,11 @@ public class World {
 		DTNHost tonode = null;
 		List <Connection> activeConnections = node.getConnections();
 		if (activeConnections.size() > 0){
-			Connection activeConnection_0 = activeConnections.get(0);
 			for (int i=0; i<activeConnections.size(); i++){
 				Connection activeConnection_i = activeConnections.get(i);
 				if (activeConnection_i.isUp()){
-					if(activeConnection_i.getOtherNode(node).name.toString().contains(name)){
+					String nodeName = name;
+					if(activeConnection_i.getOtherNode(node).name.toString().contains(nodeName)){
 						tonode = activeConnection_i.getOtherNode(node);
 					}
 				}

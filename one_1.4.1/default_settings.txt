@@ -96,7 +96,7 @@ Group.nrofHosts = 40
 
 ###################################
 ### common settings for all groups
-Group.fileCapability = true
+Group.fileCapability = false
 
 ###################################
 # path to files generation input files

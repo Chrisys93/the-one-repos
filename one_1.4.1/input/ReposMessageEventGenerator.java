@@ -5,6 +5,8 @@
 package input;
 
 import java.util.Random;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import core.Settings;
@@ -100,7 +102,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
 		if (s.contains(TO_HOST_NAME_S)) {
-			this.toHostName = TO_HOST_NAME_S.trim();
+			this.toHostName = s.getSetting(TO_HOST_NAME_S).trim();
 		}
 		else {
 			this.toHostName = null;
@@ -219,6 +221,9 @@ public class ReposMessageEventGenerator implements EventQueue {
 	 * @see input.EventQueue#nextEvent()
 	 */
 	public ExternalEvent nextEvent() {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
+		} catch(Exception e) {}
 		int responseSize = 0; /* zero stands for one way messages */
 		int msgSize;
 		int interval;
@@ -230,6 +235,7 @@ public class ReposMessageEventGenerator implements EventQueue {
 		from = drawHostAddress(this.hostRange);	
 		toAd = drawToAddress(hostRange, from);
 		to = this.toHostName;
+		System.out.println("to = " + to);
 		
 		msgSize = drawMessageSize();
 		interval = drawNextEventTimeDiff();

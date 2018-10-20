@@ -55,7 +55,7 @@ public class ReposDirectDeliveryRouter extends ActiveRouter {
 			return; // started a transfer
 		}
 		
-		List<Connection> connections = new ArrayList<Connection>();
+		//List<Connection> connections = new ArrayList<Connection>();
 		List<Message> messages = new ArrayList<Message>(super.getMessageCollection());
 		for (Connection con : this.getHost().getConnections()) {
 			super.sortByQueueMode(messages);
@@ -75,21 +75,26 @@ public class ReposDirectDeliveryRouter extends ActiveRouter {
 		 * multiply and obtain total amount of space used,
 		 * then find free space via difference.
 		 */
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		} catch(Exception e) {}
+		
 		long freeStorage = this.getHost().getStorageSystem().getFreeStorageSpace();
 
-		//System.out.println("There is "+freeStorage+" free storage space");
-		
-		if (!this.getHost().getStorageSystem().isStorageFull()){
-			this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
-			//System.out.println("Message has been added to storage, with no problem");
-		}
-		else {
-			//System.out.println("The current host is: " + this.getHost());
-			this.getHost().getStorageSystem().deleteMessagesForSpace(false);
-			//if(con.ifUp()){
+		System.out.println("There is "+freeStorage+" free storage space");
+		if (con.getMessage() != null) {
+			if (!this.getHost().getStorageSystem().isStorageFull()){
 				this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
-			//}			
-			//System.out.println("Message has been added to storage, by deleting other messages");
+				//System.out.println("Message has been added to storage, with no problem");
+			}
+			else {
+				//System.out.println("The current host is: " + this.getHost());
+				this.getHost().getStorageSystem().deleteMessagesForSpace(false);
+				//if(con.ifUp()){
+					this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
+				//}			
+				//System.out.println("Message has been added to storage, by deleting other messages");
+			}
 		}
 	}
 	
@@ -104,9 +109,6 @@ public class ReposDirectDeliveryRouter extends ActiveRouter {
 	 */
 	@Override
 	public Message messageTransferred(String id, DTNHost from) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("logupdate.txt")));
-		} catch(Exception e) {}
 		Message incoming = removeFromIncomingBuffer(id, from);
 		boolean isFinalRecipient;
 		boolean isFirstDelivery; // is this first delivered instance of the msg
