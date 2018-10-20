@@ -55,7 +55,7 @@ public class ReposDirectDeliveryRouter extends ActiveRouter {
 			return; // started a transfer
 		}
 		
-		List<Connection> connections = new ArrayList<Connection>();
+		//List<Connection> connections = new ArrayList<Connection>();
 		List<Message> messages = new ArrayList<Message>(super.getMessageCollection());
 		for (Connection con : this.getHost().getConnections()) {
 			super.sortByQueueMode(messages);

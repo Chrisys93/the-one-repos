@@ -300,11 +300,11 @@ public class World {
 		DTNHost tonode = null;
 		List <Connection> activeConnections = node.getConnections();
 		if (activeConnections.size() > 0){
-			Connection activeConnection_0 = activeConnections.get(0);
 			for (int i=0; i<activeConnections.size(); i++){
 				Connection activeConnection_i = activeConnections.get(i);
 				if (activeConnection_i.isUp()){
-					if(activeConnection_i.getOtherNode(node).name.toString().contains(name)){
+					String nodeName = name;
+					if(activeConnection_i.getOtherNode(node).name.toString().contains(nodeName)){
 						tonode = activeConnection_i.getOtherNode(node);
 					}
 				}

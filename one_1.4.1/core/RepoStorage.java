@@ -71,9 +71,6 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */
 	public void addToStoredMessages(Message sm) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
-		} catch(Exception e) {}
 		this.storedMessages.add(sm);
 		/* add space used in the storage space */
 		System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
@@ -173,7 +170,7 @@ public class RepoStorage {
 
 	public long getFreeStorageSpace() {
 		long usedStorage = this.getStoredMessagesSize();
-		//System.out.println("There is " + usedStorage + " storage used");
+		System.out.println("There is " + usedStorage + " storage used");
 		long freeStorage = this.storageSize - usedStorage;
 		//System.out.println("There is "+freeStorage+" free storage space");
 		return freeStorage;
@@ -184,7 +181,6 @@ public class RepoStorage {
 		try {
 			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		} catch(Exception e) {}
-		System.out.println("This storage system is part of: " + this.getHost());
 		if (freeStorage >= 1100000){
 			System.out.println("There is enough storage space: " + freeStorage);
 			return false;

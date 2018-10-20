@@ -27,6 +27,10 @@ public class ReposMessageCreateEvent extends ReposMessageEvent {
 	 */
 	public ReposMessageCreateEvent(int from, String to, int toAd, String id, int size,
 			int responseSize, double time) {
+		//this.fromAddr = from;
+		//this.toAddr= to;
+		//this.toAd = toAd;
+		//this.id = id;
 		super(from, to, toAd, id, time);
 		this.size = size;
 		this.responseSize = responseSize;

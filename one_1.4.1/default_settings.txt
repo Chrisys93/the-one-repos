@@ -81,7 +81,7 @@ Scenario.nrofHostGroups = 6
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-Group.router = ReposDirectDeliveryRouter
+Group.router = ReposFirstContactRouter
 Group.bufferSize = 100M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
@@ -205,8 +205,8 @@ Events1.size = 900000,1100000
 # range of message source addresses
 Events1.hosts = 40,79
 # range of message destination addresses
-Events1.tohosts = 0,39
-Events1.tohostname = r
+Events2.tohostnames = r
+Events2.tohosts = 0,39
 # Message ID prefix
 Events1.prefix = MP
 
@@ -220,8 +220,8 @@ Events2.size = 900000,1100000
 # range of message source/destination addresses
 Events2.hosts = 80,119
 # range of message destination addresses
+Events2.tohostnames = r
 Events2.tohosts = 0,39
-Events2.tohostname = r
 # Message ID prefix
 Events2.prefix = MC
 
@@ -235,8 +235,8 @@ Events3.size = 900000,1100000
 # range of message source/destination addresses
 Events3.hosts = 120,134
 # range of message destination addresses
-Events3.tohosts = 0,39
-Events3.tohostname = r
+Events2.tohostnames = r
+Events2.tohosts = 0,39
 # Message ID prefix
 Events3.prefix = MB
 
@@ -260,7 +260,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 6
+Report.nrofReports = 7
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -276,6 +276,7 @@ Report.report3 = MessageReport
 Report.report4 = RepoMessageLocationReport
 Report.report5 = RepoStoredMessageLocationReport
 Report.report6 = MobileMessageLocationReport
+Report.report7 = FileLocationReport
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
