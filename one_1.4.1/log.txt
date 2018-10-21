@@ -1,3 +1,4 @@
-There is enough storage space: 9973804142
-There is 27138321 storage used
+There is enough storage space: 4199601574
+There is 5801396932 storage used
 Message has been added to storage, with no problem
+Message added to storage

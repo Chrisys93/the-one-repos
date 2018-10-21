@@ -19,10 +19,6 @@ import core.Settings;
 import core.DTNHost;
 import core.SettingsError;
 import core.RepoStorage;
-import core.SimError;
-import core.SimClock;
-import core.Application;
-import core.Tuple;
 
 
 
@@ -87,6 +83,12 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	public void update() {
 		super.update();
 		
+		/* get all connections and all messages (getConnections and 
+		 * getMessagesForConnected()) 
+		 * and isolate the CONNECTED repos. May need to modify 
+		 * getMessagesForConnected to only work with repos
+		 */
+		
 		
 		/* if there are no messages for connected (repos),
 		 * create message for connected (repos)
@@ -97,66 +99,45 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			return; 
 		}
 		
-		if (exchangeDeliverableMessages() != null) {
-			return; 
-		}
+		//if (exchangeDeliverableMessages() != null) {
+		//	return; 
+		//}
 
 		/* modify the following\|/ to something like tryAllMessages(), with
 		 * the arguments being only connections to repos and sending
 		 * all the messages
 		 */
 
-		
-		
-		/* get all connections and all messages (getConnections and 
-		 * getMessagesForConnected()) 
-		 * and isolate the CONNECTED repos. May need to modify 
-		 * getMessagesForConnected to only work with repos
-		 */
-
-		/*List<Connection> connections = new ArrayList<Connection>();
+		List<Connection> connections = new ArrayList<Connection>();
 		List<Message> messages = new ArrayList<Message>(super.getMessageCollection());
-		for (Connection con : this.getHost().getConnections()) {
+		for (Connection con : getConnections()) {
 			super.sortByQueueMode(messages);
-			DTNHost to = con.getOtherNode(this.getHost());
-			if(con.isUp() && con.getMessage() != null){
-				System.out.println("The next message is destined to " + con.getMessage().getTo() + " coming from " +con.getMessage().getFrom()+ " and this host is " + this.getHost());			
-				Message temp = con.getMessage();
-				if (temp.getTo() == to && to.name.toString().contains("r") && tryAllMessages(con, messages) != null){
+			DTNHost to = con.getOtherNode(getHost());
+			if (to.name.toString().contains("r")){
+				if (tryAllMessages(con, messages) != null){
 					connections.add(con);
 				}
+				/*else { m_new = Message(getHost(), to, messages.size(), 1000000)
+					if (tryAllMessages(con, messages) != null){
+						connections.add(con);
+						i++;						
+						return;
+					}*/
+				/* Here is where it might be worth checking for delivered messages 
+				 * and updating the storage!!!!!
+				 */ 
+				return;					
 			}
+			return;
 		}
 			
-		tryMessagesToConnections(messages, connections);*/
-	}
-	
-	/**
-	 * Returns a list of message-connections tuples of the messages whose
-	 * recipient is some host that we're connected to at the moment.
-	 * @return a list of message-connections tuples
-	 */
-	/*@Override
-	protected List<Tuple<Message, Connection>> getMessagesForConnected() {
-		if (getNrofMessages() == 0 || getConnections().size() == 0) {
-	*/		/* no messages -> empty list */
-	/*		return new ArrayList<Tuple<Message, Connection>>(0); 
-		}
+		tryMessagesToConnections(messages, connections);
 
-		List<Tuple<Message, Connection>> forTuples = 
-			new ArrayList<Tuple<Message, Connection>>();
-		for (Message m : getMessageCollection()) {
-			for (Connection con : getConnections()) {
-				DTNHost to = con.getOtherNode(this.getHost());
-				System.out.println("The next message is destined to " + m.getTo() + " coming from " +m.getFrom()+ " and this host is " + this.getHost());
-				if (m.getTo() == to && to.name.toString().contains("r")) {
-					forTuples.add(new Tuple<Message, Connection>(m,con));
-				}
-			}
-		}
-		
-		return forTuples;
-	}*/
+		//for (Connection con : getConnections()) {
+			
+		//}
+		//tryAllMessagesToAllConnections();
+	}
 
 	
 
@@ -183,73 +164,11 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			System.out.println("Message has been added to storage, by deleting other messages");
 		}
 	}
-
-	/**
-	 * This method should be called (on the receiving host) after a message
-	 * was successfully transferred. The transferred message is put to the
-	 * message buffer unless this host is the final recipient of the message.
-	 * @param id Id of the transferred message
-	 * @param from Host the message was from (previous hop)
-	 * @return The message that this host received
-	 */
-	@Override
-	public Message messageTransferred(String id, DTNHost from) {
-		Message incoming = removeFromIncomingBuffer(id, from);
-		boolean isFinalRecipient;
-		boolean isFirstDelivery; // is this first delivered instance of the msg
-		
-		
-		if (incoming == null) {
-			throw new SimError("No message with ID " + id + " in the incoming "+
-					"buffer of " + this.getHost());
-		}
-		
-		incoming.setReceiveTime(SimClock.getTime());
-		
-		// Pass the message to the application (if any) and get outgoing message
-		Message outgoing = incoming;
-		for (Application app : getApplications(incoming.getAppID())) {
-			// Note that the order of applications is significant
-			// since the next one gets the output of the previous.
-			outgoing = app.handle(outgoing, this.getHost());
-			if (outgoing == null) break; // Some app wanted to drop the message
-		}
-		
-		Message aMessage = (outgoing==null)?(incoming):(outgoing);
-		// If the application re-targets the message (changes 'to')
-		// then the message is not considered as 'delivered' to this host.
-		isFinalRecipient = aMessage.getTo() == this.getHost();
-		isFirstDelivery = isFinalRecipient &&
-		!isDeliveredMessage(aMessage);
-
-		if (!isFinalRecipient && outgoing!=null) {
-			// not the final recipient and app doesn't want to drop the message
-			// -> put to buffer
-			addToMessages(aMessage, false);
-		}
-		else if (isFirstDelivery) {
-			this.deliveredMessages.put(id, aMessage);
-			if (this.getHost().hasStorageCapability()) {
-				for (Connection con:this.getHost().getConnections()){
-					if (con.getOtherNode(this.getHost()) == from){
-						System.out.println("Repo " + this.getHost() + " isDeliveredMessage " +isDeliveredMessage(aMessage));
-						this.addMessageToStorageSpace(con);
-						//System.out.println("Message added to storage");	
-					}
-				}
-			}
-		}
-		
-		for (MessageListener ml : this.mListeners) {
-			ml.messageTransferred(aMessage, from, this.getHost(),
-					isFirstDelivery);
-		}
-		
-		return aMessage;
-	}
 	
 	@Override
 	protected void transferDone(Connection con) {
+		/* don't leave a copy for the sender */
+		//this.deleteMessage(con.getMessage().getId(), false);
 		/* this is where the start of the storage part could be implemented
 		 * Nope, it's not! Use isDeliveredMessage instead, to check if the
 		 * message of the connection con was delivered (to this host) and if yes,
@@ -262,18 +181,15 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		DTNHost from = con.getOtherNode(this.getHost());
 		DTNHost to = this.getHost();
 		if (this.getHost().hasStorageCapability()) {
+			System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 			
-			//System.out.println("Repo " + this.getHost() + " isDeliveredMessage " +isDeliveredMessage(con.getMessage()));
-			if (!isDeliveredMessage(con.getMessage())){
+			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);
+			//if (isFinalRepoRecipient && isFirstRepoDelivery){
 				this.addMessageToStorageSpace(con);
-				//System.out.println("Message added to storage");	
-			}		
+				System.out.println("Message added to storage");	
+			//}		
 		}
 		//System.out.println("Transfer done " + this.getHost().name);
-		else if (super.getMessage(con.getMessage().getId()) != null){		
-			/* don't leave a copy for the sender */
-			this.deleteMessage(con.getMessage().getId(), false);
-		}
 		
 	}
 		

@@ -1,2 +1,0 @@
-Repo r36 isDeliveredMessage true
-Repo r36 isDeliveredMessage true
