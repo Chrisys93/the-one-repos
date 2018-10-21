@@ -125,10 +125,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 					}*/
 				/* Here is where it might be worth checking for delivered messages 
 				 * and updating the storage!!!!!
-				 */ 
-				return;					
+				 */ 					
 			}
-			return;
 		}
 			
 		tryMessagesToConnections(messages, connections);

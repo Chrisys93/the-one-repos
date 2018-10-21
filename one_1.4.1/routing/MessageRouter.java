@@ -70,13 +70,13 @@ public abstract class MessageRouter {
 	/** Receive return value for unspecified reason */
 	public static final int DENIED_UNSPECIFIED = -999;
 	
-	private List<MessageListener> mListeners;
+	protected List<MessageListener> mListeners;
 	/** The messages being transferred with msgID_hostName keys */
 	private HashMap<String, Message> incomingMessages;
 	/** The messages this router is carrying */
 	private HashMap<String, Message> messages; 
 	/** The messages this router has received as the final recipient */
-	private HashMap<String, Message> deliveredMessages;
+	protected HashMap<String, Message> deliveredMessages;
 	/** Host where this router belongs to */
 	private DTNHost host;
 	/** size of the buffer */
