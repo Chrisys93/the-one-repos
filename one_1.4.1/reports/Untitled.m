@@ -20,33 +20,81 @@ end
 maxval2 = max(maxstor2);
 
 s = 10000;
+col = 1;
 for i = 1:r3
     maxstor3(i) = max(S(i, :));
     if maxstor3(i) >= 10000 && i < s
+        c0 = 1;
+        c50 = 1;
+        for c = 1:c3
+            if S(i, c) >= 5000
+                fillperc50_100(c50) = S(i, c)/10000*100;
+                c50=c50+1;
+            else
+                fillperc0_50(c0) = S(i, c)/10000*100;
+                c0=c0+1;
+            end
+        end
         figure
         bar(S(i, :));
         s = i;
     end
+    
+    c100 = 1;
+    for c = 1:c3
+        if S(i, c) >= 9900
+            fill100(c100) = 1;
+        else
+            fill100(c100) = 0;
+        end
+        c100=c100+1;
+    end
+    fillperc100(col) = sum(fill100);
+    
+    
+    c50 = 1;
+    for c = 1:c3
+        if S(i, c) >= 5000
+            fill50(c50) = 1;
+        else
+            fill50(c50) = 0;
+        end
+        c50=c50+1;
+    end
+    fillperc50(col) = sum(fill50);
+    col = col + 1;
 end
 maxval3 = max(maxstor3);
+
+figure
+bar(fillperc100);
+title('Percentage of repositories filled up to 100%');
+xlabel('Time (s)');
+ylabel('No. of repositories which used about 100% storage');
+
+figure
+bar(fillperc50);
+title('Percentage of repositories filled up to 50%');
+xlabel('Time (s)');
+ylabel('No. of repositories which used more than 50% storage');
 
 figure
 bar(maxstor1);
 title('Bar plot of Repos Buffer(!) Usage')
 xlabel('Time(s)') 
-ylabel('Space used(B)')
+ylabel('Space used(MB)')
 
 figure
 bar(maxstor2);
 title('Bar plot of Mobile Nodes Buffer(!) Usage')
 xlabel('Time(s)') 
-ylabel('Space used(B)')
+ylabel('Space used(MB)')
 
 figure
 bar(maxstor3, 0.5);
-title('Bar plot of Repos Stored Nodes Storage Usage')
+title('Bar plot of Repos Storage Usage')
 xlabel('Time(s)') 
-ylabel('Space used(B)')
+ylabel('Space used(MB)')
 
 %figure
 %bar3(M);
@@ -62,4 +110,8 @@ ylabel('Space used(B)')
 
 figure
 stem3(S, ':.');
+title('3D Stem plot of Repos Storage Usage')
+xlabel('Time(s)') 
+ylabel('Repo Number')
+zlabel('Space used(MB)')
 
