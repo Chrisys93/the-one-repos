@@ -18,61 +18,50 @@ import core.SettingsError;
  * be configured.
  */
 public class ReposStorageConstantDepletion implements EventQueue {
-	/** Message size range -setting id ({@value}). Can be either a single
-	 * value or a range (min, max) of uniformly distributed random values.
-	 * Defines the message size (bytes). */
-	public static final String MESSAGE_SIZE_S = "size";
-	/** Message creation interval range -setting id ({@value}). Can be either a 
+	/** Message deletion interval range -setting id ({@value}). Can be either a 
 	 * single value or a range (min, max) of uniformly distributed 
 	 * random values. Defines the inter-message creation interval (seconds). */
-	public static final String MESSAGE_INTERVAL_S = "interval";
+	public static final String DEPLETION_INTERVAL_S = "depletionInterval";
+	/** Message amount to be deleted each time the event occurs*/
+	public static final String MSG_AMOUNT_S = "msgNo";
 	/** Sender/receiver address range -setting id ({@value}). 
 
 	 * The lower bound is inclusive and upper bound exclusive.*/
-	public static final String HOST_RANGE_S = "hosts";
+	//public static final String HOST_RANGE_S = "hosts";
 
 	/* The lower bound is inclusive and upper bound exclusive. */
-	public static final String HOST_NAMES_S = "hostnames";
-	/** (Optional) receiver address range -setting id ({@value}). 
-	 * If a value for this setting is defined, the destination hosts are 
-	 * selected from this range and the source hosts from the 
-	 * {@link #HOST_RANGE_S} setting's range.   
-	 * The lower bound is inclusive and upper bound exclusive. */
-	public static final String TO_HOST_NAME_S = "tohostnames";
-	public static final String TO_HOST_RANGE_S = "tohosts";
-
-	/** Message ID prefix -setting id ({@value}). The value must be unique 
-	 * for all message sources, so if you have more than one message generator,
-	 * use different prefix for all of them. The random number generator's
-	 * seed is derived from the prefix, so by changing the prefix, you'll get
-	 * also a new message sequence. */
-	public static final String MESSAGE_ID_PREFIX_S = "prefix";
-	/** Message creation time range -setting id ({@value}). Defines the time
-	 * range when messages are created. No messages are created before the first
-	 * and after the second value. By default, messages are created for the 
-	 * whole simulation time. */
-	public static final String MESSAGE_TIME_S = "time";
+	public static final String HOST_NAMES_S = "depletionHostnames";
+	/** All the storage depletion will stop/start for each repository/storage-capable node
+	 * 	at this lower limit, to make the depletion, sending and receiving of messages and 
+	 * 	the actual storage feasible. */
+	public static final String LOWER_LIMIT_S = "lowerLimit";
+	/** Storage depletion algorithm will, at the point it reaches the upper limit, 
+	 * 	inform the user of being a bottleneck in the system and suggest increasing depletion 
+	 * 	rate, increasing storage capacity, or improving storage distribution of each repository/
+	 * 	storage-capable node, to make the depletion, sending and receiving of messages and 
+	 * 	the actual storage feasible. */
+	public static final String HIGHER_LIMIT_S = "higherLimit";
 	
 	/** Time of the next event (simulated seconds) */
 	protected double nextEventsTime = 0;
 	/** Range of host addresses that can be senders or receivers */
-	protected int[] hostRange = {0, 0};
+	//protected int[] hostRange = {0, 0};
 	/** Range of host addresses that can be senders or receivers */
 	protected ArrayList<String> hostNames;
 	/** Host group names that can be receivers */
-	protected String toHostName = null;
+	//protected String toHostName = null;
 	/** Range of host addresses that can be receivers */
-	protected int[] toHostRange = null;
-	/** Next identifier for a message */
-	private int id = 0;
+	//protected int[] toHostRange = null;
 	/** Prefix for the messages */
 	protected String idPrefix;
 	/** Size range of the messages (min, max) */
-	private int[] sizeRange;
+	private long lowerLimit;
+	/** Size range of the messages (min, max) */
+	private long higherLimit;
 	/** Interval between messages (min, max) */
-	private int[] msgInterval;
-	/** Time range for message creation (min, max) */
-	protected double[] msgTime;
+	private int[] dplInterval;
+	/** Number of messages to be deleted on each event */
+	protected int msgNo;
 
 	/** Random number generator for this Class */
 	protected Random rng;
@@ -84,58 +73,46 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 * @param s Settings for this generator.
 	 */
 	public ReposStorageConstantDepletion(Settings s){
-		this.sizeRange = s.getCsvInts(MESSAGE_SIZE_S);
-		this.msgInterval = s.getCsvInts(MESSAGE_INTERVAL_S);
-		this.hostRange = s.getCsvInts(HOST_RANGE_S, 2);
-		this.hostNames = new ArrayList<String>(1);
+		this.dplInterval = s.getCsvInts(DEPLETION_INTERVAL_S);
+		//this.hostRange = s.getCsvInts(HOST_RANGE_S, 2);
+		this.hostNames = new ArrayList<String>();
 		for (int i=0; i<HOST_NAMES_S.length(); i++){
 			this.hostNames.add(Character.toString(HOST_NAMES_S.charAt(i)));
-		}		
-		this.idPrefix = s.getSetting(MESSAGE_ID_PREFIX_S);
-		
-		if (s.contains(MESSAGE_TIME_S)) {
-			this.msgTime = s.getCsvDoubles(MESSAGE_TIME_S, 2);
-		}
-		else {
-			this.msgTime = null;
 		}
 
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
-		if (s.contains(TO_HOST_NAME_S)) {
-			this.toHostName = s.getSetting(TO_HOST_NAME_S).trim();
+		if (s.contains(MSG_AMOUNT_S)) {
+			this.msgNo = s.getInt(MSG_AMOUNT_S);;
 		}
 		else {
-			this.toHostName = null;
+			this.msgNo = 10000;
 		}
-
+		
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
-		if (s.contains(TO_HOST_RANGE_S)) {
-			this.toHostRange = s.getCsvInts(TO_HOST_RANGE_S, 2);;
+		if (s.contains(HIGHER_LIMIT_S)) {
+			this.higherLimit = s.getLong(HIGHER_LIMIT_S);;
 		}
 		else {
-			this.toHostRange = null;
+			this.higherLimit = 10000;
 		}
 		
-		/* if prefix is unique, so will be the rng's sequence */
-		this.rng = new Random(idPrefix.hashCode());
-		
-		if (this.sizeRange.length == 1) {
-			/*convert single value to range with 0 length*/ 
-			this.sizeRange = new int[] {this.sizeRange[0], this.sizeRange[0]};
+		/** Need to select the hosts by name instead, for opportunistic transfers. */
+		if (s.contains(LOWER_LIMIT_S)) {
+			this.lowerLimit = s.getLong(HIGHER_LIMIT_S);;
 		}
 		else {
-			s.assertValidRange(this.sizeRange, MESSAGE_SIZE_S);
+			this.lowerLimit = 1000;
 		}
 
-		if (this.msgInterval.length == 1) {
-			this.msgInterval = new int[] {this.msgInterval[0], 
-					this.msgInterval[0]};
+		if (this.dplInterval.length == 1) {
+			this.dplInterval = new int[] {this.dplInterval[0], 
+					this.dplInterval[0]};
 		}
 		else {
-			s.assertValidRange(this.msgInterval, MESSAGE_INTERVAL_S);
+			s.assertValidRange(this.dplInterval, DEPLETION_INTERVAL_S);
 		}
 
-		s.assertValidRange(this.hostRange, HOST_RANGE_S);
+		//s.assertValidRange(this.hostRange, HOST_RANGE_S);
 		
 
 		/*
@@ -144,7 +121,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		 * the whole group is creating a message, in order to send to a repository
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
-		if (this.hostRange[1] - this.hostRange[0] < 2) {
+		/*if (this.hostRange[1] - this.hostRange[0] < 2) {
 			if (this.toHostName == null) {
 				throw new SettingsError("Host range must contain at least one " 
 						+ "letter unless toHostRange is defined");
@@ -156,14 +133,13 @@ public class ReposStorageConstantDepletion implements EventQueue {
 				throw new SettingsError("If to and from host ranges contain" + 
 						" only one host, they can't be the equal");
 			}
-		}
+		}*/
 		/* ^^^Considering just commenting this whole if statement^^^*/
 		
 		/* calculate the first event's time */
-		this.nextEventsTime = (this.msgTime != null ? this.msgTime[0] : 0) 
-			+ msgInterval[0] + 
-			(msgInterval[0] == msgInterval[1] ? 0 : 
-			rng.nextInt(msgInterval[1] - msgInterval[0]));
+		this.nextEventsTime = dplInterval[0] + 
+			(dplInterval[0] == dplInterval[1] ? 0 : 
+			rng.nextInt(dplInterval[1] - dplInterval[0]));
 	}
 	
 	
@@ -172,41 +148,31 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 * @param hostRange The range of hosts
 	 * @return A random host address
 	 */
-	protected int drawHostAddress(int hostRange[]) {
+	/*protected int drawHostAddress(int hostRange[]) {
 		if (hostRange[1] == hostRange[0]) {
 			return hostRange[0];
 		}
 		return hostRange[0] + rng.nextInt(hostRange[1] - hostRange[0]);
-	}
-	
-	/**
-	 * Generates a (random) message size
-	 * @return message size
-	 */
-	protected int drawMessageSize() {
-		int sizeDiff = sizeRange[0] == sizeRange[1] ? 0 : 
-			rng.nextInt(sizeRange[1] - sizeRange[0]);
-		return sizeRange[0] + sizeDiff;
-	}
+	}*/
 	
 	/**
 	 * Generates a (random) time difference between two events
 	 * @return the time difference
 	 */
 	protected int drawNextEventTimeDiff() {
-		int timeDiff = msgInterval[0] == msgInterval[1] ? 0 : 
-			rng.nextInt(msgInterval[1] - msgInterval[0]);
-		return msgInterval[0] + timeDiff;
+		int timeDiff = dplInterval[0] == dplInterval[1] ? 0 : 
+			rng.nextInt(dplInterval[1] - dplInterval[0]);
+		return dplInterval[0] + timeDiff;
 	}
 	
 	/**
-	 * Draws a destination host address that is different from the "from"
+	 * Check hosts address that is different from the "from"
 	 * address
 	 * @param hostRange The range of hosts
 	 * @param from the "from" address
 	 * @return a destination address from the range, but different from "from"
 	 */
-	protected int drawToAddress(int hostRange[], int from) {
+	/*protected int drawToAddress(int hostRange[], int from) {
 		int to;
 		do {
 			to = this.toHostRange != null ? drawHostAddress(this.toHostRange):
@@ -215,40 +181,39 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		
 		return to;
 	}
-	
+	*/
 	/** 
 	 * Returns the next message creation event
 	 * @see input.EventQueue#nextEvent()
 	 */
+	/*TODO: This \/ needs to be sorted out.*/
 	public ExternalEvent nextEvent() {
 		try {
 			System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
 		} catch(Exception e) {}
-		int responseSize = 0; /* zero stands for one way messages */
-		int msgSize;
+		int msgNo;
 		int interval;
-		int from;
-		String to;
-		int toAd;
+		ArrayList <String> hosts;
+		long lowerLimit;
+		long higherLimit;
 		
-		/* Get two *different* nodes randomly from the host ranges */
-		from = drawHostAddress(this.hostRange);	
-		toAd = drawToAddress(hostRange, from);
-		to = this.toHostName;
-		System.out.println("to = " + to);
 		
-		msgSize = drawMessageSize();
+		/* Get nodes for starting depletion of storage */
+		hosts = this.hostNames;
+		msgNo = this.msgNo;
+		lowerLimit = this.lowerLimit;
+		higherLimit = this.higherLimit;
+		//System.out.println("to = " + to);
 		interval = drawNextEventTimeDiff();
 		
 		/* Create event and advance to next event */
-		ReposMessageCreateEvent mce = new ReposMessageCreateEvent(from, to, toAd, this.getID(), 
-				msgSize, responseSize, this.nextEventsTime);
+		ReposDepletionCreateEvent mce = new ReposDepletionCreateEvent(hosts, lowerLimit, higherLimit, msgNo, this.nextEventsTime);
 		this.nextEventsTime += interval;	
 		
-		if (this.msgTime != null && this.nextEventsTime > this.msgTime[1]) {
+		//if (this.msgTime != null && this.nextEventsTime > this.msgTime[1]) {
 			/* next event would be later than the end time */
 			this.nextEventsTime = Double.MAX_VALUE;
-		}
+		//}
 		
 		return mce;
 	}
@@ -259,14 +224,5 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 */
 	public double nextEventsTime() {
 		return this.nextEventsTime;
-	}
-	
-	/**
-	 * Returns a next free message ID
-	 * @return next globally unique message ID
-	 */
-	protected String getID(){
-		this.id++;
-		return idPrefix + this.id;
 	}	
 }

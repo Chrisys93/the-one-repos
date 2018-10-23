@@ -101,9 +101,9 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 		for (DTNHost host : hosts) {
 			isFirstMessage = true;
 			//reportLine = "";
-			for (Message m : host.getMessageCollection()) {
-				if (isTracked(m)) {
-					if (isFirstMessage) {
+			//for (Message m : host.getMessageCollection()) {
+				//if (isTracked(m)) {
+					//if (isFirstMessage) {
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							/* In here it would be useful to use getNrofMessages 
@@ -114,10 +114,10 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
 						}
-					}		
+					//}		
 					//reportLine += " " + m.getId();
-				}
-			}
+				//}
+			//}
 			
 		}
 		if (reportLine.length() > 0) {

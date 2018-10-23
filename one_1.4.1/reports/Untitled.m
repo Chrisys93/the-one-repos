@@ -49,8 +49,7 @@ for i = 1:r3
         end
         c100=c100+1;
     end
-    fillperc100(col) = sum(fill100);
-    
+    fillperc100(col) = sum(fill100)/40*100;
     
     c50 = 1;
     for c = 1:c3
@@ -61,7 +60,18 @@ for i = 1:r3
         end
         c50=c50+1;
     end
-    fillperc50(col) = sum(fill50);
+    fillperc50(col) = sum(fill50)/40*100;
+    
+    c25 = 1;
+    for c = 1:c3
+        if S(i, c) >= 2500
+            fill25(c25) = 1;
+        else
+            fill25(c25) = 0;
+        end
+        c25=c25+1;
+    end
+    fillperc25(col) = (sum(fill25))/40*100;
     col = col + 1;
 end
 maxval3 = max(maxstor3);
@@ -70,13 +80,19 @@ figure
 bar(fillperc100);
 title('Percentage of repositories filled up to 100%');
 xlabel('Time (s)');
-ylabel('No. of repositories which used about 100% storage');
+ylabel('Repositories which used about 100% storage (%)');
 
 figure
 bar(fillperc50);
 title('Percentage of repositories filled up to 50%');
 xlabel('Time (s)');
-ylabel('No. of repositories which used more than 50% storage');
+ylabel('Repositories which used more than 50% storage (%)');
+
+figure
+bar(fillperc25);
+title('Percentage of repositories filled up to 25%');
+xlabel('Time (s)');
+ylabel('Repositories which used more than 25% storage (%)');
 
 figure
 bar(maxstor1);
@@ -111,7 +127,7 @@ ylabel('Space used(MB)')
 figure
 stem3(S, ':.');
 title('3D Stem plot of Repos Storage Usage')
-xlabel('Time(s)') 
-ylabel('Repo Number')
+xlabel('Repo Number') 
+ylabel('Time(s)')
 zlabel('Space used(MB)')
 
