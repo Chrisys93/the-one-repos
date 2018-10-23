@@ -116,25 +116,11 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			if (to.name.toString().contains("r")){
 				if (tryAllMessages(con, messages) != null){
 					connections.add(con);
-				}
-				/*else { m_new = Message(getHost(), to, messages.size(), 1000000)
-					if (tryAllMessages(con, messages) != null){
-						connections.add(con);
-						i++;						
-						return;
-					}*/
-				/* Here is where it might be worth checking for delivered messages 
-				 * and updating the storage!!!!!
-				 */ 					
+				}				
 			}
 		}
 			
 		tryMessagesToConnections(messages, connections);
-
-		//for (Connection con : getConnections()) {
-			
-		//}
-		//tryAllMessagesToAllConnections();
 	}
 
 	
