@@ -25,9 +25,13 @@ public class ReposMessageCreateEvent extends ReposMessageEvent {
 	 * no response is requested
 	 * @param time Time, when the message is created
 	 */
-	public ReposMessageCreateEvent(int from, String to, String id, int size,
+	public ReposMessageCreateEvent(int from, String to, int toAd, String id, int size,
 			int responseSize, double time) {
-		super(from, to, id, time);
+		//this.fromAddr = from;
+		//this.toAddr= to;
+		//this.toAd = toAd;
+		//this.id = id;
+		super(from, to, toAd, id, time);
 		this.size = size;
 		this.responseSize = responseSize;
 	}
@@ -38,8 +42,9 @@ public class ReposMessageCreateEvent extends ReposMessageEvent {
 	 */
 	@Override
 	public void processEvent(World world) {
+		System.out.println("For ReposMessageCreateEvent, toAddr = " + this.toAddr);
 		DTNHost from = world.getNodeByAddress(this.fromAddr);
-		DTNHost to = world.getNodeByName(this.toAddr, from);			
+		DTNHost to = world.getNodeByName(this.toAddr, from, this.toAd);			
 		
 		Message m = new Message(from, to, this.id, this.size);
 		m.setResponseSize(this.responseSize);

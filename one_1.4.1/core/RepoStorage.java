@@ -27,16 +27,12 @@ public class RepoStorage {
 	/** size of the storage space */
 	private long storageSize;
 
-	private String MessageId;
-
 	protected ArrayList<Message> storedMessages;
 
 	/** value to keep track of used storage */
 	//protected long usedStorage;
 
 	protected Collection<Message> messages;
-
-	private Message sm;
 
 	public void init(DTNHost dtnHost, long storageSize) {
 		this.host = dtnHost;
@@ -55,7 +51,7 @@ public class RepoStorage {
 	/** Create message collection stored return method */
 	
 	public Collection<Message> getStoredMessagesCollection() {
-		Collection<Message> messages = storedMessages;
+		this.messages = this.storedMessages;
 		return this.messages;
 	}
 
@@ -84,7 +80,7 @@ public class RepoStorage {
 	public Message getStoredMessage(String MessageId) {
 		Message storedMessage = this.storedMessages.get(0);
 		for (Message temp : storedMessages){
-			if (temp.getId() == MessageId){
+			if (temp.getId() == MessageId && temp != null){
 				int i = this.storedMessages.indexOf(temp);
 				storedMessage = this.storedMessages.get(i);
 			}
@@ -103,9 +99,20 @@ public class RepoStorage {
 	public long getStoredMessagesSize() {
 		long storedMessagesSize = 0;
 		for (int i=0; i<this.storedMessages.size(); i++){
+<<<<<<< HEAD
 			Message temp = this.storedMessages.get(i);
 			storedMessagesSize += temp.getSize();
 		}
+=======
+
+			System.out.println("There message returned by getStoredMessagesSize() is "+
+			this.storedMessages.get(i)+ " and this host is " + this.getHost());
+			Message temp = this.storedMessages.get(i);
+			if (temp != null){
+				storedMessagesSize += temp.getSize();
+			}
+		}	
+>>>>>>> 8c6befd0118276c0da3bd2fd8ae5b4441a37bd28
 		return storedMessagesSize;
 	}
 		

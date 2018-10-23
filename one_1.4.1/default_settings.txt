@@ -96,7 +96,7 @@ Group.nrofHosts = 40
 
 ###################################
 ### common settings for all groups
-Group.fileCapability = true
+Group.fileCapability = false
 
 ###################################
 # path to files generation input files
@@ -205,7 +205,8 @@ Events1.size = 900000,1100000
 # range of message source addresses
 Events1.hosts = 40,79
 # range of message destination addresses
-Events1.tohosts = r
+Events2.tohostnames = r
+Events2.tohosts = 0,39
 # Message ID prefix
 Events1.prefix = MP
 
@@ -219,7 +220,8 @@ Events2.size = 900000,1100000
 # range of message source/destination addresses
 Events2.hosts = 80,119
 # range of message destination addresses
-Events2.tohosts = r
+Events2.tohostnames = r
+Events2.tohosts = 0,39
 # Message ID prefix
 Events2.prefix = MC
 
@@ -233,7 +235,8 @@ Events3.size = 900000,1100000
 # range of message source/destination addresses
 Events3.hosts = 120,134
 # range of message destination addresses
-Events3.tohosts = r
+Events2.tohostnames = r
+Events2.tohosts = 0,39
 # Message ID prefix
 Events3.prefix = MB
 

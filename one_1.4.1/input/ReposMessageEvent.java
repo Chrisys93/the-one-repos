@@ -10,8 +10,10 @@ package input;
 public abstract class ReposMessageEvent extends ExternalEvent {
 	/** address of the node the message is from */
 	protected int fromAddr;
-	/** address of the node the message is to */
+	/** name of the node the message is to */
 	protected String toAddr;
+	/** address of the node the message is to */
+	protected int toAd;
 	/** identifier of the message */
 	protected String id;
 	
@@ -22,10 +24,12 @@ public abstract class ReposMessageEvent extends ExternalEvent {
 	 * @param id ID of the message
 	 * @param time Time when the message event occurs
 	 */
-	public ReposMessageEvent(int from, String to, String id, double time) {
+	public ReposMessageEvent(int from, String to, int toAd, String id, double time) {
 		super(time);
 		this.fromAddr = from;
 		this.toAddr= to;
+		System.out.println("For ReposMessageEvent, toAddr = " + this.toAddr);
+		this.toAd = toAd;
 		this.id = id;
 	}
 	

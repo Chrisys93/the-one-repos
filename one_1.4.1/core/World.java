@@ -287,32 +287,35 @@ public class World {
 	}
 
 	/**
-	 * Returns a node from the world by its group name
-	 * @param address The address of the node
-	 * @return The requested node or null if it wasn't found
+	 * Opportunistically returns a node from the world by its group name
+	 * @param name The name of the node group
+	 * @return The requested node or source node if it wasn't found
 	 */
-	public DTNHost getNodeByName(String name, DTNHost node) {
+	public DTNHost getNodeByName(String name, DTNHost node, int address) {
+		System.out.println("For World, name = " + name);
 		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * Here is where a connection check should be done, to get the proper message.
 		 * Check connection updates in here, for the opportunistic part.
 		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
-		DTNHost tonode = node;
+		DTNHost tonode = null;
 		List <Connection> activeConnections = node.getConnections();
 		if (activeConnections.size() > 0){
-			Connection activeConnection_0 = activeConnections.get(0);
-			tonode = activeConnection_0.getOtherNode(node);
 			for (int i=0; i<activeConnections.size(); i++){
 				Connection activeConnection_i = activeConnections.get(i);
 				if (activeConnection_i.isUp()){
-					if(activeConnection_i.getOtherNode(node).name.toString().contains(name)){
+					String nodeName = name;
+					if(activeConnection_i.getOtherNode(node).name.toString().contains(nodeName)){
 						tonode = activeConnection_i.getOtherNode(node);
 					}
 				}
 			}
 		}
+		else{
+			tonode = this.getNodeByAddress(address);
 			//DTNHost node = this.hosts.get(i);
 			//DTNHost tonode = reposConnection.getOtherNode(node);
+		}
 		return tonode;	 
 	}
 

@@ -20,6 +20,7 @@ end
 maxval2 = max(maxstor2);
 
 s = 10000;
+<<<<<<< HEAD
 col = 1;
 for i = 1:r3
     maxstor3(i) = max(S(i, :));
@@ -35,10 +36,16 @@ for i = 1:r3
                 c0=c0+1;
             end
         end
+=======
+for i = 1:r3
+    maxstor3(i) = max(S(i, :));
+    if maxstor3(i) >= 10000 && i < s
+>>>>>>> 8c6befd0118276c0da3bd2fd8ae5b4441a37bd28
         figure
         bar(S(i, :));
         s = i;
     end
+<<<<<<< HEAD
     
     c100 = 1;
     for c = 1:c3
@@ -94,6 +101,11 @@ title('Percentage of repositories filled up to 25%');
 xlabel('Time (s)');
 ylabel('Repositories which used more than 25% storage (%)');
 
+=======
+end
+maxval3 = max(maxstor3);
+
+>>>>>>> 8c6befd0118276c0da3bd2fd8ae5b4441a37bd28
 figure
 bar(maxstor1);
 title('Bar plot of Repos Buffer(!) Usage')
@@ -112,6 +124,12 @@ title('Bar plot of Repos Storage Usage')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
 
+figure
+bar(maxstor3, 0.5);
+title('Bar plot of Repos Stored Nodes Storage Usage')
+xlabel('Time(s)') 
+ylabel('Space used(B)')
+
 %figure
 %bar3(M);
 
@@ -126,8 +144,11 @@ ylabel('Space used(MB)')
 
 figure
 stem3(S, ':.');
+<<<<<<< HEAD
 title('3D Stem plot of Repos Storage Usage')
 xlabel('Repo Number') 
 ylabel('Time(s)')
 zlabel('Space used(MB)')
+=======
+>>>>>>> 8c6befd0118276c0da3bd2fd8ae5b4441a37bd28
 
