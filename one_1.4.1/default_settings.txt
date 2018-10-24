@@ -193,7 +193,7 @@ Group6.interface2 = wlanPedInterface
 
 ## Message creation parameters
 # How many event generators
-Events.nrof = 3
+Events.nrof = 4
 # Class of the pedestrians event generator
 Events1.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
@@ -236,6 +236,18 @@ Events3.hosts = 120,134
 Events3.tohosts = r
 # Message ID prefix
 Events3.prefix = MB
+
+# Class of storage depletion
+#Events4.class = ReposStorageConstantDepletion
+# (following settings are specific for the ReposStorageConstantDepletion class)
+# Depletion interval in seconds (a number of messages depleted/second)
+#Events4.depletionInterval = 1
+# Number of message depleted each depletionInterval
+#Events4.msgNo = 20
+# Host names of host storages to be depleted
+#Events4.depletionHostnames = r
+# Lower limit at which depletion starts
+#Events4.lowerLimit = 500
 
 
 ## Movement model settings

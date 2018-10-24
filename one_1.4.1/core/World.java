@@ -315,6 +315,30 @@ public class World {
 			//DTNHost tonode = reposConnection.getOtherNode(node);
 		return tonode;	 
 	}
+	
+	public ArrayList <DTNHost> getNodestoDeplete(ArrayList<String> deplHosts) {
+		/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		 * Here is where a connection check should be done, to get the proper message.
+		 * Check connection updates in here, for the opportunistic part.
+		 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		 */
+		ArrayList <DTNHost> depletionHosts = new ArrayList <DTNHost>();
+		for (int i=0, n = hosts.size();i < n; i++) {
+			if (hosts.get(i).hasFileCapability) {
+				DTNHost node = hosts.get(i);
+				for (int u = 0; u < deplHosts.size(); u++) {
+					if (node.name.toString().contains(deplHosts.get(u))){
+						depletionHosts.add(node);
+					}
+				}
+			}
+			else {
+			throw new SimError("No host for names " + deplHosts);
+			}
+		}
+
+		return depletionHosts; 
+	}
 
 	/**
 	 * Schedules an update request to all nodes to happen at the specified 

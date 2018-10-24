@@ -85,7 +85,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 			this.msgNo = s.getInt(MSG_AMOUNT_S);;
 		}
 		else {
-			this.msgNo = 10000;
+			this.msgNo = 1;
 		}
 		
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
@@ -98,7 +98,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
 		if (s.contains(LOWER_LIMIT_S)) {
-			this.lowerLimit = s.getLong(HIGHER_LIMIT_S);;
+			this.lowerLimit = s.getLong(LOWER_LIMIT_S);;
 		}
 		else {
 			this.lowerLimit = 1000;
@@ -212,7 +212,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		
 		//if (this.msgTime != null && this.nextEventsTime > this.msgTime[1]) {
 			/* next event would be later than the end time */
-			this.nextEventsTime = Double.MAX_VALUE;
+			//this.nextEventsTime = Double.MAX_VALUE;
 		//}
 		
 		return mce;
