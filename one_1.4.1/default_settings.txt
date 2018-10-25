@@ -37,24 +37,27 @@ wlanRepInterface.transmitRange = 600
 
 # Wlan interface for pedestrins
 wlanPedInterface.type = SimpleBroadcastInterface
-wlanPedInterface.transmitSpeeds =3M #, 2M, 1M, 0.5M, 0.25M
-wlanPedInterface.transmitRange = 20
+wlanPedInterface.transmitSpeed = 3M
+#, 2M, 1M
+wlanPedInterface.transmitRange = 35
 #dummy speed
-wlanPedInterface.transmitSpeed =0
+#wlanPedInterface.transmitSpeed =0
 
 # Wlan interface for cars
 wlanCarInterface.type = SimpleBroadcastInterface
-wlanCarInterface.transmitSpeeds =5M #, 3M, 1M, 0.5M
+wlanCarInterface.transmitSpeed =5M
+#, 3M, 1M, 500k
 wlanCarInterface.transmitRange = 100
 #dummy speed
-wlanCarInterface.transmitSpeed =0
+#wlanCarInterface.transmitSpeed =0
 
 # Wlan interface for busses
 wlanBusInterface.type = SimpleBroadcastInterface
-wlanBusInterface.transmitSpeeds =10M #, 5M, 3M, 1M
+wlanBusInterface.transmitSpeed =10M
+#, 5M, 3M, 1M
 wlanBusInterface.transmitRange = 200
 #dummy speed
-wlanBusInterface.transmitSpeed =0
+#wlanBusInterface.transmitSpeed =0
 
 # Define 4 different node groups
 Scenario.nrofHostGroups = 6
@@ -238,16 +241,16 @@ Events3.tohosts = r
 Events3.prefix = MB
 
 # Class of storage depletion
-#Events4.class = ReposStorageConstantDepletion
+Events4.class = ReposStorageConstantDepletion
 # (following settings are specific for the ReposStorageConstantDepletion class)
 # Depletion interval in seconds (a number of messages depleted/second)
-#Events4.depletionInterval = 1
+Events4.depletionInterval = 2
 # Number of message depleted each depletionInterval
-#Events4.msgNo = 20
+Events4.msgNo = 2
 # Host names of host storages to be depleted
-#Events4.depletionHostnames = r
+Events4.depletionHostnames = r
 # Lower limit at which depletion starts
-#Events4.lowerLimit = 500
+Events4.lowerLimit = 3000000000
 
 
 ## Movement model settings

@@ -514,7 +514,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @param bytesRemaining Nrof bytes that were left before the transfer
 	 * would have been ready; or -1 if the number of bytes is not known
 	 */
-	public void messageAborted(String id, DTNHost from, int bytesRemaining) {
+	public void messageAborted(String id, DTNHost from, double bytesRemaining) {
 		this.router.messageAborted(id, from, bytesRemaining);
 	}
 

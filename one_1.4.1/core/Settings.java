@@ -5,6 +5,7 @@
 package core;
 
 import java.io.*;
+import java.util.Arrays;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -606,6 +607,20 @@ public class Settings {
 
 		return values.toArray(new String[0]);
 	}
+	
+	/** @return Return CSV setting as ArrayList<String>*/
+	public ArrayList<String> getCsvSettingtoList(String name) {
+		ArrayList<String> values = new ArrayList<String>();
+		String csv = getSetting(name);
+		Scanner s = new Scanner(csv);
+		s.useDelimiter(",");
+
+		while (s.hasNext()) {
+			values.add(s.next().trim());
+		}
+
+		return values;
+	}
 
 	/**
 	 * Returns a CSV setting containing expected amount of values.
@@ -662,6 +677,11 @@ public class Settings {
 		for (int i=0; i<values.length; i++) {
 			values[i] = parseDouble(strings[i], name);
 		}
+		
+		if (name == "transmitSpeeds"){
+			System.out.println("Speeds of interfaces are: "+Arrays.toString(strings) +" and the returned values are: "+Arrays.toString(values));
+		}
+		
 		return values;
 	}
 

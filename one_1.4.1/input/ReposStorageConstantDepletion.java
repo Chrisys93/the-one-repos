@@ -76,9 +76,10 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		this.dplInterval = s.getCsvInts(DEPLETION_INTERVAL_S);
 		//this.hostRange = s.getCsvInts(HOST_RANGE_S, 2);
 		this.hostNames = new ArrayList<String>();
-		for (int i=0; i<HOST_NAMES_S.length(); i++){
-			this.hostNames.add(Character.toString(HOST_NAMES_S.charAt(i)));
-		}
+		//for (int i=0; i<HOST_NAMES_S.trim().length(); i++){
+		//	this.hostNames.add(Character.toString(HOST_NAMES_S.charAt(i)));
+		//}
+		this.hostNames = s.getCsvSettingtoList(HOST_NAMES_S);
 
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
 		if (s.contains(MSG_AMOUNT_S)) {
@@ -93,7 +94,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 			this.higherLimit = s.getLong(HIGHER_LIMIT_S);;
 		}
 		else {
-			this.higherLimit = 10000;
+			this.higherLimit = 10000000;
 		}
 		
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
@@ -101,7 +102,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 			this.lowerLimit = s.getLong(LOWER_LIMIT_S);;
 		}
 		else {
-			this.lowerLimit = 1000;
+			this.lowerLimit = 1000000;
 		}
 
 		if (this.dplInterval.length == 1) {
@@ -188,9 +189,9 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 */
 	/*TODO: This \/ needs to be sorted out.*/
 	public ExternalEvent nextEvent() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
-		} catch(Exception e) {}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
+		//} catch(Exception e) {}
 		int msgNo;
 		int interval;
 		ArrayList <String> hosts;
@@ -203,6 +204,9 @@ public class ReposStorageConstantDepletion implements EventQueue {
 		msgNo = this.msgNo;
 		lowerLimit = this.lowerLimit;
 		higherLimit = this.higherLimit;
+		//System.out.println("The lower limit is: "+this.lowerLimit);
+		//System.out.println("The higher limit is: "+this.higherLimit);
+		//System.out.println("The higher limit is: "+this.msgNo);
 		//System.out.println("to = " + to);
 		interval = drawNextEventTimeDiff();
 		

@@ -423,7 +423,7 @@ public abstract class MessageRouter {
 	 * @param bytesRemaining Nrof bytes that were left before the transfer
 	 * would have been ready; or -1 if the number of bytes is not known
 	 */
-	public void messageAborted(String id, DTNHost from, int bytesRemaining) {
+	public void messageAborted(String id, DTNHost from, double bytesRemaining) {
 		Message incoming = removeFromIncomingBuffer(id, from);
 		if (incoming == null) {
 			throw new SimError("No incoming message for id " + id + 

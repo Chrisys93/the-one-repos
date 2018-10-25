@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  * World contains all the nodes and is responsible for updating their
@@ -78,6 +80,9 @@ public class World {
 	public World(List<DTNHost> hosts, int sizeX, int sizeY, 
 			double updateInterval, List<UpdateListener> updateListeners,
 			boolean simulateConnections, List<EventQueue> eventQueues) {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("loghigherLimit.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		this.hosts = hosts;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
@@ -324,6 +329,7 @@ public class World {
 		 */
 		ArrayList <DTNHost> depletionHosts = new ArrayList <DTNHost>();
 		for (int i=0, n = hosts.size();i < n; i++) {
+			System.out.println("We are looking for group ID(s) "+deplHosts);
 			if (hosts.get(i).hasFileCapability) {
 				DTNHost node = hosts.get(i);
 				for (int u = 0; u < deplHosts.size(); u++) {

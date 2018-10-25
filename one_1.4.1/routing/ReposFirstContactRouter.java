@@ -147,11 +147,11 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 */
 		long freeStorage = this.getHost().getStorageSystem().getFreeStorageSpace();
 
-		System.out.println("There is "+freeStorage+" free storage space");
+		//System.out.println("There is "+freeStorage+" free storage space");
 		
 		if (!this.getHost().getStorageSystem().isStorageFull()){
 			this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
-			System.out.println("Message has been added to storage, with no problem");
+			//System.out.println("Message has been added to storage, with no problem");
 		}
 		else {
 			System.out.println("The current host is: " + this.getHost());
@@ -159,7 +159,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			//if(con.ifUp()){
 				this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
 			//}			
-			System.out.println("Message has been added to storage, by deleting other messages");
+			//System.out.println("Message has been added to storage, by deleting other messages");
 		}
 	}
 	
@@ -179,12 +179,12 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		DTNHost from = con.getOtherNode(this.getHost());
 		DTNHost to = this.getHost();
 		if (this.getHost().hasStorageCapability()) {
-			System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
+			//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 			
 			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);
 			//if (isFinalRepoRecipient && isFirstRepoDelivery){
 				this.addMessageToStorageSpace(con);
-				System.out.println("Message added to storage");	
+				//System.out.println("Message added to storage");	
 			//}		
 		}
 		//System.out.println("Transfer done " + this.getHost().name);

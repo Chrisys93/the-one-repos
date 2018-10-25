@@ -50,7 +50,7 @@ public class SimpleBroadcastInterface extends NetworkInterface {
 				&& (this != anotherInterface)) {
 			// new contact within range
 			// connection speed is the lower one of the two speeds 
-			int conSpeed = anotherInterface.getTransmitSpeed();
+			double conSpeed = anotherInterface.getTransmitSpeed();
 			if (conSpeed > this.transmitSpeed) {
 				conSpeed = this.transmitSpeed; 
 			}
@@ -99,7 +99,7 @@ public class SimpleBroadcastInterface extends NetworkInterface {
 	public void createConnection(NetworkInterface anotherInterface) {
 		if (!isConnected(anotherInterface) && (this != anotherInterface)) {    			
 			// connection speed is the lower one of the two speeds 
-			int conSpeed = anotherInterface.getTransmitSpeed();
+			double conSpeed = anotherInterface.getTransmitSpeed();
 			if (conSpeed > this.transmitSpeed) {
 				conSpeed = this.transmitSpeed; 
 			}

@@ -5,6 +5,9 @@
 package interfaces;
 
 import java.util.Collection;
+import java.util.Arrays;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import core.Connection;
 import core.NetworkInterface;
 import core.Settings;
@@ -27,14 +30,16 @@ public class DistanceCapacityInterface extends NetworkInterface {
 	 */
 	public static final String TRANSMIT_SPEEDS_S = "transmitSpeeds";
 	
-	protected final int[] transmitSpeeds;
+	protected final double[] transmitSpeeds;
 	
 	/**
 	 * Reads the interface settings from the Settings file
 	 */
 	public DistanceCapacityInterface(Settings s)	{
 		super(s);
-		transmitSpeeds = s.getCsvInts(TRANSMIT_SPEEDS_S);
+		transmitSpeeds = s.getCsvDoubles(TRANSMIT_SPEEDS_S);
+		System.out.println("Speeds of interfaces are: "+TRANSMIT_SPEEDS_S);
+		System.out.println("Speeds of interfaces are: "+Arrays.toString(transmitSpeeds));
 	}
 		
 	/**
@@ -126,7 +131,7 @@ public class DistanceCapacityInterface extends NetworkInterface {
 	 * @param ni The other network interface
 	 */
 	
-	public int getTransmitSpeed(NetworkInterface ni) {
+	public double getTransmitSpeed(NetworkInterface ni) {
 		double distance;
 		double fractionIndex;
 		double decimal;
@@ -149,7 +154,7 @@ public class DistanceCapacityInterface extends NetworkInterface {
 		speed = this.transmitSpeeds[index] * (1-decimal) +
 				this.transmitSpeeds[index + 1] * decimal;
 
-		return (int)speed;
+		return (double)speed;
 	}
 	
 	/**

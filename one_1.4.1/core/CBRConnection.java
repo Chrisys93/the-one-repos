@@ -10,7 +10,7 @@ import routing.MessageRouter;
  * A constant bit-rate connection between two DTN nodes.
  */
 public class CBRConnection extends Connection {
-	private int speed;
+	private double speed;
 	private double transferDoneTime;
 
 	/**
@@ -24,7 +24,7 @@ public class CBRConnection extends Connection {
 	 *  the connection is initiated
 	 */
 	public CBRConnection(DTNHost fromNode, NetworkInterface fromInterface, 
-			DTNHost toNode,	NetworkInterface toInterface, int connectionSpeed) {
+			DTNHost toNode,	NetworkInterface toInterface, double connectionSpeed) {
 		super(fromNode, fromInterface, toNode, toInterface);
 		this.speed = connectionSpeed;
 		this.transferDoneTime = 0;
@@ -100,14 +100,14 @@ public class CBRConnection extends Connection {
 	 * already
 	 * @return the amount of bytes to be transferred
 	 */
-	public int getRemainingByteCount() {
-		int remaining;
+	public double getRemainingByteCount() {
+		double remaining;
 
 		if (msgOnFly == null) {
 			return 0;
 		}
 
-		remaining = (int)((this.transferDoneTime - SimClock.getTime()) 
+		remaining = (double)((this.transferDoneTime - SimClock.getTime()) 
 				* this.speed);
 
 		return (remaining > 0 ? remaining : 0);

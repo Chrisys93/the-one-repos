@@ -10,6 +10,8 @@ import interfaces.ConnectivityOptimizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  * Network interface of a DTNHost. Takes care of connectivity among hosts.
@@ -43,7 +45,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	private List<ConnectionListener> cListeners = null; // list of listeners
 	private int address; // network interface address
 	protected double transmitRange;
-	protected int transmitSpeed;
+	protected double transmitSpeed;
 	protected ConnectivityOptimizer optimizer = null;
 	/** scanning interval, or 0.0 if n/a */
 	private double scanInterval;
@@ -67,12 +69,15 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	 * For creating an empty class of a specific type
 	 */
 	public NetworkInterface(Settings s) {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("loginterface.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		this.interfacetype = s.getNameSpace();
 		this.connections = new ArrayList<Connection>();
 		this.address = getNextNetAddress();
 
 		this.transmitRange = s.getDouble(TRANSMIT_RANGE_S);
-		this.transmitSpeed = s.getInt(TRANSMIT_SPEED_S);
+		this.transmitSpeed = s.getDouble(TRANSMIT_SPEED_S);
 		ensurePositiveValue(transmitRange, TRANSMIT_RANGE_S);
 		ensurePositiveValue(transmitSpeed, TRANSMIT_SPEED_S);
 		if (s.contains(SCAN_INTERVAL_S)) {
@@ -173,7 +178,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	 * Returns the transmit speed of this network layer
 	 * @return the transmit speed
 	 */
-	public int getTransmitSpeed() {
+	public double getTransmitSpeed() {
 		return this.transmitSpeed;
 	}
 
@@ -303,6 +308,14 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 		}
 	}
 	
+	/** And for long values */
+	protected void ensurePositiveValueLong(long value, String settingName) {
+		if (value < 0) {
+			throw new SettingsError("Negative value (" + value + 
+					") not accepted for setting " + settingName);
+		}
+	}
+	
 	/**
 	 * Updates the state of current connections (ie tears down connections
 	 * that are out of range, recalculates transmission speeds etc.).
@@ -343,7 +356,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 			this.scanInterval = (Double)newValue;	
 		}
 		else if (key.equals(SPEED_ID)) {
-			this.transmitSpeed = (Integer)newValue;	
+			this.transmitSpeed = (Double)newValue;	
 		}
 		else if (key.equals(RANGE_ID)) {
 			this.transmitRange = (Double)newValue;	

@@ -19,7 +19,7 @@ public abstract class Connection {
 	private boolean isUp;
 	protected Message msgOnFly;
 	/** how many bytes this connection has transferred */
-	protected int bytesTransferred;
+	protected double bytesTransferred;
 
 	/**
 	 * Creates a new connection between nodes and sets the connection
@@ -89,7 +89,7 @@ public abstract class Connection {
      */
 	public void abortTransfer() {
 		assert msgOnFly != null : "No message to abort at " + msgFromNode;	
-		int bytesRemaining = getRemainingByteCount();
+		double bytesRemaining = getRemainingByteCount();
 
 		this.bytesTransferred += msgOnFly.getSize() - bytesRemaining;
 
@@ -104,7 +104,7 @@ public abstract class Connection {
 	 * already
 	 * @return the amount of bytes to be transferred
 	 */
-	public abstract int getRemainingByteCount();
+	public abstract double getRemainingByteCount();
 
 	/**
 	 * Clears the message that is currently being transferred.
@@ -164,7 +164,7 @@ public abstract class Connection {
 	 * Returns the total amount of bytes this connection has transferred so far
 	 * (including all transfers).
 	 */
-	public int getTotalBytesTransferred() {
+	public double getTotalBytesTransferred() {
 		if (this.msgOnFly == null) {
 			return this.bytesTransferred;
 		}

@@ -11,9 +11,9 @@ import routing.MessageRouter;
  * is updated every round from the end point transmission speeds
  */
 public class VBRConnection extends Connection {
-	private int msgsize;
-	private int msgsent;
-	private int currentspeed = 0;
+	private double msgsize;
+	private double msgsent;
+	private double currentspeed = 0;
 	
 	/**
 	 * Creates a new connection between nodes and sets the connection
@@ -66,7 +66,7 @@ public class VBRConnection extends Connection {
 	 */
 	public void update() {
 		currentspeed =  this.fromInterface.getTransmitSpeed();
-		int othspeed =  this.toInterface.getTransmitSpeed();
+		double othspeed =  this.toInterface.getTransmitSpeed();
 		
 		if (othspeed < currentspeed) {
 			currentspeed = othspeed;
@@ -88,8 +88,8 @@ public class VBRConnection extends Connection {
      * already
      * @return the amount of bytes to be transferred
      */
-    public int getRemainingByteCount() {
-    	int bytesLeft = msgsize - msgsent; 
+    public double getRemainingByteCount() {
+    	double bytesLeft = msgsize - msgsent; 
     	return (bytesLeft > 0 ? bytesLeft : 0);
     }
     
