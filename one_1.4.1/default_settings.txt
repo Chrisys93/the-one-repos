@@ -36,28 +36,25 @@ wlanRepInterface.transmitSpeed =20M
 wlanRepInterface.transmitRange = 600
 
 # Wlan interface for pedestrins
-wlanPedInterface.type = SimpleBroadcastInterface
-wlanPedInterface.transmitSpeed = 3M
-#, 2M, 1M
+wlanPedInterface.type = DistanceCapacityInterface
+wlanPedInterface.transmitSpeeds = 3M, 2M, 1M
 wlanPedInterface.transmitRange = 35
 #dummy speed
-#wlanPedInterface.transmitSpeed =0
+wlanPedInterface.transmitSpeed =0
 
 # Wlan interface for cars
-wlanCarInterface.type = SimpleBroadcastInterface
-wlanCarInterface.transmitSpeed =5M
-#, 3M, 1M, 500k
+wlanCarInterface.type = DistanceCapacityInterface
+wlanCarInterface.transmitSpeeds =5M, 3M, 1M, 500k
 wlanCarInterface.transmitRange = 100
 #dummy speed
-#wlanCarInterface.transmitSpeed =0
+wlanCarInterface.transmitSpeed =0
 
 # Wlan interface for busses
-wlanBusInterface.type = SimpleBroadcastInterface
-wlanBusInterface.transmitSpeed =10M
-#, 5M, 3M, 1M
+wlanBusInterface.type = DistanceCapacityInterface
+wlanBusInterface.transmitSpeeds =10M, 5M, 3M, 1M
 wlanBusInterface.transmitRange = 200
 #dummy speed
-#wlanBusInterface.transmitSpeed =0
+wlanBusInterface.transmitSpeed =0
 
 # Define 4 different node groups
 Scenario.nrofHostGroups = 6

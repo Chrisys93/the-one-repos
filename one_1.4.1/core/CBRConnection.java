@@ -100,14 +100,14 @@ public class CBRConnection extends Connection {
 	 * already
 	 * @return the amount of bytes to be transferred
 	 */
-	public double getRemainingByteCount() {
-		double remaining;
+	public int getRemainingByteCount() {
+		int remaining;
 
 		if (msgOnFly == null) {
 			return 0;
 		}
 
-		remaining = (double)((this.transferDoneTime - SimClock.getTime()) 
+		remaining = (int)((this.transferDoneTime - SimClock.getTime()) 
 				* this.speed);
 
 		return (remaining > 0 ? remaining : 0);

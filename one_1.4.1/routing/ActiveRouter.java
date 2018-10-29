@@ -546,12 +546,16 @@ public abstract class ActiveRouter extends MessageRouter {
 			boolean removeCurrent = false;
 			Connection con = sendingConnections.get(i);
 			
+			
+			
 			/* finalize ready transfers */
 			if (con.isMessageTransferred()) {
 				if (con.getMessage() != null) {
+					System.out.println("The message is NOT null, keep connection "+this.getHost().name+" to "+con.getOtherNode(this.getHost()));
 					transferDone(con);
 					con.finalizeTransfer();
 				} /* else: some other entity aborted transfer */
+				//System.out.println("The message is null, remove connection "+this.getHost().name+" to "+con.getOtherNode(this.getHost()));
 				removeCurrent = true;
 			}
 			/* remove connections that have gone down */

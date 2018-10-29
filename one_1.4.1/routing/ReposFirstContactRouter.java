@@ -60,6 +60,9 @@ public class ReposFirstContactRouter extends ActiveRouter {
 
 	@Override
 	public void init(DTNHost host, List<MessageListener> mListeners) {
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		} catch(Exception e) {System.out.println("Error");}
 		super.init(host, mListeners);
 		//this.storedMessages = new ArrayList<Message>();
 		//this.usedStorage = 0;
@@ -178,8 +181,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		boolean isFirstRepoDelivery = isFinalRepoRecipient && !isDeliveredMessage(con.getMessage());
 		DTNHost from = con.getOtherNode(this.getHost());
 		DTNHost to = this.getHost();
+		System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 		if (this.getHost().hasStorageCapability()) {
-			//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 			
 			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);
 			//if (isFinalRepoRecipient && isFirstRepoDelivery){

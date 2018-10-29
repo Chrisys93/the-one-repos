@@ -38,8 +38,8 @@ public class DistanceCapacityInterface extends NetworkInterface {
 	public DistanceCapacityInterface(Settings s)	{
 		super(s);
 		transmitSpeeds = s.getCsvDoubles(TRANSMIT_SPEEDS_S);
-		System.out.println("Speeds of interfaces are: "+TRANSMIT_SPEEDS_S);
-		System.out.println("Speeds of interfaces are: "+Arrays.toString(transmitSpeeds));
+		//System.out.println("Speeds of interfaces are: "+TRANSMIT_SPEEDS_S);
+		//System.out.println("Speeds of interfaces are: "+Arrays.toString(transmitSpeeds));
 	}
 		
 	/**
@@ -109,6 +109,9 @@ public class DistanceCapacityInterface extends NetworkInterface {
 		/* update all connections */
 		for (Connection con : getConnections()) {
 			con.update();
+			if (con.isMessageTransferred() && con.getMessage() != null) {
+				System.out.println("Message was transferred to "+this.host);
+			}
 		}
 	}
 

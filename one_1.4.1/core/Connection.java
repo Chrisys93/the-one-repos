@@ -104,7 +104,7 @@ public abstract class Connection {
 	 * already
 	 * @return the amount of bytes to be transferred
 	 */
-	public abstract double getRemainingByteCount();
+	public abstract int getRemainingByteCount();
 
 	/**
 	 * Clears the message that is currently being transferred.

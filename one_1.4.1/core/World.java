@@ -80,9 +80,9 @@ public class World {
 	public World(List<DTNHost> hosts, int sizeX, int sizeY, 
 			double updateInterval, List<UpdateListener> updateListeners,
 			boolean simulateConnections, List<EventQueue> eventQueues) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("loghigherLimit.txt")));
-		} catch(Exception e) {System.out.println("Error");}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("loghigherLimit.txt")));
+		//} catch(Exception e) {System.out.println("Error");}
 		this.hosts = hosts;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
@@ -329,7 +329,7 @@ public class World {
 		 */
 		ArrayList <DTNHost> depletionHosts = new ArrayList <DTNHost>();
 		for (int i=0, n = hosts.size();i < n; i++) {
-			System.out.println("We are looking for group ID(s) "+deplHosts);
+			//System.out.println("We are looking for group ID(s) "+deplHosts.get(0));
 			if (hosts.get(i).hasFileCapability) {
 				DTNHost node = hosts.get(i);
 				for (int u = 0; u < deplHosts.size(); u++) {
@@ -337,9 +337,6 @@ public class World {
 						depletionHosts.add(node);
 					}
 				}
-			}
-			else {
-			throw new SimError("No host for names " + deplHosts);
 			}
 		}
 

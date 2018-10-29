@@ -11,8 +11,8 @@ import routing.MessageRouter;
  * is updated every round from the end point transmission speeds
  */
 public class VBRConnection extends Connection {
-	private double msgsize;
-	private double msgsent;
+	private int msgsize;
+	private int msgsent;
 	private double currentspeed = 0;
 	
 	/**
@@ -58,6 +58,17 @@ public class VBRConnection extends Connection {
 
 		return retVal;
 	}
+	
+	/**
+	 * Aborts the transfer of the currently transferred message.
+	 */
+	public void abortTransfer() {
+		assert msgOnFly != null : "No message to abort at " + msgFromNode;
+		getOtherNode(msgFromNode).messageAborted(this.msgOnFly.getId(),
+				msgFromNode,getRemainingByteCount());
+		clearMsgOnFly();
+		this.msgsize = 0;
+	}
 
 	/**
 	 * Calculate the current transmission speed from the information
@@ -72,7 +83,7 @@ public class VBRConnection extends Connection {
 			currentspeed = othspeed;
 		}
 		
-		msgsent = msgsent + currentspeed;
+		msgsent = (int) (msgsent + currentspeed);
 	}
 	
 	/**
@@ -88,8 +99,8 @@ public class VBRConnection extends Connection {
      * already
      * @return the amount of bytes to be transferred
      */
-    public double getRemainingByteCount() {
-    	double bytesLeft = msgsize - msgsent; 
+    public int getRemainingByteCount() {
+    	int bytesLeft = msgsize - msgsent; 
     	return (bytesLeft > 0 ? bytesLeft : 0);
     }
     
@@ -97,6 +108,7 @@ public class VBRConnection extends Connection {
 	 * Returns true if the current message transfer is done.
 	 * @return True if the transfer is done, false if not
 	 */
+    @Override
 	public boolean isMessageTransferred() {
 		if (msgsent >= msgsize) {
 			return true;

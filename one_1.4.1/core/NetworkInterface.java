@@ -69,9 +69,9 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	 * For creating an empty class of a specific type
 	 */
 	public NetworkInterface(Settings s) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("loginterface.txt")));
-		} catch(Exception e) {System.out.println("Error");}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("loginterface.txt")));
+		//} catch(Exception e) {System.out.println("Error");}
 		this.interfacetype = s.getNameSpace();
 		this.connections = new ArrayList<Connection>();
 		this.address = getNextNetAddress();
