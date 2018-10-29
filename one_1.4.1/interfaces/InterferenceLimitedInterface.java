@@ -19,7 +19,7 @@ import core.VBRConnection;
  * transmissions. The configured transmit speed is the maximum obtainable speed.
  */
 public class InterferenceLimitedInterface extends NetworkInterface {
-	protected double currentTransmitSpeed;
+	protected int currentTransmitSpeed;
 	protected int numberOfTransmissions;
 
 	public InterferenceLimitedInterface(Settings s) {
@@ -50,7 +50,7 @@ public class InterferenceLimitedInterface extends NetworkInterface {
 	 * @return the transmit speed
 	 */
 	@Override
-	public double getTransmitSpeed() {
+	public int getTransmitSpeed(NetworkInterface ni) {
 		return this.currentTransmitSpeed;
 	}
 
@@ -120,7 +120,7 @@ public class InterferenceLimitedInterface extends NetworkInterface {
 
 		// Based on the equation of Gupta and Kumar - and the transmission speed
 		// is divided equally to all the ongoing transmissions 
-		currentTransmitSpeed = (double)Math.floor((double)transmitSpeed / 
+		currentTransmitSpeed = (int)Math.floor((double)transmitSpeed / 
 				(Math.sqrt((1.0*numberOfActive) *
 						Math.log(1.0*numberOfActive))) /
 							ntrans );

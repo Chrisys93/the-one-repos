@@ -23,3 +23,6 @@
 /StandardEventsReader.class
 /WKTMapReader.class
 /WKTReader.class
+/ReposDepletionCreateEvent.class
+/ReposDepletionEvent.class
+/ReposStorageConstantDepletion.class

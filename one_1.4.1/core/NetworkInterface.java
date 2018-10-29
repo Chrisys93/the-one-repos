@@ -45,7 +45,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	private List<ConnectionListener> cListeners = null; // list of listeners
 	private int address; // network interface address
 	protected double transmitRange;
-	protected double transmitSpeed;
+	protected int transmitSpeed;
 	protected ConnectivityOptimizer optimizer = null;
 	/** scanning interval, or 0.0 if n/a */
 	private double scanInterval;
@@ -77,7 +77,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 		this.address = getNextNetAddress();
 
 		this.transmitRange = s.getDouble(TRANSMIT_RANGE_S);
-		this.transmitSpeed = s.getDouble(TRANSMIT_SPEED_S);
+		this.transmitSpeed = s.getInt(TRANSMIT_SPEED_S);
 		ensurePositiveValue(transmitRange, TRANSMIT_RANGE_S);
 		ensurePositiveValue(transmitSpeed, TRANSMIT_SPEED_S);
 		if (s.contains(SCAN_INTERVAL_S)) {
@@ -178,9 +178,9 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 	 * Returns the transmit speed of this network layer
 	 * @return the transmit speed
 	 */
-	public double getTransmitSpeed() {
+	public int getTransmitSpeed(NetworkInterface ni) {
 		return this.transmitSpeed;
-	}
+}
 
 	/**
 	 * Returns a list of currently connected connections
@@ -356,7 +356,7 @@ abstract public class NetworkInterface implements ModuleCommunicationListener {
 			this.scanInterval = (Double)newValue;	
 		}
 		else if (key.equals(SPEED_ID)) {
-			this.transmitSpeed = (Double)newValue;	
+			this.transmitSpeed = (int)newValue;	
 		}
 		else if (key.equals(RANGE_ID)) {
 			this.transmitRange = (Double)newValue;	

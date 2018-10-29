@@ -1,6 +1,6 @@
-/* 
+/*
  * Copyright 2010 Aalto University, ComNet
- * Released under GPLv3. See LICENSE.txt for details. 
+ * Released under GPLv3. See LICENSE.txt for details.
  */
 package core;
 
@@ -13,8 +13,10 @@ import routing.MessageRouter;
 public class VBRConnection extends Connection {
 	private int msgsize;
 	private int msgsent;
-	private double currentspeed = 0;
-	
+	private int currentspeed = 0;
+	private double lastUpdate = 0;
+
+
 	/**
 	 * Creates a new connection between nodes and sets the connection
 	 * state to "up".
@@ -23,33 +25,33 @@ public class VBRConnection extends Connection {
 	 * @param toNode The node in the other side of the connection
 	 * @param toInterface The interface in the other side of the connection
 	 */
-   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface, 
+   public VBRConnection(DTNHost fromNode, NetworkInterface fromInterface,
 		   DTNHost toNode, NetworkInterface toInterface) {
 	    super(fromNode, fromInterface, toNode, toInterface);
 		this.msgsent = 0;
 	}
-	
+
 	/**
 	 * Sets a message that this connection is currently transferring. If message
 	 * passing is controlled by external events, this method is not needed
-	 * (but then e.g. {@link #finalizeTransfer()} and 
+	 * (but then e.g. {@link #finalizeTransfer()} and
 	 * {@link #isMessageTransferred()} will not work either). Only a one message
 	 * at a time can be transferred using one connection.
 	 * @param from The host sending the message
 	 * @param m The message
-	 * @return The value returned by 
+	 * @return The value returned by
 	 * {@link MessageRouter#receiveMessage(Message, DTNHost)}
 	 */
 	public int startTransfer(DTNHost from, Message m) {
-		assert this.msgOnFly == null : "Already transferring " + 
-			this.msgOnFly + " from " + this.msgFromNode + " to " + 
-			this.getOtherNode(this.msgFromNode) + ". Can't "+ 
+		assert this.msgOnFly == null : "Already transferring " +
+			this.msgOnFly + " from " + this.msgFromNode + " to " +
+			this.getOtherNode(this.msgFromNode) + ". Can't "+
 			"start transfer of " + m + " from " + from;
-		
+
 		this.msgFromNode = from;
 		Message newMessage = m.replicate();
 		int retVal = getOtherNode(from).receiveMessage(newMessage, from);
-		
+
 		if (retVal == MessageRouter.RCV_OK) {
 			this.msgOnFly = newMessage;
 			this.msgsize = m.getSize();
@@ -58,17 +60,6 @@ public class VBRConnection extends Connection {
 
 		return retVal;
 	}
-	
-	/**
-	 * Aborts the transfer of the currently transferred message.
-	 */
-	public void abortTransfer() {
-		assert msgOnFly != null : "No message to abort at " + msgFromNode;
-		getOtherNode(msgFromNode).messageAborted(this.msgOnFly.getId(),
-				msgFromNode,getRemainingByteCount());
-		clearMsgOnFly();
-		this.msgsize = 0;
-	}
 
 	/**
 	 * Calculate the current transmission speed from the information
@@ -76,16 +67,19 @@ public class VBRConnection extends Connection {
 	 *
 	 */
 	public void update() {
-		currentspeed =  this.fromInterface.getTransmitSpeed();
-		double othspeed =  this.toInterface.getTransmitSpeed();
-		
+		currentspeed =  this.fromInterface.getTransmitSpeed(toInterface);
+		int othspeed =  this.toInterface.getTransmitSpeed(fromInterface);
+		double now = core.SimClock.getTime();
+
 		if (othspeed < currentspeed) {
 			currentspeed = othspeed;
 		}
-		
-		msgsent = (int) (msgsent + currentspeed);
+
+
+		msgsent += currentspeed * (now - this.lastUpdate);
+		this.lastUpdate = now;
 	}
-	
+
 	/**
 	 * returns the current speed of the connection
 	 */
@@ -100,15 +94,14 @@ public class VBRConnection extends Connection {
      * @return the amount of bytes to be transferred
      */
     public int getRemainingByteCount() {
-    	int bytesLeft = msgsize - msgsent; 
-    	return (bytesLeft > 0 ? bytesLeft : 0);
+	int bytesLeft = msgsize - msgsent;
+	return (bytesLeft > 0 ? bytesLeft : 0);
     }
-    
+
 	/**
 	 * Returns true if the current message transfer is done.
 	 * @return True if the transfer is done, false if not
 	 */
-    @Override
 	public boolean isMessageTransferred() {
 		if (msgsent >= msgsize) {
 			return true;
@@ -116,14 +109,5 @@ public class VBRConnection extends Connection {
 			return false;
 		}
 	}
-	
-	/**
-	 * Returns a String presentation of the connection.
-	 */
-	public String toString() {
-		return fromNode + "<->" + toNode + " (" + currentspeed + "Bps) is " +
-			(isUp() ? "up":"down") + 
-			(this.msgOnFly != null ? " transferring " + this.msgOnFly  + 
-			" from " + this.msgFromNode  : "");
-	}
+
 }
