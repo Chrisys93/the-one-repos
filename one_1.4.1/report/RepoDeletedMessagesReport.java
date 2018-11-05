@@ -19,7 +19,7 @@ import core.SimScenario;
  * Message location report. Reports the location (coordinates) of messages.
  * The messages that are reported and the reporting interval can be configured.
  */
-public class RepoStoredMessageLocationReport extends Report implements UpdateListener {
+public class RepoDeletedMessagesReport extends Report implements UpdateListener {
 	/** Reporting granularity -setting id ({@value}). 
 	 * Defines the interval how often (seconds) a new snapshot of message 
 	 * locations is created */
@@ -50,7 +50,7 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 	/**
 	 * Constructor. Reads the settings and initializes the report module.
 	 */
-	public RepoStoredMessageLocationReport() {
+	public RepoDeletedMessagesReport() {
 		Settings settings = getSettings();
 		this.lastUpdate = 0;	
 		this.granularity = settings.getInt(GRANULARITY);
@@ -118,7 +118,7 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							reportLine += " " + host.getStorageSystem().getNrofMessages();
+							reportLine += " " + host.getStorageSystem().getNrofDeletedMessages();
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
 						}

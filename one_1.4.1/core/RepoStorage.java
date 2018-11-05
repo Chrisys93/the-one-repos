@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 import core.Settings;
+import core.SimClock;
 
 /** 
  * @author Daniele Bonaldo, University of Padua
@@ -26,6 +27,8 @@ public class RepoStorage {
 
 	/** size of the storage space */
 	private long storageSize;
+	private long nrofDeletedMessages;
+	private double totalReceivedMessages;
 
 	private String MessageId;
 
@@ -43,6 +46,8 @@ public class RepoStorage {
 		//this.messages = new Collection<Message>();
 		this.storedMessages = new ArrayList<Message>();
 		this.storageSize = 0;
+		this.nrofDeletedMessages = 0;
+		this.totalReceivedMessages = 0;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
 		}	
@@ -72,6 +77,7 @@ public class RepoStorage {
 	 */
 	public void addToStoredMessages(Message sm) {
 		this.storedMessages.add(sm);
+		this.totalReceivedMessages++;
 		/* add space used in the storage space */
 		//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
 	}
@@ -141,6 +147,7 @@ public class RepoStorage {
 		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
 				this.storedMessages.remove(i);
+				this.nrofDeletedMessages++;
 				answer = true;
 			}
 			else{
@@ -148,6 +155,14 @@ public class RepoStorage {
 			}
 		}
 		return answer;
+	}
+	
+	public long getNrofDeletedMessages() {
+		return this.nrofDeletedMessages;
+	}
+	
+	public double getOverallMeanIncomingSpeed() {
+		return (this.totalReceivedMessages/SimClock.getTime());
 	}
 	
 	public boolean clearAllStoredMessages(){

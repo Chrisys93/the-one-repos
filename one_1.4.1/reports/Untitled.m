@@ -1,7 +1,7 @@
 clear
 R = dlmread('default_scenario_RepoMessageLocationReport.txt', ' ', 0, 1);
 M = dlmread('default_scenario_MobileMessageLocationReport.txt', ' ', 0, 1);
-S = dlmread('default_scenario_RepoStoredMessageLocationReport.txt', ' ', 1, 1);
+S = dlmread('default_scenario_RepoStoredMessageLocationReport.txt', ' ', 0, 2);
 [r1, c1] = size(R);
 [r2, c2] = size(M);
 [r3, c3] = size(S);
@@ -37,7 +37,9 @@ for i = 1:r3
         end
         figure
         bar(S(i, :));
-        s = i;
+        s = i; 
+        %s = 1434 for 1000 cars
+        %s = 1266 for 40 cars
     end
     
     c100 = 1;
