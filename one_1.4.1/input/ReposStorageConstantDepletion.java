@@ -94,7 +94,7 @@ public class ReposStorageConstantDepletion implements EventQueue {
 			this.higherLimit = s.getLong(HIGHER_LIMIT_S);;
 		}
 		else {
-			this.higherLimit = 10000000;
+			this.higherLimit = 10000000000L;
 		}
 		
 		/** Need to select the hosts by name instead, for opportunistic transfers. */
@@ -189,9 +189,9 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 */
 	/*TODO: This \/ needs to be sorted out.*/
 	public ExternalEvent nextEvent() {
-		//try {
-		//	System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
-		//} catch(Exception e) {}
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
+		} catch(Exception e) {}
 		int msgNo;
 		int interval;
 		ArrayList <String> hosts;

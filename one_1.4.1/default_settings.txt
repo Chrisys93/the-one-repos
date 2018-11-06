@@ -288,6 +288,12 @@ Report.report3 = MobileMessageLocationReport
 Report.report4 = RepoIncomingSpeedsReport
 Report.report5 = RepoDeletedMessagesReport
 
+RepoMessageLocationReport.output = [reports/RMLR1;reports/RMLR2;reports/RMLR3]
+RepoStoredMessageLocationReport.output = [reports/RSMLR1;reports/RSMLR2;reports/RSMLR3]
+MobileMessageLocationReport.output = [reports/MMLR1;reports/MMLR2;reports/MMLR3]
+RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3]
+RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3]
+
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
 SprayAndWaitRouter.nrofCopies = 6

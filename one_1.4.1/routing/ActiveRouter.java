@@ -551,7 +551,7 @@ public abstract class ActiveRouter extends MessageRouter {
 			/* finalize ready transfers */
 			if (con.isMessageTransferred()) {
 				if (con.getMessage() != null) {
-					System.out.println("The message is NOT null, keep connection "+this.getHost().name+" to "+con.getOtherNode(this.getHost()));
+					//System.out.println("The message is NOT null, keep connection "+this.getHost().name+" to "+con.getOtherNode(this.getHost()));
 					transferDone(con);
 					con.finalizeTransfer();
 				} /* else: some other entity aborted transfer */

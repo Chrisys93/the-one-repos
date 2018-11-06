@@ -185,9 +185,9 @@ public class RepoStorage {
 
 	public long getFreeStorageSpace() {
 		long usedStorage = this.getStoredMessagesSize();
-		System.out.println("There is " + usedStorage + " storage used");
+		//System.out.println("There is " + usedStorage + " storage used");
 		long freeStorage = this.storageSize - usedStorage;
-		System.out.println("There is "+freeStorage+" free storage space");
+		//System.out.println("There is "+freeStorage+" free storage space");
 		return freeStorage;
 	}
 

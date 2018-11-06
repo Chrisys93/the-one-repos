@@ -50,7 +50,7 @@ public class ReposDepletionCreateEvent extends ReposDepletionEvent {
 					for (int u = 0; u<this.msgNo; u++) {
 						Message temp = currNode.getStorageSystem().getStoredMessages().get(u);
 						System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
-						currNode.getStorageSystem().deleteStoredMessage(temp.getId());
+						//currNode.getStorageSystem().deleteStoredMessage(temp.getId());
 						if (currNode.getStorageSystem().getStoredMessagesSize()>=this.higherLimit) {
 							System.out.println("Host "+ currNode + " is full. Consider increasing depletion" + 
 									" rate, increasing storage capacity, or improving storage distribution" +

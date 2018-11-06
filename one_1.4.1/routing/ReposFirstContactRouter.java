@@ -60,9 +60,9 @@ public class ReposFirstContactRouter extends ActiveRouter {
 
 	@Override
 	public void init(DTNHost host, List<MessageListener> mListeners) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
-		} catch(Exception e) {System.out.println("Error");}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
+		//} catch(Exception e) {System.out.println("Error");}
 		super.init(host, mListeners);
 		//this.storedMessages = new ArrayList<Message>();
 		//this.usedStorage = 0;
@@ -157,7 +157,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 			//System.out.println("Message has been added to storage, with no problem");
 		}
 		else {
-			System.out.println("The current host is: " + this.getHost());
+			//System.out.println("The current host is: " + this.getHost());
 			this.getHost().getStorageSystem().deleteMessagesForSpace(false);
 			//if(con.ifUp()){
 				this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
@@ -181,7 +181,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		boolean isFirstRepoDelivery = isFinalRepoRecipient && !isDeliveredMessage(con.getMessage());
 		DTNHost from = con.getOtherNode(this.getHost());
 		DTNHost to = this.getHost();
-		System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
+		//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 		if (this.getHost().hasStorageCapability()) {
 			
 			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);

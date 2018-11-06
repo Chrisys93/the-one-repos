@@ -81,8 +81,10 @@ public class DTNSim {
 			for (int i=nrofRuns[0]; i<nrofRuns[1]; i++) {
 				print("Run " + (i+1) + "/" + nrofRuns[1]);
 				Settings.setRunIndex(i);
-				resetForNextRun();
 				new DTNSimTextUI().start();
+				double duration = (System.currentTimeMillis() - startTime)/1000.0;
+				print("---\nRun " + (i+1) + " done in " + String.format("%.2f", duration) + "s");
+				resetForNextRun();
 			}
 			double duration = (System.currentTimeMillis() - startTime)/1000.0;
 			print("---\nAll done in " + String.format("%.2f", duration) + "s");
