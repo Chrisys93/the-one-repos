@@ -76,10 +76,12 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */
 	public void addToStoredMessages(Message sm) {
-		this.storedMessages.add(sm);
-		this.totalReceivedMessages++;
-		/* add space used in the storage space */
-		//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
+		if (sm != null) {
+			this.storedMessages.add(sm);
+			this.totalReceivedMessages++;
+			/* add space used in the storage space */
+			//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
+		}
 	}
 	
 	/**
@@ -143,18 +145,13 @@ public class RepoStorage {
 	}
 	
 	public boolean deleteStoredMessage(String MessageId){
-		boolean answer = false;
 		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
 				this.storedMessages.remove(i);
-				this.nrofDeletedMessages++;
-				answer = true;
-			}
-			else{
-				answer = false;
+				return true;
 			}
 		}
-		return answer;
+		return false;
 	}
 	
 	public long getNrofDeletedMessages() {
@@ -185,30 +182,30 @@ public class RepoStorage {
 
 	public long getFreeStorageSpace() {
 		long usedStorage = this.getStoredMessagesSize();
-		//System.out.println("There is " + usedStorage + " storage used");
+		//System.out.println("There is " + usedStorage + " storage used in "+this.getHost());
 		long freeStorage = this.storageSize - usedStorage;
-		//System.out.println("There is "+freeStorage+" free storage space");
+		//System.out.println("There is "+freeStorage+" free storage space in "+this.getHost());
 		return freeStorage;
 	}
 
 	public boolean isStorageFull() {
-		long freeStorage = this.getFreeStorageSpace();
+		long usedStorage = this.getStoredMessagesSize();
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (freeStorage >= 1100000){
+		if (usedStorage >= this.storageSize - 100000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
-			return false;
+			return true;
 		}
 		else{
 			//System.out.println("There is not enough storage space: " + freeStorage);
-			return true;
+			return false;
 		}
 	}
 
 	public void deleteMessagesForSpace(boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
-			for (int i=0; i<10; i++){
+			for (int i=0; i<1000; i++){
 				Message oldest = null;
 				for (Message m : this.storedMessages) {
 					
@@ -219,8 +216,10 @@ public class RepoStorage {
 						oldest = m;
 					}
 				}
-				String mId = oldest.getId();
+				//System.out.println("There is " + this.getStoredMessagesSize() + " storage used in "+this.getHost().name);
+				String mId = oldest.getId(); 
 				this.deleteStoredMessage(mId);
+				this.nrofDeletedMessages++;
 			}
 		}
 		else if (deleteAll == true){
