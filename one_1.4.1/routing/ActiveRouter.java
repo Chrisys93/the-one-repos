@@ -603,5 +603,5 @@ public abstract class ActiveRouter extends MessageRouter {
 	 * @param con The connection whose transfer was finalized
 	 */
 	protected void transferDone(Connection con) { }
-	
+
 }

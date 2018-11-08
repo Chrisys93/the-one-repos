@@ -143,6 +143,9 @@ public class SimScenario implements Serializable {
 
 	/** Map used for host movement (if any) */
 	private SimMap simMap;
+	
+	/** Location for each repo when using RepoStationaryMovement */
+	private int[] simLocation;
 
 	/** Global connection event listeners */
 	private List<ConnectionListener> connectionListeners;
@@ -546,6 +549,12 @@ public class SimScenario implements Serializable {
 				}
 			}
 
+			/*
+			 * TODO:
+			 * Introduce an if statement, if the RepoStationaryMovement is used,
+			 * initialise position of DTNHosts depending in whether "r"'s or not,
+			 * so that they are in a matrix.
+			 */
 			if (mmProto instanceof MapBasedMovement) {
 				this.simMap = ((MapBasedMovement)mmProto).getMap();
 			}
@@ -558,7 +567,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, storageSize);
+						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, storageSize, simLocation);
 				hosts.add(host);
 			}
 		}

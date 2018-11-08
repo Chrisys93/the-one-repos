@@ -90,6 +90,9 @@ public abstract class MessageRouter {
 
 	/** applications attached to the host */
 	private HashMap<String, Collection<Application>>	applications = null;
+
+	/** hosts to be used as sides of connections */
+	private long totalBufferDeletedMessagesSize;
 	
 	/**
 	 * Constructor. Creates a new message router based on the settings in
@@ -646,4 +649,10 @@ public abstract class MessageRouter {
 			this.getHost().toString() + " with " + getNrofMessages() 
 			+ " messages";
 	}
+	
+
+	public long getBufferDeletedMessagesSize() { 
+		return totalBufferDeletedMessagesSize;
+	}
+	
 }

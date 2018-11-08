@@ -33,8 +33,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 
 
 	/** hosts to be used as sides of connections */
-	private DTNHost to;
-	private DTNHost from;
+	private long totalBufferDeletedMessages;
 
 	//private long storageSize;
 
@@ -178,9 +177,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * NOT the target!
 		 */
 		boolean isFinalRepoRecipient = con.getMessage().getTo() == this.getHost();
-		boolean isFirstRepoDelivery = isFinalRepoRecipient && !isDeliveredMessage(con.getMessage());
-		DTNHost from = con.getOtherNode(this.getHost());
-		DTNHost to = this.getHost();
 		//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
 		if (this.getHost().hasStorageCapability()) {
 			
@@ -193,10 +189,46 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		//System.out.println("Transfer done " + this.getHost().name);
 		
 	}
+	
+	/** 
+	 * Removes messages from the buffer (oldest first) until
+	 * there's enough space for the new message.
+	 * @param size Size of the new message 
+	 * transferred, the transfer is aborted before message is removed
+	 * @return True if enough space could be freed, false if not
+	 */
+	@Override
+	protected boolean makeRoomForMessage(int size){
+		if (size > this.getBufferSize()) {
+			return false; // message too big for the buffer
+		}
+			
+		int freeBuffer = this.getFreeBufferSize();
+		/* delete messages from the buffer until there's enough space */
+		while (freeBuffer < size) {
+			Message m = getOldestMessage(true); // don't remove msgs being sent
+
+			if (m == null) {
+				return false; // couldn't remove any more messages
+			}			
+			
+			/* delete message from the buffer as "drop" */
+			deleteMessage(m.getId(), true);
+			freeBuffer += m.getSize();
+			this.totalBufferDeletedMessages ++;
+		}
+		
+		return true;
+	}
 		
 	@Override
 	public ReposFirstContactRouter replicate() {
 		return new ReposFirstContactRouter(this);
+	}
+	
+	@Override
+	public long getBufferDeletedMessagesSize() {
+		return this.totalBufferDeletedMessages;
 	}
 
 	/** \/ This \/ needs to be solved in the router part!
