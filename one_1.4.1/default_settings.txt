@@ -134,7 +134,7 @@ Group3.speed = 2.7, 13.9
 #Group3.bufferSize = 200M
 Group3.interface1 = wlanCarInterface
 # More cars than anything else
-#Group3.nrofHosts = [40; 500; 1000]
+#Group3.nrofHosts = [40; 40; 40; 500; 1000]
 
 # The Bus groups
 Group4.groupID = b
@@ -242,7 +242,7 @@ Events3.prefix = MB
 Events4.class = ReposStorageConstantDepletion
 # (following settings are specific for the ReposStorageConstantDepletion class)
 # Depletion interval in seconds (a number of messages depleted/second)
-Events4.depletionInterval = 3
+Events4.depletionInterval = [3; 2; 1]
 # Number of message depleted each depletionInterval
 Events4.msgNo = 2
 # Host names of host storages to be depleted

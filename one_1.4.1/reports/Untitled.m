@@ -1,7 +1,7 @@
 clear
 R = dlmread('default_scenario_RepoMessageLocationReport.txt', ' ', 0, 1);
 M = dlmread('default_scenario_MobileMessageLocationReport.txt', ' ', 0, 1);
-S = dlmread('default_scenario_RepoStoredMessageLocationReport.txt', ' ', 0, 2);
+S = dlmread('RSMLR3', ' ', 0, 2);
 [r1, c1] = size(R);
 [r2, c2] = size(M);
 [r3, c3] = size(S);
