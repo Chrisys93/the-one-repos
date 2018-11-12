@@ -7,6 +7,7 @@ package movement;
 import core.Coord;
 import core.DTNHost;
 import core.Settings;
+import core.SimScenario;
 
 /**
  * A dummy stationary "movement" model where nodes do not move.
@@ -15,26 +16,27 @@ import core.Settings;
 public class RepoStationaryMovement extends MovementModel {
 	/** Per node group setting for setting the location ({@value}) */
 	//public static final String LOCATION_S = "nodeLocation";
-	private int[] location;
+	public double[] location;
 	private Coord loc; /** The location of the nodes */
 	
 	/**
 	 * Creates a new movement model based on a Settings object's settings.
 	 * @param s The Settings object where the settings are read from
 	 */
-	public RepoStationaryMovement(int[] location, Settings s) {
+	public RepoStationaryMovement(Settings s) {
 		super(s);
+		this.location = SimScenario.simLocation;
 		//int coords[];
 		
 		//coords = s.getCsvInts(LOCATION_S, 2);
-		this.loc = new Coord(location[0],location[1]);
+		this.loc = new Coord(this.location[0],this.location[1]);
 	}
 	
 	/**
 	 * Copy constructor. 
 	 * @param sm The StationaryMovement prototype
 	 */
-	public RepoStationaryMovement(RepoStationaryMovement sm, int[] location) {
+	public RepoStationaryMovement(RepoStationaryMovement sm) {
 		super(sm);
 		this.loc = sm.loc;
 	}
@@ -48,9 +50,10 @@ public class RepoStationaryMovement extends MovementModel {
 		return loc;
 	}
 	
-	public int[] getScenarioLocation(DTNHost host) {
-		this.location = host.getSimLocation();
-		return this.location;
+	@Override
+	public double[] getScenarioLocation(DTNHost host) {
+		location = host.getSimLocation();
+		return location;
 	}
 	
 	/**
@@ -75,7 +78,7 @@ public class RepoStationaryMovement extends MovementModel {
 		 * TODO:
 		 * Create method in this class to obtain the location from SimScenario?
 		 */
-		return new RepoStationaryMovement(this, this.location);
+		return new RepoStationaryMovement(this);
 	}
 
 }

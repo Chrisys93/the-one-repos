@@ -7,6 +7,7 @@ package core;
 import input.EventQueue;
 import input.EventQueueHandler;
 
+import java.lang.Math.*;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
@@ -121,6 +122,15 @@ public class SimScenario implements Serializable {
 	private int worldSizeX;
 	/** Height of the world */
 	private int worldSizeY;
+	
+	/** Width division of the world  for repo coord allocation */
+	private int worldSizeDivisionX;
+	/** Height division of the world for repo coord allocation */
+	private int worldSizeDivisionY;
+
+	/** Location for each repo when using RepoStationaryMovement */
+	public static double[] simLocation = {0,0};
+	
 	/** Largest host's radio range */
 	private double maxHostRange;
 	/** Simulation end time */
@@ -143,9 +153,6 @@ public class SimScenario implements Serializable {
 
 	/** Map used for host movement (if any) */
 	private SimMap simMap;
-	
-	/** Location for each repo when using RepoStationaryMovement */
-	private int[] simLocation;
 
 	/** Global connection event listeners */
 	private List<ConnectionListener> connectionListeners;
@@ -460,6 +467,7 @@ public class SimScenario implements Serializable {
 			int nrofInterfaces = s.getInt(NROF_INTERF_S);
 			int appCount;
 			boolean hasFileCapability;
+			
 			if (s.contains(FILE_CAPABILITY_S)) {
 				hasFileCapability = s.getBoolean(FILE_CAPABILITY_S);
 			} else {
@@ -549,12 +557,7 @@ public class SimScenario implements Serializable {
 				}
 			}
 
-			/*
-			 * TODO:
-			 * Introduce an if statement, if the RepoStationaryMovement is used,
-			 * initialise position of DTNHosts depending in whether "r"'s or not,
-			 * so that they are in a matrix.
-			 */
+			
 			if (mmProto instanceof MapBasedMovement) {
 				this.simMap = ((MapBasedMovement)mmProto).getMap();
 			}
@@ -562,13 +565,37 @@ public class SimScenario implements Serializable {
 			// creates hosts of ith group
 			for (int j=0; j<nrofHosts; j++) {
 				ModuleCommunicationBus comBus = new ModuleCommunicationBus();
-
+				
+				/*
+				 * TODO:
+				 * Introduce an if statement, if the RepoStationaryMovement is used,
+				 * initialise position of DTNHosts depending in whether "r"'s or not,
+				 * so that they are in a matrix.
+				 */
+				if (mmProto.toString().contains("RepoStationaryMovement")){
+					this.worldSizeDivisionX = (int)Math.sqrt(nrofHosts);
+					this.worldSizeDivisionY = (int)Math.sqrt(nrofHosts);
+					SimScenario.simLocation[0] = (j % this.worldSizeDivisionX)*(this.worldSizeX/this.worldSizeDivisionX);
+					SimScenario.simLocation[1] = (int)(j / worldSizeDivisionX)*(this.worldSizeY/this.worldSizeDivisionY);
+					// creates prototypes of MessageRouter and MovementModel
+					MovementModel mmPrototype = 
+						(MovementModel)s.createIntializedObject(MM_PACKAGE + 
+								s.getSetting(MOVEMENT_MODEL_S));
+					// prototypes are given to new DTNHost which replicates
+					// new instances of movement model and message router
+					DTNHost host = new DTNHost(this.messageListeners, 
+							this.movementListeners, gid, mmNetInterfaces, comBus, 
+							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, storageSize, simLocation);
+					hosts.add(host);
+				}
+				else {
 				// prototypes are given to new DTNHost which replicates
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
 						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, storageSize, simLocation);
 				hosts.add(host);
+				}
 			}
 		}
 	}

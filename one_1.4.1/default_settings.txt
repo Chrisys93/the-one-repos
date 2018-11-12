@@ -107,7 +107,8 @@ FilesGenerator.rngSeed = 2#; 8372; 98092; 18293; 777]
 
 # group1 (pedestrians) repositories specific settings
 Group1.groupID = r
-Group1.speed = 0, 0
+Group1.movementModel = RepoStationaryMovement
+#Group1.speed = 0, 0
 Group1.storageCapability = true
 Group1.storageSize = 10G
 # The repositories have to have all 3 interfaces, to receive

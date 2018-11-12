@@ -43,7 +43,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	protected boolean hasStorageCapability;
 	public long storageSize;
 	
-	private int[] simLocation;
+	private double[] simLocation;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -64,7 +64,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
 			MovementModel mmProto, MessageRouter mRouterProto,
-			boolean hasFileCapability, boolean hasStorageCapability, long storageSize, int[] simLocation) {
+			boolean hasFileCapability, boolean hasStorageCapability, long storageSize, double[] simLocation) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
@@ -88,15 +88,12 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.movListeners = movLs;
 
 		// create instances by replicating the prototypes
-		if(mmProto.toString().contains("RepoStationaryMovement")){
-			/* 
-			 * Might try determining the location of the node wither here, or in SimScenario,
-			 * and if so, I might have to pass the coordinates from SimScenario to each host.
-			 */
-			this.movement = mmProto.replicate();
-		}
 		this.movement = mmProto.replicate();
+		if (this.movement.toString().contains("RepoStationaryMovement")){
+			this.movement.location = mmProto.getScenarioLocation(this);
+		}
 		this.movement.setComBus(comBus);
+			
 		setRouter(mRouterProto.replicate());
 		setFileSystem(new DTNFileSystem());
 		setStorageSystem(new RepoStorage(), storageSize);
@@ -200,7 +197,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * Returns location set by SimScenario, when RepoStationaryMovement is used
 	 * @return host location set in SimScenario
 	 */
-	public int[] getSimLocation() {
+	public double[] getSimLocation() {
 		return this.simLocation;
 	}
 

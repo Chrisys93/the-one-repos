@@ -7,6 +7,7 @@ package movement;
 import java.util.Random;
 
 import core.Coord;
+import core.DTNHost;
 import core.DTNSim;
 import core.ModuleCommunicationBus;
 import core.Settings;
@@ -54,6 +55,7 @@ public abstract class MovementModel {
 
 	private int maxX;
 	private int maxY;
+	public double[] location;
 	
 	protected ModuleCommunicationBus comBus;
 
@@ -242,6 +244,10 @@ public abstract class MovementModel {
 	 */
 	public String toString() {
 		return this.getClass().getSimpleName();
+	}
+	
+	public double[] getScenarioLocation(DTNHost host) {
+		return null;
 	}
 	
 	/**
