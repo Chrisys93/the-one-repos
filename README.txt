@@ -63,11 +63,11 @@ by the number of runs to perform in the batch mode or by a range of runs
 to perform, delimited with a colon (e.g, value 2:4 would perform runs 2, 
 3 and 4). See section "Run indexing" for more information.
   
-Parameters:  
-  conf-files: The configuration file names where simulation parameters
-are read from. Any number of configuration files can be defined and they are
-read in the order given in the command line. Values in the later config files 
-override values in earlier config files.
+PARAMETERS:  
+  CONF-FILES: THE CONFIGURATION FILE NAMES WHERE SIMULATION PARAMETERS
+ARE READ FROM. ANY NUMBER OF CONFIGURATION FILES CAN BE DEFINED AND THEY ARE
+READ IN THE ORDER GIVEN IN THE COMMAND LINE. VALUES IN THE LATER CONFIG FILES 
+OVERRIDE VALUES IN EARLIER CONFIG FILES.
 
 
 Configuring

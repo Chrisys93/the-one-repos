@@ -1,7 +1,7 @@
 clear
-R = dlmread('default_scenario_RepoMessageLocationReport.txt', ' ', 0, 1);
-M = dlmread('default_scenario_MobileMessageLocationReport.txt', ' ', 0, 1);
-S = dlmread('RSMLR3', ' ', 0, 2);
+R = dlmread('RDMR1', ' ', 0, 1);
+M = dlmread('MDMR1', ' ', 0, 1);
+S = dlmread('RSMLR1', ' ', 0, 2);
 [r1, c1] = size(R);
 [r2, c2] = size(M);
 [r3, c3] = size(S);
@@ -98,13 +98,13 @@ ylabel('Repositories which used more than 25% storage (%)');
 
 figure
 bar(maxstor1);
-title('Bar plot of Repos Buffer(!) Usage')
+title('Bar plot of Repos Deleted Messages')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
 
 figure
 bar(maxstor2);
-title('Bar plot of Mobile Nodes Buffer(!) Usage')
+title('Bar plot of Mobile Nodes Deleted Messages')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
 
@@ -133,3 +133,16 @@ xlabel('Repo Number')
 ylabel('Time(s)')
 zlabel('Space used(MB)')
 
+figure
+stem3(M, ':.');
+title('3D Stem plot of Mobile Deleted Messages')
+xlabel('Repo Number') 
+ylabel('Time(s)')
+zlabel('Messages')
+
+figure
+stem3(R, ':.');
+title('3D Stem plot of Repos Dleted Messages')
+xlabel('Repo Number') 
+ylabel('Time(s)')
+zlabel('Messages')
