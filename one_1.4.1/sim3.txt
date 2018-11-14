@@ -13,13 +13,12 @@ Group3.nrofHosts = 1000
 
 Events4.depletionInterval = 1
 
-RepoMessageLocationReport.output = [reports3/RMLR1;reports3/RMLR2;reports3/RMLR3; reports3/RMLR4; reports3/RMLR5]
-RepoStoredMessageLocationReport.output = [reports3/RSMLR1;reports3/RSMLR2;reports3/RSMLR3; reports3/RSMLR4; reports3/RSMLR5]
-MobileMessageLocationReport.output = [reports3/MMLR1;reports3/MMLR2;reports3/MMLR3; reports3/MMLR4; reports3/MMLR5]
-RepoIncomingSpeedsReport.output = [reports3/RISR1;reports3/RISR2;reports3/RISR3; reports3/RISR4; reports3/RISR5]
-RepoDeletedMessagesReport.output = [reports3/RDMR1;reports3/RDMR2;reports3/RDMR3; reports3/RDMR4; reports3/RDMR5]
-MobileDeletedMessagesReport.output = [reports3/MDMR1;reports3/MDMR2;reports3/MDMR3; reports3/MDMR4; reports3/MDMR5]
-
+RepoMessageLocationReport.output = [reports3/RMLR1;reports3/RMLR2;reports3/RMLR3; reports3/RMLR4; reports3/RMLR5; reports3/RMLR6]
+RepoStoredMessageLocationReport.output = [reports3/RSMLR1;reports3/RSMLR2;reports3/RSMLR3; reports3/RSMLR4; reports3/RSMLR5; reports3/RSMLR6]
+MobileMessageLocationReport.output = [reports3/MMLR1;reports3/MMLR2;reports3/MMLR3; reports3/MMLR4; reports3/MMLR5; reports3/MMLR6]
+RepoIncomingSpeedsReport.output = [reports3/RISR1;reports3/RISR2;reports3/RISR3; reports3/RISR4; reports3/RISR5; reports3/RISR6]
+RepoDeletedMessagesReport.output = [reports3/RDMR1;reports3/RDMR2;reports3/RDMR3; reports3/RDMR4; reports3/RDMR5; reports3/RDMR6]
+MobileDeletedMessagesReport.output = [reports3/MDMR1;reports3/MDMR2;reports3/MDMR3; reports3/MDMR4; reports3/MDMR5; reports3/MDMR6]
 
 
 

@@ -28,9 +28,9 @@ Events4.depletionInterval = 2
 Events4.msgNo = 2
 
 
-RepoMessageLocationReport.output = [reports5/RMLR1;reports5/RMLR2;reports5/RMLR3; reports5/RMLR4; reports5/RMLR5]
-RepoStoredMessageLocationReport.output = [reports5/RSMLR1;reports5/RSMLR2;reports5/RSMLR3; reports5/RSMLR4; reports5/RSMLR5]
-MobileMessageLocationReport.output = [reports5/MMLR1;reports5/MMLR2;reports5/MMLR3; reports5/MMLR4; reports5/MMLR5]
-RepoIncomingSpeedsReport.output = [reports5/RISR1;reports5/RISR2;reports5/RISR3; reports5/RISR4; reports5/RISR5]
-RepoDeletedMessagesReport.output = [reports5/RDMR1;reports5/RDMR2;reports5/RDMR3; reports5/RDMR4; reports5/RDMR5]
-MobileDeletedMessagesReport.output = [reports5/MDMR1;reports5/MDMR2;reports5/MDMR3; reports5/MDMR4; reports5/MDMR5]
+RepoMessageLocationReport.output = [reports5/RMLR1;reports5/RMLR2;reports5/RMLR3; reports5/RMLR4; reports5/RMLR5; reports5/RMLR6;reports5/RMLR7;reports5/RMLR8; reports5/RMLR9; reports5/RMLR10; reports5/RMLR11;reports5/RMLR12;reports5/RMLR13; reports5/RMLR14; reports5/RMLR15]
+RepoStoredMessageLocationReport.output = [reports5/RSMLR1;reports5/RSMLR2;reports5/RSMLR3; reports5/RSMLR4; reports5/RSMLR5; reports5/RSMLR6;reports5/RSMLR7;reports5/RSMLR8; reports5/RSMLR9; reports5/RSMLR10; reports5/RSMLR11;reports5/RSMLR12;reports5/RSMLR13; reports5/RSMLR14; reports5/RSMLR15]
+MobileMessageLocationReport.output = [reports5/MMLR1;reports5/MMLR2;reports5/MMLR3; reports5/MMLR4; reports5/MMLR5; reports5/MMLR6;reports5/MMLR7;reports5/MMLR8; reports5/MMLR9; reports5/MMLR10; reports5/MMLR11;reports5/MMLR12;reports5/MMLR13; reports5/MMLR14; reports5/MMLR15]
+RepoIncomingSpeedsReport.output = [reports5/RISR1;reports5/RISR2;reports5/RISR3; reports5/RISR4; reports5/RISR5; reports5/RISR6;reports5/RISR7;reports5/RISR8; reports5/RISR9; reports5/RISR10; reports5/RISR11;reports5/RISR12;reports5/RISR13; reports5/RISR14; reports5/RISR15]
+RepoDeletedMessagesReport.output = [reports5/RDMR1;reports5/RDMR2;reports5/RDMR3; reports5/RDMR4; reports5/RDMR5; reports5/RDMR6;reports5/RDMR7;reports5/RDMR8; reports5/RDMR9; reports5/RDMR10; reports5/RDMR11;reports5/RDMR12;reports5/RDMR13; reports5/RDMR14; reports5/RDMR15]
+MobileDeletedMessagesReport.output = [reports5/MDMR1;reports5/MDMR2;reports5/MDMR3; reports5/MDMR4; reports5/MDMR5; reports5/MDMR6;reports5/MDMR7;reports5/MDMR8; reports5/MDMR9; reports5/MDMR10; reports5/MDMR11;reports5/MDMR12;reports5/MDMR13; reports5/MDMR14; reports5/MDMR15]

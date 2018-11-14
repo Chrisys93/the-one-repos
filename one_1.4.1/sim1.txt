@@ -229,12 +229,12 @@ Report.report4 = RepoIncomingSpeedsReport
 Report.report5 = RepoDeletedMessagesReport
 Report.report6 = MobileDeletedMessagesReport
 
-RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5]
-RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5]
-MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5]
-RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5]
-RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5]
-MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2;reports1/MDMR3; reports1/MDMR4; reports1/MDMR5]
+RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5; reports1/RMLR6]
+RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5; reports1/RSMLR6]
+MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5; reports1/MMLR6]
+RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5; reports1/RISR6]
+RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5; reports1/RDMR6]
+MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2;reports1/MDMR3; reports1/MDMR4; reports1/MDMR5; reports1/MDMR6]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
