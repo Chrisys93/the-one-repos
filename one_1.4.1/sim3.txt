@@ -1,0 +1,27 @@
+## Scenario settings
+Scenario.name = sim3_scenario
+
+# range of message source/destination addresses
+Events2.hosts = [80,119; 80,179; 80,279; 80,579; 80,1079; 80,2079]
+
+# range of message source/destination addresses
+Events3.hosts = [120,134; 180,194; 280,294; 580,594; 1080,1094; 2080,2094]
+
+Group1.nrofHosts = [40; 100; 200; 500; 1000; 2000]
+
+Group3.nrofHosts = 1000
+
+Events4.depletionInterval = 1
+
+RepoMessageLocationReport.output = [reports3/RMLR1;reports3/RMLR2;reports3/RMLR3; reports3/RMLR4; reports3/RMLR5]
+RepoStoredMessageLocationReport.output = [reports3/RSMLR1;reports3/RSMLR2;reports3/RSMLR3; reports3/RSMLR4; reports3/RSMLR5]
+MobileMessageLocationReport.output = [reports3/MMLR1;reports3/MMLR2;reports3/MMLR3; reports3/MMLR4; reports3/MMLR5]
+RepoIncomingSpeedsReport.output = [reports3/RISR1;reports3/RISR2;reports3/RISR3; reports3/RISR4; reports3/RISR5]
+RepoDeletedMessagesReport.output = [reports3/RDMR1;reports3/RDMR2;reports3/RDMR3; reports3/RDMR4; reports3/RDMR5]
+MobileDeletedMessagesReport.output = [reports3/MDMR1;reports3/MDMR2;reports3/MDMR3; reports3/MDMR4; reports3/MDMR5]
+
+
+
+
+
+
