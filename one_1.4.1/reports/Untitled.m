@@ -1,42 +1,48 @@
 clear
-R = dlmread('RDMR1', ' ', 0, 1);
-M = dlmread('MDMR1', ' ', 0, 1);
-S = dlmread('RSMLR1', ' ', 0, 2);
-[r1, c1] = size(R);
-[r2, c2] = size(M);
-[r3, c3] = size(S);
-maxstor1 = zeros(c1, 0);
-maxstor2 = zeros(c2, 0);
-maxstor3 = zeros(c3, 0);
+R1 = dlmread('RDMR1', ' ', 0, 1);
+M1 = dlmread('MDMR1', ' ', 0, 1);
+S2 = dlmread('RSMLR1', ' ', 0, 2);
+R2 = dlmread('RDMR2', ' ', 0, 1);
+M2 = dlmread('MDMR2', ' ', 0, 1);
+S2 = dlmread('RSMLR2', ' ', 0, 2);
+R3 = dlmread('RDMR3', ' ', 0, 1);
+M3 = dlmread('MDMR3', ' ', 0, 1);
+S3 = dlmread('RSMLR3', ' ', 0, 2);
+[r1, c1] = size(R1);
+[r2, c2] = size(M1);
+[r3, c3] = size(S1);
+maxstorR1 = zeros(c1, 0);
+maxstorM1 = zeros(c2, 0);
+maxstorS1 = zeros(c3, 0);
 
 for i = 1:r1
-    maxstor1(i) = max(R(i, :));
+    maxstorR1(i) = max(R1(i, :));
 end
-maxval1 = max(maxstor1);
+maxval1 = max(maxstorR1);
 
 for i = 1:r2
-    maxstor2(i) = max(M(i, :));
+    maxstorM1(i) = max(M1(i, :));
 end
-maxval2 = max(maxstor2);
+maxval2 = max(maxstorM1);
 
 s = 10000;
 col = 1;
 for i = 1:r3
-    maxstor3(i) = max(S(i, :));
-    if maxstor3(i) >= 10000 && i < s
+    maxstorS1(i) = max(S1(i, :));
+    if maxstorS1(i) >= 10000 && i < s
         c0 = 1;
         c50 = 1;
         for c = 1:c3
-            if S(i, c) >= 5000
-                fillperc50_100(c50) = S(i, c)/10000*100;
+            if S1(i, c) >= 5000
+                fillperc50_100(c50) = S1(i, c)/10000*100;
                 c50=c50+1;
             else
-                fillperc0_50(c0) = S(i, c)/10000*100;
+                fillperc0_50(c0) = S1(i, c)/10000*100;
                 c0=c0+1;
             end
         end
         figure
-        bar(S(i, :));
+        bar(S1(i, :));
         s = i; 
         %s = 1434 for 1000 cars
         %s = 1266 for 40 cars
@@ -44,7 +50,7 @@ for i = 1:r3
     
     c100 = 1;
     for c = 1:c3
-        if S(i, c) >= 9900
+        if S1(i, c) >= 9900
             fill100(c100) = 1;
         else
             fill100(c100) = 0;
@@ -55,7 +61,7 @@ for i = 1:r3
     
     c50 = 1;
     for c = 1:c3
-        if S(i, c) >= 5000
+        if S1(i, c) >= 5000
             fill50(c50) = 1;
         else
             fill50(c50) = 0;
@@ -66,7 +72,7 @@ for i = 1:r3
     
     c25 = 1;
     for c = 1:c3
-        if S(i, c) >= 2500
+        if S1(i, c) >= 2500
             fill25(c25) = 1;
         else
             fill25(c25) = 0;
@@ -76,7 +82,7 @@ for i = 1:r3
     fillperc25(col) = (sum(fill25))/40*100;
     col = col + 1;
 end
-maxval3 = max(maxstor3);
+maxval3 = max(maxstorS1);
 
 figure
 bar(fillperc100);
@@ -97,19 +103,19 @@ xlabel('Time (s)');
 ylabel('Repositories which used more than 25% storage (%)');
 
 figure
-bar(maxstor1);
+bar(maxstorR1);
 title('Bar plot of Repos Deleted Messages')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
 
 figure
-bar(maxstor2);
+bar(maxstorM1);
 title('Bar plot of Mobile Nodes Deleted Messages')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
 
 figure
-bar(maxstor3, 0.5);
+bar(maxstorS1, 0.5);
 title('Bar plot of Repos Storage Usage')
 xlabel('Time(s)') 
 ylabel('Space used(MB)')
@@ -127,21 +133,21 @@ ylabel('Space used(MB)')
 %bmesh(S);
 
 figure
-stem3(S, ':.');
+stem3(S1, ':.');
 title('3D Stem plot of Repos Storage Usage')
 xlabel('Repo Number') 
 ylabel('Time(s)')
 zlabel('Space used(MB)')
 
 figure
-stem3(M, ':.');
+stem3(M1, ':.');
 title('3D Stem plot of Mobile Deleted Messages')
 xlabel('Repo Number') 
 ylabel('Time(s)')
 zlabel('Messages')
 
 figure
-stem3(R, ':.');
+stem3(R1, ':.');
 title('3D Stem plot of Repos Dleted Messages')
 xlabel('Repo Number') 
 ylabel('Time(s)')
