@@ -24,43 +24,58 @@ public class RepoStorage {
 
 	/** Host where this file system belongs to */
 	private DTNHost host;
+	private double compressionRate;
 
 	/** size of the storage space */
 	private long storageSize;
+	private long processSize;
+	private long processedSize;
 	private long nrofDeletedMessages;
 	private double totalReceivedMessages;
 
 	private String MessageId;
 
 	protected ArrayList<Message> storedMessages;
+	protected ArrayList<Message> processMessages;
+	protected ArrayList<Message> processedMessages;
 
 	/** value to keep track of used storage */
 	//protected long usedStorage;
 
 	protected Collection<Message> messages;
 
-	private Message sm;
-
-	public void init(DTNHost dtnHost, long storageSize) {
+	public void init(DTNHost dtnHost, long storageSize, long processSize) {
 		this.host = dtnHost;
 		//this.messages = new Collection<Message>();
 		this.storedMessages = new ArrayList<Message>();
+		this.processMessages = new ArrayList<Message>();
+		this.processedMessages = new ArrayList<Message>();
 		this.storageSize = 0;
+		this.processSize = 0;
+		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
-		}	
+		}
+		if (this.getHost().hasProcessingCapability()){
+			this.processSize = processSize;
+			this.processedSize = (long)(processSize/this.compressionRate);
+		}
 	}
 
 	public long getTotalStorageSpace() {
 		return this.storageSize;
 	}
 	
+	public long getTotalProcessStorageSpace() {
+		return this.processSize;
+	}
+	
 	/** Create message collection stored return method */
 	
 	public Collection<Message> getStoredMessagesCollection() {
-		Collection<Message> messages = storedMessages;
+		this.messages = storedMessages;
 		return this.messages;
 	}
 
@@ -69,15 +84,42 @@ public class RepoStorage {
 	public ArrayList<Message> getStoredMessages() {
 		return this.storedMessages;
 	}
+
+	/** Create message ArrayList stored return method */
+	
+	public ArrayList<Message> getProcessedMessages() {
+		return this.processedMessages;
+	}
+	
+
+	/**
+	 * TODO: Add a function, to start processing messages as soon as they 
+	 * enter processing storage (processStorage), by reducing their size at 
+	 * the set compression rate, with a delay, and before it sends them off 
+	 * (depletes the messages), it stores them in processedStorage.
+	 */
 	
 	/**
 	 * Adds a message to the storage system
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
-	 */
+	 */			
 	public void addToStoredMessages(Message sm) {
 		if (sm != null) {
-			this.storedMessages.add(sm);
+			if (this.getHost().hasProcessingCapability) {
+				if (this.isProcessingFull()) {
+					this.storedMessages.add(sm);
+				}
+				else {
+					this.processMessages.add(sm);
+					if (!this.isProcessedFull()) {
+						this.processMessage(this.getOldestProcessMessage());
+					}
+				}
+			}
+			else {
+				this.storedMessages.add(sm);
+			}
 			this.totalReceivedMessages++;
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
@@ -85,9 +127,9 @@ public class RepoStorage {
 	}
 	
 	/**
-	 * Returns a file by hash.
-	 * @param hash hash of the file
-	 * @return The file
+	 * Returns a stored message by ID.
+	 * @param MessageId ID of the file
+	 * @return The message
 	 */
 	public Message getStoredMessage(String MessageId) {
 		Message storedMessage = this.storedMessages.get(0);
@@ -101,17 +143,79 @@ public class RepoStorage {
 	}
 	
 	/**
+	 * Returns a processed message by ID.
+	 * @param MessageId ID of the file
+	 * @return The message
+	 */
+	public Message getProcessedMessage(String MessageId) {
+		Message processedMessage = this.processedMessages.get(0);
+		for (Message temp : processedMessages){
+			if (temp.getId() == MessageId){
+				int i = this.processedMessages.indexOf(temp);
+				processedMessage = this.processedMessages.get(i);
+			}
+		}
+		return processedMessage;
+	}
+	
+	public boolean processMessage(Message procMessage) {
+		int initsize = procMessage.getSize();
+		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), initsize/2);
+		this.processedMessages.add(processedMessage);
+		this.deleteProcMessage(procMessage.getId());
+		return true;
+	}
+	
+	/**
 	 * Returns the number of files this file system has
 	 * @return How many files this file system has
 	 */
 	public int getNrofMessages() {
 		return this.storedMessages.size();
 	}
+	
+	/**
+	 * Returns the number of files this file system has
+	 * @return How many files this file system has
+	 */
+	public int getNrofProcessedMessages() {
+		return this.processedMessages.size();
+	}
 
+	/**
+	 * Returns the total size of stored messages in this storage system
+	 * @return The size of the used storage in this storage system
+	 */
 	public long getStoredMessagesSize() {
 		long storedMessagesSize = 0;
 		for (int i=0; i<this.storedMessages.size(); i++){
 			Message temp = this.storedMessages.get(i);
+			storedMessagesSize += temp.getSize();
+		}
+		return storedMessagesSize;
+	}
+
+	/**
+	 * Returns the total size of messages to be processed in this storage system
+	 * @return The size of the used processing storage in this storage system
+	 */
+	public long getProcMessagesSize() {
+		long storedMessagesSize = 0;
+		for (int i=0; i<this.processMessages.size(); i++){
+			Message temp = this.processMessages.get(i);
+			storedMessagesSize += temp.getSize();
+		}
+		return storedMessagesSize;
+	}
+
+	/**
+	 * Returns the total size of messages to be processed in this storage system
+	 * @return The size of the used processing storage in this storage system
+	 */
+	public long getProcessedMessagesSize() {
+		long storedMessagesSize = 0;
+		for (int i=0; i<this.processedMessages.size(); i++){
+			Message temp = this.processedMessages.get(i);
 			storedMessagesSize += temp.getSize();
 		}
 		return storedMessagesSize;
@@ -133,8 +237,15 @@ public class RepoStorage {
 	 */
 	public boolean hasMessage(String MessageId) {
 		boolean answer = false;
-		for(int i=0; i<storedMessages.size(); i++){
-			if(storedMessages.get(i).getId() == MessageId){
+
+		for (int j=0; j<this.processedMessages.size(); j++){
+			if(this.processedMessages.get(j).getId() == MessageId){
+				answer =  true;
+				return answer;
+			}
+		}
+		for(int i=0; i<this.storedMessages.size(); i++){
+			if(this.storedMessages.get(i).getId() == MessageId){
 				answer =  true;
 			}
 			else{
@@ -143,11 +254,50 @@ public class RepoStorage {
 		}
 		return answer;
 	}
-	
+
+	/**
+	 * Method for deleting specific stored message
+	 * @param MessageId ID of message to be deleted
+	 * @return successful deletion status
+	 */
 	public boolean deleteStoredMessage(String MessageId){
 		for(int i=0; i<storedMessages.size(); i++){
 			if(storedMessages.get(i).getId() == MessageId){
 				this.storedMessages.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Method for deleting specific message to be processed
+	 * @param MessageId ID of message to be deleted
+	 * @return successful deletion status
+	 */
+	public boolean deleteProcMessage(String MessageId){
+		for(int i=0; i<processMessages.size(); i++){
+			if(processMessages.get(i).getId() == MessageId){
+				this.processMessages.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for deleting specific processed message
+	 * @param MessageId ID of message to be deleted
+	 * @return successful deletion status
+	 */
+	public boolean deleteProcessedMessage(String MessageId){
+		/* 
+		 * To be used in event, for deleting processed messages 
+		 * after "sending"/depleting them.
+		 */
+		for(int i=0; i<processedMessages.size(); i++){
+			if(processedMessages.get(i).getId() == MessageId){
+				this.processedMessages.remove(i);
 				return true;
 			}
 		}
@@ -201,6 +351,50 @@ public class RepoStorage {
 			//System.out.println("There is not enough storage space: " + freeStorage);
 			return false;
 		}
+	}
+
+	public boolean isProcessingFull() {
+		long usedProc = this.getProcMessagesSize();
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		//} catch(Exception e) {}
+		if (usedProc >= this.processSize - 100000000){
+			//System.out.println("There is enough storage space: " + freeStorage);
+			return true;
+		}
+		else{
+			//System.out.println("There is not enough storage space: " + freeStorage);
+			return false;
+		}
+	}
+
+	public boolean isProcessedFull() {
+		long usedProcessed = this.getProcessedMessagesSize();
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		//} catch(Exception e) {}
+		if (usedProcessed >= this.processedSize - 100000000){
+			//System.out.println("There is enough storage space: " + freeStorage);
+			return true;
+		}
+		else{
+			//System.out.println("There is not enough storage space: " + freeStorage);
+			return false;
+		}
+	}
+	
+	public Message getOldestProcessMessage(){
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null ) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
 	}
 
 	public void deleteMessagesForSpace(boolean deleteAll){

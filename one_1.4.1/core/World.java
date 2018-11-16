@@ -330,7 +330,7 @@ public class World {
 		ArrayList <DTNHost> depletionHosts = new ArrayList <DTNHost>();
 		for (int i=0, n = hosts.size();i < n; i++) {
 			//System.out.println("We are looking for group ID(s) "+deplHosts.get(0));
-			if (hosts.get(i).hasFileCapability) {
+			if (hosts.get(i).hasStorageCapability()) {
 				DTNHost node = hosts.get(i);
 				for (int u = 0; u < deplHosts.size(); u++) {
 					if (node.name.toString().contains(deplHosts.get(u))){

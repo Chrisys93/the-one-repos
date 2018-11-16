@@ -83,6 +83,8 @@ public class SimScenario implements Serializable {
 
 	/** host's storage capability in the group -setting id ({@value})*/
 	public static final String STORAGE_CAPABILITY_S = "storageCapability";
+	/** host's processing capability in the group -setting id ({@value})*/
+	public static final String PROC_CAPABILITY_S = "processingCapability";
 	/** simulate message storage in repos -setting id ({@value})*/
 	public static final String SIM_STORE_S = "simulateStorage";
 
@@ -99,6 +101,8 @@ public class SimScenario implements Serializable {
 
 	/** Message storage size -setting id ({@value}). Integer value in bytes.*/
 	public static final String STORE_SIZE_S = "storageSize";
+	/** Message processing size -setting id ({@value}). Integer value in bytes.*/
+	public static final String PROC_SIZE_S = "processSize";
 
 	
 	/** The world instance */
@@ -117,6 +121,9 @@ public class SimScenario implements Serializable {
 
 	/** number of host groups with storage capability*/
 	public int nrofGroupsWithStorage;
+
+	/** number of host groups with storage capability*/
+	public int nrofGroupsWithProcessing;
 
 	/** Width of the world */
 	private int worldSizeX;
@@ -253,7 +260,12 @@ public class SimScenario implements Serializable {
 		for(DTNHost host:hosts){
 			//System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
 			if (host.hasStorageCapability()){
-				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize());
+				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), 0);
+				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
+			}
+			//System.out.println("Host " + host.name + " has "+host.hasProcessingCapability()+  " processing storage");
+			if (host.hasProcessingCapability()){
+				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), host.getStorageSystemProcSize());
 				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
 			}
 		}
@@ -455,6 +467,7 @@ public class SimScenario implements Serializable {
 		int lastGroupWithStorage = -1;
 		this.nrofGroupsWithFiles = 0;
 		this.nrofGroupsWithStorage = 0;
+		this.nrofGroupsWithProcessing = 0;
 		this.groupSizes = new int[nrofGroups];
 
 		for (int i=1; i<=nrofGroups; i++) {
@@ -490,7 +503,7 @@ public class SimScenario implements Serializable {
 					storageSize = s.getLong(STORE_SIZE_S);
 				}
 				else {
-					storageSize = 100000000; //defaults to 100M storage
+					storageSize = 100000000000L; //defaults to 100M storage
 				}
 			} else {
 				hasStorageCapability = false;
@@ -500,6 +513,29 @@ public class SimScenario implements Serializable {
 				lastGroupWithStorage = i;
 			//	System.out.println("Group " + i + " has storage");
 				this.nrofGroupsWithStorage++;
+			}
+		
+			
+			boolean hasProcessingCapability;
+			long processSize = 0;
+			if (s.contains(PROC_CAPABILITY_S)) {
+				hasProcessingCapability = s.getBoolean(PROC_CAPABILITY_S);
+			//	System.out.println("has storage detected");
+				/** \/ This \/ needs to be solved in the router part! */
+				if (s.contains(PROC_SIZE_S)) {
+					processSize = s.getLong(PROC_SIZE_S);
+				}
+				else {
+					processSize = 50000000000L; //defaults to 100M storage
+				}
+			} else {
+				hasProcessingCapability = false;
+			}
+			
+			if(hasStorageCapability && i!=lastGroupWithStorage){
+				lastGroupWithStorage = i;
+			//	System.out.println("Group " + i + " has processing");
+				this.nrofGroupsWithProcessing++;
 			}
 			
 
@@ -585,7 +621,7 @@ public class SimScenario implements Serializable {
 					// new instances of movement model and message router
 					DTNHost host = new DTNHost(this.messageListeners, 
 							this.movementListeners, gid, mmNetInterfaces, comBus, 
-							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, storageSize, simLocation);
+							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, simLocation);
 					hosts.add(host);
 				}
 				else {
@@ -593,7 +629,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, storageSize, simLocation);
+						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, simLocation);
 				hosts.add(host);
 				}
 			}

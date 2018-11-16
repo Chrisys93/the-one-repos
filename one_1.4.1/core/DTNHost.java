@@ -41,7 +41,9 @@ public class DTNHost implements Comparable<DTNHost> {
 	
 	private RepoStorage storageSystem;
 	protected boolean hasStorageCapability;
+	protected boolean hasProcessingCapability;
 	public long storageSize;
+	private long processSize;
 	
 	private double[] simLocation;
 
@@ -64,7 +66,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
 			MovementModel mmProto, MessageRouter mRouterProto,
-			boolean hasFileCapability, boolean hasStorageCapability, long storageSize, double[] simLocation) {
+			boolean hasFileCapability, boolean hasStorageCapability, boolean hasProcessingCapability, long storageSize, long processSize, double[] simLocation) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
@@ -72,7 +74,9 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.net = new ArrayList<NetworkInterface>();
 		this.hasFileCapability = hasFileCapability;
 		this.hasStorageCapability = hasStorageCapability;
+		this.hasProcessingCapability = hasProcessingCapability;
 		this.storageSize = storageSize;
+		this.processSize = processSize;
 		this.simLocation = simLocation;
 
 		for (NetworkInterface i : interf) {
@@ -96,7 +100,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			
 		setRouter(mRouterProto.replicate());
 		setFileSystem(new DTNFileSystem());
-		setStorageSystem(new RepoStorage(), storageSize);
+		setStorageSystem(new RepoStorage(), storageSize, processSize);
 
 		this.location = movement.getInitialLocation();
 
@@ -170,10 +174,11 @@ public class DTNHost implements Comparable<DTNHost> {
 
 	/**
 	 * Set a storage system for this host
+	 * @param processSize 
 	 * @param storage system The router to set
 	 */
-	public void setStorageSystem(RepoStorage storageSystem, long storageSize) {
-		storageSystem.init(this, storageSize);
+	public void setStorageSystem(RepoStorage storageSystem, long storageSize, long processSize) {
+		storageSystem.init(this, storageSize, processSize);
 		this.storageSystem = storageSystem;
 	}
 
@@ -191,6 +196,14 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public long getStorageSystemSize() {
 		return this.storageSize;
+	}
+
+	/**
+	 * Returns the storage system size of this host
+	 * @return the storage system size of this host
+	 */
+	public long getStorageSystemProcSize() {
+		return this.processSize;
 	}
 	
 	/**
@@ -587,6 +600,10 @@ public class DTNHost implements Comparable<DTNHost> {
 
 	public boolean hasStorageCapability() {
 		return hasStorageCapability;
+	}
+
+	public boolean hasProcessingCapability() {
+		return hasProcessingCapability;
 	}
 
 	public int getGroupId(int[] groupSizes, int nrofGroupsWithFiles) {
