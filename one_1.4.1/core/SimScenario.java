@@ -103,6 +103,8 @@ public class SimScenario implements Serializable {
 	public static final String STORE_SIZE_S = "storageSize";
 	/** Message processing size -setting id ({@value}). Integer value in bytes.*/
 	public static final String PROC_SIZE_S = "processSize";
+	/** The processing nodes process and compress the messages with an average compression ratio */
+	public static final String COMP_RAT_S = "compressionRate";
 
 	
 	/** The world instance */
@@ -260,12 +262,12 @@ public class SimScenario implements Serializable {
 		for(DTNHost host:hosts){
 			//System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
 			if (host.hasStorageCapability()){
-				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), 0);
+				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), 0, host.getStorageSystemCompressionRate());
 				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
 			}
 			//System.out.println("Host " + host.name + " has "+host.hasProcessingCapability()+  " processing storage");
 			if (host.hasProcessingCapability()){
-				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), host.getStorageSystemProcSize());
+				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), host.getStorageSystemProcSize(), host.getStorageSystemCompressionRate());
 				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
 			}
 		}
@@ -518,15 +520,18 @@ public class SimScenario implements Serializable {
 			
 			boolean hasProcessingCapability;
 			long processSize = 0;
+			double compressionRate = 0;
 			if (s.contains(PROC_CAPABILITY_S)) {
 				hasProcessingCapability = s.getBoolean(PROC_CAPABILITY_S);
 			//	System.out.println("has storage detected");
 				/** \/ This \/ needs to be solved in the router part! */
 				if (s.contains(PROC_SIZE_S)) {
 					processSize = s.getLong(PROC_SIZE_S);
+					compressionRate = s.getDouble(COMP_RAT_S);
 				}
 				else {
 					processSize = 50000000000L; //defaults to 100M storage
+					compressionRate = 1;
 				}
 			} else {
 				hasProcessingCapability = false;
@@ -621,7 +626,7 @@ public class SimScenario implements Serializable {
 					// new instances of movement model and message router
 					DTNHost host = new DTNHost(this.messageListeners, 
 							this.movementListeners, gid, mmNetInterfaces, comBus, 
-							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, simLocation);
+							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
 					hosts.add(host);
 				}
 				else {
@@ -629,7 +634,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, simLocation);
+						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
 				hosts.add(host);
 				}
 			}

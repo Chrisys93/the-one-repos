@@ -44,7 +44,7 @@ public class RepoStorage {
 
 	protected Collection<Message> messages;
 
-	public void init(DTNHost dtnHost, long storageSize, long processSize) {
+	public void init(DTNHost dtnHost, long storageSize, long processSize, double compressionRate) {
 		this.host = dtnHost;
 		//this.messages = new Collection<Message>();
 		this.storedMessages = new ArrayList<Message>();
@@ -55,6 +55,7 @@ public class RepoStorage {
 		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
+		this.compressionRate = compressionRate;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
 		}
@@ -89,6 +90,12 @@ public class RepoStorage {
 	
 	public ArrayList<Message> getProcessedMessages() {
 		return this.processedMessages;
+	}
+
+	/** Create message ArrayList stored return method */
+	
+	public ArrayList<Message> getProcessMessages() {
+		return this.processMessages;
 	}
 	
 
@@ -160,7 +167,8 @@ public class RepoStorage {
 	
 	public boolean processMessage(Message procMessage) {
 		int initsize = procMessage.getSize();
-		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), initsize/2);
+		int processedsize = initsize/2;
+		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
 		this.processedMessages.add(processedMessage);
 		this.deleteProcMessage(procMessage.getId());
 		return true;
@@ -396,24 +404,40 @@ public class RepoStorage {
 		}
 		return oldest;
 	}
+	
+	public Message getOldestStoredMessage(){
+		Message oldest = null;
+		for (Message m : this.storedMessages) {
+			
+			if (oldest == null ) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
 
 	public void deleteMessagesForSpace(boolean deleteAll){
 		if (this.isStorageFull() && deleteAll == false){
 			for (int i=0; i<1000; i++){
-				Message oldest = null;
-				for (Message m : this.storedMessages) {
-					
-					if (oldest == null ) {
-						oldest = m;
-					}
-					else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-						oldest = m;
+				Message oldest = this.getOldestStoredMessage();
+				if (this.isProcessingFull()) {
+					String mId = oldest.getId();
+					this.deleteStoredMessage(mId);
+					this.nrofDeletedMessages++;
+				}
+				else {
+					this.processMessages.add(oldest);
+					if (!this.isProcessedFull()) {
+						this.processMessage(this.getOldestProcessMessage());
 					}
 				}
 				//System.out.println("There is " + this.getStoredMessagesSize() + " storage used in "+this.getHost().name);
-				String mId = oldest.getId(); 
-				this.deleteStoredMessage(mId);
-				this.nrofDeletedMessages++;
+				//String mId = oldest.getId(); 
+				//this.deleteStoredMessage(mId);
+				//this.nrofDeletedMessages++;
 			}
 		}
 		else if (deleteAll == true){

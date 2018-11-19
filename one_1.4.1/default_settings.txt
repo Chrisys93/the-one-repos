@@ -110,7 +110,10 @@ Group1.groupID = r
 Group1.movementModel = RepoStationaryMovement
 #Group1.speed = 0, 0
 Group1.storageCapability = true
+Group1.processingCapability = true
 Group1.storageSize = 10G
+Group1.processingSize = 5G
+Group1.compressionRate = 1.2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
 Group1.nrofInterfaces = 4
@@ -250,6 +253,16 @@ Events4.msgNo = 2
 Events4.depletionHostnames = r
 # Lower limit at which depletion starts
 Events4.lowerLimit = 2500000000
+
+# Class of storage depletion
+Events5.class = ReposStorageConstantProcDepletion
+# (following settings are specific for the ReposStorageConstantDepletion class)
+# Depletion interval in seconds (a number of messages depleted/second)
+Events5.depletionInterval = 2
+# Number of message depleted each depletionInterval
+Events5.processedMsgNo = 1
+# Host names of host storages to be depleted
+Events5.procDepletionHostnames = r
 
 
 ## Movement model settings
