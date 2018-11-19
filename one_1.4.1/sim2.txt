@@ -18,6 +18,10 @@ MobileMessageLocationReport.output = [reports2/MMLR1;reports2/MMLR2;reports2/MML
 RepoIncomingSpeedsReport.output = [reports2/RISR1;reports2/RISR2;reports2/RISR3; reports2/RISR4; reports2/RISR5; reports2/RISR6]
 RepoDeletedMessagesReport.output = [reports2/RDMR1;reports2/RDMR2;reports2/RDMR3; reports2/RDMR4; reports2/RDMR5; reports2/RDMR6]
 MobileDeletedMessagesReport.output = [reports2/MDMR1;reports2/MDMR2;reports2/MDMR3; reports2/MDMR4; reports2/MDMR5; reports2/MDMR6]
+RepoProcessingMessagesReport.granularity = [reports2/RPrMR1;reports2/RPrMR2;reports2/RPrMR3; reports2/RPrMR4; reports2/RPrMR5; reports2/RPrMR6]
+RepoProcessedMessagesReport.granularity = [reports2/RPMR1;reports2/RPMR2;reports2/RPMR3; reports2/RPMR4; reports2/RPMR5; reports2/RPMR6]
+RepoAllMessagesReport.granularity = [reports2/RAMR1;reports2/RAMR2;reports2/RAMR3; reports2/RAMR4; reports2/RAMR5; reports2/RAMR6]
+MobileUnprocessedMessagesReport.granularity = [reports2/RUMR1;reports2/RUMR2;reports2/RUMR3; reports2/RUMR4; reports2/RUMR5; reports2/RUMR6]
 
 
 
