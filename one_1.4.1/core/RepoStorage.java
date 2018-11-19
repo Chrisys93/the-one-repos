@@ -186,6 +186,14 @@ public class RepoStorage {
 	 * Returns the number of files this file system has
 	 * @return How many files this file system has
 	 */
+	public int getNrofProcessMessages() {
+		return this.processMessages.size();
+	}
+	
+	/**
+	 * Returns the number of files this file system has
+	 * @return How many files this file system has
+	 */
 	public int getNrofProcessedMessages() {
 		return this.processedMessages.size();
 	}

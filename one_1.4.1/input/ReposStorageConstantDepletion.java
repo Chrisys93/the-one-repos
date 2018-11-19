@@ -189,9 +189,9 @@ public class ReposStorageConstantDepletion implements EventQueue {
 	 */
 	/*TODO: This \/ needs to be sorted out.*/
 	public ExternalEvent nextEvent() {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
-		} catch(Exception e) {}
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("logevent.txt")));
+		//} catch(Exception e) {}
 		int msgNo;
 		int interval;
 		ArrayList <String> hosts;

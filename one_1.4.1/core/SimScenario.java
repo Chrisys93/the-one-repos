@@ -261,15 +261,16 @@ public class SimScenario implements Serializable {
 		 */
 		for(DTNHost host:hosts){
 			//System.out.println("Host " + host.name + " has "+host.hasStorageCapability()+  " storage");
-			if (host.hasStorageCapability()){
+			if (host.hasStorageCapability() && !host.hasProcessingCapability()){
+				if (host.hasProcessingCapability()){
+					host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), host.getStorageSystemProcSize(), host.getStorageSystemCompressionRate());
+					//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
+					return;
+				}
 				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), 0, host.getStorageSystemCompressionRate());
 				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
 			}
 			//System.out.println("Host " + host.name + " has "+host.hasProcessingCapability()+  " processing storage");
-			if (host.hasProcessingCapability()){
-				host.setStorageSystem(host.getStorageSystem(), host.getStorageSystemSize(), host.getStorageSystemProcSize(), host.getStorageSystemCompressionRate());
-				//System.out.println("Host "+host.name+" has "+host.getStorageSystemSize()+ " storage");
-			}
 		}
 	}
 		
@@ -467,6 +468,7 @@ public class SimScenario implements Serializable {
 		this.hosts = new ArrayList<DTNHost>();
 		int lastGroupWithFiles = -1;
 		int lastGroupWithStorage = -1;
+		int lastGroupWithProcessing = -1;
 		this.nrofGroupsWithFiles = 0;
 		this.nrofGroupsWithStorage = 0;
 		this.nrofGroupsWithProcessing = 0;
@@ -523,23 +525,23 @@ public class SimScenario implements Serializable {
 			double compressionRate = 0;
 			if (s.contains(PROC_CAPABILITY_S)) {
 				hasProcessingCapability = s.getBoolean(PROC_CAPABILITY_S);
-			//	System.out.println("has storage detected");
+				//System.out.println("has processing detected");
 				/** \/ This \/ needs to be solved in the router part! */
 				if (s.contains(PROC_SIZE_S)) {
 					processSize = s.getLong(PROC_SIZE_S);
 					compressionRate = s.getDouble(COMP_RAT_S);
 				}
 				else {
-					processSize = 50000000000L; //defaults to 100M storage
+					processSize = 5000000000L; //defaults to 5G storage
 					compressionRate = 1;
 				}
 			} else {
 				hasProcessingCapability = false;
 			}
 			
-			if(hasStorageCapability && i!=lastGroupWithStorage){
-				lastGroupWithStorage = i;
-			//	System.out.println("Group " + i + " has processing");
+			if(hasProcessingCapability && i!=lastGroupWithProcessing){
+				lastGroupWithProcessing = i;
+				System.out.println("Group " + i + " has processing");
 				this.nrofGroupsWithProcessing++;
 			}
 			
@@ -627,6 +629,12 @@ public class SimScenario implements Serializable {
 					DTNHost host = new DTNHost(this.messageListeners, 
 							this.movementListeners, gid, mmNetInterfaces, comBus, 
 							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
+					/*if (host.hasProcessingCapability()) {
+						System.out.println("Host "+host.name+ " has " +host.getStorageSystemProcSize()+" processing storage");
+					}
+					else {
+						System.out.println("Host "+host.name+"does not have processing capability");
+					}*/
 					hosts.add(host);
 				}
 				else {

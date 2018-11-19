@@ -3,6 +3,11 @@ EDIT!!!!!!!!!!!!!!!!!!!
 The ONE v1.4.1 - with Repositories - Readme
 =======================
 
+This implementation of The ONE Simulator has the main scope of being used as a 
+large-scale proof-of concept tool, for data analysis and performance analysis and
+optimisation. The main subject of this proof-of-concept is the management and manipulation
+of data at the edge of the network, via data repositories.
+
 The ONE is an Opportunistic Network Environment simulator which provides a
 powerful tool for generating mobility traces, running DTN messaging
 simulations with different routing protocols, interfaces, storage and 
