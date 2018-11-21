@@ -31,6 +31,10 @@ public class RepoStorage {
 	private long processSize;
 	private long processedSize;
 	private long nrofDeletedMessages;
+	private long depletedProcMessages;
+	private long depletedProcMessagesSize;
+	private long depletedStoredMessages;
+	private long depletedStoredMessagesSize;
 	private double totalReceivedMessages;
 
 	private String MessageId;
@@ -55,6 +59,10 @@ public class RepoStorage {
 		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
+		this.depletedProcMessages = 0;
+		this.depletedProcMessagesSize = 0;
+		this.depletedStoredMessages = 0;
+		this.depletedStoredMessagesSize = 0;
 		this.compressionRate = compressionRate;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
@@ -107,7 +115,10 @@ public class RepoStorage {
 	 */
 	
 	/**
-	 * Adds a message to the storage system
+	 * Adds a message to the storage system and/or to the processing pipeline
+	 * if the the node has processing capability and the processing storage is 
+	 * not full and/or process the oldest message in processing storage, unless 
+	 * the processed messages storage is full.
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
@@ -130,6 +141,26 @@ public class RepoStorage {
 			this.totalReceivedMessages++;
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
+		}
+	}
+	
+
+	/**
+	 * TODO: Add a function, to start processing messages as soon as they 
+	 * enter processing storage (processStorage), by reducing their size at 
+	 * the set compression rate, with a delay, and before it sends them off 
+	 * (depletes the messages), it stores them in processedStorage.
+	 */
+	
+	/**
+	 * Adds a message to the depleted stored messages
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDeplStoredMessages(Message sm) {
+		if (sm != null) {
+			this.depletedStoredMessages++;
+			this.depletedStoredMessagesSize += sm.getSize();
 		}
 	}
 	
@@ -313,6 +344,8 @@ public class RepoStorage {
 		 */
 		for(int i=0; i<processedMessages.size(); i++){
 			if(processedMessages.get(i).getId() == MessageId){
+				this.depletedProcMessages++;
+				this.depletedProcMessagesSize += this.processedMessages.get(i).getSize();
 				this.processedMessages.remove(i);
 				return true;
 			}
@@ -324,8 +357,24 @@ public class RepoStorage {
 		return this.nrofDeletedMessages;
 	}
 	
+	public long getNrofDepletedProcMessages() {
+		return this.depletedProcMessages;
+	}
+	
+	public long getNrofDepletedStoredMessages() {
+		return this.depletedStoredMessages;
+	}
+	
 	public double getOverallMeanIncomingSpeed() {
 		return (this.totalReceivedMessages/SimClock.getTime());
+	}
+	
+	public double getOverallDepletedProcMessagesBW() {
+		return (this.depletedProcMessagesSize/SimClock.getTime());
+	}
+	
+	public double getOverallDepletedStoredMessagesBW() {
+		return (this.depletedStoredMessagesSize/SimClock.getTime());
 	}
 	
 	public boolean clearAllStoredMessages(){
