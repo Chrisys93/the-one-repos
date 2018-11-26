@@ -210,15 +210,20 @@ errorbar([25,50,100], fillpercerrbarS3(:,2), fillpercerrbarS3(:,2)-fillpercerrba
 errorbar([25,50,100], fillpercerrbarS4(:,2), fillpercerrbarS4(:,2)-fillpercerrbarS4(:,1), fillpercerrbarS4(:,3)-fillpercerrbarS4(:,2), '--m', 'LineWidth', 2);
 errorbar([25,50,100], fillpercerrbarS5(:,2), fillpercerrbarS5(:,2)-fillpercerrbarS5(:,1), fillpercerrbarS5(:,3)-fillpercerrbarS5(:,2), '--r', 'LineWidth', 2);
 errorbar([25,50,100], fillpercerrbarS6(:,2), fillpercerrbarS6(:,2)-fillpercerrbarS6(:,1), fillpercerrbarS6(:,3)-fillpercerrbarS6(:,2), '--g', 'LineWidth', 2);
-title('Percentage of repositories filled up to indicated values (with mode and max no. of filled repos)');
+title('Percentage of repositories filled up according to storage depletion ratio');
 xlabel('Repo storage filled (%)');
 ylabel('Quantity of repos filled (%)');
 axis([0 125 0 100])
+legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
 hold off
 
 figure
 hold on
 bar(reposfill);
+title('Repositories storage used according to storage depletion ratio');
+xlabel('Repo number');
+ylabel('Repo storage used (MB)');
+legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
 hold off
 
 
