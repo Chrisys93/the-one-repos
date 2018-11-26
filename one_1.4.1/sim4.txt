@@ -19,11 +19,10 @@ MobileMessageLocationReport.output = [reports4/MMLR1;reports4/MMLR2;reports4/MML
 RepoIncomingSpeedsReport.output = [reports4/RISR1;reports4/RISR2;reports4/RISR3; reports4/RISR4; reports4/RISR5]
 RepoDeletedMessagesReport.output = [reports4/RDMR1;reports4/RDMR2;reports4/RDMR3; reports4/RDMR4; reports4/RDMR5]
 MobileDeletedMessagesReport.output = [reports4/MDMR1;reports4/MDMR2;reports4/MDMR3; reports4/MDMR4; reports4/MDMR5]
-RepoProcessingMessagesReport.granularity = [reports4/RPrMR1;reports4/RPrMR2;reports4/RPrMR3; reports4/RPrMR4; reports4/RPrMR5]
-RepoProcessedMessagesReport.granularity = [reports4/RPMR1;reports4/RPMR2;reports4/RPMR3; reports4/RPMR4; reports4/RPMR5]
-RepoAllMessagesReport.granularity = [reports4/RAMR1;reports4/RAMR2;reports4/RAMR3; reports4/RAMR4; reports4/RAMR5]
-MobileUnprocessedMessagesReport.granularity = [reports4/RUMR1;reports4/RUMR2;reports4/RUMR3; reports4/RUMR4; reports4/RUMR5]
-
+RepoProcessingMessageLocationReport.output = [reports4/RPrMR1;reports4/RPrMR2;reports4/RPrMR3; reports4/RPrMR4; reports4/RPrMR5]
+RepoProcessedMessageLocationReport.output = [reports4/RPMR1;reports4/RPMR2;reports4/RPMR3; reports4/RPMR4; reports4/RPMR5]
+RepoAllMessagesLocationReport.output = [reports4/RAMR1;reports4/RAMR2;reports4/RAMR3; reports4/RAMR4; reports4/RAMR5]
+RepoUnprocessedMessagesLocationReport.output = [reports4/RUMR1;reports4/RUMR2;reports4/RUMR3; reports4/RUMR4; reports4/RUMR5]
 
 
 

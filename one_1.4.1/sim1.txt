@@ -209,7 +209,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 6
+Report.nrofReports = 10
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -217,8 +217,13 @@ RepoStoredMessageLocationReport.granularity = 1
 MobileMessageLocationReport.granularity = 1
 RepoIncomingSpeedsReport.granularity = 1
 RepoDeletedMessagesReport.granularity = 1
+RepoProcessingMessageLocationReport.granularity = 1
+RepoProcessedMessageLocationReport.granularity = 1
+RepoAllMessagesLocationReport.granularity = 1
 MobileDeletedMessagesReport.granularity = 1
+RepoUnprocessedMessagesLocationReport.granularity = 1
 FileLocationReport.granularity = 5
+
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
@@ -228,13 +233,21 @@ Report.report3 = MobileMessageLocationReport
 Report.report4 = RepoIncomingSpeedsReport
 Report.report5 = RepoDeletedMessagesReport
 Report.report6 = MobileDeletedMessagesReport
+Report.report7 = RepoProcessingMessageLocationReport
+Report.report8 = RepoProcessedMessageLocationReport
+Report.report9 = RepoAllMessagesLocationReport
+Report.report10 = RepoUnprocessedMessagesLocationReport
 
-RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5; reports1/RMLR6]
-RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5; reports1/RSMLR6]
-MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5; reports1/MMLR6]
-RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5; reports1/RISR6]
-RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5; reports1/RDMR6]
-MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2;reports1/MDMR3; reports1/MDMR4; reports1/MDMR5; reports1/MDMR6]
+RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5]
+RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5]
+MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5]
+RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5]
+RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5]
+MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2;reports1/MDMR3; reports1/MDMR4; reports1/MDMR5]
+RepoProcessingMessageLocationReport.output = [reports1/RPrMR1;reports1/RPrMR2;reports1/RPrMR3; reports1/RPrMR4; reports1/RPrMR5]
+RepoProcessedMessageLocationReport.output = [reports1/RPMR1;reports1/RPMR2;reports1/RPMR3; reports1/RPMR4; reports1/RPMR5]
+RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2;reports1/RAMR3; reports1/RAMR4; reports1/RAMR5]
+RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1;reports1/RUMR2;reports1/RUMR3; reports1/RUMR4; reports1/RUMR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
