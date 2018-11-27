@@ -138,7 +138,7 @@ Group3.speed = 2.7, 13.9
 #Group3.bufferSize = 200M
 Group3.interface1 = wlanCarInterface
 # More cars than anything else
-#Group3.nrofHosts = [40; 40; 40; 500; 1000]
+Group3.nrofHosts = [40; 40; 40; 500; 1000]
 
 # The Bus groups
 Group4.groupID = b

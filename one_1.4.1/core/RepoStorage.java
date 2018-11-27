@@ -144,14 +144,6 @@ public class RepoStorage {
 		}
 	}
 	
-
-	/**
-	 * TODO: Add a function, to start processing messages as soon as they 
-	 * enter processing storage (processStorage), by reducing their size at 
-	 * the set compression rate, with a delay, and before it sends them off 
-	 * (depletes the messages), it stores them in processedStorage.
-	 */
-	
 	/**
 	 * Adds a message to the depleted stored messages
 	 * @param sm The message to add
