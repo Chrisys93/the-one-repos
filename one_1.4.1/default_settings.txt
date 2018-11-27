@@ -116,11 +116,11 @@ Group1.processSize = 5G
 Group1.compressionRate = 1.2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
-Group1.nrofInterfaces = 4
+Group1.nrofInterfaces = 3
 Group1.interface1 = wlanPedInterface
 Group1.interface2 = wlanCarInterface
 Group1.interface3 = wlanBusInterface
-Group1.interface4 = wlanRepInterface
+#Group1.interface4 = wlanRepInterface
 
 # group2 pedestrians specific settings
 Group2.groupID = p
