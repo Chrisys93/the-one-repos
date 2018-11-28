@@ -118,7 +118,7 @@ public class RepoStoredMessageLocationReport extends Report implements UpdateLis
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							int totalStoredMsgs =  host.getStorageSystem().getNrofMessages();// + host.getStorageSystem().getNrofProcessMessages() + host.getStorageSystem().getNrofProcessedMessages();
+							int totalStoredMsgs =  host.getStorageSystem().getNrofMessages() + host.getStorageSystem().getNrofProcessMessages();
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

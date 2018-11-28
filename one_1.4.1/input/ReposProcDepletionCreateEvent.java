@@ -45,15 +45,23 @@ public class ReposProcDepletionCreateEvent extends ReposProcDepletionEvent {
 			//System.out.println("The storage used in node "+currNode.name.toString()+" is: "+currNode.getStorageSystem().getStoredMessagesSize());
 			if (currNode.getStorageSystem().getNrofMessages() > this.processedMsgNo){
 				for (int u = 0; u<this.processedMsgNo; u++) {
-					if (currNode.getStorageSystem().getOldestProcessMessage() != null) {
-						Message temp = currNode.getStorageSystem().getOldestProcessMessage();
-						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
-						while (!currNode.getStorageSystem().processMessage(temp)) {}
-						currNode.getStorageSystem().deleteProcessedMessage(temp.getId());
+					if (!currNode.getStorageSystem().isProcessingEmpty()) {
+						if (currNode.getStorageSystem().getOldestProcessMessage() != null) {
+							Message temp = currNode.getStorageSystem().getOldestProcessMessage();
+							//System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
+							while (!currNode.getStorageSystem().processMessage(temp)) {}
+							currNode.getStorageSystem().deleteProcessedMessage(temp.getId());
+						}
+						if (!currNode.getStorageSystem().isProcessingFull()) {
+							Message tempstored = currNode.getStorageSystem().getOldestStoredMessage();
+							currNode.getStorageSystem().addToStoredMessages(tempstored);
+						}
 					}
-					if (!currNode.getStorageSystem().isProcessingFull()) {
-						Message tempstored = currNode.getStorageSystem().getOldestStoredMessage();
-						currNode.getStorageSystem().addToStoredMessages(tempstored);
+					else {
+						Message temp = currNode.getStorageSystem().getOldestStoredMessage();
+						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
+						currNode.getStorageSystem().addToDeplStoredMessages(temp);
+						currNode.getStorageSystem().deleteStoredMessage(temp.getId());
 					}
 				}
 			}
