@@ -1,3 +1,6 @@
+% Make a function out of this, that takes the reports folder address and
+% the number of runs as variables;
+
 clear
 R1 = dlmread('reports1/RDMR1', ' ', 0, 1);
 M1 = dlmread('reports1/MDMR1', ' ', 0, 1);
@@ -46,6 +49,7 @@ for inc = 1:6
     if inc == 3
         S = S3;
     end
+    
     if inc == 4
         S = S4;
     end
@@ -58,6 +62,42 @@ for inc = 1:6
         S = S6;
     end
     
+    if inc == 7
+        S = S7;
+    end
+    
+    if inc == 8
+        S = S8;
+    end
+    
+    if inc == 9
+        S = S9;
+    end
+    
+    if inc == 10
+        S = S10;
+    end
+    
+    if inc == 11
+        S = S11;
+    end
+    
+    if inc == 12
+        S = S12;
+    end
+    
+    if inc == 13
+        S = S13;
+    end
+    
+    if inc == 14
+        S = S14;
+    end
+    
+    if inc == 15
+        S = S15;
+    end
+    
     s = 10000;
     col = 1;
     for i = 1:r3
@@ -67,10 +107,10 @@ for inc = 1:6
             c50 = 1;
             for c = 1:c3
                 if S(i, c) >= 5000
-                    fillperc50_100(c50) = S(i, c)/10000*100;
+                    fillperc50_100(c50) = S(i, c)/15000*100;
                     c50=c50+1;
                 else
-                    fillperc0_50(c0) = S(i, c)/10000*100;
+                    fillperc0_50(c0) = S(i, c)/15000*100;
                     c0=c0+1;
                 end
             end
@@ -83,7 +123,7 @@ for inc = 1:6
 
         c100 = 1;
         for c = 1:c3
-            if S(i, c) >= 9900
+            if S(i, c) >= 14000
                 fill100(c100) = 1;
             else
                 fill100(c100) = 0;
@@ -95,7 +135,7 @@ for inc = 1:6
 
         c50 = 1;
         for c = 1:c3
-            if S(i, c) >= 5000
+            if S(i, c) >= 7500
                 fill50(c50) = 1;
             else
                 fill50(c50) = 0;
@@ -107,7 +147,7 @@ for inc = 1:6
 
         c25 = 1;
         for c = 1:c3
-            if S(i, c) >= 2500
+            if S(i, c) >= 4500
                 fill25(c25) = 1;
             else
                 fill25(c25) = 0;
@@ -295,3 +335,10 @@ title('3D Stem plot of Repos Dleted Messages')
 xlabel('Repo Number') 
 ylabel('Time(s)')
 zlabel('Messages')
+
+storage_17 = [S1(:, 17), S2(:, 17), S3(:, 17), S4(:, 17), S5(:, 17), S6(:, 17)];
+
+figure
+plot(storage_17);
+legend('1 msg/s', '2 msg/s', '3 msg/s', '4 msg/s', '5 msg/s', '6 msg/s');
+

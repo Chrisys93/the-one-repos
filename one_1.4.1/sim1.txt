@@ -178,7 +178,7 @@ Events3.tohosts = r
 Events3.prefix = MB
 
 # Class of storage depletion
-Events4.class = ReposStorageConstantDepletion
+Events4.class = ReposStorageConstantProcDepletion
 # (following settings are specific for the ReposStorageConstantDepletion class)
 # Depletion interval in seconds (a number of messages depleted/second)
 Events4.depletionInterval = 1
@@ -186,8 +186,6 @@ Events4.depletionInterval = 1
 Events4.msgNo = [1; 2; 3; 4; 5; 6]
 # Host names of host storages to be depleted
 Events4.depletionHostnames = r
-# Lower limit at which depletion starts
-Events4.lowerLimit = 2500000000
 
 
 ## Movement model settings
