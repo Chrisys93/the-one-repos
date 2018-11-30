@@ -61,52 +61,52 @@ for inc = 1:6
     if inc == 6
         S = S6;
     end
-    
-    if inc == 7
-        S = S7;
-    end
-    
-    if inc == 8
-        S = S8;
-    end
-    
-    if inc == 9
-        S = S9;
-    end
-    
-    if inc == 10
-        S = S10;
-    end
-    
-    if inc == 11
-        S = S11;
-    end
-    
-    if inc == 12
-        S = S12;
-    end
-    
-    if inc == 13
-        S = S13;
-    end
-    
-    if inc == 14
-        S = S14;
-    end
-    
-    if inc == 15
-        S = S15;
-    end
+%     
+%     if inc == 7
+%         S = S7;
+%     end
+%     
+%     if inc == 8
+%         S = S8;
+%     end
+%     
+%     if inc == 9
+%         S = S9;
+%     end
+%     
+%     if inc == 10
+%         S = S10;
+%     end
+%     
+%     if inc == 11
+%         S = S11;
+%     end
+%     
+%     if inc == 12
+%         S = S12;
+%     end
+%     
+%     if inc == 13
+%         S = S13;
+%     end
+%     
+%     if inc == 14
+%         S = S14;
+%     end
+%     
+%     if inc == 15
+%         S = S15;
+%     end
     
     s = 10000;
     col = 1;
     for i = 1:r3
         maxstor(i) = max(S(i, :));
-        if maxstor(i) >= 10000 && i < s
+        if maxstor(i) >= 15000 && i < s
             c0 = 1;
             c50 = 1;
             for c = 1:c3
-                if S(i, c) >= 5000
+                if S(i, c) >= 7500
                     fillperc50_100(c50) = S(i, c)/15000*100;
                     c50=c50+1;
                 else
@@ -341,4 +341,9 @@ storage_17 = [S1(:, 17), S2(:, 17), S3(:, 17), S4(:, 17), S5(:, 17), S6(:, 17)];
 figure
 plot(storage_17);
 legend('1 msg/s', '2 msg/s', '3 msg/s', '4 msg/s', '5 msg/s', '6 msg/s');
+
+deleted_17 = [max(R1(:, 17)), max(R2(:, 17)), max(R3(:, 17)), max(R4(:, 17))];
+
+figure
+plot([1 2 3 4], deleted_17);
 

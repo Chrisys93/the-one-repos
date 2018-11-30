@@ -442,7 +442,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProc <= 100000000){
+		if (usedProc <= 2000000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -458,6 +458,21 @@ public class RepoStorage {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
 		if (usedProcessed >= this.processedSize - 100000000){
+			//System.out.println("There is enough storage space: " + freeStorage);
+			return true;
+		}
+		else{
+			//System.out.println("There is not enough storage space: " + freeStorage);
+			return false;
+		}
+	}
+
+	public boolean isProcessedEmpty() {
+		long usedProc = this.getProcessedMessagesSize();
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		//} catch(Exception e) {}
+		if (usedProc <= 100000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
