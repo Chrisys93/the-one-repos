@@ -168,7 +168,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	@Override
 	protected void transferDone(Connection con) {
 		/* don't leave a copy for the sender */
-		//this.deleteMessage(con.getMessage().getId(), false);
+		this.deleteMessage(con.getMessage().getId(), false);
 		/* this is where the start of the storage part could be implemented
 		 * Nope, it's not! Use isDeliveredMessage instead, to check if the
 		 * message of the connection con was delivered (to this host) and if yes,
@@ -176,16 +176,16 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * Soooo it seems like this literally only gets called when the node is 
 		 * NOT the target!
 		 */
-		boolean isFinalRepoRecipient = con.getMessage().getTo() == this.getHost();
+		//boolean isFinalRepoRecipient = con.getMessage().getTo() == this.getHost();
 		//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
-		if (this.getHost().hasStorageCapability()) {
+		//if (this.getHost().hasStorageCapability()) {
 			
 			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);
 			//if (isFinalRepoRecipient && isFirstRepoDelivery){
-				this.addMessageToStorageSpace(con);
+				//this.addMessageToStorageSpace(con);
 				//System.out.println("Message added to storage");	
 			//}		
-		}
+		//}
 		//System.out.println("Transfer done " + this.getHost().name);
 		
 	}

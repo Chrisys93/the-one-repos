@@ -63,13 +63,14 @@ public class RepoStorage {
 		this.depletedProcMessagesSize = 0;
 		this.depletedStoredMessages = 0;
 		this.depletedStoredMessagesSize = 0;
-		this.compressionRate = compressionRate;
+		this.compressionRate = 2;
 		if (this.getHost().hasStorageCapability()){
 			this.storageSize = storageSize;
 		}
 		if (this.getHost().hasProcessingCapability()){
 			this.processSize = processSize;
 			this.processedSize = (long)(processSize/this.compressionRate);
+			this.compressionRate = compressionRate;
 		}
 	}
 
@@ -124,7 +125,10 @@ public class RepoStorage {
 	 */			
 	public void addToStoredMessages(Message sm) {
 		if (sm != null) {
-			if (this.getHost().hasProcessingCapability) {
+			if (sm.getProperty("type") == "nonproc") {
+				this.storedMessages.add(sm);
+			}
+			else if (this.getHost().hasProcessingCapability) {
 				/**
 				 * TODO:
 				 * Messages can be generated with an ID tag, 
@@ -140,15 +144,9 @@ public class RepoStorage {
 				if (this.isProcessingFull()) {
 					this.storedMessages.add(sm);
 				}
-				else {
+				else if (sm.getProperty("type") == "proc") {
 					this.processMessages.add(sm);
-					if (!this.isProcessedFull()) {
-						this.processMessage(this.getOldestProcessMessage());
-					}
 				}
-			}
-			else {
-				this.storedMessages.add(sm);
 			}
 			this.totalReceivedMessages++;
 			/* add space used in the storage space */
@@ -202,9 +200,10 @@ public class RepoStorage {
 	
 	public boolean processMessage(Message procMessage) {
 		int initsize = procMessage.getSize();
-		int processedsize = initsize/2;
+		int processedsize = (int) (initsize/this.compressionRate);
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
 		this.processedMessages.add(processedMessage);
+		processedMessage.addProperty("type", "processed");
 		this.deleteProcMessage(procMessage.getId());
 		return true;
 	}
@@ -442,7 +441,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProc <= 2000000000){
+		if (usedProc <= 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -472,7 +471,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProc <= 100000000){
+		if (usedProc <= 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -496,6 +495,20 @@ public class RepoStorage {
 		return oldest;
 	}
 	
+	public Message getOldestProcessedMessage(){
+		Message oldest = null;
+		for (Message m : this.processedMessages) {
+			
+			if (oldest == null ) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
 	public Message getOldestStoredMessage(){
 		Message oldest = null;
 		for (Message m : this.storedMessages) {
@@ -504,6 +517,20 @@ public class RepoStorage {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getOldestProcStoredMessage(){
+		Message oldest = null;
+		for (Message m : this.storedMessages) {
+			
+			if (oldest == null && m.getProperty("type") == "proc") {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("type") == "proc") {
 				oldest = m;
 			}
 		}

@@ -198,49 +198,49 @@ Group6.interface2 = wlanPedInterface
 
 ## Message creation parameters
 # How many event generators
-Events.nrof = 4
+Events.nrof = 0
 # Class of the pedestrians event generator
-Events1.class = ReposMessageEventGenerator
+#Events1.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
-Events1.hostnames = p
-Events1.interval = 35,45
+#Events1.hostnames = p
+#Events1.interval = 35,45
 # Message sizes (900kB - 1MB)
-Events1.size = 900000,1100000
+#Events1.size = 900000,1100000
 # range of message source addresses
-Events1.hosts = 40,79
+#Events1.hosts = 40,79
 # range of message destination addresses
-Events1.tohosts = r
+#Events1.tohosts = r
 # Message ID prefix
-Events1.prefix = MP
+#Events1.prefix = MP
 
 # Class of the cars event generator
-Events2.class = ReposMessageEventGenerator
+#Events2.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
-Events2.interval = 4,5
+#Events2.interval = 4,5
 # Message sizes (900kB - 1MB)
-Events2.size = 900000,1100000
+#Events2.size = 900000,1100000
 # range of message source/destination addresses
-Events2.hosts = 80,119
+#Events2.hosts = 80,119
 # range of message destination addresses
-Events2.tohosts = r
+#Events2.tohosts = r
 # Message ID prefix
-Events2.prefix = MC
+#Events2.prefix = MC
 
 # Class of the busses event generator
-Events3.class = ReposMessageEventGenerator
+#Events3.class = ReposMessageEventGenerator
 # (following settings are specific for the MessageEventGenerator class)
 # Creation interval in seconds (one new message every 25 to 35 seconds)
-Events3.interval = 1,2
+#Events3.interval = 1,2
 # Message sizes (900kB - 1MB)
-Events3.size = 900000,1100000
+#Events3.size = 900000,1100000
 # range of message source/destination addresses
-Events3.hosts = 120,134
+#Events3.hosts = 120,134
 # range of message destination addresses
-Events3.tohosts = r
+#Events3.tohosts = r
 # Message ID prefix
-Events3.prefix = MB
+#Events3.prefix = MB
 
 # Class of storage depletion
 #Events4.class = ReposStorageConstantDepletion
@@ -255,14 +255,14 @@ Events3.prefix = MB
 #Events4.lowerLimit = 2500000000
 
 # Class of storage depletion
-Events4.class = ReposStorageConstantProcDepletion
+#Events4.class = ReposStorageConstantProcDepletion
 # (following settings are specific for the ReposStorageConstantDepletion class)
 # Depletion interval in seconds (a number of messages depleted/second)
-Events4.depletionInterval = 1
+#Events4.depletionInterval = 1
 # Number of message depleted each depletionInterval
-Events4.processedMsgNo = [3; 2; 1]
+#Events4.processedMsgNo = [3; 2; 1]
 # Host names of host storages to be depleted
-Events4.procDepletionHostnames = r
+#Events4.procDepletionHostnames = r
 
 
 ## Movement model settings
@@ -353,6 +353,60 @@ GUI.EventLogPanel.nrofEvents = 100
 
 
 
+
+
+# This configuration file adds Ping application for all the nodes and 
+# a report module that counts the number of pings & pongs sent & received
+
+# Define new application
+procApp.type = ProcApplication
+# Messages to be depleted (processing first and, if any left, nonprocessing, after)
+procApp.depletionRate = 6
+procApp.passive = false
+
+# Define new application
+procApp1.type = ProcGenApplication
+procApp1.interval = 5
+procApp1.delay = 1
+procApp1.destinationName = r
+procApp1.procSize = 1000000
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp1.passiveRate = 1,1
+procApp1.passive = false
+
+# Define new application
+procApp2.type = ProcGenApplication
+procApp2.interval = 3
+procApp2.delay = 2
+procApp2.destinationName = r
+procApp2.procSize = 1000000
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp2.passiveRate = 1,1
+procApp2.passive = false
+
+# Define new application
+procApp3.type = ProcGenApplication
+procApp3.interval = 2
+procApp3.delay = 3
+procApp3.destinationName = r
+procApp3.procSize = 1000000
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp3.passiveRate = 1,1
+procApp3.passive = false
+
+# Set proc app for all nodes
+Group1.nrofApplications = 1
+Group2.nrofApplications = 1
+Group3.nrofApplications = 1
+Group4.nrofApplications = 1
+Group5.nrofApplications = 1
+Group6.nrofApplications = 1
+Group1.application1 = procApp
+Group2.application1 = procApp1
+Group3.application1 = procApp2
+Group4.application1 = procApp3
+Group5.application1 = procApp3
+Group6.application1 = procApp3
 
 
 
