@@ -186,7 +186,7 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().addToStoredMessages(tempstored);
 				}
 			}
-			else {
+			else if (host.getStorageSystem().getOldestStoredMessage() != null){
 				Message temp = host.getStorageSystem().getOldestStoredMessage();
 				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 				host.getStorageSystem().addToDeplStoredMessages(temp);
