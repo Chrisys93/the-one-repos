@@ -4,7 +4,12 @@
  */
 package routing;
 
+import java.util.List;
+
+import core.Connection;
+import core.Message;
 import core.Settings;
+import core.Tuple;
 
 /**
  * Router that will deliver messages only to the final recipient.

@@ -12,12 +12,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import core.Application;
 import core.Connection;
 import core.Message;
 import core.MessageListener;
 import core.Settings;
 import core.DTNHost;
 import core.SettingsError;
+import core.SimClock;
 import core.RepoStorage;
 
 
@@ -34,6 +36,9 @@ public class ReposFirstContactRouter extends ActiveRouter {
 
 	/** hosts to be used as sides of connections */
 	private long totalBufferDeletedMessages;
+	
+	private double 	lastProc;
+	private int		noProc;
 
 	//private long storageSize;
 
@@ -63,6 +68,8 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		//	System.setOut(new PrintStream(new FileOutputStream("logstorage.txt")));
 		//} catch(Exception e) {System.out.println("Error");}
 		super.init(host, mListeners);
+		this.lastProc = 0;
+		this.noProc = 0;
 		//this.storedMessages = new ArrayList<Message>();
 		//this.usedStorage = 0;
 	}
@@ -89,11 +96,6 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * getMessagesForConnected()) 
 		 * and isolate the CONNECTED repos. May need to modify 
 		 * getMessagesForConnected to only work with repos
-		 */
-		
-		
-		/* if there are no messages for connected (repos),
-		 * create message for connected (repos)
 		 */
 		
 
@@ -168,7 +170,7 @@ public class ReposFirstContactRouter extends ActiveRouter {
 	@Override
 	protected void transferDone(Connection con) {
 		/* don't leave a copy for the sender */
-		this.deleteMessage(con.getMessage().getId(), false);
+		//this.deleteMessage(con.getMessage().getId(), false);
 		/* this is where the start of the storage part could be implemented
 		 * Nope, it's not! Use isDeliveredMessage instead, to check if the
 		 * message of the connection con was delivered (to this host) and if yes,
@@ -178,14 +180,66 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 */
 		//boolean isFinalRepoRecipient = con.getMessage().getTo() == this.getHost();
 		//System.out.println("The next message is destined to " + con.getMessage().getTo() + " and this host is " + this.getHost());
-		//if (this.getHost().hasStorageCapability()) {
-			
-			//System.out.println("Repo " + this.getHost() + " isFirstRepoDelivery " + isFirstRepoDelivery);
-			//if (isFinalRepoRecipient && isFirstRepoDelivery){
-				//this.addMessageToStorageSpace(con);
-				//System.out.println("Message added to storage");	
-			//}		
+		//for (Application app : getApplications(con.getMessage().getAppID())) {
+		//	System.out.println("app.handle of "+ app.getAppID() +" gets executed here");
 		//}
+		System.out.println(this.getHost() + " has storage capability " + this.getHost().hasStorageCapability());
+		if (this.getHost().name.contains("r")){
+			System.out.println("This host is "+ this.getHost() +" has storage capability: " + this.getHost().hasStorageCapability());
+		}
+		if (this.getHost().hasStorageCapability()) {
+			
+			
+			//if (isFinalRepoRecipient && isFirstRepoDelivery){
+				this.addMessageToStorageSpace(con);
+				Message msg = con.getMessage();
+				double curTime = SimClock.getTime();
+				String type = (String) msg.getProperty("type");
+				double delay = (double)msg.getProperty("delay");
+				//System.out.println("There is "+freeStorage+" free storage space");
+				
+				if (!this.getHost().getStorageSystem().isStorageFull()){
+					this.getHost().getStorageSystem().addToStoredMessages(msg);
+					System.out.println("Message has been added to storage, with no problem");
+				}
+				else {
+					//System.out.println("The current this.getHost() is: " + this.getHost());
+					this.getHost().getStorageSystem().deleteMessagesForSpace(false);
+					this.getHost().getStorageSystem().addToStoredMessages(msg);
+					System.out.println("Message has been added to storage, by deleting other messages");
+				}
+				
+				/**
+				 * TODO:
+				 * PROCESSING PART HERE, with processing rate and delay:
+				 * messages are processed at a certain rate/sec, obtaining messages according 
+				 * to processMessage() method, in RepoStorage
+				 */
+				if (type=="proc") {
+					if (!this.getHost().getStorageSystem().isProcessedFull()) {
+						this.getHost().getStorageSystem().processMessage(msg);
+					}
+					
+					if (!this.getHost().getStorageSystem().isProcessingEmpty()) {
+						if (curTime - this.lastProc >= delay) {
+							if (type == "proc"){
+								this.getHost().getStorageSystem().processMessage(msg);
+								while (!this.getHost().getStorageSystem().hasMessage(msg.getId())) {}
+							}
+							this.lastProc = curTime;
+							this.noProc++;
+						}
+						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+					}
+				}
+				
+				else if (type=="nonproc") {
+					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+					this.getHost().getStorageSystem().addToStoredMessages(msg);
+				}
+			}
+				//System.out.println("Message added to storage");	
+			//}
 		//System.out.println("Transfer done " + this.getHost().name);
 		
 	}

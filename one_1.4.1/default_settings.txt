@@ -83,7 +83,7 @@ Scenario.nrofHostGroups = 6
 
 # Common settings for all groups
 Group.movementModel = ShortestPathMapBasedMovement
-Group.router = ReposFirstContactRouter
+Group.router = RepoDirectDeliveryRouter
 Group.bufferSize = 100M
 Group.waitTime = 0, 120
 # All nodes have the bluetooth interface
@@ -352,21 +352,15 @@ GUI.EventLogPanel.nrofEvents = 100
 #GUI.EventLogPanel.REfilter = .*p[1-9]<->p[1-9]$
 
 
-
-
-
-# This configuration file adds Ping application for all the nodes and 
-# a report module that counts the number of pings & pongs sent & received
-
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = 6
+procApp.depletionRate = 1
 procApp.passive = false
 
 # Define new application
 procApp1.type = ProcGenApplication
-procApp1.interval = 5
+procApp1.interval = 3
 procApp1.delay = 1
 procApp1.destinationName = r
 procApp1.procSize = 1000000
@@ -376,8 +370,8 @@ procApp1.passive = false
 
 # Define new application
 procApp2.type = ProcGenApplication
-procApp2.interval = 3
-procApp2.delay = 2
+procApp2.interval = 2
+procApp2.delay = 1
 procApp2.destinationName = r
 procApp2.procSize = 1000000
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -386,8 +380,8 @@ procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
-procApp3.interval = 2
-procApp3.delay = 3
+procApp3.interval = 1
+procApp3.delay = 1
 procApp3.destinationName = r
 procApp3.procSize = 1000000
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

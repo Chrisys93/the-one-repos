@@ -125,7 +125,7 @@ public class RepoStorage {
 	 */			
 	public void addToStoredMessages(Message sm) {
 		if (sm != null) {
-			if (sm.getProperty("type") == "nonproc") {
+			if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
 				this.storedMessages.add(sm);
 			}
 			else if (this.getHost().hasProcessingCapability) {
@@ -144,7 +144,7 @@ public class RepoStorage {
 				if (this.isProcessingFull()) {
 					this.storedMessages.add(sm);
 				}
-				else if (sm.getProperty("type") == "proc") {
+				else if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
 					this.processMessages.add(sm);
 				}
 			}
@@ -527,13 +527,15 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.storedMessages) {
 			
-			if (oldest == null && m.getProperty("type") == "proc") {
-				oldest = m;
+			if (((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+				if (oldest == null) {
+					oldest = m;
+				}
+				else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+					oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("type") == "proc") {
-				oldest = m;
-			}
-		}
+		}	
 		return oldest;
 	}
 

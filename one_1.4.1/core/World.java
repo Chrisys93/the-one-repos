@@ -80,9 +80,6 @@ public class World {
 	public World(List<DTNHost> hosts, int sizeX, int sizeY, 
 			double updateInterval, List<UpdateListener> updateListeners,
 			boolean simulateConnections, List<EventQueue> eventQueues) {
-		//try {
-		//	System.setOut(new PrintStream(new FileOutputStream("loghigherLimit.txt")));
-		//} catch(Exception e) {System.out.println("Error");}
 		this.hosts = hosts;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
@@ -305,8 +302,6 @@ public class World {
 		DTNHost tonode = node;
 		List <Connection> activeConnections = node.getConnections();
 		if (activeConnections.size() > 0){
-			Connection activeConnection_0 = activeConnections.get(0);
-			tonode = activeConnection_0.getOtherNode(node);
 			for (int i=0; i<activeConnections.size(); i++){
 				Connection activeConnection_i = activeConnections.get(i);
 				if (activeConnection_i.isUp()){

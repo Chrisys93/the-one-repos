@@ -5,6 +5,7 @@
 
 package applications;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -117,13 +118,86 @@ public class ProcGenApplication extends Application {
 	 * @return host
 	 */
 	private DTNHost connectedRepoHost(DTNHost host) {
+		ArrayList<DTNHost> Destinations = new ArrayList<DTNHost>();
 		World w = SimScenario.getInstance().getWorld();
-		return w.getNodeByName(this.destination, host);
+		DTNHost node = host;
+		if (w.getNodeByName(this.destination, host) != host) {
+			node = w.getNodeByName(this.destination, host);
+		}
+		else {
+			for (DTNHost dest: w.getHosts()) {
+				if (dest.name.contains("r")) {
+					Destinations.add(dest);
+				}
+			}
+			node = Destinations.get(rng.nextInt(Destinations.size()));
+		}
+		return node;
 	}
 	
 	@Override
 	public Application replicate() {
 		return new ProcGenApplication(this);
+	}
+	
+	/** 
+	 * Handles an incoming message. If the message is a proc message replies
+	 * with a pong message. Generates events for proc and pong messages.
+	 * 
+	 * @param msg	message received by the router
+	 * @param host	host to which the application instance is attached
+	 */
+	@Override
+	public Message handle(Message msg, DTNHost host) {
+		if (host.hasStorageCapability()){
+			double curTime = SimClock.getTime();
+			String type = (String) msg.getProperty("type");
+	
+			System.out.println("handle is accessed on host: " + host);
+			//System.out.println("There is "+freeStorage+" free storage space");
+			
+			if (!host.getStorageSystem().isStorageFull()){
+				host.getStorageSystem().addToStoredMessages(msg);
+				System.out.println("Message has been added to storage, with no problem");
+			}
+			else {
+				//System.out.println("The current host is: " + host);
+				host.getStorageSystem().deleteMessagesForSpace(false);
+				host.getStorageSystem().addToStoredMessages(msg);
+				System.out.println("Message has been added to storage, by deleting other messages");
+			}
+			
+			/**
+			 * TODO:
+			 * PROCESSING PART HERE, with processing rate and delay:
+			 * messages are processed at a certain rate/sec, obtaining messages according 
+			 * to processMessage() method, in RepoStorage
+			 */
+			if (type.equalsIgnoreCase("proc")) {
+				if (!host.getStorageSystem().isProcessedFull()) {
+					host.getStorageSystem().processMessage(msg);
+				}
+				
+				if (!host.getStorageSystem().isProcessingEmpty()) {
+					double delayed = (double)msg.getProperty("delay");
+					if (curTime - this.lastProc >= delayed) {
+						if (type.equalsIgnoreCase("proc")){
+							host.getStorageSystem().processMessage(msg);
+							while (!host.getStorageSystem().hasMessage(msg.getId())) {}
+						}
+						this.lastProc = curTime;
+						this.noProc++;
+					}
+					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+				}
+			}
+			
+			else if (type.equalsIgnoreCase("nonproc")) {
+				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+				host.getStorageSystem().addToStoredMessages(msg);
+			}
+		}
+		return msg;
 	}
 
 	/** 
@@ -134,6 +208,8 @@ public class ProcGenApplication extends Application {
 	@Override
 	public void update(DTNHost host) {
 		double curTime = SimClock.getTime();
+
+		//System.out.println("generator update is accessed");
 		if (this.passive) {
 			if (curTime - this.lastProc >= this.interval) {
 				// Time to send a new proc
@@ -141,7 +217,7 @@ public class ProcGenApplication extends Application {
 					SimClock.getIntTime() + "-" + host.getAddress(),
 					getProcSize());
 				m.addProperty("type", "nonproc");
-				m.setAppID(APP_ID);
+				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
 				
 				// Call listeners
@@ -281,12 +357,6 @@ public class ProcGenApplication extends Application {
 	 */
 	public void setProcSize(int procSize) {
 		this.procSize = procSize;
-	}
-
-	@Override
-	public Message handle(Message msg, DTNHost host) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

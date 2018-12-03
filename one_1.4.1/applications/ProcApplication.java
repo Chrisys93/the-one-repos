@@ -83,52 +83,54 @@ public class ProcApplication extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		double curTime = SimClock.getTime();
-		String type = (String) msg.getProperty("type");
-		double delay = (double)msg.getProperty("delay");
-
-		//System.out.println("There is "+freeStorage+" free storage space");
-		
-		if (!host.getStorageSystem().isStorageFull()){
-			host.getStorageSystem().addToStoredMessages(msg);
-			System.out.println("Message has been added to storage, with no problem");
-		}
-		else {
-			//System.out.println("The current host is: " + host);
-			host.getStorageSystem().deleteMessagesForSpace(false);
-			host.getStorageSystem().addToStoredMessages(msg);
-			System.out.println("Message has been added to storage, by deleting other messages");
-		}
-		
-		/**
-		 * TODO:
-		 * PROCESSING PART HERE, with processing rate and delay:
-		 * messages are processed at a certain rate/sec, obtaining messages according 
-		 * to processMessage() method, in RepoStorage
-		 */
-		if (type=="proc") {
-			if (!host.getStorageSystem().isProcessedFull()) {
-				host.getStorageSystem().processMessage(msg);
+		if (host.hasStorageCapability()){
+			double curTime = SimClock.getTime();
+			String type = (String) msg.getProperty("type");
+			double delay = (double)msg.getProperty("delay");
+	
+			System.out.println("handle is accessed on host: " + host);
+			//System.out.println("There is "+freeStorage+" free storage space");
+			
+			if (!host.getStorageSystem().isStorageFull()){
+				host.getStorageSystem().addToStoredMessages(msg);
+				System.out.println("Message has been added to storage, with no problem");
+			}
+			else {
+				//System.out.println("The current host is: " + host);
+				host.getStorageSystem().deleteMessagesForSpace(false);
+				host.getStorageSystem().addToStoredMessages(msg);
+				System.out.println("Message has been added to storage, by deleting other messages");
 			}
 			
-			if (!host.getStorageSystem().isProcessingEmpty()) {
-				if (curTime - this.lastProc >= delay) {
-					if (type == "proc"){
-						host.getStorageSystem().processMessage(msg);
-						while (!host.getStorageSystem().hasMessage(msg.getId())) {}
-					}
-					this.lastProc = curTime;
-					this.noProc++;
+			/**
+			 * TODO:
+			 * PROCESSING PART HERE, with processing rate and delay:
+			 * messages are processed at a certain rate/sec, obtaining messages according 
+			 * to processMessage() method, in RepoStorage
+			 */
+			if (type.equalsIgnoreCase("proc")) {
+				if (!host.getStorageSystem().isProcessedFull()) {
+					host.getStorageSystem().processMessage(msg);
 				}
+				
+				if (!host.getStorageSystem().isProcessingEmpty()) {
+					if (curTime - this.lastProc >= delay) {
+						if (type.equalsIgnoreCase("proc")){
+							host.getStorageSystem().processMessage(msg);
+							while (!host.getStorageSystem().hasMessage(msg.getId())) {}
+						}
+						this.lastProc = curTime;
+						this.noProc++;
+					}
+					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+				}
+			}
+			
+			else if (type.equalsIgnoreCase("nonproc")) {
 				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+				host.getStorageSystem().addToStoredMessages(msg);
 			}
 		}
-		
-		else if (type=="nonproc") {
-			//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-			host.getStorageSystem().addToStoredMessages(msg);
-		};
-		
 		return msg;
 	}
 
@@ -139,6 +141,8 @@ public class ProcApplication extends Application {
 	 */
 	@Override
 	public void update(DTNHost host) {
+
+		//System.out.println("processor update is accessed");
 
 		/**
 		 * TODO:
@@ -159,7 +163,7 @@ public class ProcApplication extends Application {
 				String temptype = (String)temp.getProperty("type");
 				double delay = (double)temp.getProperty("delay");
 				if (curTime - this.lastProc >= delay) {
-					if (temptype == "proc"){
+					if (temptype.equalsIgnoreCase("proc")){
 						host.getStorageSystem().processMessage(temp);
 						while (!host.getStorageSystem().hasMessage(temp.getId())) {}
 					}
@@ -174,6 +178,10 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().addToStoredMessages(tempstored);
 			}
 		}
+		
+		/**
+		 * Depleting processed messages; and if there are none, deplete stored messages
+		 */
 		
 		for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
 			if (host.getStorageSystem().getOldestProcessedMessage() != null) {
