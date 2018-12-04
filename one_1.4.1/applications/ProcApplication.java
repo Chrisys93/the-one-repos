@@ -33,6 +33,7 @@ public class ProcApplication extends Application {
 	
 	// Private vars
 	private double	lastProc = 0;
+	private double 	lastDepl = 0;
 	private boolean passive = false;
 	private double 	depl_rate = 1;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
@@ -62,6 +63,7 @@ public class ProcApplication extends Application {
 	public ProcApplication(ProcApplication a) {
 		super(a);
 		this.lastProc = a.getLastProc();
+		this.lastDepl = a.getLastDepl();
 		this.passive = a.isPassive();
 		this.noDepl = a.getNoDepl();
 		this.noProc = a.getNoProc();
@@ -86,20 +88,19 @@ public class ProcApplication extends Application {
 		if (host.hasStorageCapability()){
 			double curTime = SimClock.getTime();
 			String type = (String) msg.getProperty("type");
-			double delay = (double)msg.getProperty("delay");
 	
-			System.out.println("handle is accessed on host: " + host);
+			//System.out.println("handle is accessed on host: " + host);
 			//System.out.println("There is "+freeStorage+" free storage space");
 			
 			if (!host.getStorageSystem().isStorageFull()){
 				host.getStorageSystem().addToStoredMessages(msg);
-				System.out.println("Message has been added to storage, with no problem");
+				//System.out.println("Message has been added to storage, with no problem");
 			}
 			else {
 				//System.out.println("The current host is: " + host);
 				host.getStorageSystem().deleteMessagesForSpace(false);
 				host.getStorageSystem().addToStoredMessages(msg);
-				System.out.println("Message has been added to storage, by deleting other messages");
+				//System.out.println("Message has been added to storage, by deleting other messages");
 			}
 			
 			/**
@@ -114,7 +115,8 @@ public class ProcApplication extends Application {
 				}
 				
 				if (!host.getStorageSystem().isProcessingEmpty()) {
-					if (curTime - this.lastProc >= delay) {
+					double delayed = (double)msg.getProperty("delay");
+					if (curTime - this.lastProc >= delayed) {
 						if (type.equalsIgnoreCase("proc")){
 							host.getStorageSystem().processMessage(msg);
 							while (!host.getStorageSystem().hasMessage(msg.getId())) {}
@@ -183,23 +185,26 @@ public class ProcApplication extends Application {
 		 * Depleting processed messages; and if there are none, deplete stored messages
 		 */
 		
-		for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
-			if (host.getStorageSystem().getOldestProcessedMessage() != null) {
-				Message temp = host.getStorageSystem().getOldestProcessedMessage();
-				host.getStorageSystem().deleteProcessedMessage(temp.getId());
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-					
-				if (!host.getStorageSystem().isProcessingFull()) {					
-					Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
-					host.getStorageSystem().addToStoredMessages(tempstored);
+		if (curTime - this.lastDepl >= 1) {
+			for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
+				if (host.getStorageSystem().getOldestProcessedMessage() != null) {
+					Message temp = host.getStorageSystem().getOldestProcessedMessage();
+					host.getStorageSystem().deleteProcessedMessage(temp.getId());
+					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
+						
+					if (!host.getStorageSystem().isProcessingFull()) {					
+						Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
+						host.getStorageSystem().addToStoredMessages(tempstored);
+					}
 				}
-			}
-			else if (host.getStorageSystem().getOldestStoredMessage() != null){
-				Message temp = host.getStorageSystem().getOldestStoredMessage();
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				host.getStorageSystem().addToDeplStoredMessages(temp);
-				host.getStorageSystem().deleteStoredMessage(temp.getId());
-			}
+				else if (host.getStorageSystem().getOldestStoredMessage() != null){
+					Message temp = host.getStorageSystem().getOldestStoredMessage();
+					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+					host.getStorageSystem().addToDeplStoredMessages(temp);
+					host.getStorageSystem().deleteStoredMessage(temp.getId());
+				}
+			}			
+			this.lastDepl = curTime;
 		}
 	}
 
@@ -215,6 +220,20 @@ public class ProcApplication extends Application {
 	 */
 	public void setLastProc(double lastProc) {
 		this.lastProc = lastProc;
+	}
+	
+	/**
+	 * @return the lastProc
+	 */
+	public double getLastDepl() {
+		return lastDepl;
+	}
+	
+	/**
+	 * @return the lastProc
+	 */
+	public void setLastDepl(double lastDepl) {
+		this.lastDepl = lastDepl;
 	}
 
 	/**

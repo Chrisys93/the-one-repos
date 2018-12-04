@@ -18,6 +18,10 @@ import core.Tuple;
  */
 public class RepoDirectDeliveryRouter extends ActiveRouter {
 
+
+	/** hosts to be used as sides of connections */
+	private long totalBufferDeletedMessages;
+	
 	public RepoDirectDeliveryRouter(Settings s) {
 		super(s);
 	}
@@ -49,16 +53,47 @@ public class RepoDirectDeliveryRouter extends ActiveRouter {
 		for (Tuple<Message, Connection> t : tuples) {
 			Message m = t.getKey();
 			Connection con = t.getValue();
-			if (con.getOtherNode(this.getHost()).name.contains("r")) {
-				if(!this.getHost().name.contains("r")) {
+			//if (con.getOtherNode(this.getHost()).name.contains("r")) {
+				//if(!this.getHost().name.contains("r")) {
 					if (startTransfer(m, con) == RCV_OK) {
 						return t;
 					}
-				}	
-			}
+				//}	
+			//}
 		}
 		
 		return null;
+	}
+	
+	/** 
+	 * Removes messages from the buffer (oldest first) until
+	 * there's enough space for the new message.
+	 * @param size Size of the new message 
+	 * transferred, the transfer is aborted before message is removed
+	 * @return True if enough space could be freed, false if not
+	 */
+	@Override
+	protected boolean makeRoomForMessage(int size){
+		if (size > this.getBufferSize()) {
+			return false; // message too big for the buffer
+		}
+			
+		int freeBuffer = this.getFreeBufferSize();
+		/* delete messages from the buffer until there's enough space */
+		while (freeBuffer < size) {
+			Message m = getOldestMessage(true); // don't remove msgs being sent
+
+			if (m == null) {
+				return false; // couldn't remove any more messages
+			}			
+			
+			/* delete message from the buffer as "drop" */
+			deleteMessage(m.getId(), true);
+			freeBuffer += m.getSize();
+			this.totalBufferDeletedMessages ++;
+		}
+		
+		return true;
 	}
 	
 	@Override
@@ -77,8 +112,8 @@ public class RepoDirectDeliveryRouter extends ActiveRouter {
 		//for (Application app : getApplications(con.getMessage().getAppID())) {
 		//	System.out.println("app.handle of "+ app.getAppID() +" gets executed here");
 		//}
-		System.out.println(this.getHost().name + " has storage capability " + this.getHost().hasStorageCapability());
-		System.out.println("And other host of connection: "+con.getOtherNode(this.getHost()).name + " has storage capability " + con.getOtherNode(this.getHost()).hasStorageCapability());
+		//System.out.println(this.getHost().name + " has storage capability " + this.getHost().hasStorageCapability());
+		//System.out.println("And other host of connection: "+con.getOtherNode(this.getHost()).name + " has storage capability " + con.getOtherNode(this.getHost()).hasStorageCapability());
 		//Message msg = this.messageTransferred(con.getMessage().getId(), this.getHost());
 		//if (this.getHost().name.contains("r")){
 		//	System.out.println("This host is "+ this.getHost() +" has storage capability: " + this.getHost().hasStorageCapability());
@@ -88,12 +123,17 @@ public class RepoDirectDeliveryRouter extends ActiveRouter {
 			for (Application app : getApplications(con.getMessage().getAppID())) {
 				// Note that the order of applications is significant
 				// since the next one gets the output of the previous.
-				System.out.println("app.handle gets executed here");
+				//System.out.println("app.handle gets executed here: " + con.getMessage().getAppID());
 				Message outgoing = app.handle(con.getMessage(), con.getOtherNode(this.getHost()));
 			}
 			
 		}
 		
+	}
+	
+	@Override
+	public long getBufferDeletedMessagesSize() {
+		return this.totalBufferDeletedMessages;
 	}
 	
 	@Override

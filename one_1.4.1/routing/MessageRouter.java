@@ -101,9 +101,6 @@ public abstract class MessageRouter {
 	 * @param s The settings object
 	 */
 	public MessageRouter(Settings s) {
-		try {
-			System.setOut(new PrintStream(new FileOutputStream("loghosts.txt")));
-		} catch(Exception e) {System.out.println("Error");}
 		this.bufferSize = Integer.MAX_VALUE; // defaults to rather large buffer	
 		this.msgTtl = Message.INFINITE_TTL;
 		this.applications = new HashMap<String, Collection<Application>>();
@@ -337,7 +334,7 @@ public abstract class MessageRouter {
 		for (Application app : getApplications(incoming.getAppID())) {
 			// Note that the order of applications is significant
 			// since the next one gets the output of the previous.
-			System.out.println("app.handle gets executed here");
+			//System.out.println("app.handle gets executed here");
 			outgoing = app.handle(outgoing, this.host);
 			if (outgoing == null) break; // Some app wanted to drop the message
 		}

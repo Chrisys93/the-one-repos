@@ -37,7 +37,7 @@ wlanRepInterface.transmitRange = 600
 
 # Wlan interface for pedestrins
 wlanPedInterface.type = DistanceCapacityInterface
-wlanPedInterface.transmitSpeeds = 3M, 2M, 1M
+wlanPedInterface.transmitSpeeds = 18M, 15M, 12M, 9M, 6M, 3M
 wlanPedInterface.transmitRange = 35
 #dummy speed
 wlanPedInterface.transmitSpeed =0
@@ -46,14 +46,14 @@ wlanPedInterface.transmitSpeed =0
 # IEEE 1609 specifies: "Physical access for high-speed (<27 Mb/s ~ 3MB/s), short-range (<1000 m), and low
 #latency wireless communications in the vehicular environment." THERE CAN BE A PHYSICAL LAYER PROBLEM HERE.
 wlanCarInterface.type = DistanceCapacityInterface
-wlanCarInterface.transmitSpeeds = 3M, 2M, 1M, 500k
+wlanCarInterface.transmitSpeeds = 20M, 16M, 12M, 8M, 4M
 wlanCarInterface.transmitRange = 100
 #dummy speed
 wlanCarInterface.transmitSpeed =0
 
 # Wlan interface for busses
 wlanBusInterface.type = DistanceCapacityInterface
-wlanBusInterface.transmitSpeeds =10M, 5M, 3M, 1M
+wlanBusInterface.transmitSpeeds = 25M, 20M, 15M, 10M, 5M
 wlanBusInterface.transmitRange = 200
 #dummy speed
 wlanBusInterface.transmitSpeed =0
@@ -121,6 +121,7 @@ Group1.interface1 = wlanPedInterface
 Group1.interface2 = wlanCarInterface
 Group1.interface3 = wlanBusInterface
 #Group1.interface4 = wlanRepInterface
+Group1.nrofHosts = 100
 
 # group2 pedestrians specific settings
 Group2.groupID = p
@@ -135,14 +136,14 @@ Group3.okMaps = 1
 # 10-50 km/h
 Group3.speed = 2.7, 13.9
 # Larger buffer size than pedestrians
-#Group3.bufferSize = 200M
+Group3.bufferSize = 300M
 Group3.interface1 = wlanCarInterface
 # More cars than anything else
-Group3.nrofHosts = [40; 40; 40; 500; 1000]
+Group3.nrofHosts = 1000
 
 # The Bus groups
 Group4.groupID = b
-#Group4.bufferSize = 300M
+Group4.bufferSize = 500M
 Group4.movementModel = MapRouteMovement
 Group4.routeFile = data/tram3.wkt
 Group4.routeType = 1
@@ -154,7 +155,7 @@ Group4.interface1 = wlanBusInterface
 Group4.interface2 = wlanPedInterface
 
 Group5.groupID = b
-#Group5.bufferSize = 300M
+Group5.bufferSize = 500M
 Group5.movementModel = MapRouteMovement
 Group5.routeFile = data/tram4.wkt
 Group5.routeType = 1
@@ -166,7 +167,7 @@ Group5.interface1 = wlanBusInterface
 Group5.interface2 = wlanPedInterface
 
 Group6.groupID = b
-#Group6.bufferSize = 300M
+Group6.bufferSize = 300M
 Group6.movementModel = MapRouteMovement
 Group6.routeFile = data/tram10.wkt
 Group6.routeType = 1
@@ -365,25 +366,25 @@ procApp1.delay = 1
 procApp1.destinationName = r
 procApp1.procSize = 1000000
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp1.passiveRate = 1,1
+procApp1.passiveRate = 2,0
 procApp1.passive = false
 
 # Define new application
 procApp2.type = ProcGenApplication
 procApp2.interval = 2
-procApp2.delay = 1
+procApp2.delay = 2
 procApp2.destinationName = r
-procApp2.procSize = 1000000
+procApp2.procSize = 2000000
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp2.passiveRate = 1,1
+procApp2.passiveRate = 0,2
 procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
 procApp3.interval = 1
-procApp3.delay = 1
+procApp3.delay = 3
 procApp3.destinationName = r
-procApp3.procSize = 1000000
+procApp3.procSize = 3000000
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp3.passiveRate = 1,1
 procApp3.passive = false

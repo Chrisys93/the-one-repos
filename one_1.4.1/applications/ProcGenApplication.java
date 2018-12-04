@@ -58,8 +58,6 @@ public class ProcGenApplication extends Application {
 	private String	destination = "r";
 	private int		procSize=1000000;
 	private Random	rng;
-	private int		noPassive=0;
-	private int		noProc=0;
 	
 	/** 
 	 * Creates a new proc application with the given settings.
@@ -107,7 +105,6 @@ public class ProcGenApplication extends Application {
 		this.seed = a.getSeed();
 		this.procSize = a.getProcSize();
 		this.rng = new Random(this.seed);
-		this.noPassive =0;
 		this.passive_rate = a.getPassiveRate();
 		this.delay = 1;
 	}
@@ -149,54 +146,7 @@ public class ProcGenApplication extends Application {
 	 */
 	@Override
 	public Message handle(Message msg, DTNHost host) {
-		if (host.hasStorageCapability()){
-			double curTime = SimClock.getTime();
-			String type = (String) msg.getProperty("type");
-	
-			System.out.println("handle is accessed on host: " + host);
-			//System.out.println("There is "+freeStorage+" free storage space");
-			
-			if (!host.getStorageSystem().isStorageFull()){
-				host.getStorageSystem().addToStoredMessages(msg);
-				System.out.println("Message has been added to storage, with no problem");
-			}
-			else {
-				//System.out.println("The current host is: " + host);
-				host.getStorageSystem().deleteMessagesForSpace(false);
-				host.getStorageSystem().addToStoredMessages(msg);
-				System.out.println("Message has been added to storage, by deleting other messages");
-			}
-			
-			/**
-			 * TODO:
-			 * PROCESSING PART HERE, with processing rate and delay:
-			 * messages are processed at a certain rate/sec, obtaining messages according 
-			 * to processMessage() method, in RepoStorage
-			 */
-			if (type.equalsIgnoreCase("proc")) {
-				if (!host.getStorageSystem().isProcessedFull()) {
-					host.getStorageSystem().processMessage(msg);
-				}
-				
-				if (!host.getStorageSystem().isProcessingEmpty()) {
-					double delayed = (double)msg.getProperty("delay");
-					if (curTime - this.lastProc >= delayed) {
-						if (type.equalsIgnoreCase("proc")){
-							host.getStorageSystem().processMessage(msg);
-							while (!host.getStorageSystem().hasMessage(msg.getId())) {}
-						}
-						this.lastProc = curTime;
-						this.noProc++;
-					}
-					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				}
-			}
-			
-			else if (type.equalsIgnoreCase("nonproc")) {
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				host.getStorageSystem().addToStoredMessages(msg);
-			}
-		}
+		
 		return msg;
 	}
 
@@ -209,7 +159,7 @@ public class ProcGenApplication extends Application {
 	public void update(DTNHost host) {
 		double curTime = SimClock.getTime();
 
-		//System.out.println("generator update is accessed");
+		//System.out.println("generator update is accessed on: " + host);
 		if (this.passive) {
 			if (curTime - this.lastProc >= this.interval) {
 				// Time to send a new proc
@@ -228,29 +178,23 @@ public class ProcGenApplication extends Application {
 		}
 		else if (curTime - this.lastProc >= this.interval) {
 			// Time to send a new proc
-			if (this.noProc<(this.passive_rate[1])) {
+			for (int noProc = 0; noProc<(this.passive_rate[1]); noProc++) {
 				Message m = new Message(host, connectedRepoHost(host), "proc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
 				m.addProperty("type", "proc");
 				m.addProperty("delay", this.delay);
-				m.setAppID(APP_ID);
+				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
-				this.noProc++;
 			}
-			else if (this.noPassive<(this.passive_rate[0])) {
+			for (int noPassive = 0; noPassive<(this.passive_rate[0]); noPassive++) {
 
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
 				m.addProperty("type", "nonproc");
-				m.setAppID(APP_ID);
+				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
-				noPassive++;
-			}
-			else {
-				this.noPassive = 0;
-				this.noProc = 0;
 			}
 			
 			// Call listeners
@@ -308,13 +252,6 @@ public class ProcGenApplication extends Application {
 	 */
 	public void setPassive(boolean passive) {
 		this.passive = passive;
-	}
-
-	/**
-	 * @param no. of previous passive messages
-	 */
-	public int getNoPassive() {
-		return noPassive;
 	}
 
 	/**
