@@ -163,9 +163,9 @@ public class ProcApplication extends Application {
 			if (host.getStorageSystem().getOldestProcessMessage() != null) {
 				Message temp = host.getStorageSystem().getOldestProcessMessage();
 				String temptype = (String)temp.getProperty("type");
-				double delay = (double)temp.getProperty("delay");
-				if (curTime - this.lastProc >= delay) {
-					if (temptype.equalsIgnoreCase("proc")){
+				if (temptype.equalsIgnoreCase("proc")){
+					double delayed = (double)temp.getProperty("delay");
+					if (curTime - this.lastProc >= delayed) {
 						host.getStorageSystem().processMessage(temp);
 						while (!host.getStorageSystem().hasMessage(temp.getId())) {}
 					}
