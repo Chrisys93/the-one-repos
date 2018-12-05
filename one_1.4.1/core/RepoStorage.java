@@ -129,18 +129,6 @@ public class RepoStorage {
 				this.storedMessages.add(sm);
 			}
 			else if (this.getHost().hasProcessingCapability) {
-				/**
-				 * TODO:
-				 * Messages can be generated with an ID tag, 
-				 * to show that they are to be processed.
-				 * When they enter the repo, the tag is removed, 
-				 * if there is not enough space in the processing 
-				 * storage, this can be expanded, up to a 
-				 * limit (or not), so that unprocessed storage is 
-				 * still available; and if unprocessed storage is 
-				 * needed, then the unprocessed storage deletes a 
-				 * number of messages (1000). (not urgent)
-				 */
 				if (this.isProcessingFull()) {
 					this.storedMessages.add(sm);
 				}
@@ -408,25 +396,17 @@ public class RepoStorage {
 
 	public boolean isStorageFull() {
 		long usedStorage = this.getStoredMessagesSize();
-		//try {
-		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
-		//} catch(Exception e) {}
 		if (usedStorage >= this.storageSize - 100000000){
-			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
 		else{
-			//System.out.println("There is not enough storage space: " + freeStorage);
 			return false;
 		}
 	}
 
 	public boolean isProcessingFull() {
 		long usedProc = this.getProcMessagesSize();
-		//try {
-		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
-		//} catch(Exception e) {}
-		if (usedProc >= this.processSize - 100000000){
+		if (usedProc >= this.processSize - 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}

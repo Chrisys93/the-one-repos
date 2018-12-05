@@ -113,7 +113,7 @@ Group1.storageCapability = true
 Group1.processingCapability = true
 Group1.storageSize = 10G
 Group1.processSize = 5G
-Group1.compressionRate = 1.2
+Group1.compressionRate = 1.43
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
 Group1.nrofInterfaces = 3
@@ -167,7 +167,7 @@ Group5.interface1 = wlanBusInterface
 Group5.interface2 = wlanPedInterface
 
 Group6.groupID = b
-Group6.bufferSize = 300M
+Group6.bufferSize = 500M
 Group6.movementModel = MapRouteMovement
 Group6.routeFile = data/tram10.wkt
 Group6.routeType = 1
@@ -364,7 +364,7 @@ procApp1.type = ProcGenApplication
 procApp1.interval = 3
 procApp1.delay = 1
 procApp1.destinationName = r
-procApp1.procSize = 1000000
+procApp1.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp1.passiveRate = 2,0
 procApp1.passive = false
@@ -374,7 +374,7 @@ procApp2.type = ProcGenApplication
 procApp2.interval = 2
 procApp2.delay = 2
 procApp2.destinationName = r
-procApp2.procSize = 2000000
+procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp2.passiveRate = 0,2
 procApp2.passive = false
@@ -384,7 +384,7 @@ procApp3.type = ProcGenApplication
 procApp3.interval = 1
 procApp3.delay = 3
 procApp3.destinationName = r
-procApp3.procSize = 3000000
+procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp3.passiveRate = 1,1
 procApp3.passive = false

@@ -117,12 +117,14 @@ public class ProcApplication extends Application {
 				if (!host.getStorageSystem().isProcessingEmpty()) {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.lastProc >= delayed) {
-						if (type.equalsIgnoreCase("proc")){
-							host.getStorageSystem().processMessage(msg);
-							while (!host.getStorageSystem().hasMessage(msg.getId())) {}
+						if (!host.getStorageSystem().isProcessedFull()) {
+							if (type.equalsIgnoreCase("proc")){
+								host.getStorageSystem().processMessage(msg);
+								while (!host.getStorageSystem().hasMessage(msg.getId())) {}
+							}
+							this.lastProc = curTime;
+							this.noProc++;
 						}
-						this.lastProc = curTime;
-						this.noProc++;
 					}
 					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 				}
@@ -178,6 +180,10 @@ public class ProcApplication extends Application {
 			if (!host.getStorageSystem().isProcessingFull()) {					
 				Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
 				host.getStorageSystem().addToStoredMessages(tempstored);
+			}
+			else if (host.getStorageSystem().isProcessingFull()){
+				Message tempproc = host.getStorageSystem().getOldestProcessMessage();
+				host.getStorageSystem().addToStoredMessages(tempproc);
 			}
 		}
 		
