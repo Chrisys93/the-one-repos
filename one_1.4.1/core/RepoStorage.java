@@ -54,7 +54,7 @@ public class RepoStorage {
 		this.storedMessages = new ArrayList<Message>();
 		this.processMessages = new ArrayList<Message>();
 		this.processedMessages = new ArrayList<Message>();
-		this.storageSize = 0;
+		this.storageSize = storageSize;
 		this.processSize = 0;
 		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
@@ -63,14 +63,10 @@ public class RepoStorage {
 		this.depletedProcMessagesSize = 0;
 		this.depletedStoredMessages = 0;
 		this.depletedStoredMessagesSize = 0;
-		this.compressionRate = 2;
-		if (this.getHost().hasStorageCapability()){
-			this.storageSize = storageSize;
-		}
 		if (this.getHost().hasProcessingCapability()){
 			this.processSize = processSize;
-			this.processedSize = (long)(processSize/this.compressionRate);
 			this.compressionRate = compressionRate;
+			this.processedSize = (long)(processSize/this.compressionRate);
 		}
 	}
 
@@ -451,6 +447,22 @@ public class RepoStorage {
 			}
 		}
 		return oldest;
+	}
+	
+
+	
+	public Message getNewestProcessMessage(){
+		Message newest = null;
+		for (Message m : this.processMessages) {
+			
+			if (newest == null ) {
+				newest = m;
+			}
+			else if (newest.getReceiveTime() < m.getReceiveTime()) {
+				newest = m;
+			}
+		}
+		return newest;
 	}
 	
 	public Message getOldestProcessedMessage(){

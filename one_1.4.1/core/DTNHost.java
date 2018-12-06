@@ -101,9 +101,9 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.movement.setComBus(comBus);
 			
 		setRouter(mRouterProto.replicate());
-		setFileSystem(new DTNFileSystem());
-		setStorageSystem(new RepoStorage(), storageSize, processSize, compressionRate);
-
+		if (this.hasStorageCapability()){
+			setStorageSystem(new RepoStorage(), storageSize, processSize, compressionRate);
+		}
 		this.location = movement.getInitialLocation();
 
 		this.nextTimeToMove = movement.nextPathAvailable();

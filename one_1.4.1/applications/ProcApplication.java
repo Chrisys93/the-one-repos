@@ -90,17 +90,14 @@ public class ProcApplication extends Application {
 			String type = (String) msg.getProperty("type");
 	
 			//System.out.println("handle is accessed on host: " + host);
-			//System.out.println("There is "+freeStorage+" free storage space");
 			
 			if (!host.getStorageSystem().isStorageFull()){
 				host.getStorageSystem().addToStoredMessages(msg);
-				//System.out.println("Message has been added to storage, with no problem");
 			}
 			else {
 				//System.out.println("The current host is: " + host);
 				host.getStorageSystem().deleteMessagesForSpace(false);
 				host.getStorageSystem().addToStoredMessages(msg);
-				//System.out.println("Message has been added to storage, by deleting other messages");
 			}
 			
 			/**
@@ -109,24 +106,16 @@ public class ProcApplication extends Application {
 			 * messages are processed at a certain rate/sec, obtaining messages according 
 			 * to processMessage() method, in RepoStorage
 			 */
-			if (type.equalsIgnoreCase("proc")) {
-				if (!host.getStorageSystem().isProcessedFull()) {
-					host.getStorageSystem().processMessage(msg);
-				}
-				
+			if (type.equalsIgnoreCase("proc")) {				
 				if (!host.getStorageSystem().isProcessingEmpty()) {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.lastProc >= delayed) {
 						if (!host.getStorageSystem().isProcessedFull()) {
-							if (type.equalsIgnoreCase("proc")){
-								host.getStorageSystem().processMessage(msg);
-								while (!host.getStorageSystem().hasMessage(msg.getId())) {}
-							}
+							host.getStorageSystem().processMessage(msg);
 							this.lastProc = curTime;
 							this.noProc++;
 						}
 					}
-					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 				}
 			}
 			
@@ -169,7 +158,6 @@ public class ProcApplication extends Application {
 					double delayed = (double)temp.getProperty("delay");
 					if (curTime - this.lastProc >= delayed) {
 						host.getStorageSystem().processMessage(temp);
-						while (!host.getStorageSystem().hasMessage(temp.getId())) {}
 						this.lastProc = curTime;
 					}
 					
@@ -177,13 +165,18 @@ public class ProcApplication extends Application {
 				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 				
 			}
-			if (host.getStorageSystem().isProcessingFull()) {
-				Message tempproc = host.getStorageSystem().getOldestProcessMessage();
-				host.getStorageSystem().addToStoredMessages(tempproc);
-			}
-			else {					
-				Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
+		}
+
+		if (host.getStorageSystem().isProcessingFull()) {
+			Message tempproc = host.getStorageSystem().getNewestProcessMessage();
+			host.getStorageSystem().addToStoredMessages(tempproc);
+			host.getStorageSystem().deleteProcMessage(tempproc.getId());
+		}
+		else {					
+			Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
+			if (tempstored != null) {
 				host.getStorageSystem().addToStoredMessages(tempstored);
+				host.getStorageSystem().deleteStoredMessage(tempstored.getId());
 			}
 		}
 		
