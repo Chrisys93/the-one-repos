@@ -2,24 +2,24 @@
 % the number of runs as variables;
 
 clear
-R1 = dlmread('reports1/RDMR1', ' ', 0, 1);
-M1 = dlmread('reports1/MDMR1', ' ', 0, 1);
-S1 = dlmread('reports1/RSMLR1', ' ', 0, 2);
-R2 = dlmread('reports1/RDMR2', ' ', 0, 1);
-M2 = dlmread('reports1/MDMR2', ' ', 0, 1);
-S2 = dlmread('reports1/RSMLR2', ' ', 0, 2);
-R3 = dlmread('reports1/RDMR3', ' ', 0, 1);
-M3 = dlmread('reports1/MDMR3', ' ', 0, 1);
-S3 = dlmread('reports1/RSMLR3', ' ', 0, 2);
-R4 = dlmread('reports1/RDMR4', ' ', 0, 1);
-M4 = dlmread('reports1/MDMR4', ' ', 0, 1);
-S4 = dlmread('reports1/RSMLR4', ' ', 0, 2);
-R5 = dlmread('reports1/RDMR5', ' ', 0, 1);
-M5 = dlmread('reports1/MDMR5', ' ', 0, 1);
-S5 = dlmread('reports1/RSMLR5', ' ', 0, 2);
-R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
-M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
-S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
+R1 = dlmread('reports/RDMR1', ' ', 0, 1);
+M1 = dlmread('reports/MDMR1', ' ', 0, 1);
+S1 = dlmread('reports/RAMR1', ' ', 0, 2);
+% R2 = dlmread('reports1/RDMR2', ' ', 0, 1);
+% M2 = dlmread('reports1/MDMR2', ' ', 0, 1);
+% S2 = dlmread('reports1/RSMLR2', ' ', 0, 2);
+% R3 = dlmread('reports1/RDMR3', ' ', 0, 1);
+% M3 = dlmread('reports1/MDMR3', ' ', 0, 1);
+% S3 = dlmread('reports1/RSMLR3', ' ', 0, 2);
+% R4 = dlmread('reports1/RDMR4', ' ', 0, 1);
+% M4 = dlmread('reports1/MDMR4', ' ', 0, 1);
+% S4 = dlmread('reports1/RSMLR4', ' ', 0, 2);
+% R5 = dlmread('reports1/RDMR5', ' ', 0, 1);
+% M5 = dlmread('reports1/MDMR5', ' ', 0, 1);
+% S5 = dlmread('reports1/RSMLR5', ' ', 0, 2);
+% R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
+% M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
+% S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
 [r1, c1] = size(R1);
 [r2, c2] = size(M1);
 [r3, c3] = size(S1);
@@ -37,30 +37,30 @@ for i = 1:r2
 end
 maxval2 = max(maxstorM1);
 
-for inc = 1:6
+for inc = 1
     if inc == 1
         S = S1;
     end
     
-    if inc == 2
-        S = S2;
-    end
-    
-    if inc == 3
-        S = S3;
-    end
-    
-    if inc == 4
-        S = S4;
-    end
-    
-    if inc == 5
-        S = S5;
-    end
-    
-    if inc == 6
-        S = S6;
-    end
+%     if inc == 2
+%         S = S2;
+%     end
+%     
+%     if inc == 3
+%         S = S3;
+%     end
+%     
+%     if inc == 4
+%         S = S4;
+%     end
+%     
+%     if inc == 5
+%         S = S5;
+%     end
+%     
+%     if inc == 6
+%         S = S6;
+%     end
 %     
 %     if inc == 7
 %         S = S7;
@@ -147,7 +147,7 @@ for inc = 1:6
 
         c25 = 1;
         for c = 1:c3
-            if S(i, c) >= 4500
+            if S(i, c) >= 4507
                 fill25(c25) = 1;
             else
                 fill25(c25) = 0;
@@ -176,95 +176,95 @@ for inc = 1:6
                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
     end
     
-    if inc == 2
-        maxstorS2 = maxstor;
-        fillpercS2 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS2(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS2(repo);           
-        end
-        fillpercerrbarS2 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 3
-        maxstorS3 = maxstor;
-        fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS3(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS3(repo);           
-        end
-        fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 4
-        maxstorS1 = maxstor;
-        fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS4(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS4(repo);           
-        end
-        fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 5
-        maxstorS5 = maxstor;
-        fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS5(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS5(repo);
-        end
-        fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 6
-        maxstorS6 = maxstor;
-        fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS6(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS6(repo);
-        end
-        fillpercerrbarS6 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    for repo = 1:c3
-        
-    end
+%     if inc == 2
+%         maxstorS2 = maxstor;
+%         fillpercS2 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS2(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS2(repo);           
+%         end
+%         fillpercerrbarS2 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 3
+%         maxstorS3 = maxstor;
+%         fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS3(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS3(repo);           
+%         end
+%         fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 4
+%         maxstorS1 = maxstor;
+%         fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS4(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS4(repo);           
+%         end
+%         fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 5
+%         maxstorS5 = maxstor;
+%         fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS5(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS5(repo);
+%         end
+%         fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 6
+%         maxstorS6 = maxstor;
+%         fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS6(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS6(repo);
+%         end
+%         fillpercerrbarS6 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     for repo = 1:c3
+%         
+%     end
                 
 end
 
-figure
-hold on
-errorbar([25,50,100], fillpercerrbarS1(:,2), fillpercerrbarS1(:,2)-fillpercerrbarS1(:,1), fillpercerrbarS1(:,3)-fillpercerrbarS1(:,2), '--k', 'LineWidth', 2);
-errorbar([25,50,100], fillpercerrbarS2(:,2), fillpercerrbarS2(:,2)-fillpercerrbarS2(:,1), fillpercerrbarS2(:,3)-fillpercerrbarS2(:,2), '--b', 'LineWidth', 2);
-errorbar([25,50,100], fillpercerrbarS3(:,2), fillpercerrbarS3(:,2)-fillpercerrbarS3(:,1), fillpercerrbarS3(:,3)-fillpercerrbarS3(:,2), '--y', 'LineWidth', 2);
-errorbar([25,50,100], fillpercerrbarS4(:,2), fillpercerrbarS4(:,2)-fillpercerrbarS4(:,1), fillpercerrbarS4(:,3)-fillpercerrbarS4(:,2), '--m', 'LineWidth', 2);
-errorbar([25,50,100], fillpercerrbarS5(:,2), fillpercerrbarS5(:,2)-fillpercerrbarS5(:,1), fillpercerrbarS5(:,3)-fillpercerrbarS5(:,2), '--r', 'LineWidth', 2);
-errorbar([25,50,100], fillpercerrbarS6(:,2), fillpercerrbarS6(:,2)-fillpercerrbarS6(:,1), fillpercerrbarS6(:,3)-fillpercerrbarS6(:,2), '--g', 'LineWidth', 2);
-title('Percentage of repositories filled up according to storage depletion ratio');
-xlabel('Repo storage filled (%)');
-ylabel('Quantity of repos filled (%)');
-axis([0 125 0 100])
-legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
-hold off
+% figure
+% hold on
+% errorbar([25,50,100], fillpercerrbarS1(:,2), fillpercerrbarS1(:,2)-fillpercerrbarS1(:,1), fillpercerrbarS1(:,3)-fillpercerrbarS1(:,2), '--k', 'LineWidth', 2);
+% errorbar([25,50,100], fillpercerrbarS2(:,2), fillpercerrbarS2(:,2)-fillpercerrbarS2(:,1), fillpercerrbarS2(:,3)-fillpercerrbarS2(:,2), '--b', 'LineWidth', 2);
+% errorbar([25,50,100], fillpercerrbarS3(:,2), fillpercerrbarS3(:,2)-fillpercerrbarS3(:,1), fillpercerrbarS3(:,3)-fillpercerrbarS3(:,2), '--y', 'LineWidth', 2);
+% errorbar([25,50,100], fillpercerrbarS4(:,2), fillpercerrbarS4(:,2)-fillpercerrbarS4(:,1), fillpercerrbarS4(:,3)-fillpercerrbarS4(:,2), '--m', 'LineWidth', 2);
+% errorbar([25,50,100], fillpercerrbarS5(:,2), fillpercerrbarS5(:,2)-fillpercerrbarS5(:,1), fillpercerrbarS5(:,3)-fillpercerrbarS5(:,2), '--r', 'LineWidth', 2);
+% errorbar([25,50,100], fillpercerrbarS6(:,2), fillpercerrbarS6(:,2)-fillpercerrbarS6(:,1), fillpercerrbarS6(:,3)-fillpercerrbarS6(:,2), '--g', 'LineWidth', 2);
+% title('Percentage of repositories filled up according to storage depletion ratio');
+% xlabel('Repo storage filled (%)');
+% ylabel('Quantity of repos filled (%)');
+% axis([0 125 0 100])
+% legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
+% hold off
 
-figure
-hold on
-bar(reposfill);
-title('Repositories storage used according to storage depletion ratio');
-xlabel('Repo number');
-ylabel('Repo storage used (MB)');
-legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
-hold off
+% figure
+% hold on
+% bar(reposfill);
+% title('Repositories storage used according to storage depletion ratio');
+% xlabel('Repo number');
+% ylabel('Repo storage used (MB)');
+% legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
+% hold off
 
 
 figure
@@ -336,14 +336,14 @@ xlabel('Repo Number')
 ylabel('Time(s)')
 zlabel('Messages')
 
-storage_17 = [S1(:, 17), S2(:, 17), S3(:, 17), S4(:, 17), S5(:, 17), S6(:, 17)];
-
-figure
-plot(storage_17);
-legend('1 msg/s', '2 msg/s', '3 msg/s', '4 msg/s', '5 msg/s', '6 msg/s');
-
-deleted_17 = [max(R1(:, 17)), max(R2(:, 17)), max(R3(:, 17)), max(R4(:, 17))];
-
-figure
-plot([1 2 3 4], deleted_17);
+% storage_17 = [S1(:, 17), S2(:, 17), S3(:, 17), S4(:, 17), S5(:, 17), S6(:, 17)];
+% 
+% figure
+% plot(storage_17);
+% legend('1 msg/s', '2 msg/s', '3 msg/s', '4 msg/s', '5 msg/s', '6 msg/s');
+% 
+% deleted_17 = [max(R1(:, 17)), max(R2(:, 17)), max(R3(:, 17)), max(R4(:, 17))];
+% 
+% figure
+% plot([1 2 3 4], deleted_17);
 

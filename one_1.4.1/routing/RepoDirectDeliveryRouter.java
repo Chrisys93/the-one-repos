@@ -4,10 +4,12 @@
  */
 package routing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import core.Application;
 import core.Connection;
+import core.DTNHost;
 import core.Message;
 import core.Settings;
 import core.SimClock;
@@ -37,28 +39,41 @@ public class RepoDirectDeliveryRouter extends ActiveRouter {
 			return; // can't start a new transfer
 		}
 		
-		// Try only the messages that can be delivered to final recipient
-		if (exchangeDeliverableMessages() != null) {
-			return; // started a transfer
-		}
+		this.tryAllMessagesToAllConnections();
+		
 	}
 	
+	/**
+	 * Tries to send all messages that this router is carrying to all
+	 * connections this node has. Messages are ordered using the 
+	 * {@link MessageRouter#sortByQueueMode(List)}. See 
+	 * {@link #tryMessagesToConnections(List, List)} for sending details.
+	 * @return The connections that started a transfer or null if no connection
+	 * accepted a message.
+	 */
 	@Override
-	protected Tuple<Message, Connection> tryMessagesForConnected(
-			List<Tuple<Message, Connection>> tuples) {
-		if (tuples.size() == 0) {
+	protected Connection tryAllMessagesToAllConnections(){
+
+		List<Connection> connections = new ArrayList<Connection>();
+		List<Message> messages = new ArrayList<Message>(this.getMessageCollection());
+		this.sortByQueueMode(messages);
+		
+		if (!this.getHost().name.contains("r")) {
+			for (Connection con : getConnections()) {
+				DTNHost to = con.getOtherNode(this.getHost());
+				if (to.name.contains("r")){
+					connections.add(con);
+				}
+			}
+			if (connections.size() == 0 || this.getNrofMessages() == 0) {
+				return null;
+			}
+
+			return this.tryMessagesToConnections(messages, connections);
+		}
+		else {
 			return null;
 		}
-		
-		for (Tuple<Message, Connection> t : tuples) {
-			Message m = t.getKey();
-			Connection con = t.getValue();
-			if (startTransfer(m, con) == RCV_OK) {
-				return t;
-			}
-		}
-		
-		return null;
 	}
 	
 	/** 

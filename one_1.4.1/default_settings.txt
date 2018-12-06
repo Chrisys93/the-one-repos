@@ -10,7 +10,6 @@ Scenario.updateInterval = 0.1
 Scenario.endTime = 43200
 
 
-Scenario.simulateFiles = false
 Scenario.simulateStorage = true
 
 
@@ -96,36 +95,27 @@ Group.msgTtl = 300
 
 Group.nrofHosts = 40
 
-###################################
-### common settings for all groups
-Group.fileCapability = true
-
-###################################
-# path to files generation input files
-FilesGenerator.filepath = files_input_examples/sample_files_distributed_in_groups.txt
-FilesGenerator.rngSeed = 2#; 8372; 98092; 18293; 777]
-
 # group1 (pedestrians) repositories specific settings
 Group1.groupID = r
 Group1.movementModel = RepoStationaryMovement
 #Group1.speed = 0, 0
 Group1.storageCapability = true
 Group1.processingCapability = true
-Group1.storageSize = 10G
-Group1.processSize = 5G
+Group1.storageSize = 20G
+Group1.processSize = 10G
 Group1.compressionRate = 1.43
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
-Group1.nrofInterfaces = 3
-Group1.interface1 = wlanPedInterface
-Group1.interface2 = wlanCarInterface
-Group1.interface3 = wlanBusInterface
+Group1.nrofInterfaces = 1
+Group1.interface1 = wlanCarInterface
+#Group1.interface2 = wlanCarInterface
+#Group1.interface3 = wlanBusInterface
 #Group1.interface4 = wlanRepInterface
-Group1.nrofHosts = 100
+Group1.nrofHosts = 80
 
 # group2 pedestrians specific settings
 Group2.groupID = p
-Group2.interface1 = wlanPedInterface
+Group2.interface1 = wlanCarInterface
 # # 10-50 km/h
 # Group2.speed = 2.7, 13.9
 
@@ -139,7 +129,7 @@ Group3.speed = 2.7, 13.9
 Group3.bufferSize = 300M
 Group3.interface1 = wlanCarInterface
 # More cars than anything else
-Group3.nrofHosts = 1000
+Group3.nrofHosts = 500
 
 # The Bus groups
 Group4.groupID = b
@@ -150,9 +140,8 @@ Group4.routeType = 1
 Group4.waitTime = 10, 30
 Group4.speed = 4, 10
 Group4.nrofHosts = 5
-Group4.nrofInterfaces = 2
-Group4.interface1 = wlanBusInterface
-Group4.interface2 = wlanPedInterface
+Group4.nrofInterfaces = 1
+Group4.interface1 = wlanCarInterface
 
 Group5.groupID = b
 Group5.bufferSize = 500M
@@ -162,9 +151,8 @@ Group5.routeType = 1
 Group5.waitTime = 10, 30
 Group5.speed = 4, 10
 Group5.nrofHosts = 5
-Group5.nrofInterfaces = 2
-Group5.interface1 = wlanBusInterface
-Group5.interface2 = wlanPedInterface
+Group5.nrofInterfaces = 1
+Group5.interface1 = wlanCarInterface
 
 Group6.groupID = b
 Group6.bufferSize = 500M
@@ -174,9 +162,8 @@ Group6.routeType = 1
 Group6.waitTime = 10, 30
 Group6.speed = 4, 10
 Group6.nrofHosts = 5
-Group6.nrofInterfaces = 2
-Group6.interface1 = wlanBusInterface
-Group6.interface2 = wlanPedInterface
+Group6.nrofInterfaces = 1
+Group6.interface1 = wlanCarInterface
 
 # Group5.groupID = t
 # Group5.bufferSize = 50M
@@ -285,7 +272,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 10
+Report.nrofReports = 7
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -303,20 +290,14 @@ FileLocationReport.granularity = 5
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
-Report.report1 = RepoMessageLocationReport
-Report.report2 = RepoStoredMessageLocationReport
-Report.report3 = MobileMessageLocationReport
-Report.report4 = RepoIncomingSpeedsReport
-Report.report5 = RepoDeletedMessagesReport
-Report.report6 = MobileDeletedMessagesReport
-Report.report7 = RepoProcessingMessageLocationReport
-Report.report8 = RepoProcessedMessageLocationReport
-Report.report9 = RepoAllMessagesLocationReport
-Report.report10 = RepoUnprocessedMessagesLocationReport
+Report.report1 = RepoIncomingSpeedsReport
+Report.report2 = RepoDeletedMessagesReport
+Report.report3 = MobileDeletedMessagesReport
+Report.report4 = RepoProcessingMessageLocationReport
+Report.report5 = RepoProcessedMessageLocationReport
+Report.report6 = RepoAllMessagesLocationReport
+Report.report7 = RepoUnprocessedMessagesLocationReport
 
-RepoMessageLocationReport.output = [reports/RMLR1;reports/RMLR2;reports/RMLR3; reports/RMLR4; reports/RMLR5]
-RepoStoredMessageLocationReport.output = [reports/RSMLR1;reports/RSMLR2;reports/RSMLR3; reports/RSMLR4; reports/RSMLR5]
-MobileMessageLocationReport.output = [reports/MMLR1;reports/MMLR2;reports/MMLR3; reports/MMLR4; reports/MMLR5]
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
 MobileDeletedMessagesReport.output = [reports/MDMR1;reports/MDMR2;reports/MDMR3; reports/MDMR4; reports/MDMR5]
@@ -356,7 +337,7 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = 1
+procApp.depletionRate = 10
 procApp.passive = false
 
 # Define new application

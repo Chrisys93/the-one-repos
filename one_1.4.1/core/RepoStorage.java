@@ -107,14 +107,6 @@ public class RepoStorage {
 		return this.processMessages;
 	}
 	
-
-	/**
-	 * TODO: Add a function, to start processing messages as soon as they 
-	 * enter processing storage (processStorage), by reducing their size at 
-	 * the set compression rate, with a delay, and before it sends them off 
-	 * (depletes the messages), it stores them in processedStorage.
-	 */
-	
 	/**
 	 * Adds a message to the storage system and/or to the processing pipeline
 	 * if the the node has processing capability and the processing storage is 
@@ -191,7 +183,6 @@ public class RepoStorage {
 		int processedsize = (int) (initsize/this.compressionRate);
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
 		this.processedMessages.add(processedMessage);
-		processedMessage.addProperty("type", "processed");
 		this.deleteProcMessage(procMessage.getId());
 		return true;
 	}
@@ -372,19 +363,6 @@ public class RepoStorage {
 		this.storedMessages.clear();
 		return true;
 	}
-		
-	/**
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * TODO: Create methods for returning:
-	 * free storage space;
-	 * total storage space;
-	 * add message to storage space
-	 * TODO: Create methods for obtaining:
-	 * deletion of messages from storage space;
-	 * storage space full;
-	 * free up storage if there is none left;
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 */
 
 	public long getFreeStorageSpace() {
 		long usedStorage = this.getStoredMessagesSize();
