@@ -4,6 +4,7 @@
 
 ## Scenario settings
 Scenario.name = sim1_scenario
+Scenario.endTime = 10000
 
 Scenario.simulateStorage = true
 
