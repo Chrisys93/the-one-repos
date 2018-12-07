@@ -94,10 +94,6 @@ public class ProcApplication extends Application {
 			//System.out.println("handle is accessed on host: " + host);
 
 			host.getStorageSystem().addToStoredMessages(msg);
-			if (host.getStorageSystem().isStorageFull()){
-				//System.out.println("The current host is: " + host);
-				host.getStorageSystem().deleteMessagesForSpace(false);
-			}
 			
 			/**
 			 * TODO:
@@ -146,27 +142,11 @@ public class ProcApplication extends Application {
 			if (!host.getStorageSystem().isProcessingEmpty()) {
 				if (host.getStorageSystem().getOldestProcessMessage() != null) {
 					Message temp = host.getStorageSystem().getOldestProcessMessage();
-					String temptype = (String)temp.getProperty("type");
-					if (temptype.equalsIgnoreCase("proc")){
-						double delayed = (double)temp.getProperty("delay");
-						if (curTime - this.lastProc >= delayed) {
-							host.getStorageSystem().processMessage(temp);
-							this.lastProc = curTime;
-						}
+					double delayed = (double)temp.getProperty("delay");
+					if (curTime - this.lastProc >= delayed) {
+						host.getStorageSystem().processMessage(temp);
+						this.lastProc = curTime;
 					}
-				}
-			}
-	
-			if (host.getStorageSystem().isProcessingFull()) {
-				Message tempproc = host.getStorageSystem().getNewestProcessMessage();
-				host.getStorageSystem().addToStoredMessages(tempproc);
-				host.getStorageSystem().deleteProcMessage(tempproc.getId());
-			}
-			else {					
-				Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
-				if (tempstored != null) {
-					host.getStorageSystem().addToStoredMessages(tempstored);
-					host.getStorageSystem().deleteStoredMessage(tempstored.getId());
 				}
 			}
 			this.lastCheck = curTime;
@@ -183,11 +163,11 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().deleteProcessedMessage(temp.getId());
 					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 				}
-				else if (host.getStorageSystem().getOldestStoredMessage() != null){
-					Message temp = host.getStorageSystem().getOldestStoredMessage();
+				else if (host.getStorageSystem().getOldestStaticMessage() != null){
+					Message temp = host.getStorageSystem().getOldestStaticMessage();
 					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-					host.getStorageSystem().addToDeplStoredMessages(temp);
-					host.getStorageSystem().deleteStoredMessage(temp.getId());
+					host.getStorageSystem().addToDeplStaticMessages(temp);
+					host.getStorageSystem().deleteStaticMessage(temp.getId());
 				}
 			}			
 			this.lastDepl = curTime;

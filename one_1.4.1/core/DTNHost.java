@@ -40,7 +40,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	protected boolean hasStorageCapability;
 	protected boolean hasProcessingCapability;
 	public long storageSize;
-	private long processSize;
+	//private long processSize;
 	private double compressionRate;
 	
 	private double[] simLocation;
@@ -63,7 +63,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			List<MovementListener> movLs,
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
-			MovementModel mmProto, MessageRouter mRouterProto, boolean hasStorageCapability, boolean hasProcessingCapability, long storageSize, long processSize, double compressionRate, double[] simLocation) {
+			MovementModel mmProto, MessageRouter mRouterProto, boolean hasStorageCapability, boolean hasProcessingCapability, long storageSize, double compressionRate, double[] simLocation) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
@@ -72,7 +72,7 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.hasStorageCapability = hasStorageCapability;
 		this.hasProcessingCapability = hasProcessingCapability;
 		this.storageSize = storageSize;
-		this.processSize = processSize;
+		//this.processSize = processSize;
 		this.simLocation = simLocation;
 		this.compressionRate = compressionRate;
 
@@ -97,7 +97,7 @@ public class DTNHost implements Comparable<DTNHost> {
 			
 		setRouter(mRouterProto.replicate());
 		if (this.hasStorageCapability()){
-			setStorageSystem(new RepoStorage(), storageSize, processSize, compressionRate);
+			setStorageSystem(new RepoStorage(), storageSize, compressionRate);
 		}
 		this.location = movement.getInitialLocation();
 
@@ -157,8 +157,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @param processSize 
 	 * @param storage system The router to set
 	 */
-	public void setStorageSystem(RepoStorage storageSystem, long storageSize, long processSize, double compressionRate) {
-		storageSystem.init(this, storageSize, processSize, compressionRate);
+	public void setStorageSystem(RepoStorage storageSystem, long storageSize, double compressionRate) {
+		storageSystem.init(this, storageSize, compressionRate);
 		this.storageSystem = storageSystem;
 	}
 
@@ -183,7 +183,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	 * @return the storage system size of this host
 	 */
 	public long getStorageSystemProcSize() {
-		return this.processSize;
+		return this.getStorageSystem().getProcMessagesSize();
 	}
 
 	/**
