@@ -27,7 +27,6 @@ import core.SimError;
 import core.Tuple;
 
 
-import core.DTNFile;
 import core.SimScenario;
 
 /**
@@ -575,15 +574,7 @@ public abstract class MessageRouter {
 		for (Connection c : host.getConnections()) {
 			cons.addMoreInfo(new RoutingInfo(c));
 		}
-		
-		if(SimScenario.getInstance().simulateFiles() && host.hasFileCapability()){
-			RoutingInfo files = new RoutingInfo(host.getFileSystem().getNrofFiles() + 
-			" file(s)");
-			ri.addMoreInfo(files);
-			for(DTNFile file : host.getFileSystem().getFileCollection()){
-				files.addMoreInfo(new RoutingInfo(file.getFilename()));
-			}
-		}
+
 
 		if(SimScenario.getInstance().simulateRepos() && host.hasStorageCapability()){
 			RoutingInfo stored = new RoutingInfo(host.getStorageSystem().getNrofMessages() + 

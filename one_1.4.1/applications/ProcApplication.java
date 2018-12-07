@@ -10,6 +10,7 @@ import core.Message;
 import core.Settings;
 import core.SimClock;
 
+
 /**
  * Simple proc application to demonstrate the application support. The 
  * application can be configured to send procs with a fixed interval or to only
@@ -34,6 +35,7 @@ public class ProcApplication extends Application {
 	// Private vars
 	private double	lastProc = 0;
 	private double 	lastDepl = 0;
+	private double 	lastCheck = 0;
 	private boolean passive = false;
 	private double 	depl_rate = 1;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
@@ -77,8 +79,8 @@ public class ProcApplication extends Application {
 	}
 	
 	/** 
-	 * Handles an incoming message. If the message is a proc message replies
-	 * with a pong message. Generates events for proc and pong messages.
+	 * Handles an incoming message and stores it. If the message is a proc message,
+	 * it processes it.
 	 * 
 	 * @param msg	message received by the router
 	 * @param host	host to which the application instance is attached
@@ -90,14 +92,11 @@ public class ProcApplication extends Application {
 			String type = (String) msg.getProperty("type");
 	
 			//System.out.println("handle is accessed on host: " + host);
-			
-			if (!host.getStorageSystem().isStorageFull()){
-				host.getStorageSystem().addToStoredMessages(msg);
-			}
-			else {
+
+			host.getStorageSystem().addToStoredMessages(msg);
+			if (host.getStorageSystem().isStorageFull()){
 				//System.out.println("The current host is: " + host);
 				host.getStorageSystem().deleteMessagesForSpace(false);
-				host.getStorageSystem().addToStoredMessages(msg);
 			}
 			
 			/**
@@ -107,21 +106,14 @@ public class ProcApplication extends Application {
 			 * to processMessage() method, in RepoStorage
 			 */
 			if (type.equalsIgnoreCase("proc")) {				
-				if (!host.getStorageSystem().isProcessingEmpty()) {
+				if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.lastProc >= delayed) {
-						if (!host.getStorageSystem().isProcessedFull()) {
-							host.getStorageSystem().processMessage(msg);
-							this.lastProc = curTime;
-							this.noProc++;
-						}
+						host.getStorageSystem().processMessage(msg);
+						this.lastProc = curTime;
+						this.noProc++;
 					}
 				}
-			}
-			
-			else if (type.equalsIgnoreCase("nonproc")) {
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				host.getStorageSystem().addToStoredMessages(msg);
 			}
 		}
 		return msg;
@@ -150,34 +142,34 @@ public class ProcApplication extends Application {
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason.
 		 */
-		if (!host.getStorageSystem().isProcessingEmpty()) {
-			if (host.getStorageSystem().getOldestProcessMessage() != null) {
-				Message temp = host.getStorageSystem().getOldestProcessMessage();
-				String temptype = (String)temp.getProperty("type");
-				if (temptype.equalsIgnoreCase("proc")){
-					double delayed = (double)temp.getProperty("delay");
-					if (curTime - this.lastProc >= delayed) {
-						host.getStorageSystem().processMessage(temp);
-						this.lastProc = curTime;
+		if (curTime - this.lastCheck > 1) {
+			if (!host.getStorageSystem().isProcessingEmpty()) {
+				if (host.getStorageSystem().getOldestProcessMessage() != null) {
+					Message temp = host.getStorageSystem().getOldestProcessMessage();
+					String temptype = (String)temp.getProperty("type");
+					if (temptype.equalsIgnoreCase("proc")){
+						double delayed = (double)temp.getProperty("delay");
+						if (curTime - this.lastProc >= delayed) {
+							host.getStorageSystem().processMessage(temp);
+							this.lastProc = curTime;
+						}
 					}
-					
 				}
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				
 			}
-		}
-
-		if (host.getStorageSystem().isProcessingFull()) {
-			Message tempproc = host.getStorageSystem().getNewestProcessMessage();
-			host.getStorageSystem().addToStoredMessages(tempproc);
-			host.getStorageSystem().deleteProcMessage(tempproc.getId());
-		}
-		else {					
-			Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
-			if (tempstored != null) {
-				host.getStorageSystem().addToStoredMessages(tempstored);
-				host.getStorageSystem().deleteStoredMessage(tempstored.getId());
+	
+			if (host.getStorageSystem().isProcessingFull()) {
+				Message tempproc = host.getStorageSystem().getNewestProcessMessage();
+				host.getStorageSystem().addToStoredMessages(tempproc);
+				host.getStorageSystem().deleteProcMessage(tempproc.getId());
 			}
+			else {					
+				Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
+				if (tempstored != null) {
+					host.getStorageSystem().addToStoredMessages(tempstored);
+					host.getStorageSystem().deleteStoredMessage(tempstored.getId());
+				}
+			}
+			this.lastCheck = curTime;
 		}
 		
 		/**
@@ -190,11 +182,6 @@ public class ProcApplication extends Application {
 					Message temp = host.getStorageSystem().getOldestProcessedMessage();
 					host.getStorageSystem().deleteProcessedMessage(temp.getId());
 					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
-						
-					if (!host.getStorageSystem().isProcessingFull()) {					
-						Message tempstored = host.getStorageSystem().getOldestProcStoredMessage();
-						host.getStorageSystem().addToStoredMessages(tempstored);
-					}
 				}
 				else if (host.getStorageSystem().getOldestStoredMessage() != null){
 					Message temp = host.getStorageSystem().getOldestStoredMessage();

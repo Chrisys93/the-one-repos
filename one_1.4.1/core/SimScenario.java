@@ -153,8 +153,6 @@ public class SimScenario implements Serializable {
 
 	/** Should filesystem in hosts be simulated */
 	private boolean simulateFiles;
-	/** The file generator used by the Scenario */
-	private DTNFileGenerator filesGenerator;
 
 	/** Should repo storage in hosts be simulated */
 	private boolean simulateRepos;
@@ -230,9 +228,6 @@ public class SimScenario implements Serializable {
 		this.worldSizeY = worldSize[1];
 		
 		createHosts();
-		if(this.simulateFiles){
-			addFilesToHosts();
-		}
 		if(this.simulateRepos){
 			addStorageToHosts();
 			System.out.println("Repos are simulated");
@@ -241,12 +236,6 @@ public class SimScenario implements Serializable {
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval, 
 				updateListeners, simulateConnections, 
 				eqHandler.getEventQueues());
-	}
-	
-	private void addFilesToHosts() {		
-		filesGenerator = new DTNFileGenerator(this);
-		filesGenerator.readFiles();
-		filesGenerator.generateFiles();		
 	}
 
 	private void addStorageToHosts() {
@@ -272,12 +261,6 @@ public class SimScenario implements Serializable {
 			}
 			//System.out.println("Host " + host.name + " has "+host.hasProcessingCapability()+  " processing storage");
 		}
-	}
-		
-	
-
-	public DTNFileGenerator getFileGenerator(){
-		return this.filesGenerator;
 	}
 
 	/**
@@ -628,7 +611,7 @@ public class SimScenario implements Serializable {
 					// new instances of movement model and message router
 					DTNHost host = new DTNHost(this.messageListeners, 
 							this.movementListeners, gid, mmNetInterfaces, comBus, 
-							mmPrototype, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
+							mmPrototype, mRouterProto, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
 					/*if (host.hasProcessingCapability()) {
 						System.out.println("Host "+host.name+ " has " +host.getStorageSystemProcSize()+" processing storage");
 					}
@@ -642,7 +625,7 @@ public class SimScenario implements Serializable {
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners, 
 						this.movementListeners, gid, mmNetInterfaces, comBus, 
-						mmProto, mRouterProto, hasFileCapability, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
+						mmProto, mRouterProto, hasStorageCapability, hasProcessingCapability, storageSize, processSize, compressionRate, simLocation);
 				hosts.add(host);
 				}
 			}

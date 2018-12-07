@@ -36,9 +36,6 @@ public class DTNHost implements Comparable<DTNHost> {
 	public List<NetworkInterface> net;
 	private ModuleCommunicationBus comBus;
 	
-	private DTNFileSystem fileSystem;
-	protected boolean hasFileCapability;
-	
 	private RepoStorage storageSystem;
 	protected boolean hasStorageCapability;
 	protected boolean hasProcessingCapability;
@@ -66,14 +63,12 @@ public class DTNHost implements Comparable<DTNHost> {
 			List<MovementListener> movLs,
 			String groupId, List<NetworkInterface> interf,
 			ModuleCommunicationBus comBus, 
-			MovementModel mmProto, MessageRouter mRouterProto,
-			boolean hasFileCapability, boolean hasStorageCapability, boolean hasProcessingCapability, long storageSize, long processSize, double compressionRate, double[] simLocation) {
+			MovementModel mmProto, MessageRouter mRouterProto, boolean hasStorageCapability, boolean hasProcessingCapability, long storageSize, long processSize, double compressionRate, double[] simLocation) {
 		this.comBus = comBus;
 		this.location = new Coord(0,0);
 		this.address = getNextAddress();
 		this.name = groupId+address;
 		this.net = new ArrayList<NetworkInterface>();
-		this.hasFileCapability = hasFileCapability;
 		this.hasStorageCapability = hasStorageCapability;
 		this.hasProcessingCapability = hasProcessingCapability;
 		this.storageSize = storageSize;
@@ -155,23 +150,6 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public MessageRouter getRouter() {
 		return this.router;
-	}
-	
-	/**
-	 * Set a file system for this host
-	 * @param file system The router to set
-	 */
-	private void setFileSystem(DTNFileSystem fileSystem) {
-		fileSystem.init(this);
-		this.fileSystem = fileSystem;
-	}
-
-	/**
-	 * Returns the file system of this host
-	 * @return the file system of this host
-	 */
-	public DTNFileSystem getFileSystem() {
-		return this.fileSystem;
 	}
 
 	/**
@@ -602,10 +580,6 @@ public class DTNHost implements Comparable<DTNHost> {
 	 */
 	public int compareTo(DTNHost h) {
 		return this.getAddress() - h.getAddress();
-	}
-
-	public boolean hasFileCapability() {
-		return hasFileCapability;
 	}
 
 	public boolean hasStorageCapability() {
