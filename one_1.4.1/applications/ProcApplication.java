@@ -158,7 +158,7 @@ public class ProcApplication extends Application {
 		
 		if (curTime - this.lastDepl >= 1) {
 			for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
-				if (!host.getStorageSystem().isProcessedEmpty()) {
+				if (!(host.getStorageSystem().isProcessedEmpty())) {
 					Message temp = host.getStorageSystem().getOldestProcessedMessage();
 					host.getStorageSystem().deleteProcessedMessage(temp.getId());
 					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());

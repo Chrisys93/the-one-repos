@@ -149,22 +149,10 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		 * multiply and obtain total amount of space used,
 		 * then find free space via difference.
 		 */
-		long freeStorage = this.getHost().getStorageSystem().getFreeStorageSpace();
 
 		//System.out.println("There is "+freeStorage+" free storage space");
 		
-		if (!this.getHost().getStorageSystem().isStorageFull()){
-			this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
-			//System.out.println("Message has been added to storage, with no problem");
-		}
-		else {
-			//System.out.println("The current host is: " + this.getHost());
-			this.getHost().getStorageSystem().deleteMessagesForSpace(false);
-			//if(con.ifUp()){
-				this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
-			//}			
-			//System.out.println("Message has been added to storage, by deleting other messages");
-		}
+		this.getHost().getStorageSystem().addToStoredMessages(con.getMessage());
 	}
 	
 	@Override
@@ -183,63 +171,14 @@ public class ReposFirstContactRouter extends ActiveRouter {
 		//for (Application app : getApplications(con.getMessage().getAppID())) {
 		//	System.out.println("app.handle of "+ app.getAppID() +" gets executed here");
 		//}
-		System.out.println(this.getHost() + " has storage capability " + this.getHost().hasStorageCapability());
-		if (this.getHost().name.contains("r")){
-			System.out.println("This host is "+ this.getHost() +" has storage capability: " + this.getHost().hasStorageCapability());
-		}
+		
 		if (this.getHost().hasStorageCapability()) {
-			
-			
-			//if (isFinalRepoRecipient && isFirstRepoDelivery){
-				this.addMessageToStorageSpace(con);
 				Message msg = con.getMessage();
-				double curTime = SimClock.getTime();
-				String type = (String) msg.getProperty("type");
-				double delay = (double)msg.getProperty("delay");
 				//System.out.println("There is "+freeStorage+" free storage space");
 				
-				if (!this.getHost().getStorageSystem().isStorageFull()){
-					this.getHost().getStorageSystem().addToStoredMessages(msg);
-					System.out.println("Message has been added to storage, with no problem");
-				}
-				else {
-					//System.out.println("The current this.getHost() is: " + this.getHost());
-					this.getHost().getStorageSystem().deleteMessagesForSpace(false);
-					this.getHost().getStorageSystem().addToStoredMessages(msg);
-					System.out.println("Message has been added to storage, by deleting other messages");
-				}
-				
-				/**
-				 * TODO:
-				 * PROCESSING PART HERE, with processing rate and delay:
-				 * messages are processed at a certain rate/sec, obtaining messages according 
-				 * to processMessage() method, in RepoStorage
-				 */
-				if (type=="proc") {
-					if (!this.getHost().getStorageSystem().isProcessedFull()) {
-						this.getHost().getStorageSystem().processMessage(msg);
-					}
-					
-					if (!this.getHost().getStorageSystem().isProcessingEmpty()) {
-						if (curTime - this.lastProc >= delay) {
-							if (type == "proc"){
-								this.getHost().getStorageSystem().processMessage(msg);
-								while (!this.getHost().getStorageSystem().hasMessage(msg.getId())) {}
-							}
-							this.lastProc = curTime;
-							this.noProc++;
-						}
-						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-					}
-				}
-				
-				else if (type=="nonproc") {
-					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-					this.getHost().getStorageSystem().addToStoredMessages(msg);
-				}
-			}
+				this.getHost().getStorageSystem().addToStoredMessages(msg);
 				//System.out.println("Message added to storage");	
-			//}
+		}
 		//System.out.println("Transfer done " + this.getHost().name);
 		
 	}

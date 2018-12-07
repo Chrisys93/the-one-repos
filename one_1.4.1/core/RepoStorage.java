@@ -41,6 +41,7 @@ public class RepoStorage {
 	protected ArrayList<Message> staticMessages;
 	protected ArrayList<Message> processMessages;
 	protected ArrayList<Message> processedMessages;
+	protected ArrayList<Message> storedMessages;
 
 	/** value to keep track of used storage */
 	//protected long usedStorage;
@@ -53,6 +54,7 @@ public class RepoStorage {
 		this.staticMessages = new ArrayList<Message>();
 		this.processMessages = new ArrayList<Message>();
 		this.processedMessages = new ArrayList<Message>();
+		this.storedMessages = new ArrayList<Message>();
 		this.storageSize = storageSize;
 		this.processSize = 0;
 		this.staticSize = 0;
@@ -74,21 +76,20 @@ public class RepoStorage {
 		return this.storageSize;
 	}
 	
-	public long getTotalProcessStorageSpace() {
-		return this.processSize;
-	}
-	
 	/** Create message collection stored return method */
 	
-	public Collection<Message> getStaticMessagesCollection() {
-		this.messages = staticMessages;
+	public Collection<Message> getStoredMessagesCollection() {
+		this.messages = this.staticMessages;
+		this.messages.addAll(this.processMessages);
 		return this.messages;
 	}
 
 	/** Create message ArrayList stored return method */
 	
-	public ArrayList<Message> getStaticMessages() {
-		return this.staticMessages;
+	public ArrayList<Message> getStoredMessages() {
+		this.storedMessages = this.staticMessages;
+		this.storedMessages.addAll(this.processMessages);
+		return this.storedMessages;
 	}
 
 	/** Create message ArrayList stored return method */
@@ -101,6 +102,12 @@ public class RepoStorage {
 	
 	public ArrayList<Message> getProcessMessages() {
 		return this.processMessages;
+	}
+
+	/** Create message ArrayList stored return method */
+	
+	public ArrayList<Message> getStaticMessages() {
+		return this.staticMessages;
 	}
 	
 	/**
@@ -125,8 +132,16 @@ public class RepoStorage {
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
-		if (this.staticSize + this.processSize >= this.storageSize) {
-			this.deleteStaticMessage(this.getOldestStaticMessage().getId());
+		if ((this.staticSize + this.processSize) >= this.storageSize) {
+			if (this.getOldestStaticMessage() != null) {
+				this.deleteStaticMessage(this.getOldestStaticMessage().getId());
+			}
+			else if(this.getProcessedMessagesSize()<this.processedSize){
+				this.processMessage(this.getOldestProcessMessage());
+			}
+			else {
+				this.deleteProcMessage(this.getOldestProcessMessage().getId());
+			}
 		}
 	}
 	
@@ -228,7 +243,11 @@ public class RepoStorage {
 	 * @return The size of the used processing storage in this storage system
 	 */
 	public long getProcessedMessagesSize() {
-		return this.processedSize;
+		long processedUsed = 0;
+		for (Message msg:this.processedMessages) {
+			processedUsed += msg.getSize();
+		}
+		return processedUsed;
 	}
 		
 	
@@ -289,7 +308,7 @@ public class RepoStorage {
 	public boolean deleteProcMessage(String MessageId){
 		for(int i=0; i<processMessages.size(); i++){
 			if(processMessages.get(i).getId() == MessageId){
-				this.staticSize -= processMessages.get(i).getSize();
+				this.processSize -= processMessages.get(i).getSize();
 				this.processMessages.remove(i);
 				return true;
 			}
@@ -396,7 +415,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProcessed >= this.processedSize - 100000000){
+		if (usedProcessed >= this.processedSize - 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
