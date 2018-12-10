@@ -47,16 +47,15 @@ FileLocationReport.granularity = 5
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
-Report.report1 = RepoMessageLocationReport
-Report.report2 = RepoStoredMessageLocationReport
-Report.report3 = MobileMessageLocationReport
-Report.report4 = RepoIncomingSpeedsReport
-Report.report5 = RepoDeletedMessagesReport
-Report.report6 = MobileDeletedMessagesReport
-Report.report7 = RepoProcessingMessageLocationReport
-Report.report8 = RepoProcessedMessageLocationReport
-Report.report9 = RepoAllMessagesLocationReport
-Report.report10 = RepoUnprocessedMessagesLocationReport
+Report.report1 = RepoIncomingSpeedsReport
+Report.report2 = RepoDeletedMessagesReport
+Report.report3 = MobileDeletedMessagesReport
+
+Report.report4 = RepoUnprocessedMessagesLocationReport
+Report.report5 = RepoProcessedMessageLocationReport
+Report.report6 = RepoAllMessagesLocationReport
+Report.report7 = RepoDepletedProcBWReport
+Report.report8 = RepoDepletedStorageBWReport
 
 RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5]
 RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5]
@@ -68,6 +67,9 @@ RepoProcessingMessageLocationReport.output = [reports1/RPrMR1;reports1/RPrMR2;re
 RepoProcessedMessageLocationReport.output = [reports1/RPMR1;reports1/RPMR2;reports1/RPMR3; reports1/RPMR4; reports1/RPMR5]
 RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2;reports1/RAMR3; reports1/RAMR4; reports1/RAMR5]
 RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1;reports1/RUMR2;reports1/RUMR3; reports1/RUMR4; reports1/RUMR5]
+
+RepoDepletedProcBWReport.output = [reports/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5]
+RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -100,7 +102,7 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = [1; 2; 3; 4; 5]
+procApp.depletionRate = [5; 8; 10; 20; 30]
 procApp.passive = false
 
 
