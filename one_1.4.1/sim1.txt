@@ -100,7 +100,7 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = [1; 2; 3; 4; 5]
+procApp.depletionRate = [5; 8; 10; 20; 30]
 procApp.passive = false
 
 

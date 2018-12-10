@@ -8,7 +8,7 @@ Events2.hosts = [80,119; 80,179; 80,279; 80,579; 80,1079; 80,2079]
 # range of message source/destination addresses
 Events3.hosts = [120,134; 180,194; 280,294; 580,594; 1080,1094; 2080,2094]
 
-Group3.nrofHosts = [40; 100; 200; 500; 1000; 2000]
+Group3.nrofHosts = [200; 500; 1000]
 
 Events4.depletionInterval = 1
 

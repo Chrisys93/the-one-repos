@@ -1,7 +1,7 @@
 ## Scenario settings
 Scenario.name = sim3_scenario
 
-Group1.nrofHosts = [40; 100; 200; 500]
+Group1.nrofHosts = [40; 100; 200]
 
 Group3.nrofHosts = 1000
 
