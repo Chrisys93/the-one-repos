@@ -100,7 +100,7 @@ public class ProcApplication extends Application {
 			if (type.equalsIgnoreCase("proc")) {				
 				if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
 					double delayed = (double)msg.getProperty("delay");
-					if (curTime - this.lastProc >= delayed) {
+					if (curTime - this.lastProc >= delayed && !(host.getStorageSystem().isProcessedFull())) {
 						host.getStorageSystem().processMessage(msg);
 						this.lastProc = curTime;
 					}
@@ -137,7 +137,7 @@ public class ProcApplication extends Application {
 			if (host.getStorageSystem().getOldestProcessMessage() != null) {
 				Message temp = host.getStorageSystem().getOldestProcessMessage();
 				double delayed = (double)temp.getProperty("delay");
-				if (curTime - this.lastProc >= delayed) {
+				if (curTime - this.lastProc >= delayed && !(host.getStorageSystem().isProcessedFull())) {
 					host.getStorageSystem().processMessage(temp);
 					this.lastProc = curTime;
 				}

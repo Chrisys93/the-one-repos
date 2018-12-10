@@ -271,7 +271,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 7
+Report.nrofReports = 8
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -284,6 +284,8 @@ RepoProcessedMessageLocationReport.granularity = 1
 RepoAllMessagesLocationReport.granularity = 1
 MobileDeletedMessagesReport.granularity = 1
 RepoUnprocessedMessagesLocationReport.granularity = 1
+RepoDepletedProcBWReport.granularity = 1
+RepoDepletedStorageBWReport.granularity = 1
 FileLocationReport.granularity = 5
 
 # default directory of reports (can be overridden per Report with output setting)
@@ -292,10 +294,11 @@ Report.reportDir = reports/
 Report.report1 = RepoIncomingSpeedsReport
 Report.report2 = RepoDeletedMessagesReport
 Report.report3 = MobileDeletedMessagesReport
-Report.report4 = RepoProcessingMessageLocationReport
-Report.report5 = RepoProcessedMessageLocationReport
-Report.report6 = RepoAllMessagesLocationReport
-Report.report7 = RepoUnprocessedMessagesLocationReport
+Report.report4 = RepoProcessedMessageLocationReport
+Report.report5 = RepoAllMessagesLocationReport
+Report.report6 = RepoUnprocessedMessagesLocationReport
+Report.report7 = RepoDepletedProcBWReport
+Report.report8 = RepoDepletedStorageBWReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
@@ -304,6 +307,8 @@ RepoProcessingMessageLocationReport.output = [reports/RPrMR1;reports/RPrMR2;repo
 RepoProcessedMessageLocationReport.output = [reports/RPMR1;reports/RPMR2;reports/RPMR3; reports/RPMR4; reports/RPMR5]
 RepoAllMessagesLocationReport.output = [reports/RAMR1;reports/RAMR2;reports/RAMR3; reports/RAMR4; reports/RAMR5]
 RepoUnprocessedMessagesLocationReport.output = [reports/RUMR1;reports/RUMR2;reports/RUMR3; reports/RUMR4; reports/RUMR5]
+RepoDepletedProcBWReport.output = [reports/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5]
+RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -336,7 +341,7 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = 30
+procApp.depletionRate = [5; 8; 10; 20; 30]
 procApp.passive = false
 
 # Define new application
