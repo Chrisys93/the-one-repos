@@ -39,8 +39,6 @@ public class ProcApplication extends Application {
 	private boolean passive = false;
 	private double 	depl_rate = 1;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
-	private int		noDepl = 0;
-	private int		noProc = 0;
 	
 	/** 
 	 * Creates a new proc application with the given settings.
@@ -67,8 +65,6 @@ public class ProcApplication extends Application {
 		this.lastProc = a.getLastProc();
 		this.lastDepl = a.getLastDepl();
 		this.passive = a.isPassive();
-		this.noDepl = a.getNoDepl();
-		this.noProc = a.getNoProc();
 		this.depl_rate = a.getDeplRate();
 		//this.processedSize = a.getProcessedSize();
 	}
@@ -107,7 +103,6 @@ public class ProcApplication extends Application {
 					if (curTime - this.lastProc >= delayed) {
 						host.getStorageSystem().processMessage(msg);
 						this.lastProc = curTime;
-						this.noProc++;
 					}
 				}
 			}
@@ -138,18 +133,15 @@ public class ProcApplication extends Application {
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason.
 		 */
-		if (curTime - this.lastCheck > 1) {
-			if (!host.getStorageSystem().isProcessingEmpty()) {
-				if (host.getStorageSystem().getOldestProcessMessage() != null) {
-					Message temp = host.getStorageSystem().getOldestProcessMessage();
-					double delayed = (double)temp.getProperty("delay");
-					if (curTime - this.lastProc >= delayed) {
-						host.getStorageSystem().processMessage(temp);
-						this.lastProc = curTime;
-					}
+		if (!host.getStorageSystem().isProcessingEmpty()) {
+			if (host.getStorageSystem().getOldestProcessMessage() != null) {
+				Message temp = host.getStorageSystem().getOldestProcessMessage();
+				double delayed = (double)temp.getProperty("delay");
+				if (curTime - this.lastProc >= delayed) {
+					host.getStorageSystem().processMessage(temp);
+					this.lastProc = curTime;
 				}
 			}
-			this.lastCheck = curTime;
 		}
 		
 		/**
@@ -158,16 +150,31 @@ public class ProcApplication extends Application {
 		
 		if (curTime - this.lastDepl >= 1) {
 			for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
-				if (!(host.getStorageSystem().isProcessedEmpty())) {
-					Message temp = host.getStorageSystem().getOldestProcessedMessage();
-					host.getStorageSystem().deleteProcessedMessage(temp.getId());
-					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
+				if (host.getStorageSystem().getStaticMessagesSize() < host.getStorageSystem().getTotalStorageSpace()/1.25) {
+					if (!(host.getStorageSystem().isProcessedEmpty())) {
+						Message temp = host.getStorageSystem().getOldestProcessedMessage();
+						host.getStorageSystem().deleteProcessedMessage(temp.getId());
+						//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
+					}
+					else if (host.getStorageSystem().getOldestStaticMessage() != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage();
+						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+						host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().deleteStaticMessage(temp.getId());
+					}
 				}
-				else if (host.getStorageSystem().getOldestStaticMessage() != null){
-					Message temp = host.getStorageSystem().getOldestStaticMessage();
-					//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-					host.getStorageSystem().addToDeplStaticMessages(temp);
-					host.getStorageSystem().deleteStaticMessage(temp.getId());
+				else {
+					if (host.getStorageSystem().getOldestStaticMessage() != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage();
+						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
+						host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().deleteStaticMessage(temp.getId());
+					}
+					else if (!(host.getStorageSystem().isProcessedEmpty())) {
+							Message temp = host.getStorageSystem().getOldestProcessedMessage();
+							host.getStorageSystem().deleteProcessedMessage(temp.getId());
+							//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
+					}
 				}
 			}			
 			this.lastDepl = curTime;
@@ -214,20 +221,6 @@ public class ProcApplication extends Application {
 	 */
 	public void setPassive(boolean passive) {
 		this.passive = passive;
-	}
-
-	/**
-	 * @param no. of previous passive messages
-	 */
-	public int getNoDepl() {
-		return noDepl;
-	}
-
-	/**
-	 * @param no. of previous passive messages
-	 */
-	public int getNoProc() {
-		return noProc;
 	}
 
 	/**

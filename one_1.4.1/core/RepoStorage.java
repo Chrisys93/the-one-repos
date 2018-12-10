@@ -135,12 +135,14 @@ public class RepoStorage {
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
 			if (this.getOldestStaticMessage() != null) {
 				this.deleteStaticMessage(this.getOldestStaticMessage().getId());
+				this.nrofDeletedMessages++;
 			}
-			else if(this.getProcessedMessagesSize()<this.processedSize){
+			else if(!this.isProcessedFull()){
 				this.processMessage(this.getOldestProcessMessage());
 			}
 			else {
 				this.deleteProcMessage(this.getOldestProcessMessage().getId());
+				this.nrofDeletedMessages++;
 			}
 		}
 	}
@@ -415,7 +417,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProcessed >= this.processedSize - 2000000){
+		if (usedProcessed >= this.processedSize - 1000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
