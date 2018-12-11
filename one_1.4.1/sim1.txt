@@ -29,7 +29,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 10
+Report.nrofReports = 8
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -43,6 +43,9 @@ RepoAllMessagesLocationReport.granularity = 1
 MobileDeletedMessagesReport.granularity = 1
 RepoUnprocessedMessagesLocationReport.granularity = 1
 FileLocationReport.granularity = 5
+
+RepoDepletedProcBWReport.granularity = 1
+RepoDepletedStorageBWReport.granularity = 1
 
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/

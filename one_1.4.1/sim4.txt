@@ -1,17 +1,14 @@
 \## Scenario settings
 Scenario.name = sim4_scenario
 
-# range of message source/destination addresses
-Events2.hosts = [80,119; 80,179; 80,279; 80,579; 80,1079]
 
-# range of message source/destination addresses
-Events3.hosts = [120,134; 180,194; 280,294; 580,594; 1080,1094]
-
+# range of message source/destination addre
 Group1.nrofHosts = [80; 150; 200]
 
 Group3.nrofHosts = [400; 750; 1000]
 
-Events4.depletionInterval = 1
+procApp.depletionRate = 30
+
 
 RepoMessageLocationReport.output = [reports4/RMLR1;reports4/RMLR2;reports4/RMLR3; reports4/RMLR4; reports4/RMLR5]
 RepoStoredMessageLocationReport.output = [reports4/RSMLR1;reports4/RSMLR2;reports4/RSMLR3; reports4/RSMLR4; reports4/RSMLR5]
