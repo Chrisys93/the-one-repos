@@ -37,6 +37,7 @@ public class RepoStorage {
 	private long depletedStaticMessages;
 	private long depletedStaticMessagesSize;
 	private double totalReceivedMessages;
+	private double totalReceivedMessagesSize;
 
 	protected ArrayList<Message> staticMessages;
 	protected ArrayList<Message> processMessages;
@@ -61,6 +62,7 @@ public class RepoStorage {
 		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
+		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
 		this.depletedProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
@@ -129,6 +131,7 @@ public class RepoStorage {
 				this.processSize += sm.getSize();				
 			}
 			this.totalReceivedMessages++;
+			this.totalReceivedMessagesSize += sm.getSize();
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
@@ -351,8 +354,12 @@ public class RepoStorage {
 		return this.depletedStaticMessages;
 	}
 	
-	public double getOverallMeanIncomingSpeed() {
+	public double getOverallMeanIncomingMesssageNo() {
 		return (this.totalReceivedMessages/SimClock.getTime());
+	}
+	
+	public double getOverallMeanIncomingSpeed() {
+		return (this.totalReceivedMessagesSize/SimClock.getTime());
 	}
 	
 	public double getOverallDepletedProcMessagesBW() {
