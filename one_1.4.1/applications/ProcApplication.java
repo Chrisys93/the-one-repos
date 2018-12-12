@@ -167,9 +167,12 @@ public class ProcApplication extends Application {
 					else if (host.getStorageSystem().getOldestStaticMessage() != null){
 						Message temp = host.getStorageSystem().getOldestStaticMessage();
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-						host.getStorageSystem().addToDeplStaticMessages(temp);
-						host.getStorageSystem().deleteStaticMessage(temp.getId());
+						host.getStorageSystem().addToDeplProcMessages(temp);
 						//sdepleted += 1;
+					}
+					else if(host.getStorageSystem().isProcessedFull()) {
+						Message tempc = host.getStorageSystem().getNewestProcessMessage();
+						host.getStorageSystem().addToDeplProcMessages(tempc);
 					}
 				}
 				else {

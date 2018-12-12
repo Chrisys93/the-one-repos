@@ -168,6 +168,25 @@ public class RepoStorage {
 	}
 	
 	/**
+	 * Adds a message there is not enough space for in the repository
+	 * to the "depleted processed" messages, even though this message 
+	 * would be sent towards the cloud for processing instead. The 
+	 * tradeoff for this problem is accounted for by increasing BW 
+	 * of depletion. This is a last-resort solution.
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDeplProcMessages(Message sm) {
+		if (sm != null) {
+			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
+				this.depletedProcMessages++;
+				this.depletedProcMessagesSize += sm.getSize();
+				this.processMessages.remove(sm);
+			}
+		}
+	}
+	
+	/**
 	 * Returns a stored message by ID.
 	 * @param MessageId ID of the file
 	 * @return The message
