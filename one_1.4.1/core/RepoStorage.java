@@ -34,7 +34,9 @@ public class RepoStorage {
 	private long nrofDeletedMessages;
 	private long depletedProcMessages;
 	private long depletedProcMessagesSize;
+	private long oldDepletedProcMessagesSize;
 	private long depletedStaticMessages;
+	private long oldDepletedStaticMessagesSize;
 	private long depletedStaticMessagesSize;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
@@ -64,13 +66,16 @@ public class RepoStorage {
 		this.totalReceivedMessages = 0;
 		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
+		this.oldDepletedProcMessagesSize = 0;
 		this.depletedProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
+		this.oldDepletedStaticMessagesSize = 0;
 		this.depletedStaticMessagesSize = 0;
 		if (this.getHost().hasProcessingCapability()){
 			//this.processSize = processSize;
 			this.compressionRate = compressionRate;
-			this.processedSize = (long)(storageSize/(2*this.compressionRate));
+			double processedRatio = this.compressionRate*2;
+			this.processedSize = (long)(this.storageSize/processedRatio);
 		}
 	}
 
@@ -350,7 +355,7 @@ public class RepoStorage {
 		return this.depletedProcMessages;
 	}
 	
-	public long getNrofDepletedStaticMessages() {
+	public long getNrofDepletedStaticMessages() {		
 		return this.depletedStaticMessages;
 	}
 	
@@ -362,12 +367,16 @@ public class RepoStorage {
 		return (this.totalReceivedMessagesSize/SimClock.getTime());
 	}
 	
-	public double getOverallDepletedProcMessagesBW() {
-		return (this.depletedProcMessagesSize/SimClock.getTime());
+	public long getDepletedProcMessagesBW() {
+		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
+		this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+		return (procBW);
 	}
 	
-	public double getOverallDepletedStaticMessagesBW() {
-		return (this.depletedStaticMessagesSize/SimClock.getTime());
+	public long getDepletedStaticMessagesBW() {
+		long statBW = this.depletedStaticMessagesSize - this.oldDepletedStaticMessagesSize;
+		this.oldDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+		return (statBW);
 	}
 	
 	public boolean clearAllStaticMessages(){

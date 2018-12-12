@@ -102,7 +102,7 @@ Group1.movementModel = RepoStationaryMovement
 Group1.storageCapability = true
 Group1.processingCapability = true
 Group1.storageSize = 10G
-Group1.compressionRate = 1.43
+Group1.compressionRate = 2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
 Group1.nrofInterfaces = 1
@@ -271,7 +271,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 8
+Report.nrofReports = 10
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -294,16 +294,21 @@ Report.reportDir = reports/
 Report.report1 = RepoIncomingSpeedsReport
 Report.report2 = RepoDeletedMessagesReport
 Report.report3 = MobileDeletedMessagesReport
-Report.report4 = RepoProcessedMessageLocationReport
-Report.report5 = RepoAllMessagesLocationReport
-Report.report6 = RepoUnprocessedMessagesLocationReport
-Report.report7 = RepoDepletedProcBWReport
-Report.report8 = RepoDepletedStorageBWReport
+
+Report.report4 = RepoProcessingMessageLocationReport
+Report.report5 = RepoStoredMessageLocationReport
+
+Report.report6 = RepoProcessedMessageLocationReport
+Report.report7 = RepoAllMessagesLocationReport
+Report.report8 = RepoUnprocessedMessagesLocationReport
+Report.report9 = RepoDepletedProcBWReport
+Report.report10 = RepoDepletedStorageBWReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
 MobileDeletedMessagesReport.output = [reports/MDMR1;reports/MDMR2;reports/MDMR3; reports/MDMR4; reports/MDMR5]
 RepoProcessingMessageLocationReport.output = [reports/RPrMR1;reports/RPrMR2;reports/RPrMR3; reports/RPrMR4; reports/RPrMR5]
+RepoStoredMessageLocationReport.output = [reports/RSMR1;reports/RSMR2;reports/RSMR3; reports/RSMR4; reports/RSMR5]
 RepoProcessedMessageLocationReport.output = [reports/RPMR1;reports/RPMR2;reports/RPMR3; reports/RPMR4; reports/RPMR5]
 RepoAllMessagesLocationReport.output = [reports/RAMR1;reports/RAMR2;reports/RAMR3; reports/RAMR4; reports/RAMR5]
 RepoUnprocessedMessagesLocationReport.output = [reports/RUMR1;reports/RUMR2;reports/RUMR3; reports/RUMR4; reports/RUMR5]
@@ -346,8 +351,8 @@ procApp.passive = false
 
 # Define new application
 procApp1.type = ProcGenApplication
-procApp1.interval = 3
-procApp1.delay = 0.25
+procApp1.interval = 5
+procApp1.delay = 0.5
 procApp1.destinationName = r
 procApp1.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -357,7 +362,7 @@ procApp1.passive = false
 # Define new application
 procApp2.type = ProcGenApplication
 procApp2.interval = 2
-procApp2.delay = 0.5
+procApp2.delay = 0.1
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -367,7 +372,7 @@ procApp2.passive = false
 # Define new application
 procApp3.type = ProcGenApplication
 procApp3.interval = 1
-procApp3.delay = 1
+procApp3.delay = 0.2
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

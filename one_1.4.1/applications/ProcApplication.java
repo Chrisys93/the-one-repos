@@ -98,9 +98,9 @@ public class ProcApplication extends Application {
 			 * to processMessage() method, in RepoStorage
 			 */
 			if (type.equalsIgnoreCase("proc")) {				
-				if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
+				if ((!host.getStorageSystem().isProcessingEmpty()) && (!host.getStorageSystem().isProcessedFull())) {
 					double delayed = (double)msg.getProperty("delay");
-					if (curTime - this.lastProc >= delayed && !(host.getStorageSystem().isProcessedFull())) {
+					if (curTime - this.lastProc >= delayed) {
 						host.getStorageSystem().processMessage(msg);
 						this.lastProc = curTime;
 					}
@@ -133,11 +133,11 @@ public class ProcApplication extends Application {
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason.
 		 */
-		if (!host.getStorageSystem().isProcessingEmpty()) {
+		if (!host.getStorageSystem().isProcessingEmpty() && (!host.getStorageSystem().isProcessedFull())) {
 			if (host.getStorageSystem().getOldestProcessMessage() != null) {
 				Message temp = host.getStorageSystem().getOldestProcessMessage();
 				double delayed = (double)temp.getProperty("delay");
-				if (curTime - this.lastProc >= delayed && !(host.getStorageSystem().isProcessedFull())) {
+				if (curTime - this.lastProc >= delayed) {
 					host.getStorageSystem().processMessage(temp);
 					this.lastProc = curTime;
 				}
@@ -149,11 +149,19 @@ public class ProcApplication extends Application {
 		 */
 		
 		if (curTime - this.lastDepl >= 1) {
+			//int sdepleted = 0;
+			//int pdepleted = 0;
 			for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
-				if (host.getStorageSystem().getStaticMessagesSize() < host.getStorageSystem().getTotalStorageSpace()/1.25) {
-					if (!(host.getStorageSystem().isProcessedEmpty())) {
+				if (host.getStorageSystem().getStaticMessagesSize() < (host.getStorageSystem().getTotalStorageSpace()/1.25)) {
+					if (!host.getStorageSystem().isProcessedEmpty()) {
 						Message temp = host.getStorageSystem().getOldestProcessedMessage();
 						host.getStorageSystem().deleteProcessedMessage(temp.getId());
+						if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
+							Message tempp = host.getStorageSystem().getOldestProcessMessage();
+							host.getStorageSystem().processMessage(tempp);
+							this.lastProc = curTime;
+						}
+						//pdepleted += 1;
 						//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 					}
 					else if (host.getStorageSystem().getOldestStaticMessage() != null){
@@ -161,6 +169,7 @@ public class ProcApplication extends Application {
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 						host.getStorageSystem().addToDeplStaticMessages(temp);
 						host.getStorageSystem().deleteStaticMessage(temp.getId());
+						//sdepleted += 1;
 					}
 				}
 				else {
@@ -169,15 +178,27 @@ public class ProcApplication extends Application {
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 						host.getStorageSystem().addToDeplStaticMessages(temp);
 						host.getStorageSystem().deleteStaticMessage(temp.getId());
+						//sdepleted += 1;
 					}
-					else if (!(host.getStorageSystem().isProcessedEmpty())) {
+					else if (!host.getStorageSystem().isProcessedEmpty()) {
 							Message temp = host.getStorageSystem().getOldestProcessedMessage();
 							host.getStorageSystem().deleteProcessedMessage(temp.getId());
+							if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
+								Message tempp = host.getStorageSystem().getOldestProcessMessage();
+								double delayed = (double)tempp.getProperty("delay");
+								if (curTime - this.lastProc >= delayed) {
+									host.getStorageSystem().processMessage(tempp);
+									this.lastProc = curTime;
+								}
+							}
 							//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
+							//pdepleted += 1;
 					}
 				}
-			}			
+			}
 			this.lastDepl = curTime;
+			//System.out.println("Depleted processed messages: "+ pdepleted);
+			//System.out.println("Depleted static messages: "+ sdepleted);
 		}
 	}
 

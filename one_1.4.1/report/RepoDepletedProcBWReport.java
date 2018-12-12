@@ -118,7 +118,7 @@ public class RepoDepletedProcBWReport extends Report implements UpdateListener {
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getOverallDepletedProcMessagesBW();
+							double totalStoredMsgs =  host.getStorageSystem().getDepletedProcMessagesBW();
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

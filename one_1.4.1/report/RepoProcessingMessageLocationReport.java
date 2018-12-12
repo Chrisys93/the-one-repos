@@ -118,7 +118,7 @@ public class RepoProcessingMessageLocationReport extends Report implements Updat
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							int totalStoredMsgs =  host.getStorageSystem().getNrofProcessMessages() + host.getStorageSystem().getNrofProcessedMessages();
+							long totalStoredMsgs =  host.getStorageSystem().getProcMessagesSize();
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
