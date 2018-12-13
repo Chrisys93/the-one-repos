@@ -8,7 +8,7 @@ procApp.depletionRate = 30
 
 
 RepoMessageLocationReport.output = [reports2/RMLR1;reports2/RMLR2;reports2/RMLR3; reports2/RMLR4; reports2/RMLR5]
-RepoStoredMessageLocationReport.output = [reports2/RSMLR1;reports2/RSMLR2;reports2/RSMLR3; reports2/RSMLR4; reports2/RSMLR5]
+RepoStoredMessageLocationReport.output = [reports2/RSMR1;reports2/RSMR2;reports2/RSMR3; reports2/RSMR4; reports2/RSMR5]
 MobileMessageLocationReport.output = [reports2/MMLR1;reports2/MMLR2;reports2/MMLR3; reports2/MMLR4; reports2/MMLR5]
 RepoIncomingSpeedsReport.output = [reports2/RISR1;reports2/RISR2;reports2/RISR3; reports2/RISR4; reports2/RISR5]
 RepoDeletedMessagesReport.output = [reports2/RDMR1;reports2/RDMR2;reports2/RDMR3; reports2/RDMR4; reports2/RDMR5]

@@ -29,7 +29,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 8
+Report.nrofReports = 10
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -54,14 +54,17 @@ Report.report1 = RepoIncomingSpeedsReport
 Report.report2 = RepoDeletedMessagesReport
 Report.report3 = MobileDeletedMessagesReport
 
-Report.report4 = RepoUnprocessedMessagesLocationReport
-Report.report5 = RepoProcessedMessageLocationReport
-Report.report6 = RepoAllMessagesLocationReport
-Report.report7 = RepoDepletedProcBWReport
-Report.report8 = RepoDepletedStorageBWReport
+Report.report4 = RepoProcessingMessageLocationReport
+Report.report5 = RepoStoredMessageLocationReport
+
+Report.report6 = RepoUnprocessedMessagesLocationReport
+Report.report7 = RepoProcessedMessageLocationReport
+Report.report8 = RepoAllMessagesLocationReport
+Report.report9 = RepoDepletedProcBWReport
+Report.report10 = RepoDepletedStorageBWReport
 
 RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5]
-RepoStoredMessageLocationReport.output = [reports1/RSMLR1;reports1/RSMLR2;reports1/RSMLR3; reports1/RSMLR4; reports1/RSMLR5]
+RepoStoredMessageLocationReport.output = [reports1/RSMR1;reports1/RSMR2;reports1/RSMR3; reports1/RSMR4; reports1/RSMR5]
 MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5]
 RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5]
 RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5]
