@@ -1,6 +1,6 @@
 /* 
- * Copyright 2010 Aalto University, ComNet
- * Released under GPLv3. See LICENSE.txt for details. 
+ * 2018 UCL
+ * Author: Adrian-Cristian Nicolaescu
  */
 
 package applications;
@@ -12,16 +12,9 @@ import core.SimClock;
 
 
 /**
- * Simple proc application to demonstrate the application support. The 
- * application can be configured to send procs with a fixed interval or to only
- * answer to procs it receives. When the application receives a proc it sends
- * a pong message in response.
- * 
- * The corresponding <code>ProcAppReporter</code> class can be used to record
- * information about the application behavior.
- * 
- * @see ProcAppReporter
- * @author teemuk
+ * Processing application, implemented on each of the repositories, for
+ * processing/storing and depleting all incoming messages, according to 
+ * the scope and age of each message.
  */
 public class ProcApplication extends Application {
 	/** Run in passive mode - don't process messages, but store */
@@ -152,7 +145,16 @@ public class ProcApplication extends Application {
 			//int sdepleted = 0;
 			//int pdepleted = 0;
 			for (int noDepl = 0; noDepl<this.depl_rate; noDepl++) {
+				/* 
+				 * In order to make the system (kind of) fair, we want to make sure that it does not get overflowed 
+				 * by static messages and processed messages are not depleted, past a point, and neither the other
+				 * way around (having the cloud off-loading as a solution)
+				 */
 				if (host.getStorageSystem().getStaticMessagesSize() < (host.getStorageSystem().getTotalStorageSpace()/1.25)) {
+					/* 
+					 * Oldest processed message is depleted (as a FIFO type of storage,
+					 * and a new message for processing is processed
+					 */
 					if (!host.getStorageSystem().isProcessedEmpty()) {
 						Message temp = host.getStorageSystem().getOldestProcessedMessage();
 						host.getStorageSystem().deleteProcessedMessage(temp.getId());
@@ -164,13 +166,15 @@ public class ProcApplication extends Application {
 						//pdepleted += 1;
 						//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 					}
+					/* Oldest unprocessed message is depleted (as a FIFO type of storage */
 					else if (host.getStorageSystem().getOldestStaticMessage() != null){
 						Message temp = host.getStorageSystem().getOldestStaticMessage();
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 						host.getStorageSystem().addToDeplProcMessages(temp);
 						//sdepleted += 1;
 					}
-					else if(host.getStorageSystem().isProcessedFull()) {
+					/* Message to be processed is offloaded to the cloud */
+					else if(host.getStorageSystem().getProcessedMessagesSize() > (host.getStorageSystem().getTotalProcessedSpace() - 2000000)) {
 						Message tempc = host.getStorageSystem().getNewestProcessMessage();
 						host.getStorageSystem().addToDeplProcMessages(tempc);
 					}

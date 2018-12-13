@@ -78,9 +78,21 @@ public class RepoStorage {
 			this.processedSize = (long)(this.storageSize/processedRatio);
 		}
 	}
-
+	
+	/**
+	 * Returns total storage size of repo
+	 * @return total storage size
+	 */
 	public long getTotalStorageSpace() {
 		return this.storageSize;
+	}
+	
+	/**
+	 * Returns total processed message storage size of repo
+	 * @return total processed message storage size
+	 */
+	public long getTotalProcessedSpace() {
+		return this.processedSize;
 	}
 	
 	/** Create message collection stored return method */
