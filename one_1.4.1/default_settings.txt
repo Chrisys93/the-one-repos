@@ -371,12 +371,12 @@ procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
-procApp3.interval = 1
+procApp3.interval = 2
 procApp3.delay = 0.2
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp3.passiveRate = 1,1
+procApp3.passiveRate = 1,2
 procApp3.passive = false
 
 # Set proc app for all nodes

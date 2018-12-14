@@ -174,10 +174,10 @@ public class ProcApplication extends Application {
 						//sdepleted += 1;
 					}
 					/* Message to be processed is offloaded to the cloud */
-					else if(host.getStorageSystem().getProcessedMessagesSize() > (host.getStorageSystem().getTotalProcessedSpace() - 2000000)) {
+					/*else if(host.getStorageSystem().getProcessedMessagesSize() > (host.getStorageSystem().getTotalProcessedSpace() - 2000000)) {
 						Message tempc = host.getStorageSystem().getNewestProcessMessage();
 						host.getStorageSystem().addToDeplProcMessages(tempc);
-					}
+					}*/
 				}
 				else {
 					if (host.getStorageSystem().getOldestStaticMessage() != null){

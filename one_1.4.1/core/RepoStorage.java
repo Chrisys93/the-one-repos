@@ -464,7 +464,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProcessed >= this.processedSize - 1000000){
+		if (usedProcessed >= this.processedSize - 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -546,61 +546,5 @@ public class RepoStorage {
 		}
 		return oldest;
 	}
-	
-	/*public Message getOldestProcStaticMessage(){
-		Message oldest = null;
-		for (Message m : this.staticMessages) {
-			
-			if (((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
-				if (oldest == null) {
-					oldest = m;
-				}
-				else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-					oldest = m;
-				}
-			}
-		}	
-		return oldest;
-	}
-
-	public void deleteMessagesForSpace(boolean deleteAll){
-		if (this.isStorageFull() && deleteAll == false){
-			for (int i=0; i<1000; i++){
-				Message oldest = this.getOldestStaticMessage();
-				if (this.isProcessingFull()) {
-					String mId = oldest.getId();
-					this.deleteStaticMessage(mId);
-					this.nrofDeletedMessages++;
-				}
-				else {
-					this.processMessages.add(oldest);
-					if (!this.isProcessedFull()) {
-						this.processMessage(this.getOldestProcessMessage());
-					}
-				}
-				//System.out.println("There is " + this.getStaticMessagesSize() + " storage used in "+this.getHost().name);
-				//String mId = oldest.getId(); 
-				//this.deleteStaticMessage(mId);
-				//this.nrofDeletedMessages++;
-			}
-		}
-		else if (deleteAll == true){
-			this.staticMessages.clear();
-		};
-	}*/
-	
-
-		
-	
-	/**
-	 * Returns a String presentation of this file system
-	 * @return A String presentation of this file system
-	 */
-	/*public String toString() {
-		return getClass().getSimpleName() + " of " + 
-			this.getHost().toString() + " with " + getNrofFiles() 
-			+ " files";
-	}*/
-
 
 }
