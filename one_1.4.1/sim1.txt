@@ -74,8 +74,8 @@ RepoProcessedMessageLocationReport.output = [reports1/RPMR1;reports1/RPMR2;repor
 RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2;reports1/RAMR3; reports1/RAMR4; reports1/RAMR5]
 RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1;reports1/RUMR2;reports1/RUMR3; reports1/RUMR4; reports1/RUMR5]
 
-RepoDepletedProcBWReport.output = [reports/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5]
-RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
+RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5]
+RepoDepletedStorageBWReport.output = [reports1/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
