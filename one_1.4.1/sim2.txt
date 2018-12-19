@@ -4,7 +4,7 @@ Scenario.name = sim2_scenario
 
 Group3.nrofHosts = [200; 500; 1000]
 
-procApp.depletionRate = 30
+procApp.depletionRate = 10M
 
 
 RepoMessageLocationReport.output = [reports2/RMLR1;reports2/RMLR2;reports2/RMLR3; reports2/RMLR4; reports2/RMLR5]

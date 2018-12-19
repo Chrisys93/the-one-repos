@@ -6,10 +6,8 @@
 Scenario.name = sim5_scenario
 
 
-Group1.compressionRate = [1.2; 1.43; 1.5; 2]
-
 procApp.depletionRate = 10M
-
+procApp.coreNo = [2; 4; 8; 16]
 
 RepoMessageLocationReport.output = [reports5/RMLR1;reports5/RMLR2;reports5/RMLR3; reports5/RMLR4; reports5/RMLR5; reports5/RMLR6;reports5/RMLR7;reports5/RMLR8; reports5/RMLR9; reports5/RMLR10; reports5/RMLR11;reports5/RMLR12;reports5/RMLR13; reports5/RMLR14; reports5/RMLR15]
 RepoStoredMessageLocationReport.output = [reports5/RSMR1;reports5/RSMR2;reports5/RSMR3; reports5/RSMR4; reports5/RSMR5; reports5/RSMR6;reports5/RSMR7;reports5/RSMR8; reports5/RSMR9; reports5/RSMR10; reports5/RSMR11;reports5/RSMR12;reports5/RSMR13; reports5/RSMR14; reports5/RSMR15]

@@ -348,6 +348,7 @@ procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
 procApp.depletionRate = [5M; 8M; 10M; 20M; 30M]
 procApp.passive = false
+procApp.coreNo = 4
 
 # Define new application
 procApp1.type = ProcGenApplication

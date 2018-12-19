@@ -7,7 +7,7 @@ Group1.nrofHosts = [80; 150; 200]
 
 Group3.nrofHosts = [400; 750; 1000]
 
-procApp.depletionRate = 30
+procApp.depletionRate = 10M
 
 
 RepoMessageLocationReport.output = [reports4/RMLR1;reports4/RMLR2;reports4/RMLR3; reports4/RMLR4; reports4/RMLR5]
