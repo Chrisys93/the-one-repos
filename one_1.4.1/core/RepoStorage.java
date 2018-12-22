@@ -153,16 +153,15 @@ public class RepoStorage {
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
-			if (this.getOldestStaticMessage() != null) {
+			if(!this.isProcessedFull()){
+				this.processMessage(this.getOldestProcessMessage());
+			}
+			else if (this.getOldestStaticMessage() != null) {
 				this.deleteStaticMessage(this.getOldestStaticMessage().getId());
 				this.nrofDeletedMessages++;
 			}
-			else if(!this.isProcessedFull()){
-				this.processMessage(this.getOldestProcessMessage());
-			}
 			else {
-				this.deleteProcMessage(this.getOldestProcessMessage().getId());
-				this.nrofDeletedMessages++;
+				this.addToDeplProcMessages(this.getNewestProcessMessage());
 			}
 		}
 	}
@@ -398,15 +397,31 @@ public class RepoStorage {
 		return (this.totalReceivedMessagesSize/SimClock.getTime());
 	}
 	
-	public long getDepletedProcMessagesBW() {
+	/**
+	 * Method that returns depletion BW used for processed messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the processed depletion BW used upstream
+	 */
+	public long getDepletedProcMessagesBW(boolean reporting) {
 		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
-		this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+		}
 		return (procBW);
 	}
 	
-	public long getDepletedStaticMessagesBW() {
+	/**
+	 * Method that returns depletion BW used for non-processing messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the non-processing depletion BW used upstream
+	 */
+	public long getDepletedStaticMessagesBW(boolean reporting) {
 		long statBW = this.depletedStaticMessagesSize - this.oldDepletedStaticMessagesSize;
-		this.oldDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+		if (reporting) {
+			this.oldDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+		}
 		return (statBW);
 	}
 	
@@ -464,7 +479,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProcessed >= this.processedSize - 2000000){
+		if (usedProcessed >= this.processedSize - 500000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}

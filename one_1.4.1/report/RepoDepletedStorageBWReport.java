@@ -118,7 +118,7 @@ public class RepoDepletedStorageBWReport extends Report implements UpdateListene
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getDepletedStaticMessagesBW();
+							double totalStoredMsgs =  host.getStorageSystem().getDepletedStaticMessagesBW(true);
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
