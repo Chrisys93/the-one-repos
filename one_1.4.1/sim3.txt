@@ -8,9 +8,7 @@ Group3.nrofHosts = 1000
 procApp.depletionRate = 10M
 
 
-RepoMessageLocationReport.output = [reports3/RMLR1;reports3/RMLR2;reports3/RMLR3; reports3/RMLR4]
 RepoStoredMessageLocationReport.output = [reports3/RSMR1;reports3/RSMR2;reports3/RSMR3; reports3/RSMR4]
-MobileMessageLocationReport.output = [reports3/MMLR1;reports3/MMLR2;reports3/MMLR3; reports3/MMLR4]
 RepoIncomingSpeedsReport.output = [reports3/RISR1;reports3/RISR2;reports3/RISR3; reports3/RISR4]
 RepoDeletedMessagesReport.output = [reports3/RDMR1;reports3/RDMR2;reports3/RDMR3; reports3/RDMR4]
 MobileDeletedMessagesReport.output = [reports3/MDMR1;reports3/MDMR2;reports3/MDMR3; reports3/MDMR4]
@@ -18,6 +16,9 @@ RepoProcessingMessageLocationReport.output = [reports3/RPrMR1;reports3/RPrMR2;re
 RepoProcessedMessageLocationReport.output = [reports3/RPMR1;reports3/RPMR2;reports3/RPMR3; reports3/RPMR4]
 RepoAllMessagesLocationReport.output = [reports3/RAMR1;reports3/RAMR2;reports3/RAMR3; reports3/RAMR4]
 RepoUnprocessedMessagesLocationReport.output = [reports3/RUMR1;reports3/RUMR2;reports3/RUMR3; reports3/RUMR4]
+
+RepoDepletedProcBWReport.output = [reports3/RPBWR1;reports3/RPBWR2;reports3/RPBWR3; reports3/RPBWR4; reports3/RPBWR5]
+RepoDepletedStorageBWReport.output = [reports3/RSBWR1; reports3/RSBWR2; reports3/RSBWR3; reports3/RSBWR4; reports3/RSBWR5]
 
 
 
