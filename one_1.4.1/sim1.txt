@@ -19,6 +19,7 @@ RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2;reports1/R
 RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1;reports1/RUMR2;reports1/RUMR3; reports1/RUMR4; reports1/RUMR5]
 
 RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports1/RPBWR2;reports1/RPBWR3; reports1/RPBWR4; reports1/RPBWR5]
+RepoDepletedUnProcBWReport.output = [reports1/RUPBWR1;reports1/RUPBWR2;reports1/RUPBWR3; reports1/RUPBWR4; reports1/RUPBWR5]
 RepoDepletedStorageBWReport.output = [reports1/RSBWR1; reports1/RSBWR2; reports1/RSBWR3; reports1/RSBWR4; reports1/RSBWR5]
 
 ## Default settings for some routers settings

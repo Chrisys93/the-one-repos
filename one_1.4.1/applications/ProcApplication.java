@@ -202,7 +202,7 @@ public class ProcApplication extends Application {
 					/* Message to be processed is offloaded to the cloud */
 					else if(host.getStorageSystem().getProcessedMessagesSize() > (host.getStorageSystem().getTotalProcessedSpace() - 2000000)) {
 						Message tempc = host.getStorageSystem().getNewestProcessMessage();
-						host.getStorageSystem().addToDeplProcMessages(tempc);
+						host.getStorageSystem().addToDeplUnProcMessages(tempc);
 					}
 				}
 				else {
@@ -232,7 +232,7 @@ public class ProcApplication extends Application {
 							//pdepleted += 1;
 					}
 				}
-				deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
+				deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
 				//System.out.println("Depletion is at: "+ deplBW);
 			}
 			this.lastDepl = curTime;

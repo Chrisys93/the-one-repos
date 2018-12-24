@@ -35,6 +35,9 @@ public class RepoStorage {
 	private long depletedProcMessages;
 	private long depletedProcMessagesSize;
 	private long oldDepletedProcMessagesSize;
+	private long depletedUnProcMessages;
+	private long depletedUnProcMessagesSize;
+	private long oldDepletedUnProcMessagesSize;
 	private long depletedStaticMessages;
 	private long oldDepletedStaticMessagesSize;
 	private long depletedStaticMessagesSize;
@@ -68,6 +71,9 @@ public class RepoStorage {
 		this.depletedProcMessages = 0;
 		this.oldDepletedProcMessagesSize = 0;
 		this.depletedProcMessagesSize = 0;
+		this.depletedUnProcMessages = 0;
+		this.depletedUnProcMessagesSize = 0;
+		this.oldDepletedUnProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
 		this.oldDepletedStaticMessagesSize = 0;
 		this.depletedStaticMessagesSize = 0;
@@ -161,7 +167,7 @@ public class RepoStorage {
 				this.nrofDeletedMessages++;
 			}
 			else {
-				this.addToDeplProcMessages(this.getNewestProcessMessage());
+				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
 			}
 		}
 	}
@@ -187,11 +193,11 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
-	public void addToDeplProcMessages(Message sm) {
+	public void addToDeplUnProcMessages(Message sm) {
 		if (sm != null) {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				this.depletedProcMessages++;
-				this.depletedProcMessagesSize += sm.getSize();
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
 				this.processMessages.remove(sm);
 			}
 		}
@@ -385,6 +391,10 @@ public class RepoStorage {
 		return this.depletedProcMessages;
 	}
 	
+	public long getNrofDepletedUnProcMessages() {
+		return this.depletedUnProcMessages;
+	}
+	
 	public long getNrofDepletedStaticMessages() {		
 		return this.depletedStaticMessages;
 	}
@@ -407,6 +417,20 @@ public class RepoStorage {
 		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
 		if (reporting) {
 			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+		}
+		return (procBW);
+	}
+	
+	/**
+	 * Method that returns depletion BW used in off-loading unprocessed messages to the cloud.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the unprocessed depletion BW used upstream
+	 */
+	public long getDepletedUnProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedUnProcMessagesSize - this.oldDepletedUnProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedUnProcMessagesSize = this.depletedUnProcMessagesSize;
 		}
 		return (procBW);
 	}
