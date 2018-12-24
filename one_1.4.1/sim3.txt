@@ -18,6 +18,7 @@ RepoAllMessagesLocationReport.output = [reports3/RAMR1;reports3/RAMR2;reports3/R
 RepoUnprocessedMessagesLocationReport.output = [reports3/RUMR1;reports3/RUMR2;reports3/RUMR3; reports3/RUMR4]
 
 RepoDepletedProcBWReport.output = [reports3/RPBWR1;reports3/RPBWR2;reports3/RPBWR3; reports3/RPBWR4; reports3/RPBWR5]
+RepoDepletedUnProcBWReport.output = [reports3/RUPBWR1;reports3/RUPBWR2;reports3/RUPBWR3; reports3/RUPBWR4; reports3/RUPBWR5]
 RepoDepletedStorageBWReport.output = [reports3/RSBWR1; reports3/RSBWR2; reports3/RSBWR3; reports3/RSBWR4; reports3/RSBWR5]
 
 
