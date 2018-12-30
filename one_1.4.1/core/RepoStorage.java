@@ -20,7 +20,7 @@ public class RepoStorage {
 	 * and this is a more complex system, with a collection 
 	 * of messages and a certain capacity
 	 */
-	//private HashMap<String, Messages> storedMessages;
+	//private HashMap<String, Messages> staticMessages;
 
 	/** Host where this file system belongs to */
 	private DTNHost host;
@@ -29,65 +29,91 @@ public class RepoStorage {
 	/** size of the storage space */
 	private long storageSize;
 	private long processSize;
+	private long staticSize;
 	private long processedSize;
 	private long nrofDeletedMessages;
 	private long depletedProcMessages;
 	private long depletedProcMessagesSize;
-	private long depletedStoredMessages;
-	private long depletedStoredMessagesSize;
+	private long oldDepletedProcMessagesSize;
+	private long depletedUnProcMessages;
+	private long depletedUnProcMessagesSize;
+	private long oldDepletedUnProcMessagesSize;
+	private long depletedStaticMessages;
+	private long oldDepletedStaticMessagesSize;
+	private long depletedStaticMessagesSize;
 	private double totalReceivedMessages;
+	private double totalReceivedMessagesSize;
 
-	private String MessageId;
-
-	protected ArrayList<Message> storedMessages;
+	protected ArrayList<Message> staticMessages;
 	protected ArrayList<Message> processMessages;
 	protected ArrayList<Message> processedMessages;
+	protected ArrayList<Message> storedMessages;
 
 	/** value to keep track of used storage */
 	//protected long usedStorage;
 
 	protected Collection<Message> messages;
 
-	public void init(DTNHost dtnHost, long storageSize, long processSize, double compressionRate) {
+	public void init(DTNHost dtnHost, long storageSize, double compressionRate) {
 		this.host = dtnHost;
 		//this.messages = new Collection<Message>();
-		this.storedMessages = new ArrayList<Message>();
+		this.staticMessages = new ArrayList<Message>();
 		this.processMessages = new ArrayList<Message>();
 		this.processedMessages = new ArrayList<Message>();
+		this.storedMessages = new ArrayList<Message>();
 		this.storageSize = storageSize;
 		this.processSize = 0;
+		this.staticSize = 0;
 		this.processedSize = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
+		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
+		this.oldDepletedProcMessagesSize = 0;
 		this.depletedProcMessagesSize = 0;
-		this.depletedStoredMessages = 0;
-		this.depletedStoredMessagesSize = 0;
+		this.depletedUnProcMessages = 0;
+		this.depletedUnProcMessagesSize = 0;
+		this.oldDepletedUnProcMessagesSize = 0;
+		this.depletedStaticMessages = 0;
+		this.oldDepletedStaticMessagesSize = 0;
+		this.depletedStaticMessagesSize = 0;
 		if (this.getHost().hasProcessingCapability()){
-			this.processSize = processSize;
+			//this.processSize = processSize;
 			this.compressionRate = compressionRate;
-			this.processedSize = (long)(processSize/this.compressionRate);
+			double processedRatio = this.compressionRate*2;
+			this.processedSize = (long)(this.storageSize/processedRatio);
 		}
 	}
-
+	
+	/**
+	 * Returns total storage size of repo
+	 * @return total storage size
+	 */
 	public long getTotalStorageSpace() {
 		return this.storageSize;
 	}
 	
-	public long getTotalProcessStorageSpace() {
-		return this.processSize;
+	/**
+	 * Returns total processed message storage size of repo
+	 * @return total processed message storage size
+	 */
+	public long getTotalProcessedSpace() {
+		return this.processedSize;
 	}
 	
 	/** Create message collection stored return method */
 	
 	public Collection<Message> getStoredMessagesCollection() {
-		this.messages = storedMessages;
+		this.messages = this.staticMessages;
+		this.messages.addAll(this.processMessages);
 		return this.messages;
 	}
 
 	/** Create message ArrayList stored return method */
 	
 	public ArrayList<Message> getStoredMessages() {
+		this.storedMessages = this.staticMessages;
+		this.storedMessages.addAll(this.processMessages);
 		return this.storedMessages;
 	}
 
@@ -102,6 +128,12 @@ public class RepoStorage {
 	public ArrayList<Message> getProcessMessages() {
 		return this.processMessages;
 	}
+
+	/** Create message ArrayList stored return method */
+	
+	public ArrayList<Message> getStaticMessages() {
+		return this.staticMessages;
+	}
 	
 	/**
 	 * Adds a message to the storage system and/or to the processing pipeline
@@ -114,19 +146,29 @@ public class RepoStorage {
 	public void addToStoredMessages(Message sm) {
 		if (sm != null) {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
-				this.storedMessages.add(sm);
+				this.staticMessages.add(sm);
+				this.staticSize += sm.getSize();
 			}
-			else if (this.getHost().hasProcessingCapability) {
-				if (this.isProcessingFull()) {
-					this.storedMessages.add(sm);
-				}
-				else if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-					this.processMessages.add(sm);
-				}
+			else if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
+				this.processMessages.add(sm);
+				this.processSize += sm.getSize();				
 			}
 			this.totalReceivedMessages++;
+			this.totalReceivedMessagesSize += sm.getSize();
 			/* add space used in the storage space */
-			//System.out.println("There is " + this.getStoredMessagesSize() + " storage used");
+			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
+		}
+		if ((this.staticSize + this.processSize) >= this.storageSize) {
+			if(!this.isProcessedFull()){
+				this.processMessage(this.getOldestProcessMessage());
+			}
+			else if (this.getOldestStaticMessage() != null) {
+				this.deleteStaticMessage(this.getOldestStaticMessage().getId());
+				this.nrofDeletedMessages++;
+			}
+			else {
+				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
+			}
 		}
 	}
 	
@@ -135,10 +177,29 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
-	public void addToDeplStoredMessages(Message sm) {
+	public void addToDeplStaticMessages(Message sm) {
 		if (sm != null) {
-			this.depletedStoredMessages++;
-			this.depletedStoredMessagesSize += sm.getSize();
+			this.depletedStaticMessages++;
+			this.depletedStaticMessagesSize += sm.getSize();
+		}
+	}
+	
+	/**
+	 * Adds a message there is not enough space for in the repository
+	 * to the "depleted processed" messages, even though this message 
+	 * would be sent towards the cloud for processing instead. The 
+	 * tradeoff for this problem is accounted for by increasing BW 
+	 * of depletion. This is a last-resort solution.
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDeplUnProcMessages(Message sm) {
+		if (sm != null) {
+			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
+				this.processMessages.remove(sm);
+			}
 		}
 	}
 	
@@ -147,15 +208,15 @@ public class RepoStorage {
 	 * @param MessageId ID of the file
 	 * @return The message
 	 */
-	public Message getStoredMessage(String MessageId) {
-		Message storedMessage = this.storedMessages.get(0);
-		for (Message temp : storedMessages){
+	public Message getStaticMessage(String MessageId) {
+		Message staticMessage = this.staticMessages.get(0);
+		for (Message temp : staticMessages){
 			if (temp.getId() == MessageId){
-				int i = this.storedMessages.indexOf(temp);
-				storedMessage = this.storedMessages.get(i);
+				int i = this.staticMessages.indexOf(temp);
+				staticMessage = this.staticMessages.get(i);
 			}
 		}
-		return storedMessage;
+		return staticMessage;
 	}
 	
 	/**
@@ -188,7 +249,7 @@ public class RepoStorage {
 	 * @return How many files this file system has
 	 */
 	public int getNrofMessages() {
-		return this.storedMessages.size();
+		return this.staticMessages.size();
 	}
 	
 	/**
@@ -211,13 +272,8 @@ public class RepoStorage {
 	 * Returns the total size of stored messages in this storage system
 	 * @return The size of the used storage in this storage system
 	 */
-	public long getStoredMessagesSize() {
-		long storedMessagesSize = 0;
-		for (int i=0; i<this.storedMessages.size(); i++){
-			Message temp = this.storedMessages.get(i);
-			storedMessagesSize += temp.getSize();
-		}
-		return storedMessagesSize;
+	public long getStaticMessagesSize() {
+		return this.staticSize;
 	}
 
 	/**
@@ -225,12 +281,7 @@ public class RepoStorage {
 	 * @return The size of the used processing storage in this storage system
 	 */
 	public long getProcMessagesSize() {
-		long storedMessagesSize = 0;
-		for (int i=0; i<this.processMessages.size(); i++){
-			Message temp = this.processMessages.get(i);
-			storedMessagesSize += temp.getSize();
-		}
-		return storedMessagesSize;
+		return this.processSize;
 	}
 
 	/**
@@ -238,12 +289,11 @@ public class RepoStorage {
 	 * @return The size of the used processing storage in this storage system
 	 */
 	public long getProcessedMessagesSize() {
-		long storedMessagesSize = 0;
-		for (int i=0; i<this.processedMessages.size(); i++){
-			Message temp = this.processedMessages.get(i);
-			storedMessagesSize += temp.getSize();
+		long processedUsed = 0;
+		for (Message msg:this.processedMessages) {
+			processedUsed += msg.getSize();
 		}
-		return storedMessagesSize;
+		return processedUsed;
 	}
 		
 	
@@ -269,8 +319,8 @@ public class RepoStorage {
 				return answer;
 			}
 		}
-		for(int i=0; i<this.storedMessages.size(); i++){
-			if(this.storedMessages.get(i).getId() == MessageId){
+		for(int i=0; i<this.staticMessages.size(); i++){
+			if(this.staticMessages.get(i).getId() == MessageId){
 				answer =  true;
 			}
 			else{
@@ -285,10 +335,11 @@ public class RepoStorage {
 	 * @param MessageId ID of message to be deleted
 	 * @return successful deletion status
 	 */
-	public boolean deleteStoredMessage(String MessageId){
-		for(int i=0; i<storedMessages.size(); i++){
-			if(storedMessages.get(i).getId() == MessageId){
-				this.storedMessages.remove(i);
+	public boolean deleteStaticMessage(String MessageId){
+		for(int i=0; i<staticMessages.size(); i++){
+			if(staticMessages.get(i).getId() == MessageId){
+				this.staticSize -= staticMessages.get(i).getSize();
+				this.staticMessages.remove(i);
 				return true;
 			}
 		}
@@ -303,6 +354,7 @@ public class RepoStorage {
 	public boolean deleteProcMessage(String MessageId){
 		for(int i=0; i<processMessages.size(); i++){
 			if(processMessages.get(i).getId() == MessageId){
+				this.processSize -= processMessages.get(i).getSize();
 				this.processMessages.remove(i);
 				return true;
 			}
@@ -339,37 +391,79 @@ public class RepoStorage {
 		return this.depletedProcMessages;
 	}
 	
-	public long getNrofDepletedStoredMessages() {
-		return this.depletedStoredMessages;
+	public long getNrofDepletedUnProcMessages() {
+		return this.depletedUnProcMessages;
 	}
 	
-	public double getOverallMeanIncomingSpeed() {
+	public long getNrofDepletedStaticMessages() {		
+		return this.depletedStaticMessages;
+	}
+	
+	public double getOverallMeanIncomingMesssageNo() {
 		return (this.totalReceivedMessages/SimClock.getTime());
 	}
 	
-	public double getOverallDepletedProcMessagesBW() {
-		return (this.depletedProcMessagesSize/SimClock.getTime());
+	public double getOverallMeanIncomingSpeed() {
+		return (this.totalReceivedMessagesSize/SimClock.getTime());
 	}
 	
-	public double getOverallDepletedStoredMessagesBW() {
-		return (this.depletedStoredMessagesSize/SimClock.getTime());
+	/**
+	 * Method that returns depletion BW used for processed messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the processed depletion BW used upstream
+	 */
+	public long getDepletedProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+		}
+		return (procBW);
 	}
 	
-	public boolean clearAllStoredMessages(){
-		this.storedMessages.clear();
+	/**
+	 * Method that returns depletion BW used in off-loading unprocessed messages to the cloud.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the unprocessed depletion BW used upstream
+	 */
+	public long getDepletedUnProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedUnProcMessagesSize - this.oldDepletedUnProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedUnProcMessagesSize = this.depletedUnProcMessagesSize;
+		}
+		return (procBW);
+	}
+	
+	/**
+	 * Method that returns depletion BW used for non-processing messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the non-processing depletion BW used upstream
+	 */
+	public long getDepletedStaticMessagesBW(boolean reporting) {
+		long statBW = this.depletedStaticMessagesSize - this.oldDepletedStaticMessagesSize;
+		if (reporting) {
+			this.oldDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+		}
+		return (statBW);
+	}
+	
+	public boolean clearAllStaticMessages(){
+		this.staticMessages.clear();
 		return true;
 	}
 
 	public long getFreeStorageSpace() {
-		long usedStorage = this.getStoredMessagesSize();
+		long usedStorage = this.getStaticMessagesSize();
 		//System.out.println("There is " + usedStorage + " storage used in "+this.getHost());
 		long freeStorage = this.storageSize - usedStorage;
 		//System.out.println("There is "+freeStorage+" free storage space in "+this.getHost());
 		return freeStorage;
 	}
 
-	public boolean isStorageFull() {
-		long usedStorage = this.getStoredMessagesSize();
+	/*public boolean isStorageFull() {
+		long usedStorage = this.getStaticMessagesSize();
 		if (usedStorage >= this.storageSize - 100000000){
 			return true;
 		}
@@ -388,14 +482,13 @@ public class RepoStorage {
 			//System.out.println("There is not enough storage space: " + freeStorage);
 			return false;
 		}
-	}
+	}*/
 
 	public boolean isProcessingEmpty() {
-		long usedProc = this.getProcMessagesSize();
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProc <= 2000000){
+		if (this.processSize <= 2000000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -410,7 +503,7 @@ public class RepoStorage {
 		//try {
 		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 		//} catch(Exception e) {}
-		if (usedProcessed >= this.processedSize - 100000000){
+		if (usedProcessed >= this.processedSize - 500000){
 			//System.out.println("There is enough storage space: " + freeStorage);
 			return true;
 		}
@@ -479,9 +572,9 @@ public class RepoStorage {
 		return oldest;
 	}
 	
-	public Message getOldestStoredMessage(){
+	public Message getOldestStaticMessage(){
 		Message oldest = null;
-		for (Message m : this.storedMessages) {
+		for (Message m : this.staticMessages) {
 			
 			if (oldest == null ) {
 				oldest = m;
@@ -492,61 +585,5 @@ public class RepoStorage {
 		}
 		return oldest;
 	}
-	
-	public Message getOldestProcStoredMessage(){
-		Message oldest = null;
-		for (Message m : this.storedMessages) {
-			
-			if (((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
-				if (oldest == null) {
-					oldest = m;
-				}
-				else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-					oldest = m;
-				}
-			}
-		}	
-		return oldest;
-	}
-
-	public void deleteMessagesForSpace(boolean deleteAll){
-		if (this.isStorageFull() && deleteAll == false){
-			for (int i=0; i<1000; i++){
-				Message oldest = this.getOldestStoredMessage();
-				if (this.isProcessingFull()) {
-					String mId = oldest.getId();
-					this.deleteStoredMessage(mId);
-					this.nrofDeletedMessages++;
-				}
-				else {
-					this.processMessages.add(oldest);
-					if (!this.isProcessedFull()) {
-						this.processMessage(this.getOldestProcessMessage());
-					}
-				}
-				//System.out.println("There is " + this.getStoredMessagesSize() + " storage used in "+this.getHost().name);
-				//String mId = oldest.getId(); 
-				//this.deleteStoredMessage(mId);
-				//this.nrofDeletedMessages++;
-			}
-		}
-		else if (deleteAll == true){
-			this.storedMessages.clear();
-		};
-	}
-	
-
-		
-	
-	/**
-	 * Returns a String presentation of this file system
-	 * @return A String presentation of this file system
-	 */
-	/*public String toString() {
-		return getClass().getSimpleName() + " of " + 
-			this.getHost().toString() + " with " + getNrofFiles() 
-			+ " files";
-	}*/
-
 
 }

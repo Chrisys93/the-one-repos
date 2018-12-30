@@ -19,7 +19,7 @@ import core.SimScenario;
  * Message location report. Reports the location (coordinates) of messages.
  * The messages that are reported and the reporting interval can be configured.
  */
-public class RepoProcessingMessageLocationReport extends Report implements UpdateListener {
+public class RepoDepletedUnProcBWReport extends Report implements UpdateListener {
 	/** Reporting granularity -setting id ({@value}). 
 	 * Defines the interval how often (seconds) a new snapshot of message 
 	 * locations is created */
@@ -50,7 +50,7 @@ public class RepoProcessingMessageLocationReport extends Report implements Updat
 	/**
 	 * Constructor. Reads the settings and initializes the report module.
 	 */
-	public RepoProcessingMessageLocationReport() {
+	public RepoDepletedUnProcBWReport() {
 		Settings settings = getSettings();
 		this.lastUpdate = 0;	
 		this.granularity = settings.getInt(GRANULARITY);
@@ -118,7 +118,7 @@ public class RepoProcessingMessageLocationReport extends Report implements Updat
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							long totalStoredMsgs =  host.getStorageSystem().getProcMessagesSize();
+							double totalStoredMsgs =  host.getStorageSystem().getDepletedUnProcMessagesBW(true);
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

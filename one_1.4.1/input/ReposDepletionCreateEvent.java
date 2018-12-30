@@ -45,14 +45,14 @@ public class ReposDepletionCreateEvent extends ReposDepletionEvent {
 		for (int i = 0; i<deplHosts.size(); i++) {
 			DTNHost currNode = deplHosts.get(i);
 			//System.out.println("The storage used in node "+currNode.name.toString()+" is: "+currNode.getStorageSystem().getStoredMessagesSize());
-			if (currNode.getStorageSystem().getStoredMessagesSize()>this.lowerLimit) {
+			if (currNode.getStorageSystem().getStaticMessagesSize()>this.lowerLimit) {
 				if (currNode.getStorageSystem().getNrofMessages() > this.msgNo){
 					for (int u = 0; u<this.msgNo; u++) {
 						Message temp = currNode.getStorageSystem().getStoredMessages().get(u);
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
-						currNode.getStorageSystem().addToDeplStoredMessages(temp);
-						currNode.getStorageSystem().deleteStoredMessage(temp.getId());
-						if (currNode.getStorageSystem().getStoredMessagesSize()>=this.higherLimit) {
+						currNode.getStorageSystem().addToDeplStaticMessages(temp);
+						currNode.getStorageSystem().deleteStaticMessage(temp.getId());
+						if (currNode.getStorageSystem().getStaticMessagesSize()>=this.higherLimit) {
 							System.out.println("Host "+ currNode + " is full. Consider increasing depletion" + 
 									" rate, increasing storage capacity, or improving storage distribution" +
 									" of each repository/storage-capable node");

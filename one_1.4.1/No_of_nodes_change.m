@@ -2,12 +2,12 @@
 % the number of runs as variables;
 
 clear
-R1 = dlmread('reports1_sparta/RDMR1', ' ', 0, 2);
-M1 = dlmread('reports1_sparta/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports1_sparta/RAMR1', ' ', 0, 2);
-R2 = dlmread('reports1_sparta/RDMR2', ' ', 0, 2);
-M2 = dlmread('reports1_sparta/MDMR2', ' ', 0, 2);
-S2 = dlmread('reports1_sparta/RAMR2', ' ', 0, 2);
+R1 = dlmread('reports2_sparta/RDMR1', ' ', 0, 2);
+M1 = dlmread('reports2_sparta/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports2_sparta/RAMR1', ' ', 0, 2);
+R2 = dlmread('reports2_sparta/RDMR2', ' ', 0, 2);
+M2 = dlmread('reports2_sparta/MDMR2', ' ', 0, 2);
+S2 = dlmread('reports2_sparta/RAMR2', ' ', 0, 2);
 R3 = dlmread('reports1_sparta/RDMR3', ' ', 0, 2);
 M3 = dlmread('reports1_sparta/MDMR3', ' ', 0, 2);
 S3 = dlmread('reports1_sparta/RAMR3', ' ', 0, 2);
@@ -20,24 +20,27 @@ S5 = dlmread('reports1_sparta/RAMR5', ' ', 0, 2);
 % R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
 % M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
 % S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
-[r1, c1] = size(R1);
-[r2, c2] = size(M1);
-[r3, c3] = size(S1);
-maxstorR1 = zeros(c1, 0);
-maxstorM1 = zeros(c2, 0);
-maxstor = zeros(c3, 0);
+[r11, c11] = size(R1);
+[r12, c12] = size(R2);
+[r21, c21] = size(M1);
+[r22, c22] = size(M2);
+[r31, c31] = size(S1);
+[r32, c32] = size(S2);
+maxstorR1 = zeros(c11, 0);
+maxstorM1 = zeros(c21, 0);
+maxstor = zeros(c31, 0);
 
-for i = 1:r1
+for i = 1:r11
     maxstorR1(i) = max(R1(i, :));
 end
 maxval1 = max(maxstorR1);
 
-for i = 1:r2
+for i = 1:r21
     maxstorM1(i) = max(M1(i, :));
 end
 maxval2 = max(maxstorM1);
 
-for inc = 5
+for inc = 2
     if inc == 1
         S = S1;
     end
@@ -46,17 +49,17 @@ for inc = 5
         S = S2;
     end
     
-    if inc == 3
-        S = S3;
-    end
-    
-    if inc == 4
-        S = S4;
-    end
-    
-    if inc == 5
-        S = S5;
-    end
+%     if inc == 3
+%         S = S3;
+%     end
+%     
+%     if inc == 4
+%         S = S4;
+%     end
+%     
+%     if inc == 5
+%         S = S5;
+%     end
 %     
 %     if inc == 6
 %         S = S6;
@@ -100,12 +103,12 @@ for inc = 5
     
     s = 10000;
     col = 1;
-    for i = 1:r3
+    for i = 1:r31
         maxstor(i) = max(S(i, :));
         if maxstor(i) >= 15000 && i < s
             c0 = 1;
             c50 = 1;
-            for c = 1:c3
+            for c = 1:c31
                 if S(i, c) >= 7500
                     fillperc50_100(c50) = S(i, c)/15000*100;
                     c50=c50+1;
@@ -122,7 +125,7 @@ for inc = 5
         end
 
         c100 = 1;
-        for c = 1:c3
+        for c = 1:c31
             if S(i, c) >= 14000
                 fill100(c100) = 1;
             else
@@ -134,7 +137,7 @@ for inc = 5
         fillperc100(col) = sum(fill100)/40*100;
 
         c50 = 1;
-        for c = 1:c3
+        for c = 1:c31
             if S(i, c) >= 7500
                 fill50(c50) = 1;
             else
@@ -146,7 +149,7 @@ for inc = 5
         fillperc50(col) = sum(fill50)/40*100;
 
         c25 = 1;
-        for c = 1:c3
+        for c = 1:c31
             if S(i, c) >= 4507
                 fill25(c25) = 1;
             else
@@ -162,6 +165,8 @@ for inc = 5
     maxval3 = max(maxstor);
     
     if inc == 1
+        c3 = c31;
+        r3 = r31;
         maxstorS1 = maxstor;
         fillpercS1 = [fillperc25(:); fillperc50(:); fillperc100(:)];
         filled100S1 = filled100;
@@ -177,6 +182,8 @@ for inc = 5
     end
     
     if inc == 2
+        c3 = c32;
+        r3 = r32;
         maxstorS2 = maxstor;
         fillpercS2 = [fillperc25(:); fillperc50(:); fillperc100(:)];
         for repo = 1:c3
@@ -188,41 +195,41 @@ for inc = 5
                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
     end
     
-    if inc == 3
-        maxstorS3 = maxstor;
-        fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS3(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS3(repo);           
-        end
-        fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 4
-        maxstorS1 = maxstor;
-        fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS4(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS4(repo);           
-        end
-        fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 5
-        maxstorS5 = maxstor;
-        fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS5(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS5(repo);
-        end
-        fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
+%     if inc == 3
+%         maxstorS3 = maxstor;
+%         fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS3(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS3(repo);           
+%         end
+%         fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 4
+%         maxstorS1 = maxstor;
+%         fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS4(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS4(repo);           
+%         end
+%         fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 5
+%         maxstorS5 = maxstor;
+%         fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS5(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS5(repo);
+%         end
+%         fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
 %     
 %     if inc == 6
 %         maxstorS6 = maxstor;
@@ -336,19 +343,29 @@ xlabel('Repo Number')
 ylabel('Time(s)')
 zlabel('Messages')
 
-storage_9 = [S1(:, 9), S2(:, 9), S3(:, 9), S4(:, 9), S5(:, 9)];
+storage_9 = [S1(:, 9), S2(:, 9)];
 
 figure
 plot(storage_9);
-legend('5 msg/s', '6 msg/s', '7 msg/s', '9 msg/s', '9 msg/s');
+legend('200 cars', '500 cars');
 
 deleted_9 = [max(R1(:, 9)), max(R2(:, 9)), max(R3(:, 9)), max(R4(:, 9))];
 
 figure
 plot([1 2 3 4], deleted_9);
 
-mdeleted = [M1(10000, :)', M2(10000, :)', M3(10000, :)', M4(10000, :)', M5(10000, :)'];
+mdeleted1 = M1(10000, :);
+mdeleted2 = M2(10000, :);
+addr1 = 80:334;
+addr2 = 80:634;
 
 figure
-bar(mdeleted);
-
+subplot(1,2,1);
+bar(addr1, mdeleted1);
+title('200 cars in environment');
+ylabel('Messages deleted');
+xlabel('Mobile node address');
+subplot(1,2,2);
+bar(addr2, mdeleted2);
+title('500 cars in environment');
+xlabel('Mobile node address');

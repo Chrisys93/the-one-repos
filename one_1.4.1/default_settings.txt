@@ -7,7 +7,7 @@ Scenario.name = default_scenario
 Scenario.simulateConnections = true
 Scenario.updateInterval = 0.1
 # 43200s == 12h
-Scenario.endTime = 43200
+Scenario.endTime = 10800
 
 
 Scenario.simulateStorage = true
@@ -101,9 +101,8 @@ Group1.movementModel = RepoStationaryMovement
 #Group1.speed = 0, 0
 Group1.storageCapability = true
 Group1.processingCapability = true
-Group1.storageSize = 20G
-Group1.processSize = 10G
-Group1.compressionRate = 1.43
+Group1.storageSize = 10G
+Group1.compressionRate = 2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
 Group1.nrofInterfaces = 1
@@ -272,7 +271,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 7
+Report.nrofReports = 10
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -285,26 +284,38 @@ RepoProcessedMessageLocationReport.granularity = 1
 RepoAllMessagesLocationReport.granularity = 1
 MobileDeletedMessagesReport.granularity = 1
 RepoUnprocessedMessagesLocationReport.granularity = 1
+RepoDepletedProcBWReport.granularity = 1
+RepoDepletedUnProcBWReport.granularity = 1
+RepoDepletedStorageBWReport.granularity = 1
 FileLocationReport.granularity = 5
 
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
 Report.report1 = RepoIncomingSpeedsReport
-Report.report2 = RepoDeletedMessagesReport
-Report.report3 = MobileDeletedMessagesReport
-Report.report4 = RepoProcessingMessageLocationReport
+Report.report2 = MobileDeletedMessagesReport
+
+Report.report3 = RepoProcessingMessageLocationReport
+Report.report4 = RepoStoredMessageLocationReport
+
 Report.report5 = RepoProcessedMessageLocationReport
 Report.report6 = RepoAllMessagesLocationReport
 Report.report7 = RepoUnprocessedMessagesLocationReport
+Report.report8 = RepoDepletedProcBWReport
+Report.report9 = RepoDepletedUnProcBWReport
+Report.report10 = RepoDepletedStorageBWReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
 MobileDeletedMessagesReport.output = [reports/MDMR1;reports/MDMR2;reports/MDMR3; reports/MDMR4; reports/MDMR5]
 RepoProcessingMessageLocationReport.output = [reports/RPrMR1;reports/RPrMR2;reports/RPrMR3; reports/RPrMR4; reports/RPrMR5]
+RepoStoredMessageLocationReport.output = [reports/RSMR1;reports/RSMR2;reports/RSMR3; reports/RSMR4; reports/RSMR5]
 RepoProcessedMessageLocationReport.output = [reports/RPMR1;reports/RPMR2;reports/RPMR3; reports/RPMR4; reports/RPMR5]
 RepoAllMessagesLocationReport.output = [reports/RAMR1;reports/RAMR2;reports/RAMR3; reports/RAMR4; reports/RAMR5]
 RepoUnprocessedMessagesLocationReport.output = [reports/RUMR1;reports/RUMR2;reports/RUMR3; reports/RUMR4; reports/RUMR5]
+RepoDepletedProcBWReport.output = [reports/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5]
+RepoDepletedUnProcBWReport.output = [reports/RUPBWR1;reports/RUPBWR2;reports/RUPBWR3; reports/RUPBWR4; reports/RUPBWR5]
+RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -337,13 +348,14 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = 10
+procApp.depletionRate = [5M; 8M; 10M; 20M; 30M]
 procApp.passive = false
+procApp.coreNo = 4
 
 # Define new application
 procApp1.type = ProcGenApplication
-procApp1.interval = 3
-procApp1.delay = 1
+procApp1.interval = 5
+procApp1.delay = 0.5
 procApp1.destinationName = r
 procApp1.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -353,7 +365,7 @@ procApp1.passive = false
 # Define new application
 procApp2.type = ProcGenApplication
 procApp2.interval = 2
-procApp2.delay = 2
+procApp2.delay = 0.1
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -362,12 +374,12 @@ procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
-procApp3.interval = 1
-procApp3.delay = 3
+procApp3.interval = 2
+procApp3.delay = 0.2
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp3.passiveRate = 1,1
+procApp3.passiveRate = 1,2
 procApp3.passive = false
 
 # Set proc app for all nodes
