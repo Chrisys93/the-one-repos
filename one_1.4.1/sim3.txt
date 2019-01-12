@@ -1,11 +1,12 @@
 ## Scenario settings
 Scenario.name = sim3_scenario
 
-Group1.nrofHosts = [40; 100; 200]
+Group1.nrofHosts = [40; 80; 100]
 
-Group3.nrofHosts = 1000
+Group3.nrofHosts = 500
 
 procApp.depletionRate = 10M
+procApp.coreNo = 8
 
 
 RepoStoredMessageLocationReport.output = [reports3/RSMR1;reports3/RSMR2;reports3/RSMR3; reports3/RSMR4]
