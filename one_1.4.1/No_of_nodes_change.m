@@ -2,21 +2,32 @@
 % the number of runs as variables;
 
 clear
-R1 = dlmread('reports2_sparta/RDMR1', ' ', 0, 2);
-M1 = dlmread('reports2_sparta/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports2_sparta/RAMR1', ' ', 0, 2);
-R2 = dlmread('reports2_sparta/RDMR2', ' ', 0, 2);
-M2 = dlmread('reports2_sparta/MDMR2', ' ', 0, 2);
-S2 = dlmread('reports2_sparta/RAMR2', ' ', 0, 2);
-R3 = dlmread('reports1_sparta/RDMR3', ' ', 0, 2);
-M3 = dlmread('reports1_sparta/MDMR3', ' ', 0, 2);
-S3 = dlmread('reports1_sparta/RAMR3', ' ', 0, 2);
-R4 = dlmread('reports1_sparta/RDMR4', ' ', 0, 2);
-M4 = dlmread('reports1_sparta/MDMR4', ' ', 0, 2);
-S4 = dlmread('reports1_sparta/RAMR4', ' ', 0, 2);
-R5 = dlmread('reports1_sparta/RDMR5', ' ', 0, 2);
-M5 = dlmread('reports1_sparta/MDMR5', ' ', 0, 2);
-S5 = dlmread('reports1_sparta/RAMR5', ' ', 0, 2);
+M1 = dlmread('reports2/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports2/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports2/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports2/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports2/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports2/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports2/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports2/RSMR1', ' ', 0, 2);
+
+M2 = dlmread('reports2/MDMR2', ' ', 0, 2);
+S2 = dlmread('reports2/RAMR2', ' ', 0, 2);
+UB2 = dlmread('reports2/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('reports2/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('reports2/RSBWR2', ' ', 0, 2);
+RI2 = dlmread('reports2/RISR2', ' ', 0, 2);
+RP2 = dlmread('reports2/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('reports2/RSMR2', ' ', 0, 2);
+
+M3 = dlmread('reports2/MDMR3', ' ', 0, 2);
+S3 = dlmread('reports2/RAMR3', ' ', 0, 2);
+PB3 = dlmread('reports2/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('reports2/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('reports2/RSBWR3', ' ', 0, 2);
+RI3 = dlmread('reports2/RISR3', ' ', 0, 2);
+RP3 = dlmread('reports2/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('reports2/RSMR3', ' ', 0, 2);
 % R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
 % M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
 % S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
@@ -49,9 +60,9 @@ for inc = 2
         S = S2;
     end
     
-%     if inc == 3
-%         S = S3;
-%     end
+    if inc == 3
+        S = S3;
+    end
 %     
 %     if inc == 4
 %         S = S4;
@@ -195,17 +206,17 @@ for inc = 2
                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
     end
     
-%     if inc == 3
-%         maxstorS3 = maxstor;
-%         fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-%         for repo = 1:c3
-%             reposfillS3(repo) = mean(S(:, repo));
-%             reposfill(repo, inc) = reposfillS3(repo);           
-%         end
-%         fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-%     end
+    if inc == 3
+        maxstorS3 = maxstor;
+        fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            reposfillS3(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS3(repo);           
+        end
+        fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+    end
 %     
 %     if inc == 4
 %         maxstorS1 = maxstor;
@@ -343,16 +354,16 @@ xlabel('Repo Number')
 ylabel('Time(s)')
 zlabel('Messages')
 
-storage_9 = [S1(:, 9), S2(:, 9)];
+storage_29 = [S1(:, 29), S2(:, 29)];
 
 figure
-plot(storage_9);
+plot(storage_29);
 legend('200 cars', '500 cars');
 
-deleted_9 = [max(R1(:, 9)), max(R2(:, 9)), max(R3(:, 9)), max(R4(:, 9))];
+deleted_29 = [max(R1(:, 29)), max(R2(:, 29)), max(R3(:, 29)), max(R4(:, 29))];
 
 figure
-plot([1 2 3 4], deleted_9);
+plot([1 2 3 4], deleted_29);
 
 mdeleted1 = M1(10000, :);
 mdeleted2 = M2(10000, :);
