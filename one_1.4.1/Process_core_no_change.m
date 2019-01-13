@@ -234,9 +234,11 @@ for repo = 1:c3
     upspeeds1(repo, :) = [mean(SB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
     upspeeds2(repo, :) = [mean(SB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
     upspeeds3(repo, :) = [mean(SB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
+    upspeeds4(repo, :) = [mean(SB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
     inspeeds1(repo, :) = mean(RI1(:, repo));
     inspeeds2(repo, :) = mean(RI2(:, repo));
     inspeeds3(repo, :) = mean(RI3(:, repo));
+    inspeeds4(repo, :) = mean(RI4(:, repo));
 end
 
 figure
