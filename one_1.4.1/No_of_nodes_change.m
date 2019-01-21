@@ -31,20 +31,17 @@ RS3 = dlmread('reports2/RSMR3', ' ', 0, 2);
 % R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
 % M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
 % S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
-[r11, c11] = size(R1);
-[r12, c12] = size(R2);
 [r21, c21] = size(M1);
 [r22, c22] = size(M2);
 [r31, c31] = size(S1);
 [r32, c32] = size(S2);
-maxstorR1 = zeros(c11, 0);
 maxstorM1 = zeros(c21, 0);
 maxstor = zeros(c31, 0);
 
-for i = 1:r11
-    maxstorR1(i) = max(R1(i, :));
-end
-maxval1 = max(maxstorR1);
+% for i = 1:r11
+%     maxstorR1(i) = max(R1(i, :));
+% end
+% maxval1 = max(maxstorR1);
 
 for i = 1:r21
     maxstorM1(i) = max(M1(i, :));
@@ -285,41 +282,23 @@ end
 % hold off
 
 
-figure
-bar(fillperc100);
-title('Percentage of repositories filled up to 100%');
-xlabel('Time (s)');
-ylabel('Repositories which used about 100% storage (%)');
-
-figure
-bar(fillperc50);
-title('Percentage of repositories filled up to 50%');
-xlabel('Time (s)');
-ylabel('Repositories which used more than 50% storage (%)');
-
-figure
-bar(fillperc25);
-title('Percentage of repositories filled up to 25%');
-xlabel('Time (s)');
-ylabel('Repositories which used more than 25% storage (%)');
-
-figure
-bar(maxstorR1);
-title('Bar plot of Repos Deleted Messages')
-xlabel('Time(s)') 
-ylabel('Space used(MB)')
-
-figure
-bar(maxstorM1);
-title('Bar plot of Mobile Nodes Deleted Messages')
-xlabel('Time(s)') 
-ylabel('Space used(MB)')
-
-figure
-bar(maxstor, 0.5);
-title('Bar plot of Repos Storage Usage')
-xlabel('Time(s)') 
-ylabel('Space used(MB)')
+% figure
+% bar(fillperc100);
+% title('Percentage of repositories filled up to 100%');
+% xlabel('Time (s)');
+% ylabel('Repositories which used about 100% storage (%)');
+% 
+% figure
+% bar(fillperc50);
+% title('Percentage of repositories filled up to 50%');
+% xlabel('Time (s)');
+% ylabel('Repositories which used more than 50% storage (%)');
+% 
+% figure
+% bar(fillperc25);
+% title('Percentage of repositories filled up to 25%');
+% xlabel('Time (s)');
+% ylabel('Repositories which used more than 25% storage (%)');
 
 %figure
 %bar3(M);
@@ -330,53 +309,172 @@ ylabel('Space used(MB)')
 %figure
 %bar3(S, 0.5);
 
-%figure
-%bmesh(S);
+% deleted_29 = [max(R1(:, 29)), max(R2(:, 29)), max(R3(:, 29)), max(R4(:, 29))];
+% 
+% figure
+% plot([1 2 3 4], deleted_29);
+
+mdeleted1 = [mean(M1(10800, 1:40)), mean(M1(10800, 41:240)), mean(M1(10800, 241:255));
+             mean(M2(10800, 1:40)), mean(M2(10800, 41:540)), mean(M2(10800, 541:555));
+             mean(M3(10800, 1:40)), mean(M3(10800, 41:1040)), mean(M3(10800, 1041:1055))];
+% mdeleted2 = M2(10000, :);
+% mdeleted3 = M3(10000, :);
+% addr1 = 80:334;
+% addr2 = 80:634;
+% addr3 = 80:1134;
 
 figure
-stem3(S1, ':.');
-title('3D Stem plot of Repos Storage Usage')
-xlabel('Repo Number') 
-ylabel('Time(s)')
-zlabel('Space used(MB)')
+% subplot(1,3,1);
+bar([200, 500, 1000], mdeleted1);
+lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
+lgd.FontSize = 12;
+ylabel('Average no. of messages deleted per node','fontsize',12);
+xlabel('No. of cars in environment','fontsize',12);
+% subplot(1,3,2);
+% bar(addr2, mdeleted2);
+% title('500 cars in environment');
+% xlabel('Mobile node address');
+% subplot(1,3,3);
+% bar(addr3, mdeleted3);
+% title('1000 cars in environment');
+% xlabel('Mobile node address');
+
+for repo = 1:c3
+    upspeeds1(repo, :) = [mean(SB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
+    upspeeds2(repo, :) = [mean(SB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
+    upspeeds3(repo, :) = [mean(SB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
+    inspeeds1(repo, :) = mean(RI1(:, repo));
+    inspeeds2(repo, :) = mean(RI2(:, repo));
+    inspeeds3(repo, :) = mean(RI3(:, repo));
+end
+
+storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30)];
 
 figure
-stem3(M1, ':.');
-title('3D Stem plot of Mobile Deleted Messages')
-xlabel('Repo Number') 
-ylabel('Time(s)')
-zlabel('Messages')
+plot(storage_30);
+xlabel('Time (s)','fontsize',12) 
+ylabel('Total storage used (messages stored)','fontsize',12)
+lgd = legend('200 cars', '500 cars', '1000 cars');
+lgd.FontSize = 9;
+
+% mdeleted = M3(10800, :)';
+% figure
+% bar(80:1134, mdeleted);
+% title('No. messages deleted from mobile nodes','fontsize',16)
+% xlabel('Node address','fontsize',12) 
+% ylabel('No. messages deleted','fontsize',12)
+
+proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30)];
+uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30)];
+static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30)];
+figure
+% subplot(3,1,1);
+% plot(uproc_upspeeds_30);
+% title('Upload speeds for cloud offloading','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('200 cars', '500 cars', '1000 cars');
+% lgd.FontSize = 9;
+subplot(2,1,1);
+plot(proc_upspeeds_30);
+title('Upload speeds for processed messages','fontsize',16)
+xlabel('Time (s)','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+lgd = legend('200 cars', '500 cars', '1000 cars');
+lgd.FontSize = 9;
+subplot(2,1,2);
+plot(static_upspeeds_30);
+title('Upload speeds for unprocessed messages','fontsize',16)
+xlabel('Time (s)','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+lgd = legend('200 cars', '500 cars', '1000 cars');
+lgd.FontSize = 9;
+
+% figure
+% upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
+% subplot(1,2,1);
+% bar(upspeeds1_30, 'stacked');
+% lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+% lgd.FontSize = 9;
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth used (B)','fontsize',12)
+% inspeeds1_30 = RI3(:, 30);
+% subplot(1,2,2);
+% bar(inspeeds1_30);
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth of input (B)','fontsize',12)
 
 figure
-stem3(R1, ':.');
-title('3D Stem plot of Repos Dleted Messages')
-xlabel('Repo Number') 
-ylabel('Time(s)')
-zlabel('Messages')
-
-storage_29 = [S1(:, 29), S2(:, 29)];
-
-figure
-plot(storage_29);
-legend('200 cars', '500 cars');
-
-deleted_29 = [max(R1(:, 29)), max(R2(:, 29)), max(R3(:, 29)), max(R4(:, 29))];
-
-figure
-plot([1 2 3 4], deleted_29);
-
-mdeleted1 = M1(10000, :);
-mdeleted2 = M2(10000, :);
-addr1 = 80:334;
-addr2 = 80:634;
-
-figure
+upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
+                mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
+                mean(SB3(:, 30)), mean(UB3(:, 30)), mean(PB3(:, 30))];
 subplot(1,2,1);
-bar(addr1, mdeleted1);
-title('200 cars in environment');
-ylabel('Messages deleted');
-xlabel('Mobile node address');
+bar([200, 500, 1000], upspeeds1_30, 'stacked');
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+lgd.FontSize = 10;
+xlabel('No. of cars in simulation','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30))];
 subplot(1,2,2);
-bar(addr2, mdeleted2);
-title('500 cars in environment');
-xlabel('Mobile node address');
+bar([200, 500, 1000], inspeeds1_30);
+xlabel('No. of cars in simulation','fontsize',12) 
+ylabel('Bandwidth of input (B)','fontsize',12)
+
+storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
+                mean(RS2(:, 30)), mean(RP2(:, 30)); 
+                mean(RS3(:, 30)), mean(RP3(:, 30))];
+figure
+bar([200, 500, 1000], storages_30, 'stacked');
+lgd = legend('non-processing message storage', 'processing message storage');
+lgd.FontSize = 9;
+xlabel('No. of cars in simulation','fontsize',12)
+ylabel('Total storage used (B)','fontsize',12)
+
+upspeeds1_store = upspeeds1(:, 1)';
+upspeeds1_cloud = upspeeds1(:, 2)';
+upspeeds1_proc = upspeeds1(:, 3)';
+upspeeds3_store = upspeeds3(:, 1)';
+upspeeds3_cloud = upspeeds3(:, 2)';
+upspeeds3_proc = upspeeds3(:, 3)';
+upspeeds1_total = upspeeds1(:, 1)' + upspeeds1(:, 2)' + upspeeds1(:, 3)';
+upspeeds2_total = upspeeds2(:, 1)' + upspeeds2(:, 2)' + upspeeds2(:, 3)';
+upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
+
+figure
+plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds3_store, 1:80, upspeeds3_cloud, 1:80, upspeeds3_proc);
+title('Processing threads','fontsize',16)
+lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
+lgd.FontSize = 9;
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+
+
+figure
+
+subplot(1,2,1);
+yyaxis left
+bar(upspeeds1, 'stacked');
+title('(a) Number of cars vs. up-link BW','fontsize',14)
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+ylim([0 5*10^6]);
+xlim([17 57]);
+
+yyaxis right
+plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*');
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
+lgd1.FontSize = 9;
+ylabel('Bandwidth used (B/s)','fontsize',12)
+xlim([17 57]);
+ylim([0 5*10^6]);
+
+subplot(1,2,2);
+inspeeds = [inspeeds1, inspeeds2, inspeeds3];
+bar(inspeeds);
+title('(b) Input Bandwidths','fontsize',14)
+lgd = legend('200 cars', '500 cars', '1000 cars');
+lgd.FontSize = 9;
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+xlim([17 57]);
+

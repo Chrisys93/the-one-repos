@@ -323,7 +323,7 @@ plot(storage_29);
 xlabel('Time (s)','fontsize',12) 
 ylabel('Total storage used (No. of messages)','fontsize',12)
 lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
-lgd.FontSize = 9;
+lgd.FontSize = 12;
 
 mdeleted = [M1(10000, :)', M2(10000, :)', M3(10000, :)', M4(10000, :)', M5(10000, :)'];
 figure
@@ -338,21 +338,21 @@ proc_upspeeds_29 = [PB1(:, 29), PB2(:, 29), PB3(:, 29), PB4(:, 29), PB5(:, 29)];
 uproc_upspeeds_29 = [UB1(:, 29), UB2(:, 29), UB3(:, 29), UB4(:, 29), UB5(:, 29)];
 static_upspeeds_29 = [SB1(:, 29), SB2(:, 29), SB3(:, 29), SB4(:, 29), SB5(:, 29)];
 figure
-subplot(3,1,1);
-plot(uproc_upspeeds_29);
-title('Upload speeds for cloud offloading','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
-lgd.FontSize = 9;
-subplot(3,1,2);
+% subplot(3,1,1);
+% plot(uproc_upspeeds_29);
+% title('Upload speeds for cloud offloading','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+% lgd.FontSize = 9;
+subplot(2,1,1);
 plot(proc_upspeeds_29);
 title('Upload speeds for processed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
 lgd.FontSize = 9;
-subplot(3,1,3);
+subplot(2,1,2);
 plot(static_upspeeds_29);
 title('Upload speeds for unprocessed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
@@ -360,19 +360,19 @@ ylabel('Bandwidth used (B)','fontsize',12)
 lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
 lgd.FontSize = 9;
 
-figure
-upspeeds1_29 = [SB4(:, 29) UB4(:, 29) PB4(:, 29)];
-subplot(1,2,1);
-bar(upspeeds1_29, 'stacked');
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
-lgd.FontSize = 9;
-inspeeds1_29 = RI4(:, 29);
-subplot(1,2,2);
-bar(inspeeds1_29);
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
+% figure
+% upspeeds1_29 = [SB4(:, 29) UB4(:, 29) PB4(:, 29)];
+% subplot(1,2,1);
+% bar(upspeeds1_29, 'stacked');
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+% lgd.FontSize = 9;
+% inspeeds1_29 = RI4(:, 29);
+% subplot(1,2,2);
+% bar(inspeeds1_29);
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
 
 figure
 upspeeds1_29 = [mean(SB1(:, 29)), mean(UB1(:, 29)), mean(PB1(:, 29));
@@ -396,7 +396,7 @@ tstorages_29 = [RS1(:, 29) RP1(:, 29)];
 figure
 bar(tstorages_29, 'stacked');
 lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
+lgd.FontSize = 12;
 xlabel('Total storage used (B)','fontsize',12) 
 ylabel('Time (s)','fontsize',12)
 
@@ -408,7 +408,7 @@ storages_29 = [mean(RS1(:, 29)), mean(RP1(:, 29));
 figure
 bar([5, 8, 10, 20, 30], storages_29, 'stacked');
 lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
+lgd.FontSize = 12;
 xlabel('Change in total output BW (B)','fontsize',12)
 ylabel('Total storage used (B)','fontsize',12)
 
