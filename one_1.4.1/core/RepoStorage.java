@@ -163,8 +163,7 @@ public class RepoStorage {
 				this.processMessage(this.getOldestProcessMessage());
 			}
 			else if (this.getOldestStaticMessage() != null) {
-				this.deleteStaticMessage(this.getOldestStaticMessage().getId());
-				this.nrofDeletedMessages++;
+				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
 			}
 			else {
 				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
@@ -199,6 +198,11 @@ public class RepoStorage {
 				this.depletedUnProcMessages++;
 				this.depletedUnProcMessagesSize += sm.getSize();
 				this.deleteProcMessage(sm.getId());
+			}
+			else if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
+				this.deleteStaticMessage(sm.getId());
 			}
 		}
 	}
