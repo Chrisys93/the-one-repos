@@ -198,7 +198,7 @@ public class RepoStorage {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
 				this.depletedUnProcMessages++;
 				this.depletedUnProcMessagesSize += sm.getSize();
-				this.processMessages.remove(sm);
+				this.deleteProcMessage(sm.getId());
 			}
 		}
 	}

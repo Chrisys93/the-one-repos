@@ -470,7 +470,10 @@ ylim([0 5*10^6]);
 
 subplot(1,2,2);
 inspeeds = [inspeeds1, inspeeds2, inspeeds3];
-bar(inspeeds);
+bar_handle = bar(inspeeds);
+set(bar_handle(1),'FaceColor',[1,0,0])
+set(bar_handle(2),'FaceColor',[0,1,0])
+set(bar_handle(3),'FaceColor',[0,0,1])
 title('(b) Input Bandwidths','fontsize',14)
 lgd = legend('200 cars', '500 cars', '1000 cars');
 lgd.FontSize = 9;
