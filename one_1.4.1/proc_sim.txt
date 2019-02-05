@@ -3,10 +3,12 @@
 #
 
 ## Scenario settings
-Scenario.name = sim1_scenario
+Scenario.name = proc_sim_scenario
 Scenario.endTime = 10800
 
 Group1.storageSize = 5G
+
+Group3.nrofHosts = [200; 500; 800; 1000; 1200]
 
 
 RepoMessageLocationReport.output = [proc_sims/RMLR1;proc_sims/RMLR2;proc_sims/RMLR3; proc_sims/RMLR4; proc_sims/RMLR5]
