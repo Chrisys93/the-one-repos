@@ -3,7 +3,7 @@
 #
 
 ## Scenario settings
-Scenario.name = proc_sim_scenario
+Scenario.name = non_proc_sim_scenario
 Scenario.endTime = 10800
 
 Group1.storageSize = 5G
@@ -11,20 +11,20 @@ Group1.storageSize = 5G
 Group3.nrofHosts = [200; 500; 800; 1000; 1200]
 
 
-RepoMessageLocationReport.output = [proc_sims/RMLR1;proc_sims/RMLR2;proc_sims/RMLR3; proc_sims/RMLR4; proc_sims/RMLR5]
-RepoStoredMessageLocationReport.output = [proc_sims/RSMR1;proc_sims/RSMR2;proc_sims/RSMR3; proc_sims/RSMR4; proc_sims/RSMR5]
-MobileMessageLocationReport.output = [proc_sims/MMLR1;proc_sims/MMLR2;proc_sims/MMLR3; proc_sims/MMLR4; proc_sims/MMLR5]
-RepoIncomingSpeedsReport.output = [proc_sims/RISR1;proc_sims/RISR2;proc_sims/RISR3; proc_sims/RISR4; proc_sims/RISR5]
-RepoDeletedMessagesReport.output = [proc_sims/RDMR1;proc_sims/RDMR2;proc_sims/RDMR3; proc_sims/RDMR4; proc_sims/RDMR5]
-MobileDeletedMessagesReport.output = [proc_sims/MDMR1;proc_sims/MDMR2;proc_sims/MDMR3; proc_sims/MDMR4; proc_sims/MDMR5]
-RepoProcessingMessageLocationReport.output = [proc_sims/RPrMR1;proc_sims/RPrMR2;proc_sims/RPrMR3; proc_sims/RPrMR4; proc_sims/RPrMR5]
-RepoProcessedMessageLocationReport.output = [proc_sims/RPMR1;proc_sims/RPMR2;proc_sims/RPMR3; proc_sims/RPMR4; proc_sims/RPMR5]
-RepoAllMessagesLocationReport.output = [proc_sims/RAMR1;proc_sims/RAMR2;proc_sims/RAMR3; proc_sims/RAMR4; proc_sims/RAMR5]
-RepoUnprocessedMessagesLocationReport.output = [proc_sims/RUMR1;proc_sims/RUMR2;proc_sims/RUMR3; proc_sims/RUMR4; proc_sims/RUMR5]
+RepoMessageLocationReport.output = [non_proc_sims/RMLR1;non_proc_sims/RMLR2;non_proc_sims/RMLR3; non_proc_sims/RMLR4; non_proc_sims/RMLR5]
+RepoStoredMessageLocationReport.output = [non_proc_sims/RSMR1;non_proc_sims/RSMR2;non_proc_sims/RSMR3; non_proc_sims/RSMR4; non_proc_sims/RSMR5]
+MobileMessageLocationReport.output = [non_proc_sims/MMLR1;non_proc_sims/MMLR2;non_proc_sims/MMLR3; non_proc_sims/MMLR4; non_proc_sims/MMLR5]
+RepoIncomingSpeedsReport.output = [non_proc_sims/RISR1;non_proc_sims/RISR2;non_proc_sims/RISR3; non_proc_sims/RISR4; non_proc_sims/RISR5]
+RepoDeletedMessagesReport.output = [non_proc_sims/RDMR1;non_proc_sims/RDMR2;non_proc_sims/RDMR3; non_proc_sims/RDMR4; non_proc_sims/RDMR5]
+MobileDeletedMessagesReport.output = [non_proc_sims/MDMR1;non_proc_sims/MDMR2;non_proc_sims/MDMR3; non_proc_sims/MDMR4; non_proc_sims/MDMR5]
+RepoProcessingMessageLocationReport.output = [non_proc_sims/RPrMR1;non_proc_sims/RPrMR2;non_proc_sims/RPrMR3; non_proc_sims/RPrMR4; non_proc_sims/RPrMR5]
+RepoProcessedMessageLocationReport.output = [non_proc_sims/RPMR1;non_proc_sims/RPMR2;non_proc_sims/RPMR3; non_proc_sims/RPMR4; non_proc_sims/RPMR5]
+RepoAllMessagesLocationReport.output = [non_proc_sims/RAMR1;non_proc_sims/RAMR2;non_proc_sims/RAMR3; non_proc_sims/RAMR4; non_proc_sims/RAMR5]
+RepoUnprocessedMessagesLocationReport.output = [non_proc_sims/RUMR1;non_proc_sims/RUMR2;non_proc_sims/RUMR3; non_proc_sims/RUMR4; non_proc_sims/RUMR5]
 
-RepoDepletedProcBWReport.output = [proc_sims/RPBWR1;proc_sims/RPBWR2;proc_sims/RPBWR3; proc_sims/RPBWR4; proc_sims/RPBWR5]
-RepoDepletedUnProcBWReport.output = [proc_sims/RUPBWR1;proc_sims/RUPBWR2;proc_sims/RUPBWR3; proc_sims/RUPBWR4; proc_sims/RUPBWR5]
-RepoDepletedStorageBWReport.output = [proc_sims/RSBWR1; proc_sims/RSBWR2; proc_sims/RSBWR3; proc_sims/RSBWR4; proc_sims/RSBWR5]
+RepoDepletedProcBWReport.output = [non_proc_sims/RPBWR1;non_proc_sims/RPBWR2;non_proc_sims/RPBWR3; non_proc_sims/RPBWR4; non_proc_sims/RPBWR5]
+RepoDepletedUnProcBWReport.output = [non_proc_sims/RUPBWR1;non_proc_sims/RUPBWR2;non_proc_sims/RUPBWR3; non_proc_sims/RUPBWR4; non_proc_sims/RUPBWR5]
+RepoDepletedStorageBWReport.output = [non_proc_sims/RSBWR1; non_proc_sims/RSBWR2; non_proc_sims/RSBWR3; non_proc_sims/RSBWR4; non_proc_sims/RSBWR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
