@@ -28,9 +28,9 @@ SB3 = dlmread('reports2/RSBWR3', ' ', 0, 2);
 RI3 = dlmread('reports2/RISR3', ' ', 0, 2);
 RP3 = dlmread('reports2/RPrMR3', ' ', 0, 2);
 RS3 = dlmread('reports2/RSMR3', ' ', 0, 2);
-% R6 = dlmread('reports1/RDMR6', ' ', 0, 1);
-% M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
-% S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
+% R6 = dlmread('proc_sims/RDMR6', ' ', 0, 1);
+% M6 = dlmread('proc_sims/MDMR6', ' ', 0, 1);
+% S6 = dlmread('proc_sims/RSMLR6', ' ', 0, 2);
 [r21, c21] = size(M1);
 [r22, c22] = size(M2);
 [r31, c31] = size(S1);
@@ -48,7 +48,7 @@ for i = 1:r21
 end
 maxval2 = max(maxstorM1);
 
-for inc = 2
+for inc = 3
     if inc == 1
         S = S1;
     end
@@ -204,6 +204,8 @@ for inc = 2
     end
     
     if inc == 3
+        c3 = c31;
+        r3 = r31;
         maxstorS3 = maxstor;
         fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
         for repo = 1:c3

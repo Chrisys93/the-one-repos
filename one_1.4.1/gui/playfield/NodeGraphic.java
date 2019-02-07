@@ -42,9 +42,9 @@ public class NodeGraphic extends PlayFieldGraphic {
 		drawHost(g2);
 		drawMessages(g2);
 		
-		if(node.hasFileCapability()){
+		/*if(node.hasFileCapability()){
 			drawFiles(g2);
-		}
+		}*/
 	}
 
 	/**
@@ -136,13 +136,13 @@ public class NodeGraphic extends PlayFieldGraphic {
 	 * Visualize the files this node is carrying
 	 * @param g2 The graphic context to draw to
 	 */
-	private void drawFiles(Graphics2D g2) {
+	/*private void drawFiles(Graphics2D g2) {
 		int nrofFiles = node.getFileSystem().getNrofFiles();
 		Coord loc = node.getLocation();
 
 		drawBar(g2,loc, nrofFiles % 10, 1);
 		drawBar(g2,loc, nrofFiles / 10, 2);
-	}
+	}*/
 
 	/**
 	 * Draws a bar (stack of squares) next to a location
