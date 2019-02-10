@@ -359,6 +359,20 @@ ylabel('Total storage used (messages stored)','fontsize',12)
 lgd = legend('200 cars', '500 cars', '1000 cars');
 lgd.FontSize = 9;
 
+% storage = zeros(3, c31);
+% repos = 1:80;
+% for repo = 1:80
+% storage(:, repo) = [mean(S1(:, repo)); mean(S2(:, repo)); mean(S3(:, repo))];
+% end
+% 
+% figure
+% errorbar(repos,storage(2, :), storage(2, :)-storage(1, :), storage(3, :)-storage(2, :));
+% xlabel('Repo No.','fontsize',12) 
+% ylabel('Total storage used (messages stored)','fontsize',12)
+% lgd = legend('200 cars', '500 cars', '1000 cars');
+% lgd.FontSize = 9;
+
+
 % mdeleted = M3(10800, :)';
 % figure
 % bar(80:1134, mdeleted);

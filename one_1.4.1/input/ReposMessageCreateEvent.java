@@ -8,6 +8,10 @@ import core.DTNHost;
 import core.Message;
 import core.World;
 
+/** 
+ * @author Adrian-Cristian Nicolaescu, University College London
+ */
+
 /**
  * External event for creating a message.
  */

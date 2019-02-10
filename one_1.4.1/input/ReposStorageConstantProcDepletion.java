@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import core.Settings;
 import core.SettingsError;
 
+/** 
+ * @author Adrian-Cristian Nicolaescu, University College London
+ */
+
 /**
  * Message creation -external events generator. Creates uniformly distributed
  * message creation patterns whose message size and inter-message intervals can

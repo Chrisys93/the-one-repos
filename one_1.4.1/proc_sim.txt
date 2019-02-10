@@ -6,7 +6,7 @@
 Scenario.name = proc_sim_scenario
 Scenario.endTime = 10800
 
-Group1.storageSize = 5G
+Group1.storageSize = 2500M
 
 Group3.nrofHosts = [200; 500; 800; 1000; 1200]
 

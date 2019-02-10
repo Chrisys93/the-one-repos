@@ -4,6 +4,10 @@
  */
 package input;
 
+/** 
+ * @author Adrian-Cristian Nicolaescu, University College London
+ */
+
 /**
  * A message related external event
  */

@@ -1,7 +1,9 @@
+/* 
+ * 2018 UCL
+ * Author: Adrian-Cristian Nicolaescu
+ */
 package core;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import core.Settings;
 import core.SimClock;
 
 /** 
- * @author Daniele Bonaldo, University of Padua
+ * @author Adrian-Cristian Nicolaescu, University College London
  */
 public class RepoStorage {
 	

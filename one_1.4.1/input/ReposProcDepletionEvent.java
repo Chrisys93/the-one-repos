@@ -5,8 +5,10 @@
 package input;
 
 import java.util.ArrayList;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+
+/** 
+ * @author Adrian-Cristian Nicolaescu, University College London
+ */
 
 /**
  * A message related external event
