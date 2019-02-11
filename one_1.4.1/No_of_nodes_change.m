@@ -497,3 +497,24 @@ xlabel('Repository number','fontsize',12)
 ylabel('Bandwidth used (B/s)','fontsize',12)
 xlim([17 57]);
 
+repos = 1:80;
+figure
+hBarGrp=bar(abs(randn(320,2)),'grouped','stacked');  % 160 bars, group by 2
+off=hBarGrp(2).XOffset - 0.03;             % hidden property, offset from nominal x
+hBar1=bar(repos-off+0.03,upspeeds1,0.25,'stacked'); % draw first stacked as wanted
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
+lgd1.FontSize = 9;
+
+hold all                            % hold axes, don't reset color order position
+hBar2=bar(repos+off-0.03,[nan(size(inspeeds1)) inspeeds1],0.30, 'r'); % second with place holder
+xlim([17 57]);
+
+hold all                            % hold axes, don't reset color order position
+hBar3=bar(repos+2*off-0.03,[nan(size(inspeeds2)) inspeeds2],0.30, 'g'); % second with place holder
+xlim([17 57]);
+
+hold all                            % hold axes, don't reset color order position
+hBar4=bar(repos+3*off-0.03,[nan(size(inspeeds3)) inspeeds3],0.30, 'b'); % second with place holder
+xlim([17 57]);
+
+
