@@ -7,7 +7,7 @@ Scenario.name = sim6_scenario
 
 
 procApp.depletionRate = 10M
-procApp.coreNo = [2; 4; 8; 10; 16]
+procApp.coreNo = [2; 4; 8; 10; 12; 16]
 
 RepoStoredMessageLocationReport.output = [reports6/RSMR1;reports6/RSMR2;reports6/RSMR3; reports6/RSMR4; reports6/RSMR5; reports6/RSMR6;reports6/RSMR7;reports6/RSMR8; reports6/RSMR9; reports6/RSMR10; reports6/RSMR11;reports6/RSMR12;reports6/RSMR13; reports6/RSMR14; reports6/RSMR15]
 RepoIncomingSpeedsReport.output = [reports6/RISR1;reports6/RISR2;reports6/RISR3; reports6/RISR4; reports6/RISR5; reports6/RISR6;reports6/RISR7; reports6/RISR8; reports6/RISR9; reports6/RISR10; reports6/RISR11;reports6/RISR12;reports6/RISR13; reports6/RISR14; reports6/RISR15]
