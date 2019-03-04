@@ -1,9 +1,9 @@
 ## Scenario settings
 Scenario.name = sim3_scenario
 
-Group1.nrofHosts = [40; 80; 100]
+Group1.nrofHosts = [40; 80; 100; 1]
 
-Group3.nrofHosts = 500
+Group3.nrofHosts = 800
 
 procApp.depletionRate = 10M
 procApp.coreNo = 8

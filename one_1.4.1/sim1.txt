@@ -7,20 +7,20 @@ Scenario.name = sim1_scenario
 Scenario.endTime = 10800
 
 
-RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2;reports1/RMLR3; reports1/RMLR4; reports1/RMLR5]
-RepoStoredMessageLocationReport.output = [reports1/RSMR1;reports1/RSMR2;reports1/RSMR3; reports1/RSMR4; reports1/RSMR5]
-MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2;reports1/MMLR3; reports1/MMLR4; reports1/MMLR5]
-RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2;reports1/RISR3; reports1/RISR4; reports1/RISR5]
-RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2;reports1/RDMR3; reports1/RDMR4; reports1/RDMR5]
-MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2;reports1/MDMR3; reports1/MDMR4; reports1/MDMR5]
-RepoProcessingMessageLocationReport.output = [reports1/RPrMR1;reports1/RPrMR2;reports1/RPrMR3; reports1/RPrMR4; reports1/RPrMR5]
-RepoProcessedMessageLocationReport.output = [reports1/RPMR1;reports1/RPMR2;reports1/RPMR3; reports1/RPMR4; reports1/RPMR5]
-RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2;reports1/RAMR3; reports1/RAMR4; reports1/RAMR5]
-RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1;reports1/RUMR2;reports1/RUMR3; reports1/RUMR4; reports1/RUMR5]
+RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2; reports1/RMLR3; reports1/RMLR4; reports1/RMLR5; reports1/RMLR6; reports1/RMLR7; reports1/RMLR8]
+RepoStoredMessageLocationReport.output = [reports1/RSMR1;reports1/RSMR2; reports1/RSMR3; reports1/RSMR4; reports1/RSMR5; reports1/RSMR6; reports1/RSMR7; reports1/RSMR8]
+MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2; reports1/MMLR3; reports1/MMLR4; reports1/MMLR5; reports1/MMLR6; reports1/MMLR7; reports1/MMLR8]
+RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2; reports1/RISR3; reports1/RISR4; reports1/RISR5; reports1/RISR6; reports1/RISR7; reports1/RISR8]
+RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2; reports1/RDMR3; reports1/RDMR4; reports1/RDMR5; reports1/RDMR6; reports1/RDMR7; reports1/RDMR8]
+MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2; reports1/MDMR3; reports1/MDMR4; reports1/MDMR5; reports1/MDMR6; reports1/MDMR7; reports1/MDMR8]
+RepoProcessingMessageLocationReport.output = [reports1/RPrMR1; reports1/RPrMR2; reports1/RPrMR3; reports1/RPrMR4; reports1/RPrMR5; reports1/RPrMR6; reports1/RPrMR7; reports1/RPrMR8]
+RepoProcessedMessageLocationReport.output = [reports1/RPMR1; reports1/RPMR2; reports1/RPMR3; reports1/RPMR4; reports1/RPMR5; reports1/RPMR6; reports1/RPMR7; reports1/RPMR8]
+RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2; reports1/RAMR3; reports1/RAMR4; reports1/RAMR5; reports1/RAMR6; reports1/RAMR7; reports1/RAMR8]
+RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1; reports1/RUMR2; reports1/RUMR3; reports1/RUMR4; reports1/RUMR5; reports1/RUMR6; reports1/RUMR7; reports1/RUMR8]
 
-RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports1/RPBWR2;reports1/RPBWR3; reports1/RPBWR4; reports1/RPBWR5]
-RepoDepletedUnProcBWReport.output = [reports1/RUPBWR1;reports1/RUPBWR2;reports1/RUPBWR3; reports1/RUPBWR4; reports1/RUPBWR5]
-RepoDepletedStorageBWReport.output = [reports1/RSBWR1; reports1/RSBWR2; reports1/RSBWR3; reports1/RSBWR4; reports1/RSBWR5]
+RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports1/RPBWR2; reports1/RPBWR3; reports1/RPBWR4; reports1/RPBWR5; reports1/RPBWR6; reports1/RPBWR7; reports1/RPBWR8]
+RepoDepletedUnProcBWReport.output = [reports1/RUPBWR1;reports1/RUPBWR2; reports1/RUPBWR3; reports1/RUPBWR4; reports1/RUPBWR5; reports1/RUPBWR6; reports1/RUPBWR7; reports1/RUPBWR8]
+RepoDepletedStorageBWReport.output = [reports1/RSBWR1; reports1/RSBWR2; reports1/RSBWR3; reports1/RSBWR4; reports1/RSBWR5; reports1/RSBWR6; reports1/RSBWR7; reports1/RSBWR8]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -53,7 +53,7 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = [5M; 8M; 10M; 20M; 30M]
+procApp.depletionRate = [5M; 7M; 9M; 10M; 15M; 20M; 25M; 30M]
 procApp.passive = false
 procApp.coreNo = 8
 
