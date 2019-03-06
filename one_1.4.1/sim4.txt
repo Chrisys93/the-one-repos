@@ -20,8 +20,8 @@ RepoProcessedMessageLocationReport.output = [reports5/RPMR1;reports5/RPMR2;repor
 RepoAllMessagesLocationReport.output = [reports5/RAMR1;reports5/RAMR2;reports5/RAMR3; reports5/RAMR4; reports5/RAMR5; reports5/RAMR6; reports5/RAMR7; reports5/RAMR8; reports5/RAMR9; reports5/RAMR10; reports5/RAMR11;reports5/RAMR12;reports5/RAMR13; reports5/RAMR14; reports5/RAMR15]
 RepoUnprocessedMessagesLocationReport.output = [reports5/RUMR1;reports5/RUMR2;reports5/RUMR3; reports5/RUMR4; reports5/RUMR5; reports5/RUMR6; reports5/RUMR7; reports5/RUMR8; reports5/RUMR9; reports5/RUMR10; reports5/RUMR11; reports5/RUMR12; reports5/RUMR13; reports5/RUMR14; reports5/RUMR15]
 
-RepoDepletedProcBWReport.output = [reports5/RPBWR1;reports5/RPBWR2;reports5/RPBWR3; reports5/RPBWR4; reports5/RPBWR5]
-RepoDepletedUnProcBWReport.output = [reports5/RUPBWR1;reports5/RUPBWR2;reports5/RUPBWR3; reports5/RUPBWR4; reports5/RUPBWR5]
-RepoDepletedStorageBWReport.output = [reports5/RSBWR1; reports5/RSBWR2; reports5/RSBWR3; reports5/RSBWR4; reports5/RSBWR5]
+RepoDepletedProcBWReport.output = [reports5/RPBWR1;reports5/RPBWR2;reports5/RPBWR3; reports5/RPBWR4; reports5/RPBWR5; reports5/RPBWR6]
+RepoDepletedUnProcBWReport.output = [reports5/RUPBWR1;reports5/RUPBWR2;reports5/RUPBWR3; reports5/RUPBWR4; reports5/RUPBWR5; reports5/RUPBWR6]
+RepoDepletedStorageBWReport.output = [reports5/RSBWR1; reports5/RSBWR2; reports5/RSBWR3; reports5/RSBWR4; reports5/RSBWR5; reports5/RSBWR6]
 
 

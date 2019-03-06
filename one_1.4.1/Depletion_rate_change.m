@@ -47,6 +47,33 @@ RI5 = dlmread('reports1/RISR5', ' ', 0, 2);
 RP5 = dlmread('reports1/RPrMR5', ' ', 0, 2);
 RS5 = dlmread('reports1/RSMR5', ' ', 0, 2);
 
+M6 = dlmread('reports1/MDMR6', ' ', 0, 2);
+S6 = dlmread('reports1/RAMR6', ' ', 0, 2);
+UB6 = dlmread('reports1/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('reports1/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('reports1/RSBWR6', ' ', 0, 2);
+RI6 = dlmread('reports1/RISR6', ' ', 0, 2);
+RP6 = dlmread('reports1/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('reports1/RSMR6', ' ', 0, 2);
+
+M7 = dlmread('reports1/MDMR7', ' ', 0, 2);
+S7 = dlmread('reports1/RAMR7', ' ', 0, 2);
+PB7 = dlmread('reports1/RPBWR7', ' ', 0, 2);
+UB7 = dlmread('reports1/RUPBWR7', ' ', 0, 2);
+SB7 = dlmread('reports1/RSBWR7', ' ', 0, 2);
+RI7 = dlmread('reports1/RISR7', ' ', 0, 2);
+RP7 = dlmread('reports1/RPrMR7', ' ', 0, 2);
+RS7 = dlmread('reports1/RSMR7', ' ', 0, 2);
+
+M8 = dlmread('reports1/MDMR8', ' ', 0, 2);
+S8 = dlmread('reports1/RAMR8', ' ', 0, 2);
+PB8 = dlmread('reports1/RPBWR8', ' ', 0, 2);
+UB8 = dlmread('reports1/RUPBWR8', ' ', 0, 2);
+SB8 = dlmread('reports1/RSBWR8', ' ', 0, 2);
+RI8 = dlmread('reports1/RISR8', ' ', 0, 2);
+RP8 = dlmread('reports1/RPrMR8', ' ', 0, 2);
+RS8 = dlmread('reports1/RSMR8', ' ', 0, 2);
+
 % M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
 % S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);
 [r2, c2] = size(M1);
@@ -59,7 +86,7 @@ for i = 1:r2
 end
 maxval2 = max(maxstorM1);
 
-for inc = 5
+for inc = 8
     if inc == 1
         S = S1;
     end
@@ -79,18 +106,18 @@ for inc = 5
     if inc == 5
         S = S5;
     end
-%     
-%     if inc == 6
-%         S = S6;
-%     end
-%     
-%     if inc == 7
-%         S = S7;
-%     end
-%     
-%     if inc == 8
-%         S = S8;
-%     end
+    
+    if inc == 6
+        S = S6;
+    end
+    
+    if inc == 7
+        S = S7;
+    end
+    
+    if inc == 8
+        S = S8;
+    end
 %     
 %     if inc == 9
 %         S = S9;
@@ -237,6 +264,36 @@ for inc = 5
         end
     end
     
+    if inc == 6
+        maxstorS6 = maxstor;
+        fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            reposfillS6(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS6(repo);           
+        end
+%         fillerrbarS3 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
+    end
+    
+    if inc == 7
+        maxstorS7 = maxstor;
+        fillpercS7 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            upspeeds7(repo, :) = [mean(SB7(:, repo)), mean(UB7(:, repo)), mean(PB7(:, repo))];
+            reposfillS7(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS4(repo);           
+        end
+%         fillerrbarS4 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
+    end
+    
+    if inc == 8
+        maxstorS8 = maxstor;
+        fillpercS8 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            reposfillS8(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS8(repo);
+        end
+    end
+    
     fillerrbar(:, inc) = [sum(filled100(r3, :)), sum(filled50(r3, :)), sum(filled25(r3, :))];
 %     
 %     if inc == 6
@@ -257,43 +314,23 @@ for inc = 5
                 %fillerrbarS6];
 end
 
-
-
-% figure
-% hold on
-% errorbar([25,50,100], fillerrbar(:,2), fillerrbar(:,2)-fillerrbar(:,1), fillerrbar(:,3)-fillpercerrbar(:,2), '--k', 'LineWidth', 2);
-% errorbar([25,50,100], fillerrbarS2(:,2), fillerrbarS2(:,2)-fillerrbarS2(:,1), fillerrbarS2(:,3)-fillpercerrbarS2(:,2), '--b', 'LineWidth', 2);
-% errorbar([25,50,100], fillerrbarS3(:,2), fillerrbarS3(:,2)-fillerrbarS3(:,1), fillerrbarS3(:,3)-fillpercerrbarS3(:,2), '--y', 'LineWidth', 2);
-% errorbar([25,50,100], fillerrbarS4(:,2), fillerrbarS4(:,2)-fillerrbarS4(:,1), fillerrbarS4(:,3)-fillpercerrbarS4(:,2), '--m', 'LineWidth', 2);
-% errorbar([25,50,100], fillerrbarS5(:,2), fillerrbarS5(:,2)-fillerrbarS5(:,1), fillerrbarS5(:,3)-fillpercerrbarS5(:,2), '--r', 'LineWidth', 2);
-% errorbar([25,50,100], fillerrbarS6(:,2), fillerrbarS6(:,2)-fillerrbarS6(:,1), fillerrbarS6(:,3)-fillpercerrbarS6(:,2), '--g', 'LineWidth', 2);
-% title('Percentage of repositories filled up according to storage depletion ratio');
-% xlabel('Repo storage filled (%)');
-% ylabel('Quantity of repos filled (%)');
-% axis([0 125 0 100])
-% lgd = legend('2 MB/ 3 s', '2 MB/2 s', '2 MB/s', '1 MB/3 s', '1 MB/2 s', '1 MB/s');
-% hold off
-
-% figure
-% hold on
-% bar(reposfill);
-% title('Repositories storage used according to storage depletion ratio');
-% xlabel('Repo number');
-% ylabel('Repo storage used (MB)');
-% lgd = legend('2 MB/ 3 s', '2 MB/2 s', '2 MB/s', '1 MB/3 s', '1 MB/2 s', '1 MB/s');
-% hold off
-
 for repo = 1:c3
     upspeeds1(repo, :) = [mean(SB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
     upspeeds2(repo, :) = [mean(SB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
     upspeeds3(repo, :) = [mean(SB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
     upspeeds4(repo, :) = [mean(SB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];    
     upspeeds5(repo, :) = [mean(SB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
+    upspeeds6(repo, :) = [mean(SB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
+    upspeeds7(repo, :) = [mean(SB7(:, repo)), mean(UB7(:, repo)), mean(PB7(:, repo))];    
+    upspeeds8(repo, :) = [mean(SB8(:, repo)), mean(UB8(:, repo)), mean(PB8(:, repo))];
     inspeeds1(repo, :) = mean(RI1(:, repo));
     inspeeds2(repo, :) = mean(RI2(:, repo));
     inspeeds3(repo, :) = mean(RI3(:, repo));
     inspeeds4(repo, :) = mean(RI4(:, repo));    
     inspeeds5(repo, :) = mean(RI5(:, repo)); 
+    inspeeds6(repo, :) = mean(RI6(:, repo));
+    inspeeds7(repo, :) = mean(RI7(:, repo));    
+    inspeeds8(repo, :) = mean(RI8(:, repo));
 end
 
 figure
@@ -316,48 +353,48 @@ zlabel('Space used(MB)','fontsize',12)
 % ylabel('Time(s)')
 % zlabel('Messages')
 
-storage_29 = [S1(:, 29), S2(:, 29), S3(:, 29), S4(:, 29), S5(:, 29)];
+storage_29 = [S1(:, 29), S2(:, 29), S3(:, 29), S4(:, 29), S5(:, 29), S6(:, 29), S7(:, 29), S8(:, 29)];
 
 figure
 plot(storage_29);
 xlabel('Time (s)','fontsize',12) 
 ylabel('Total storage used (No. of messages)','fontsize',12)
-lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 lgd.FontSize = 12;
 
-mdeleted = [M1(10000, :)', M2(10000, :)', M3(10000, :)', M4(10000, :)', M5(10000, :)'];
+mdeleted = [M1(10000, :)', M2(10000, :)', M3(10000, :)', M4(10000, :)', M5(10000, :)', M6(10000, :)', M7(10000, :)', M8(10000, :)'];
 figure
 bar(80:634, mdeleted);
 title('No. messages deleted from mobile nodes','fontsize',16)
 xlabel('Change in total output BW (B)','fontsize',12) 
 ylabel('No. messages deleted','fontsize',12)
-lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 lgd.FontSize = 9;
 
-proc_upspeeds_29 = [PB1(:, 29), PB2(:, 29), PB3(:, 29), PB4(:, 29), PB5(:, 29)];
-uproc_upspeeds_29 = [UB1(:, 29), UB2(:, 29), UB3(:, 29), UB4(:, 29), UB5(:, 29)];
-static_upspeeds_29 = [SB1(:, 29), SB2(:, 29), SB3(:, 29), SB4(:, 29), SB5(:, 29)];
+proc_upspeeds_29 = [PB1(:, 29), PB2(:, 29), PB3(:, 29), PB4(:, 29), PB5(:, 29), PB6(:, 29), PB7(:, 29), PB8(:, 29)];
+uproc_upspeeds_29 = [UB1(:, 29), UB2(:, 29), UB3(:, 29), UB4(:, 29), UB5(:, 29), UB6(:, 29), UB7(:, 29), UB8(:, 29)];
+static_upspeeds_29 = [SB1(:, 29), SB2(:, 29), SB3(:, 29), SB4(:, 29), SB5(:, 29), SB6(:, 29), SB7(:, 29), SB8(:, 29)];
 figure
 % subplot(3,1,1);
 % plot(uproc_upspeeds_29);
 % title('Upload speeds for cloud offloading','fontsize',16)
 % xlabel('Time (s)','fontsize',12) 
 % ylabel('Bandwidth used (B)','fontsize',12)
-% lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+% lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 % lgd.FontSize = 9;
 subplot(2,1,1);
 plot(proc_upspeeds_29);
 title('Upload speeds for processed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 lgd.FontSize = 9;
 subplot(2,1,2);
 plot(static_upspeeds_29);
 title('Upload speeds for unprocessed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('5 MB/s', '8 MB/s', '10 MB/s', '20 MB/s', '30 MB/s');
+lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 lgd.FontSize = 9;
 
 % figure
@@ -379,16 +416,19 @@ upspeeds1_29 = [mean(SB1(:, 29)), mean(UB1(:, 29)), mean(PB1(:, 29));
                 mean(SB2(:, 29)), mean(UB2(:, 29)), mean(PB2(:, 29)); 
                 mean(SB3(:, 29)), mean(UB3(:, 29)), mean(PB3(:, 29)); 
                 mean(SB4(:, 29)), mean(UB4(:, 29)), mean(PB4(:, 29)); 
-                mean(SB5(:, 29)), mean(UB5(:, 29)), mean(PB5(:, 29))];
+                mean(SB5(:, 29)), mean(UB5(:, 29)), mean(PB5(:, 29)); 
+                mean(SB6(:, 29)), mean(UB6(:, 29)), mean(PB6(:, 29)); 
+                mean(SB7(:, 29)), mean(UB7(:, 29)), mean(PB7(:, 29)); 
+                mean(SB8(:, 29)), mean(UB8(:, 29)), mean(PB8(:, 29))];
 subplot(1,2,1);
-bar([5, 8, 10, 20, 30], upspeeds1_29, 'stacked');
+bar([5, 7, 9, 10, 15, 20, 25, 30], upspeeds1_29, 'stacked');
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
 lgd.FontSize = 9;
 xlabel('Change in total output BW (MB)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
-inspeeds1_29 = [mean(RI1(:, 29)), mean(RI2(:, 29)), mean(RI3(:, 29)), mean(RI4(:, 29)), mean(RI5(:, 29))];
+inspeeds1_29 = [mean(RI1(:, 29)), mean(RI2(:, 29)), mean(RI3(:, 29)), mean(RI4(:, 29)), mean(RI5(:, 29)), mean(RI6(:, 29)), mean(RI7(:, 29)), mean(RI8(:, 29))];
 subplot(1,2,2);
-bar([5, 8, 10, 20, 30], inspeeds1_29);
+bar([5, 7, 9, 10, 15, 20, 25, 30], inspeeds1_29);
 xlabel('Change in total output BW (B)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 
@@ -404,9 +444,12 @@ storages_29 = [mean(RS1(:, 29)), mean(RP1(:, 29));
                 mean(RS2(:, 29)), mean(RP2(:, 29)); 
                 mean(RS3(:, 29)), mean(RP3(:, 29)); 
                 mean(RS4(:, 29)), mean(RP4(:, 29)); 
-                mean(RS5(:, 29)), mean(RP5(:, 29))];
+                mean(RS5(:, 29)), mean(RP5(:, 29)); 
+                mean(RS6(:, 29)), mean(RP6(:, 29)); 
+                mean(RS7(:, 29)), mean(RP7(:, 29)); 
+                mean(RS8(:, 29)), mean(RP8(:, 29))];
 figure
-bar([5, 8, 10, 20, 30], storages_29, 'stacked');
+bar([5, 7, 9, 10, 15, 20, 25, 30], storages_29, 'stacked');
 lgd = legend('non-processing message storage', 'processing message storage');
 lgd.FontSize = 12;
 xlabel('Change in total output BW (B)','fontsize',12)
@@ -456,6 +499,9 @@ upspeeds2_total = upspeeds2(:, 1)' + upspeeds2(:, 2)' + upspeeds2(:, 3)';
 upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
 upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
+upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
+upspeeds7_total = upspeeds7(:, 1)' + upspeeds7(:, 2)' + upspeeds7(:, 3)';
+upspeeds8_total = upspeeds8(:, 1)' + upspeeds8(:, 2)' + upspeeds8(:, 3)';
 
 figure
 plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds4_store, 1:80, upspeeds4_cloud, 1:80, upspeeds4_proc);
@@ -473,7 +519,7 @@ xlabel('Repository number','fontsize',12)
 ylabel('Bandwidth used (B/s)','fontsize',12)
 
 yyaxis right
-plot(1:80, upspeeds1_total, '-+', 1:80, upspeeds2_total, '-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, '-x', 1:80, upspeeds5_total, ':o');
+plot(1:80, upspeeds1_total, '-+', 1:80, upspeeds2_total, '-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, '-x', 1:80, upspeeds5_total, ':o', 1:80, upspeeds6_total, '-*', 1:80, upspeeds7_total, '-x', 1:80, upspeeds8_total, ':o');
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 5MB/s', 'message upload for 8MB/s', 'message upload for 10MB/s', 'message upload for 20MB/s', 'message upload for 30MB/s');
 lgd1.FontSize = 9;
 ylabel('Bandwidth used (B/s)','fontsize',12)
