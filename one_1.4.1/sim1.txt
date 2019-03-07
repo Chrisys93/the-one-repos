@@ -16,7 +16,6 @@ MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2; reports1/MD
 RepoProcessingMessageLocationReport.output = [reports1/RPrMR1; reports1/RPrMR2; reports1/RPrMR3; reports1/RPrMR4; reports1/RPrMR5; reports1/RPrMR6; reports1/RPrMR7; reports1/RPrMR8]
 RepoProcessedMessageLocationReport.output = [reports1/RPMR1; reports1/RPMR2; reports1/RPMR3; reports1/RPMR4; reports1/RPMR5; reports1/RPMR6; reports1/RPMR7; reports1/RPMR8]
 RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2; reports1/RAMR3; reports1/RAMR4; reports1/RAMR5; reports1/RAMR6; reports1/RAMR7; reports1/RAMR8]
-RepoUnprocessedMessagesLocationReport.output = [reports1/RUMR1; reports1/RUMR2; reports1/RUMR3; reports1/RUMR4; reports1/RUMR5; reports1/RUMR6; reports1/RUMR7; reports1/RUMR8]
 
 RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports1/RPBWR2; reports1/RPBWR3; reports1/RPBWR4; reports1/RPBWR5; reports1/RPBWR6; reports1/RPBWR7; reports1/RPBWR8]
 RepoDepletedUnProcBWReport.output = [reports1/RUPBWR1;reports1/RUPBWR2; reports1/RUPBWR3; reports1/RUPBWR4; reports1/RUPBWR5; reports1/RUPBWR6; reports1/RUPBWR7; reports1/RUPBWR8]
