@@ -1,0 +1,530 @@
+% Make a function out of this, that takes the reports folder address and
+% the number of runs as variables;
+
+clear
+M1 = dlmread('reports3/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports3/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports3/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports3/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports3/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports3/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports3/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports3/RSMR1', ' ', 0, 2);
+
+M2 = dlmread('reports3/MDMR2', ' ', 0, 2);
+S2 = dlmread('reports3/RAMR2', ' ', 0, 2);
+UB2 = dlmread('reports3/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('reports3/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('reports3/RSBWR2', ' ', 0, 2);
+RI2 = dlmread('reports3/RISR2', ' ', 0, 2);
+RP2 = dlmread('reports3/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('reports3/RSMR2', ' ', 0, 2);
+
+M3 = dlmread('reports3/MDMR3', ' ', 0, 2);
+S3 = dlmread('reports3/RAMR3', ' ', 0, 2);
+PB3 = dlmread('reports3/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('reports3/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('reports3/RSBWR3', ' ', 0, 2);
+RI3 = dlmread('reports3/RISR3', ' ', 0, 2);
+RP3 = dlmread('reports3/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('reports3/RSMR3', ' ', 0, 2);
+
+M4 = dlmread('reports3/MDMR4', ' ', 0, 2);
+S4 = dlmread('reports3/RAMR4', ' ', 0, 2);
+PB4 = dlmread('reports3/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('reports3/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('reports3/RSBWR4', ' ', 0, 2);
+RI4 = dlmread('reports3/RISR4', ' ', 0, 2);
+RP4 = dlmread('reports3/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('reports3/RSMR4', ' ', 0, 2);
+
+M5 = dlmread('reports3/MDMR5', ' ', 0, 2);
+S5 = dlmread('reports3/RAMR5', ' ', 0, 2);
+UB5 = dlmread('reports3/RUPBWR5', ' ', 0, 2);
+PB5 = dlmread('reports3/RPBWR5', ' ', 0, 2);
+SB5 = dlmread('reports3/RSBWR5', ' ', 0, 2);
+RI5 = dlmread('reports3/RISR5', ' ', 0, 2);
+RP5 = dlmread('reports3/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('reports3/RSMR5', ' ', 0, 2);
+
+% M6 = dlmread('reports3/MDMR6', ' ', 0, 2);
+% S6 = dlmread('reports3/RAMR6', ' ', 0, 2);
+% PB6 = dlmread('reports3/RPBWR6', ' ', 0, 2);
+% UB6 = dlmread('reports3/RUPBWR6', ' ', 0, 2);
+% SB6 = dlmread('reports3/RSBWR6', ' ', 0, 2);
+% RI6 = dlmread('reports3/RISR6', ' ', 0, 2);
+% RP6 = dlmread('reports3/RPrMR6', ' ', 0, 2);
+% RS6 = dlmread('reports3/RSMR6', ' ', 0, 2);
+
+% R6 = dlmread('proc_sims/RDMR6', ' ', 0, 1);
+% M6 = dlmread('proc_sims/MDMR6', ' ', 0, 1);
+% S6 = dlmread('proc_sims/RSMLR6', ' ', 0, 2);
+[r21, c21] = size(M1);
+[r22, c22] = size(M2);
+[r31, c31] = size(S1);
+[r32, c32] = size(S2);
+maxstorM1 = zeros(c21, 0);
+maxstor = zeros(c31, 0);
+
+% for i = 1:r11
+%     maxstorR1(i) = max(R1(i, :));
+% end
+% maxval1 = max(maxstorR1);
+
+for i = 1:r21
+    maxstorM1(i) = max(M1(i, :));
+end
+maxval2 = max(maxstorM1);
+
+% for inc = 5
+%     if inc == 1
+%         S = S1;
+%     end
+%     
+%     if inc == 2
+%         S = S2;
+%     end
+%     
+%     if inc == 3
+%         S = S3;
+%     end
+%     
+%     if inc == 4
+%         S = S4;
+%     end
+%     
+%     if inc == 5
+%         S = S5;
+%     end
+%     
+% %     if inc == 6
+% %         S = S6;
+% %     end
+% %     
+% %     if inc == 7
+% %         S = S7;
+% %     end
+% %     
+% %     if inc == 8
+% %         S = S8;
+% %     end
+% %     
+% %     if inc == 9
+% %         S = S9;
+% %     end
+% %     
+% %     if inc == 10
+% %         S = S10;
+% %     end
+% %     
+% %     if inc == 11
+% %         S = S11;
+% %     end
+% %     
+% %     if inc == 12
+% %         S = S12;
+% %     end
+% %     
+% %     if inc == 13
+% %         S = S13;
+% %     end
+% %     
+% %     if inc == 14
+% %         S = S14;
+% %     end
+% %     
+% %     if inc == 15
+% %         S = S15;
+% %     end
+%     
+%     s = 10000;
+%     col = 1;
+%     for i = 1:r31
+%         maxstor(i) = max(S(i, :));
+%         if maxstor(i) >= 15000 && i < s
+%             c0 = 1;
+%             c50 = 1;
+%             for c = 1:c31
+%                 if S(i, c) >= 7500
+%                     fillperc50_100(c50) = S(i, c)/15000*100;
+%                     c50=c50+1;
+%                 else
+%                     fillperc0_50(c0) = S(i, c)/15000*100;
+%                     c0=c0+1;
+%                 end
+%             end
+%             figure
+%             bar(S(i, :));
+%             s = i; 
+%             %s = 1434 for 1000 cars
+%             %s = 1266 for 40 cars
+%         end
+% 
+%         c100 = 1;
+%         for c = 1:c31
+%             if S(i, c) >= 14000
+%                 fill100(c100) = 1;
+%             else
+%                 fill100(c100) = 0;
+%             end
+%             c100=c100+1;
+%         end
+%         filled100(i, :) = fill100;        
+%         fillperc100(col) = sum(fill100)/40*100;
+% 
+%         c50 = 1;
+%         for c = 1:c31
+%             if S(i, c) >= 7500
+%                 fill50(c50) = 1;
+%             else
+%                 fill50(c50) = 0;
+%             end
+%             c50=c50+1;
+%         end
+%         filled50(i, :) = fill50;
+%         fillperc50(col) = sum(fill50)/40*100;
+% 
+%         c25 = 1;
+%         for c = 1:c31
+%             if S(i, c) >= 4507
+%                 fill25(c25) = 1;
+%             else
+%                 fill25(c25) = 0;
+%             end
+%             c25=c25+1;
+%         end
+%         filled25(i, :) = fill25;
+%         fillperc25(col) = (sum(fill25))/40*100;
+%         col = col + 1;
+%     end
+% 
+%     maxval3 = max(maxstor);
+%     
+%     if inc == 1
+%         c3 = c31;
+%         r3 = r31;
+%         maxstorS1 = maxstor;
+%         fillpercS1 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         filled100S1 = filled100;
+%         filled50S1 = filled50;
+%         filled25S1 = filled25;
+%         for repo = 1:c3
+%             reposfillS1(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS1(repo);           
+%         end
+%         fillpercerrbarS1 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 2
+%         c3 = c32;
+%         r3 = r32;
+%         maxstorS2 = maxstor;
+%         fillpercS2 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS2(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS2(repo);           
+%         end
+%         fillpercerrbarS2 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 3
+%         c3 = c31;
+%         r3 = r31;
+%         maxstorS3 = maxstor;
+%         fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS3(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS3(repo);           
+%         end
+%         fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 4
+%         c3 = c31;
+%         r3 = r31;
+%         maxstorS1 = maxstor;
+%         fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS4(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS4(repo);           
+%         end
+%         fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 5
+%         c3 = c31;
+%         r3 = r31;
+%         maxstorS5 = maxstor;
+%         fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS5(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS5(repo);
+%         end
+%         fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+%     
+%     if inc == 6
+%         c3 = c31;
+%         r3 = r31;
+%         maxstorS6 = maxstor;
+%         fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+%         for repo = 1:c3
+%             reposfillS6(repo) = mean(S(:, repo));
+%             reposfill(repo, inc) = reposfillS6(repo);
+%         end
+%         fillpercerrbarS6 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
+%                             mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
+%                             mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
+%     end
+% %     
+% %     for repo = 1:c3
+% %         
+% %     end
+%                 
+% end
+
+
+% deleted_29 = [max(R1(:, 29)), max(R2(:, 29)), max(R3(:, 29)), max(R4(:, 29))];
+% 
+% figure
+% plot([1 2 3 4], deleted_29);
+
+mdeleted1 = [mean(M1(10800, 1:40)), mean(M1(10800, 41:840)), mean(M1(10800, 541:855));
+             mean(M2(10800, 1:40)), mean(M2(10800, 41:840)), mean(M2(10800, 541:855));
+             mean(M3(10800, 1:40)), mean(M3(10800, 41:840)), mean(M3(10800, 541:855));
+             mean(M4(10800, 1:40)), mean(M4(10800, 41:840)), mean(M4(10800, 541:855));
+             mean(M5(10800, 1:40)), mean(M5(10800, 41:840)), mean(M5(10800, 541:855))];
+% mdeleted2 = M2(10000, :);
+% mdeleted3 = M3(10000, :);
+% addr1 = 80:334;
+% addr2 = 80:634;
+% addr3 = 80:1134;
+
+figure
+% subplot(1,3,1);
+bar([40, 80, 100, 120, 144], mdeleted1);
+lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
+lgd.FontSize = 12;
+ylabel('Average no. of messages deleted per node','fontsize',12);
+xlabel('No. of cars in environment','fontsize',12);
+% subplot(1,3,2);
+% bar(addr2, mdeleted2);
+% title('500 cars in environment');
+% xlabel('Mobile node address');
+% subplot(1,3,3);
+% bar(addr3, mdeleted3);
+% title('1000 cars in environment');
+% xlabel('Mobile node address');
+
+for repo = 1:40
+    upspeeds1(repo, :) = [mean(SB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
+    inspeeds1(repo, :) = mean(RI1(:, repo));
+end
+
+for repo = 1:80
+    upspeeds2(repo, :) = [mean(SB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
+    inspeeds2(repo, :) = mean(RI2(:, repo));
+end
+
+for repo = 1:100
+    upspeeds3(repo, :) = [mean(SB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
+    inspeeds3(repo, :) = mean(RI3(:, repo));
+end
+
+for repo = 1:120
+    upspeeds4(repo, :) = [mean(SB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
+    inspeeds4(repo, :) = mean(RI4(:, repo));
+end
+
+for repo = 1:144   
+    upspeeds5(repo, :) = [mean(SB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
+    inspeeds5(repo, :) = mean(RI5(:, repo));
+end
+
+storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
+
+figure
+plot(storage_30);
+xlabel('Time (s)','fontsize',12) 
+ylabel('Total storage used (messages stored)','fontsize',12)
+lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+lgd.FontSize = 9;
+
+% storage = zeros(3, c31);
+% repos = 1:80;
+% for repo = 1:80
+% storage(:, repo) = [mean(S1(:, repo)); mean(S2(:, repo)); mean(S3(:, repo))];
+% end
+% 
+% figure
+% errorbar(repos,storage(2, :), storage(2, :)-storage(1, :), storage(3, :)-storage(2, :));
+% xlabel('Repo No.','fontsize',12) 
+% ylabel('Total storage used (messages stored)','fontsize',12)
+% lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+% lgd.FontSize = 9;
+
+
+% mdeleted = M3(10800, :)';
+% figure
+% bar(80:1134, mdeleted);
+% title('No. messages deleted from mobile nodes','fontsize',16)
+% xlabel('Node address','fontsize',12) 
+% ylabel('No. messages deleted','fontsize',12)
+
+proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
+uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
+static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
+figure
+% subplot(3,1,1);
+% plot(uproc_upspeeds_30);
+% title('Upload speeds for cloud offloading','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+% lgd.FontSize = 9;
+subplot(2,1,1);
+plot(proc_upspeeds_30);
+title('Upload speeds for processed messages','fontsize',16)
+xlabel('Time (s)','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+lgd.FontSize = 9;
+subplot(2,1,2);
+plot(static_upspeeds_30);
+title('Upload speeds for unprocessed messages','fontsize',16)
+xlabel('Time (s)','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+lgd.FontSize = 9;
+
+% figure
+% upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
+% subplot(1,2,1);
+% bar(upspeeds1_30, 'stacked');
+% lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+% lgd.FontSize = 9;
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth used (B)','fontsize',12)
+% inspeeds1_30 = RI3(:, 30);
+% subplot(1,2,2);
+% bar(inspeeds1_30);
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth of input (B)','fontsize',12)
+
+figure
+upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
+                mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
+                mean(SB3(:, 30)), mean(UB3(:, 30)), mean(PB3(:, 30));
+                mean(SB4(:, 30)), mean(UB4(:, 30)), mean(PB4(:, 30));
+                mean(SB5(:, 30)), mean(UB5(:, 30)), mean(PB5(:, 30)); 
+                mean(SB6(:, 30)), mean(UB6(:, 30)), mean(PB6(:, 30))];
+subplot(1,2,1);
+bar([200, 300, 400, 500, 800, 1000], upspeeds1_30, 'stacked');
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+lgd.FontSize = 10;
+xlabel('No. of cars in simulation','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30)), mean(RI6(:, 30))];
+subplot(1,2,2);
+bar([200, 300, 400, 500, 800, 1000], inspeeds1_30);
+xlabel('No. of cars in simulation','fontsize',12) 
+ylabel('Bandwidth of input (B)','fontsize',12)
+
+storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
+                mean(RS2(:, 30)), mean(RP2(:, 30)); 
+                mean(RS3(:, 30)), mean(RP3(:, 30));
+                mean(RS4(:, 30)), mean(RP4(:, 30));
+                mean(RS5(:, 30)), mean(RP5(:, 30)); 
+                mean(RS6(:, 30)), mean(RP6(:, 30))];
+figure
+bar([200, 300, 400, 500, 800, 1000], storages_30, 'stacked');
+lgd = legend('non-processing message storage', 'processing message storage');
+lgd.FontSize = 9;
+xlabel('No. of cars in simulation','fontsize',12)
+ylabel('Total storage used (B)','fontsize',12)
+
+upspeeds1_store = upspeeds1(:, 1)';
+upspeeds1_cloud = upspeeds1(:, 2)';
+upspeeds1_proc = upspeeds1(:, 3)';
+upspeeds6_store = upspeeds6(:, 1)';
+upspeeds6_cloud = upspeeds6(:, 2)';
+upspeeds6_proc = upspeeds6(:, 3)';
+upspeeds1_total = upspeeds1(:, 1)' + upspeeds1(:, 2)' + upspeeds1(:, 3)';
+upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
+upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
+upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
+
+figure
+plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
+title('Processing threads','fontsize',16)
+lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
+lgd.FontSize = 9;
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+
+
+figure
+
+subplot(1,2,1);
+yyaxis left
+barhandle=bar(upspeeds1(:, 1:2), 'stacked');
+set(barhandle(1),'FaceColor',[1,0,0])
+set(barhandle(2),'FaceColor',[0,1,0])
+title('(a) Number of cars vs. up-link BW','fontsize',14)
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+ylim([0 5*10^6]);
+xlim([17 57]);
+
+yyaxis right
+plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds3_total, 'm-o', 1:80, upspeeds4_total, 'g-X', 1:80, upspeeds6_total, '-*');
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000');
+lgd1.FontSize = 9;
+ylabel('Bandwidth used (B/s)','fontsize',12)
+xlim([17 57]);
+ylim([0 5*10^6]);
+
+subplot(1,2,2);
+inspeeds = [inspeeds1, inspeeds3, inspeeds6];
+bar_handle = bar(inspeeds);
+set(bar_handle(1),'FaceColor',[1,0,0])
+set(bar_handle(2),'FaceColor',[0,1,0])
+set(bar_handle(3),'FaceColor',[0,0,1])
+title('(b) Input Bandwidths','fontsize',14)
+lgd = legend('200 cars', '500 cars', '1000 cars');
+lgd.FontSize = 9;
+xlabel('Repository number','fontsize',12) 
+ylabel('Bandwidth used (B/s)','fontsize',12)
+xlim([17 57]);
+
+repos = 1:80;
+figure
+hBarGrp=bar(abs(randn(320,2)),'grouped','stacked');  % 160 bars, group by 2
+off=hBarGrp(2).XOffset - 0.03;             % hidden property, offset from nominal x
+hBar1=bar(repos-off+0.03,upspeeds1,0.25,'stacked'); % draw first stacked as wanted
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
+lgd1.FontSize = 9;
+
+hold all                            % hold axes, don't reset color order position
+hBar2=bar(repos+off-0.03,[nan(size(inspeeds1)) inspeeds1],0.30, 'r'); % second with place holder
+xlim([17 57]);
+
+hold all                            % hold axes, don't reset color order position
+hBar3=bar(repos+2*off-0.03,[nan(size(inspeeds3)) inspeeds3],0.30, 'g'); % second with place holder
+xlim([17 57]);
+
+hold all                            % hold axes, don't reset color order position
+hBar4=bar(repos+3*off-0.03,[nan(size(inspeeds6)) inspeeds6],0.30, 'b'); % second with place holder
+xlim([17 57]);
+
+

@@ -11,6 +11,8 @@ SB1 = dlmread('reports6/RSBWR1', ' ', 0, 2);
 RI1 = dlmread('reports6/RISR1', ' ', 0, 2);
 RP1 = dlmread('reports6/RPrMR1', ' ', 0, 2);
 RS1 = dlmread('reports6/RSMR1', ' ', 0, 2);
+RC1 = dlmread('reports6/RPMR1', ' ', 0, 2);
+
 
 M2 = dlmread('reports6/MDMR2', ' ', 0, 2);
 S2 = dlmread('reports6/RAMR2', ' ', 0, 2);
@@ -20,6 +22,8 @@ SB2 = dlmread('reports6/RSBWR2', ' ', 0, 2);
 RI2 = dlmread('reports6/RISR2', ' ', 0, 2);
 RP2 = dlmread('reports6/RPrMR2', ' ', 0, 2);
 RS2 = dlmread('reports6/RSMR2', ' ', 0, 2);
+RC2 = dlmread('reports6/RPMR2', ' ', 0, 2);
+
 
 M3 = dlmread('reports6/MDMR3', ' ', 0, 2);
 S3 = dlmread('reports6/RAMR3', ' ', 0, 2);
@@ -29,6 +33,8 @@ SB3 = dlmread('reports6/RSBWR3', ' ', 0, 2);
 RI3 = dlmread('reports6/RISR3', ' ', 0, 2);
 RP3 = dlmread('reports6/RPrMR3', ' ', 0, 2);
 RS3 = dlmread('reports6/RSMR3', ' ', 0, 2);
+RC3 = dlmread('reports6/RPMR3', ' ', 0, 2);
+
 
 M4 = dlmread('reports6/MDMR4', ' ', 0, 2);
 S4 = dlmread('reports6/RAMR4', ' ', 0, 2);
@@ -38,6 +44,8 @@ SB4 = dlmread('reports6/RSBWR4', ' ', 0, 2);
 RI4 = dlmread('reports6/RISR4', ' ', 0, 2);
 RP4 = dlmread('reports6/RPrMR4', ' ', 0, 2);
 RS4 = dlmread('reports6/RSMR4', ' ', 0, 2);
+RC4 = dlmread('reports6/RPMR4', ' ', 0, 2);
+
 
 M5 = dlmread('reports6/MDMR5', ' ', 0, 2);
 S5 = dlmread('reports6/RAMR5', ' ', 0, 2);
@@ -47,6 +55,8 @@ SB5 = dlmread('reports6/RSBWR5', ' ', 0, 2);
 RI5 = dlmread('reports6/RISR5', ' ', 0, 2);
 RP5 = dlmread('reports6/RPrMR5', ' ', 0, 2);
 RS5 = dlmread('reports6/RSMR5', ' ', 0, 2);
+RC5 = dlmread('reports6/RPMR5', ' ', 0, 2);
+
 
 M6 = dlmread('reports6/MDMR6', ' ', 0, 2);
 S6 = dlmread('reports6/RAMR6', ' ', 0, 2);
@@ -56,6 +66,7 @@ SB6 = dlmread('reports6/RSBWR6', ' ', 0, 2);
 RI6 = dlmread('reports6/RISR6', ' ', 0, 2);
 RP6 = dlmread('reports6/RPrMR6', ' ', 0, 2);
 RS6 = dlmread('reports6/RSMR6', ' ', 0, 2);
+RC6 = dlmread('reports6/RPMR6', ' ', 0, 2);
 
 % M5 = dlmread('reports6/MDMR5', ' ', 0, 2);
 % S5 = dlmread('reports6/RAMR5', ' ', 0, 2);
@@ -284,6 +295,13 @@ xlabel('Repo Number','fontsize',12)
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 
+figure
+stem3(RC6, ':.');
+title('3D Stem plot of Repos Cache Usage','fontsize',16)
+xlabel('Repo Number','fontsize',12) 
+ylabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
+
 storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30)];
 
 figure
@@ -430,7 +448,7 @@ upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
 upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
 figure
-plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds4_store, 1:80, upspeeds4_cloud, 1:80, upspeeds4_proc);
+plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
 title('Processing threads','fontsize',16)
 lgd =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'processed message upload for 2', 'non-processing message upload for 16', 'cloud offloading upload for 16', 'processed message upload for 16');
 lgd.FontSize = 9;
@@ -442,11 +460,14 @@ figure
 
 % subplot(2,1,1);
 yyaxis left
-bar(upspeeds1, 'stacked');
+bar_handle = bar(upspeeds1, 'stacked');
 title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
 xlim([17 57]);
+set(bar_handle(1),'FaceColor',[0,0.5,1])
+set(bar_handle(2),'FaceColor',[0,1,0])
+set(bar_handle(3),'FaceColor',[0,1,0.5])
 
 yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x');

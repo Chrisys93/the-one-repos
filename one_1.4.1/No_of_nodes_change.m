@@ -503,6 +503,7 @@ upspeeds6_cloud = upspeeds6(:, 2)';
 upspeeds6_proc = upspeeds6(:, 3)';
 upspeeds1_total = upspeeds1(:, 1)' + upspeeds1(:, 2)' + upspeeds1(:, 3)';
 upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
+upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
 figure
@@ -518,7 +519,9 @@ figure
 
 subplot(1,2,1);
 yyaxis left
-bar(upspeeds1, 'stacked');
+barhandle=bar(upspeeds1(:, 1:2), 'stacked');
+set(barhandle(1),'FaceColor',[1,0,0])
+set(barhandle(2),'FaceColor',[0,1,0])
 title('(a) Number of cars vs. up-link BW','fontsize',14)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
@@ -526,8 +529,8 @@ ylim([0 5*10^6]);
 xlim([17 57]);
 
 yyaxis right
-plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds3_total, 'm-o', 1:80, upspeeds6_total, '-*');
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
+plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds3_total, 'm-o', 1:80, upspeeds4_total, 'g-X', 1:80, upspeeds6_total, '-*');
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000');
 lgd1.FontSize = 9;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 xlim([17 57]);
