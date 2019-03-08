@@ -280,12 +280,12 @@ for repo = 1:c3
     inspeeds5(repo, :) = mean(RI5(:, repo));
 end
 
-figure
-stem3(S4, ':.');
-title('3D Stem plot of Repos Storage Usage','fontsize',16)
-xlabel('Repo Number','fontsize',12) 
-ylabel('Time(s)','fontsize',12)
-zlabel('Space used(B)','fontsize',12)
+% figure
+% stem3(S4, ':.');
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% xlabel('Repo Number','fontsize',12) 
+% ylabel('Time(s)','fontsize',12)
+% zlabel('Space used(B)','fontsize',12)
 
 figure
 stem3(RC5, ':.');
@@ -295,21 +295,21 @@ ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 
 
-storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
+% storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
 
-figure
-plot(storage_30);
-xlabel('Time (s)','fontsize',12) 
-ylabel('Total storage used (messages stored)','fontsize',12)
-lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
-lgd.FontSize = 9;
+% figure
+% plot(storage_30);
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Total storage used (messages stored)','fontsize',12)
+% lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
+% lgd.FontSize = 9;
 
-mdeleted = M1(10000, :)';
-figure
-bar(80:634, mdeleted);
-title('No. messages deleted from mobile nodes','fontsize',16)
-xlabel('Node address','fontsize',12) 
-ylabel('No. messages deleted','fontsize',12)
+% mdeleted = M1(10000, :)';
+% figure
+% bar(80:634, mdeleted);
+% title('No. messages deleted from mobile nodes','fontsize',16)
+% xlabel('Node address','fontsize',12) 
+% ylabel('No. messages deleted','fontsize',12)
 
 proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30)];
 uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30)];
@@ -351,17 +351,17 @@ bar([1.2, 1.43, 1.66, 2, 2.5], inspeeds1_30);
 xlabel('Compression rate','fontsize',12) 
 ylabel('Bandwidth of input (B)','fontsize',12)
 
-storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
-                mean(RS2(:, 30)), mean(RP2(:, 30)); 
-                mean(RS3(:, 30)), mean(RP3(:, 30)); 
-                mean(RS4(:, 30)), mean(RP4(:, 30)); 
-                mean(RS5(:, 30)), mean(RP5(:, 30))];
-figure
-bar([1.2, 1.43, 1.66, 2, 2.5], storages_30, 'stacked');
-lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
-xlabel('Compression rate','fontsize',12)
-ylabel('Total storage used (B)','fontsize',12)
+% storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
+%                 mean(RS2(:, 30)), mean(RP2(:, 30)); 
+%                 mean(RS3(:, 30)), mean(RP3(:, 30)); 
+%                 mean(RS4(:, 30)), mean(RP4(:, 30)); 
+%                 mean(RS5(:, 30)), mean(RP5(:, 30))];
+% figure
+% bar([1.2, 1.43, 1.66, 2, 2.5], storages_30, 'stacked');
+% lgd = legend('non-processing message storage', 'processing message storage');
+% lgd.FontSize = 9;
+% xlabel('Compression rate','fontsize',12)
+% ylabel('Total storage used (B)','fontsize',12)
 
 upspeeds1_store = upspeeds1(:, 1)';
 upspeeds1_cloud = upspeeds1(:, 2)';
@@ -376,13 +376,13 @@ upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
 % upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
-figure
-plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds5_store, 1:80, upspeeds5_cloud, 1:80, upspeeds5_proc);
-title('Compression rates','fontsize',16)
-lgd =legend('non-processing message upload for 1.2', 'cloud offloading upload for 1.2', 'processed message upload for 1.2', 'non-processing message upload for 2.5', 'cloud offloading upload for 2.5', 'processed message upload for 2.5');
-lgd.FontSize = 9;
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
+% figure
+% plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds5_store, 1:80, upspeeds5_cloud, 1:80, upspeeds5_proc);
+% title('Compression rates','fontsize',16)
+% lgd =legend('non-processing message upload for 1.2', 'cloud offloading upload for 1.2', 'processed message upload for 1.2', 'non-processing message upload for 2.5', 'cloud offloading upload for 2.5', 'processed message upload for 2.5');
+% lgd.FontSize = 9;
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
 figure
