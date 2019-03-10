@@ -286,13 +286,13 @@ end
 % xlabel('Repo Number','fontsize',12) 
 % ylabel('Time(s)','fontsize',12)
 % zlabel('Space used(B)','fontsize',12)
-
-figure
-stem3(RC5, ':.');
-title('3D Stem plot of Repos Storage Usage','fontsize',16)
-xlabel('Repo Number','fontsize',12) 
-ylabel('Time(s)','fontsize',12)
-zlabel('Space used(B)','fontsize',12)
+% 
+% figure
+% stem3(RC5, ':.');
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% xlabel('Repo Number','fontsize',12) 
+% ylabel('Time(s)','fontsize',12)
+% zlabel('Space used(B)','fontsize',12)
 
 
 % storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
