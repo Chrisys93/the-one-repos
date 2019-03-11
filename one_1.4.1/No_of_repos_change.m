@@ -309,6 +309,9 @@ mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 541:
 % addr2 = 80:634;
 % addr3 = 80:1134;
 
+
+% Most important assessment in the simulations...maybe could create others
+% in the same way...? Also, try with plot instead...
 figure
 % subplot(1,3,1);
 bar([40, 80, 100, 120], mdeleted1);
@@ -350,14 +353,16 @@ end
 %     inspeeds5(repo, :) = mean(RI5(:, repo));
 % end
 
-storage_30 = [S1(1:10000, 30), S2(1:10000, 30), S3(1:10000, 30), S4(1:10000, 30)];
 
-figure
-plot(storage_30);
-xlabel('Time (s)','fontsize',12) 
-ylabel('Total storage used (messages stored)','fontsize',12)
-lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
-lgd.FontSize = 9;
+
+% storage_30 = [S1(1:10000, 30), S2(1:10000, 30), S3(1:10000, 30), S4(1:10000, 30)];
+% 
+% figure
+% plot(storage_30);
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Total storage used (messages stored)','fontsize',12)
+% lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
+% lgd.FontSize = 9;
 
 % storage = zeros(3, c31);
 % repos = 1:80;
@@ -380,10 +385,10 @@ lgd.FontSize = 9;
 % xlabel('Node address','fontsize',12) 
 % ylabel('No. messages deleted','fontsize',12)
 
-proc_upspeeds_30 = [PB1(1:10000, 30), PB2(1:10000, 30), PB3(1:10000, 30), PB4(1:10000, 30)];
-uproc_upspeeds_30 = [UB1(1:10000, 30), UB2(1:10000, 30), UB3(1:10000, 30), UB4(1:10000, 30)];
-static_upspeeds_30 = [SB1(1:10000, 30), SB2(1:10000, 30), SB3(1:10000, 30), SB4(1:10000, 30)];
-figure
+% proc_upspeeds_30 = [PB1(1:10000, 30), PB2(1:10000, 30), PB3(1:10000, 30), PB4(1:10000, 30)];
+% uproc_upspeeds_30 = [UB1(1:10000, 30), UB2(1:10000, 30), UB3(1:10000, 30), UB4(1:10000, 30)];
+% static_upspeeds_30 = [SB1(1:10000, 30), SB2(1:10000, 30), SB3(1:10000, 30), SB4(1:10000, 30)];
+% figure
 % subplot(3,1,1);
 % plot(uproc_upspeeds_30);
 % title('Upload speeds for cloud offloading','fontsize',16)
@@ -391,20 +396,20 @@ figure
 % ylabel('Bandwidth used (B)','fontsize',12)
 % lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
 % lgd.FontSize = 9;
-subplot(2,1,1);
-plot(proc_upspeeds_30);
-title('Upload speeds for processed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
-lgd.FontSize = 9;
-subplot(2,1,2);
-plot(static_upspeeds_30);
-title('Upload speeds for unprocessed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
-lgd.FontSize = 9;
+% subplot(2,1,1);
+% plot(proc_upspeeds_30);
+% title('Upload speeds for processed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
+% lgd.FontSize = 9;
+% subplot(2,1,2);
+% plot(static_upspeeds_30);
+% title('Upload speeds for unprocessed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('40 repos', '80 repos', '100 repos', '120 repos');
+% lgd.FontSize = 9;
 
 % figure
 % upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
@@ -420,6 +425,10 @@ lgd.FontSize = 9;
 % xlabel('Time (s)','fontsize',12)  
 % ylabel('Bandwidth of input (B)','fontsize',12)
 
+
+% Maybe could try an average over inspeeds (and upspeeds?) for the 
+% different scenarios instead? Could potentially look better, like in the
+% deleted mobile messages...
 figure
 upspeeds1_30 = [mean(SB1(1:10000, 30)), mean(UB1(1:10000, 30)), mean(PB1(1:10000, 30));
                 mean(SB2(1:10000, 30)), mean(UB2(1:10000, 30)), mean(PB2(1:10000, 30)); 
@@ -437,6 +446,10 @@ bar([40, 80, 100, 120], inspeeds1_30);
 xlabel('No. of cars in simulation','fontsize',12) 
 ylabel('Bandwidth of input (B)','fontsize',12)
 
+
+% Maybe could try an average over storages for the different scenarios
+% instead? Could potentially look better, like in the deleted mobile
+% messages...
 storages_30 = [mean(RS1(1:10000, 30)), mean(RP1(1:10000, 30));
                 mean(RS2(1:10000, 30)), mean(RP2(1:10000, 30)); 
                 mean(RS3(1:10000, 30)), mean(RP3(1:10000, 30));
@@ -448,58 +461,59 @@ lgd.FontSize = 9;
 xlabel('No. of cars in simulation','fontsize',12)
 ylabel('Total storage used (B)','fontsize',12)
 
-upspeeds1_store = upspeeds1(1:40, 1)';
-upspeeds1_cloud = upspeeds1(1:40, 2)';
-upspeeds1_proc = upspeeds1(1:40, 3)';
-upspeeds4_store = upspeeds4(1:40, 1)';
-upspeeds4_cloud = upspeeds4(1:40, 2)';
-upspeeds4_proc = upspeeds4(1:40, 3)';
-upspeeds1_total = upspeeds1(1:40, 1)' + upspeeds1(1:40, 2)' + upspeeds1(1:40, 3)';
-upspeeds2_total = upspeeds2(1:40, 1)' + upspeeds2(1:40, 2)' + upspeeds2(1:40, 3)';
-upspeeds3_total = upspeeds3(1:40, 1)' + upspeeds3(1:40, 2)' + upspeeds3(1:40, 3)';
-upspeeds4_total = upspeeds4(1:40, 1)' + upspeeds4(1:40, 2)' + upspeeds4(1:40, 3)';
+% upspeeds1_store = upspeeds1(1:40, 1)';
+% upspeeds1_cloud = upspeeds1(1:40, 2)';
+% upspeeds1_proc = upspeeds1(1:40, 3)';
+% upspeeds4_store = upspeeds4(1:40, 1)';
+% upspeeds4_cloud = upspeeds4(1:40, 2)';
+% upspeeds4_proc = upspeeds4(1:40, 3)';
+% upspeeds1_total = upspeeds1(1:40, 1)' + upspeeds1(1:40, 2)' + upspeeds1(1:40, 3)';
+% upspeeds2_total = upspeeds2(1:40, 1)' + upspeeds2(1:40, 2)' + upspeeds2(1:40, 3)';
+% upspeeds3_total = upspeeds3(1:40, 1)' + upspeeds3(1:40, 2)' + upspeeds3(1:40, 3)';
+% upspeeds4_total = upspeeds4(1:40, 1)' + upspeeds4(1:40, 2)' + upspeeds4(1:40, 3)';
+% 
+% 
+% figure
+% plot(1:40, upspeeds1_store, 1:40, upspeeds1_cloud, 1:40, upspeeds1_proc, 1:40, upspeeds4_store, 1:40, upspeeds4_cloud, 1:40, upspeeds4_proc);
+% title('Processing threads','fontsize',16)
+% lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
+% lgd.FontSize = 9;
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
 
-figure
-plot(1:40, upspeeds1_store, 1:40, upspeeds1_cloud, 1:40, upspeeds1_proc, 1:40, upspeeds4_store, 1:40, upspeeds4_cloud, 1:40, upspeeds4_proc);
-title('Processing threads','fontsize',16)
-lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
-lgd.FontSize = 9;
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
 
-
-figure
-
-subplot(1,2,1);
-yyaxis left
-barhandle=bar(upspeeds1(:, 1:2), 'stacked');
-set(barhandle(1),'FaceColor',[1,0,0])
-set(barhandle(2),'FaceColor',[0,1,0])
-title('(a) Number of cars vs. up-link BW','fontsize',14)
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
-ylim([0 5*10^6]);
-% xlim([17 57]);
-
-yyaxis right
-plot(1:40, upspeeds1_total, 'r-+', 1:40, upspeeds2_total, '-*', 1:40, upspeeds3_total, 'm-o', 1:40, upspeeds4_total, 'g-X');
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000');
-lgd1.FontSize = 9;
-ylabel('Bandwidth used (B/s)','fontsize',12)
-% xlim([17 57]);
-ylim([0 5*10^6]);
-
-subplot(1,2,2);
-inspeeds = [inspeeds1(1:40, :), inspeeds2(1:40, :), inspeeds4(1:40, :)];
-bar_handle = bar(inspeeds);
-set(bar_handle(1),'FaceColor',[1,0,0])
-set(bar_handle(2),'FaceColor',[0,1,0])
-set(bar_handle(3),'FaceColor',[0,0,1])
-title('(b) Input Bandwidths','fontsize',14)
-lgd = legend('40 repos', '80 repos', '120 repos');
-lgd.FontSize = 9;
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
+% figure
+% 
+% subplot(1,2,1);
+% yyaxis left
+% barhandle=bar(upspeeds1(:, 1:2), 'stacked');
+% set(barhandle(1),'FaceColor',[1,0,0])
+% set(barhandle(2),'FaceColor',[0,1,0])
+% title('(a) Number of cars vs. up-link BW','fontsize',14)
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
+% ylim([0 5*10^6]);
+% % xlim([17 57]);
+% 
+% yyaxis right
+% plot(1:40, upspeeds1_total, 'r-+', 1:40, upspeeds2_total, '-*', 1:40, upspeeds3_total, 'm-o', 1:40, upspeeds4_total, 'g-X');
+% lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000');
+% lgd1.FontSize = 9;
+% ylabel('Bandwidth used (B/s)','fontsize',12)
+% % xlim([17 57]);
+% ylim([0 5*10^6]);
+% 
+% subplot(1,2,2);
+% inspeeds = [inspeeds1(1:40, :), inspeeds2(1:40, :), inspeeds4(1:40, :)];
+% bar_handle = bar(inspeeds);
+% set(bar_handle(1),'FaceColor',[1,0,0])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,0,1])
+% title('(b) Input Bandwidths','fontsize',14)
+% lgd = legend('40 repos', '80 repos', '120 repos');
+% lgd.FontSize = 9;
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
 % xlim([17 57]);
 
 % repos = 1:80;

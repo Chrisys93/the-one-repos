@@ -311,27 +311,27 @@ end
 % xlabel('Node address','fontsize',12) 
 % ylabel('No. messages deleted','fontsize',12)
 
-proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30)];
-uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30)];
-static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30)];
-
-
-figure
-
-subplot(2,1,1);
-plot(proc_upspeeds_30);
-title('Upload speeds for processed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
-lgd.FontSize = 9;
-subplot(2,1,2);
-plot(static_upspeeds_30);
-title('Upload speeds for unprocessed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
-lgd.FontSize = 9;
+% proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30)];
+% uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30)];
+% static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30)];
+% 
+% 
+% figure
+% 
+% subplot(2,1,1);
+% plot(proc_upspeeds_30);
+% title('Upload speeds for processed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
+% lgd.FontSize = 9;
+% subplot(2,1,2);
+% plot(static_upspeeds_30);
+% title('Upload speeds for unprocessed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
+% lgd.FontSize = 9;
 
 figure
 upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
@@ -384,7 +384,8 @@ upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
 % xlabel('Repository number','fontsize',12) 
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
-
+% Most important part of these simulation scenarios, because the upspeed
+% varies with the compression ratio, but not with storage usage.
 figure
 
 % subplot(2,1,1);

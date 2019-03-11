@@ -362,6 +362,8 @@ mdeleted1 = [mean(M1(10800, 1:40)), mean(M1(10800, 41:240)), mean(M1(10800, 241:
 % addr2 = 80:634;
 % addr3 = 80:1134;
 
+% Main output of this assessment (and these scenarios. Maybe modify to
+% present better...? Either a line plot, or...associate with smth else?
 figure
 % subplot(1,3,1);
 bar([200, 300, 400, 500, 800, 1000], mdeleted1);
@@ -393,6 +395,8 @@ for repo = 1:c3
     inspeeds6(repo, :) = mean(RI6(:, repo));
 end
 
+
+% Need to check this one.
 storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
 
 figure
@@ -423,6 +427,9 @@ lgd.FontSize = 9;
 % xlabel('Node address','fontsize',12) 
 % ylabel('No. messages deleted','fontsize',12)
 
+
+%These shouldn't be influenced too much, so might not be VERY important,
+%but nevertheless, might be at least marginally, so worth looking at/
 proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
 uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
 static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
@@ -449,20 +456,24 @@ ylabel('Bandwidth used (B)','fontsize',12)
 lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
 lgd.FontSize = 9;
 
-% figure
-% upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
-% subplot(1,2,1);
-% bar(upspeeds1_30, 'stacked');
-% lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
-% lgd.FontSize = 9;
-% xlabel('Time (s)','fontsize',12)  
-% ylabel('Bandwidth used (B)','fontsize',12)
-% inspeeds1_30 = RI3(:, 30);
-% subplot(1,2,2);
-% bar(inspeeds1_30);
-% xlabel('Time (s)','fontsize',12)  
-% ylabel('Bandwidth of input (B)','fontsize',12)
 
+% Check this.
+figure
+upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
+subplot(1,2,1);
+bar(upspeeds1_30, 'stacked');
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+lgd.FontSize = 9;
+xlabel('Time (s)','fontsize',12)  
+ylabel('Bandwidth used (B)','fontsize',12)
+inspeeds1_30 = RI3(:, 30);
+subplot(1,2,2);
+bar(inspeeds1_30);
+xlabel('Time (s)','fontsize',12)  
+ylabel('Bandwidth of input (B)','fontsize',12)
+
+
+% Worth checking
 figure
 upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
                 mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
@@ -482,6 +493,8 @@ bar([200, 300, 400, 500, 800, 1000], inspeeds1_30);
 xlabel('No. of cars in simulation','fontsize',12) 
 ylabel('Bandwidth of input (B)','fontsize',12)
 
+
+% These should be quite impacted.
 storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
                 mean(RS2(:, 30)), mean(RP2(:, 30)); 
                 mean(RS3(:, 30)), mean(RP3(:, 30));
@@ -495,6 +508,7 @@ lgd.FontSize = 9;
 xlabel('No. of cars in simulation','fontsize',12)
 ylabel('Total storage used (B)','fontsize',12)
 
+
 upspeeds1_store = upspeeds1(:, 1)';
 upspeeds1_cloud = upspeeds1(:, 2)';
 upspeeds1_proc = upspeeds1(:, 3)';
@@ -506,6 +520,8 @@ upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
 upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
+
+%This one might not be THAT important, but let's see...
 figure
 plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
 title('Processing threads','fontsize',16)
@@ -515,8 +531,8 @@ xlabel('Repository number','fontsize',12)
 ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
+% Important! See how it may be compressed!
 figure
-
 subplot(1,2,1);
 yyaxis left
 barhandle=bar(upspeeds1(:, 1:2), 'stacked');

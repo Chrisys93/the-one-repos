@@ -293,8 +293,12 @@ end
 %interesting to see the evolution, use of storage and their stability.
 %(check which repos should be monitored mainly by doing different stem
 %plots for the different simulation scenarios)
+
+%Repos:
+%
+%change mostly.
 figure
-stem3(S4, ':.');
+stem3(S1, ':.');
 title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
