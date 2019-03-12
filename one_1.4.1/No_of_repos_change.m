@@ -312,9 +312,10 @@ mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 541:
 
 % Most important assessment in the simulations...maybe could create others
 % in the same way...? Also, try with plot instead...
+% Maybe try and integrate (average) storage with this, as well?
 figure
 % subplot(1,3,1);
-bar([40, 80, 100, 120], mdeleted1);
+plot([40, 80, 100, 120], mdeleted1);
 lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
 lgd.FontSize = 12;
 ylabel('Average no. of messages deleted per node','fontsize',12);

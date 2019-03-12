@@ -334,7 +334,7 @@ for repo = 1:c3
 end
 
 figure
-stem3(S1, ':.');
+stem3(S5, ':.');
 title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
@@ -411,6 +411,9 @@ lgd.FontSize = 9;
 % xlabel('Time (s)','fontsize',12) 
 % ylabel('Bandwidth used (B)','fontsize',12)
 
+
+% Maybe show how the change in up-link speeds influences
+% mostly-storage-based repositories and their overflowing here...
 figure
 upspeeds1_29 = [mean(SB1(:, 29)), mean(UB1(:, 29)), mean(PB1(:, 29));
                 mean(SB2(:, 29)), mean(UB2(:, 29)), mean(PB2(:, 29)); 

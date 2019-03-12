@@ -65,6 +65,7 @@ RS6 = dlmread('reports2/RSMR6', ' ', 0, 2);
 [r32, c32] = size(S2);
 maxstorM1 = zeros(c21, 0);
 maxstor = zeros(c31, 0);
+c3 = c32;
 
 % for i = 1:r11
 %     maxstorR1(i) = max(R1(i, :));
@@ -76,238 +77,6 @@ for i = 1:r21
 end
 maxval2 = max(maxstorM1);
 
-for inc = 6
-    if inc == 1
-        S = S1;
-    end
-    
-    if inc == 2
-        S = S2;
-    end
-    
-    if inc == 3
-        S = S3;
-    end
-    
-    if inc == 4
-        S = S4;
-    end
-    
-    if inc == 5
-        S = S5;
-    end
-    
-    if inc == 6
-        S = S6;
-    end
-%     
-%     if inc == 7
-%         S = S7;
-%     end
-%     
-%     if inc == 8
-%         S = S8;
-%     end
-%     
-%     if inc == 9
-%         S = S9;
-%     end
-%     
-%     if inc == 10
-%         S = S10;
-%     end
-%     
-%     if inc == 11
-%         S = S11;
-%     end
-%     
-%     if inc == 12
-%         S = S12;
-%     end
-%     
-%     if inc == 13
-%         S = S13;
-%     end
-%     
-%     if inc == 14
-%         S = S14;
-%     end
-%     
-%     if inc == 15
-%         S = S15;
-%     end
-    
-    s = 10000;
-    col = 1;
-    for i = 1:r31
-        maxstor(i) = max(S(i, :));
-        if maxstor(i) >= 15000 && i < s
-            c0 = 1;
-            c50 = 1;
-            for c = 1:c31
-                if S(i, c) >= 7500
-                    fillperc50_100(c50) = S(i, c)/15000*100;
-                    c50=c50+1;
-                else
-                    fillperc0_50(c0) = S(i, c)/15000*100;
-                    c0=c0+1;
-                end
-            end
-            figure
-            bar(S(i, :));
-            s = i; 
-            %s = 1434 for 1000 cars
-            %s = 1266 for 40 cars
-        end
-
-        c100 = 1;
-        for c = 1:c31
-            if S(i, c) >= 14000
-                fill100(c100) = 1;
-            else
-                fill100(c100) = 0;
-            end
-            c100=c100+1;
-        end
-        filled100(i, :) = fill100;        
-        fillperc100(col) = sum(fill100)/40*100;
-
-        c50 = 1;
-        for c = 1:c31
-            if S(i, c) >= 7500
-                fill50(c50) = 1;
-            else
-                fill50(c50) = 0;
-            end
-            c50=c50+1;
-        end
-        filled50(i, :) = fill50;
-        fillperc50(col) = sum(fill50)/40*100;
-
-        c25 = 1;
-        for c = 1:c31
-            if S(i, c) >= 4507
-                fill25(c25) = 1;
-            else
-                fill25(c25) = 0;
-            end
-            c25=c25+1;
-        end
-        filled25(i, :) = fill25;
-        fillperc25(col) = (sum(fill25))/40*100;
-        col = col + 1;
-    end
-
-    maxval3 = max(maxstor);
-    
-    if inc == 1
-        c3 = c31;
-        r3 = r31;
-        maxstorS1 = maxstor;
-        fillpercS1 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        filled100S1 = filled100;
-        filled50S1 = filled50;
-        filled25S1 = filled25;
-        for repo = 1:c3
-            reposfillS1(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS1(repo);           
-        end
-        fillpercerrbarS1 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 2
-        c3 = c32;
-        r3 = r32;
-        maxstorS2 = maxstor;
-        fillpercS2 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS2(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS2(repo);           
-        end
-        fillpercerrbarS2 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 3
-        c3 = c31;
-        r3 = r31;
-        maxstorS3 = maxstor;
-        fillpercS3 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS3(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS3(repo);           
-        end
-        fillpercerrbarS3 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 4
-        c3 = c31;
-        r3 = r31;
-        maxstorS1 = maxstor;
-        fillpercS4 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS4(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS4(repo);           
-        end
-        fillpercerrbarS4 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 5
-        c3 = c31;
-        r3 = r31;
-        maxstorS5 = maxstor;
-        fillpercS5 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS5(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS5(repo);
-        end
-        fillpercerrbarS5 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-    
-    if inc == 6
-        c3 = c31;
-        r3 = r31;
-        maxstorS6 = maxstor;
-        fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-        for repo = 1:c3
-            reposfillS6(repo) = mean(S(:, repo));
-            reposfill(repo, inc) = reposfillS6(repo);
-        end
-        fillpercerrbarS6 = [mode(fillperc25(:)), mean(fillperc25(:)), max(fillperc25(:)); ...
-                            mode(fillperc50(:)), mean(fillperc50(:)), max(fillperc50(:)); ...
-                            mode(fillperc100(:)), mean(fillperc100(:)), max(fillperc100(:))];
-    end
-%     
-%     for repo = 1:c3
-%         
-%     end
-                
-end
-
-% figure
-% hold on
-% errorbar([25,50,100], fillpercerrbarS1(:,2), fillpercerrbarS1(:,2)-fillpercerrbarS1(:,1), fillpercerrbarS1(:,3)-fillpercerrbarS1(:,2), '--k', 'LineWidth', 2);
-% errorbar([25,50,100], fillpercerrbarS2(:,2), fillpercerrbarS2(:,2)-fillpercerrbarS2(:,1), fillpercerrbarS2(:,3)-fillpercerrbarS2(:,2), '--b', 'LineWidth', 2);
-% errorbar([25,50,100], fillpercerrbarS3(:,2), fillpercerrbarS3(:,2)-fillpercerrbarS3(:,1), fillpercerrbarS3(:,3)-fillpercerrbarS3(:,2), '--y', 'LineWidth', 2);
-% errorbar([25,50,100], fillpercerrbarS4(:,2), fillpercerrbarS4(:,2)-fillpercerrbarS4(:,1), fillpercerrbarS4(:,3)-fillpercerrbarS4(:,2), '--m', 'LineWidth', 2);
-% errorbar([25,50,100], fillpercerrbarS5(:,2), fillpercerrbarS5(:,2)-fillpercerrbarS5(:,1), fillpercerrbarS5(:,3)-fillpercerrbarS5(:,2), '--r', 'LineWidth', 2);
-% errorbar([25,50,100], fillpercerrbarS6(:,2), fillpercerrbarS6(:,2)-fillpercerrbarS6(:,1), fillpercerrbarS6(:,3)-fillpercerrbarS6(:,2), '--g', 'LineWidth', 2);
-% title('Percentage of repositories filled up according to storage depletion ratio');
-% xlabel('Repo storage filled (%)');
-% ylabel('Quantity of repos filled (%)');
-% axis([0 125 0 100])
-% legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
-% hold off
-
 % figure
 % hold on
 % bar(reposfill);
@@ -316,25 +85,6 @@ end
 % ylabel('Repo storage used (MB)');
 % legend('2 msg/ 3 s', '2 msg/2 s', '2 msg/s', '1 msg/3 s', '1 msg/2 s', '1 msg/s');
 % hold off
-
-
-% figure
-% bar(fillperc100);
-% title('Percentage of repositories filled up to 100%');
-% xlabel('Time (s)');
-% ylabel('Repositories which used about 100% storage (%)');
-% 
-% figure
-% bar(fillperc50);
-% title('Percentage of repositories filled up to 50%');
-% xlabel('Time (s)');
-% ylabel('Repositories which used more than 50% storage (%)');
-% 
-% figure
-% bar(fillperc25);
-% title('Percentage of repositories filled up to 25%');
-% xlabel('Time (s)');
-% ylabel('Repositories which used more than 25% storage (%)');
 
 %figure
 %bar3(M);
@@ -366,7 +116,7 @@ mdeleted1 = [mean(M1(10800, 1:40)), mean(M1(10800, 41:240)), mean(M1(10800, 241:
 % present better...? Either a line plot, or...associate with smth else?
 figure
 % subplot(1,3,1);
-bar([200, 300, 400, 500, 800, 1000], mdeleted1);
+plot([200, 300, 400, 500, 800, 1000], mdeleted1(:, 1), '-^', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 2), '-v', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 3), '-d');
 lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
 lgd.FontSize = 12;
 ylabel('Average no. of messages deleted per node','fontsize',12);
@@ -430,10 +180,10 @@ lgd.FontSize = 9;
 
 %These shouldn't be influenced too much, so might not be VERY important,
 %but nevertheless, might be at least marginally, so worth looking at/
-proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
-uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
-static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
-figure
+% proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
+% uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
+% static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
+% figure
 % subplot(3,1,1);
 % plot(uproc_upspeeds_30);
 % title('Upload speeds for cloud offloading','fontsize',16)
@@ -441,39 +191,39 @@ figure
 % ylabel('Bandwidth used (B)','fontsize',12)
 % lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
 % lgd.FontSize = 9;
-subplot(2,1,1);
-plot(proc_upspeeds_30);
-title('Upload speeds for processed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
-lgd.FontSize = 9;
-subplot(2,1,2);
-plot(static_upspeeds_30);
-title('Upload speeds for unprocessed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
-lgd.FontSize = 9;
+% subplot(2,1,1);
+% plot(proc_upspeeds_30);
+% title('Upload speeds for processed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+% lgd.FontSize = 9;
+% subplot(2,1,2);
+% plot(static_upspeeds_30);
+% title('Upload speeds for unprocessed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
+% lgd.FontSize = 9;
 
 
-% Check this.
-figure
-upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
-subplot(1,2,1);
-bar(upspeeds1_30, 'stacked');
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
-lgd.FontSize = 9;
-xlabel('Time (s)','fontsize',12)  
-ylabel('Bandwidth used (B)','fontsize',12)
-inspeeds1_30 = RI3(:, 30);
-subplot(1,2,2);
-bar(inspeeds1_30);
-xlabel('Time (s)','fontsize',12)  
-ylabel('Bandwidth of input (B)','fontsize',12)
+% figure
+% upspeeds1_30 = [SB3(:, 30) UB3(:, 30) PB3(:, 30)];
+% subplot(1,2,1);
+% bar(upspeeds1_30, 'stacked');
+% lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+% lgd.FontSize = 9;
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth used (B)','fontsize',12)
+% inspeeds1_30 = RI3(:, 30);
+% subplot(1,2,2);
+% bar(inspeeds1_30);
+% xlabel('Time (s)','fontsize',12)  
+% ylabel('Bandwidth of input (B)','fontsize',12)
 
 
-% Worth checking
+% Next two are very important and have to be merged in a way, to obtain the
+% best analysis from them!
 figure
 upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
                 mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
@@ -481,32 +231,44 @@ upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
                 mean(SB4(:, 30)), mean(UB4(:, 30)), mean(PB4(:, 30));
                 mean(SB5(:, 30)), mean(UB5(:, 30)), mean(PB5(:, 30)); 
                 mean(SB6(:, 30)), mean(UB6(:, 30)), mean(PB6(:, 30))];
-subplot(1,2,1);
-bar([200, 300, 400, 500, 800, 1000], upspeeds1_30, 'stacked');
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
-lgd.FontSize = 10;
-xlabel('No. of cars in simulation','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30)), mean(RI6(:, 30))];
-subplot(1,2,2);
-bar([200, 300, 400, 500, 800, 1000], inspeeds1_30);
-xlabel('No. of cars in simulation','fontsize',12) 
-ylabel('Bandwidth of input (B)','fontsize',12)
-
-
-% These should be quite impacted.
+inspeeds1_30 = [mean(RI1(:, 30)),... 
+                mean(RI2(:, 30)),...
+                mean(RI3(:, 30)),...
+                mean(RI4(:, 30)),...
+                mean(RI5(:, 30)),...
+                mean(RI6(:, 30))];
 storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
                 mean(RS2(:, 30)), mean(RP2(:, 30)); 
                 mean(RS3(:, 30)), mean(RP3(:, 30));
                 mean(RS4(:, 30)), mean(RP4(:, 30));
                 mean(RS5(:, 30)), mean(RP5(:, 30)); 
                 mean(RS6(:, 30)), mean(RP6(:, 30))];
-figure
-bar([200, 300, 400, 500, 800, 1000], storages_30, 'stacked');
-lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
-xlabel('No. of cars in simulation','fontsize',12)
-ylabel('Total storage used (B)','fontsize',12)
+% subplot(1,2,1);
+yyaxis left
+hold on
+bar_handle = bar([200, 300, 400, 500, 800, 1000], upspeeds1_30, 'stacked');
+xlabel('No. of cars in simulation','fontsize',12) 
+ylabel('Bandwidth used (B)','fontsize',12)
+ylim([0 10*10^6]);
+plot([200, 300, 400, 500, 800, 1000], inspeeds1_30);
+set(bar_handle(1),'FaceColor',[0,0.5,1])
+set(bar_handle(2),'FaceColor',[0,1,0])
+set(bar_handle(3),'FaceColor',[0,1,0.5])
+% subplot(1,2,2);
+yyaxis right
+semilogy([200, 300, 400, 500, 800, 1000], storages_30);
+ylabel('Bandwidth of input (B)','fontsize',12)
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'total data input', 'non-processing message storage', 'processing message storage');
+lgd.FontSize = 10;
+
+
+% These should be quite impacted.
+% figure
+% bar([200, 300, 400, 500, 800, 1000], storages_30, 'stacked');
+% lgd = legend('non-processing message storage', 'processing message storage');
+% lgd.FontSize = 9;
+% xlabel('No. of cars in simulation','fontsize',12)
+% ylabel('Total storage used (B)','fontsize',12)
 
 
 upspeeds1_store = upspeeds1(:, 1)';
@@ -521,68 +283,69 @@ upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
 
-%This one might not be THAT important, but let's see...
-figure
-plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
-title('Processing threads','fontsize',16)
-lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
-lgd.FontSize = 9;
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
+
+% figure
+% plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
+% title('Processing threads','fontsize',16)
+% lgd =legend('non-processing message upload for 200', 'cloud offloading upload for 200', 'processed message upload for 200', 'non-processing message upload for 1000', 'cloud offloading upload for 1000', 'processed message upload for 1000');
+% lgd.FontSize = 9;
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
 % Important! See how it may be compressed!
 figure
-subplot(1,2,1);
+% subplot(1,2,1);
 yyaxis left
 barhandle=bar(upspeeds1(:, 1:2), 'stacked');
 set(barhandle(1),'FaceColor',[1,0,0])
 set(barhandle(2),'FaceColor',[0,1,0])
-title('(a) Number of cars vs. up-link BW','fontsize',14)
+title('Number of cars vs. up-link BW vs. input BW','fontsize',14)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
-ylim([0 5*10^6]);
-xlim([17 57]);
+ylim([0 10*10^6]);
+xlim([17 48]);
 
 yyaxis right
-plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds3_total, 'm-o', 1:80, upspeeds4_total, 'g-X', 1:80, upspeeds6_total, '-*');
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000');
+plot(1:80, upspeeds1_total, 'b-+', 1:80, upspeeds3_total, 'g-o', 1:80, upspeeds4_total, 'm-X', 1:80, upspeeds6_total, 'y-*', 1:80, inspeeds1, '-+', 1:80, inspeeds3, '-o', 1:80, inspeeds4, '-X', 1:80, inspeeds6, '-*');
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000', 'message input for 200 cars', 'message input for 400 cars', 'message input for 500 cars', 'message input for 1000 cars', 'Location', 'southoutside');
 lgd1.FontSize = 9;
+lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
-ylim([0 5*10^6]);
+xlim([17 48]);
+ylim([0 10*10^6]);
 
-subplot(1,2,2);
-inspeeds = [inspeeds1, inspeeds3, inspeeds6];
-bar_handle = bar(inspeeds);
-set(bar_handle(1),'FaceColor',[1,0,0])
-set(bar_handle(2),'FaceColor',[0,1,0])
-set(bar_handle(3),'FaceColor',[0,0,1])
-title('(b) Input Bandwidths','fontsize',14)
-lgd = legend('200 cars', '500 cars', '1000 cars');
-lgd.FontSize = 9;
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
+% subplot(1,2,2);
+% bar_handle = bar(inspeeds);
+% set(bar_handle(1),'FaceColor',[1,0,0])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,0,1])
+% title('(b) Input Bandwidths','fontsize',14)
+% lgd = legend('200 cars', '500 cars', '1000 cars');
+% lgd.FontSize = 9;
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
+% xlim([17 48]);
 
-repos = 1:80;
-figure
-hBarGrp=bar(abs(randn(320,2)),'grouped','stacked');  % 160 bars, group by 2
-off=hBarGrp(2).XOffset - 0.03;             % hidden property, offset from nominal x
-hBar1=bar(repos-off+0.03,upspeeds1,0.25,'stacked'); % draw first stacked as wanted
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
-lgd1.FontSize = 9;
-
-hold all                            % hold axes, don't reset color order position
-hBar2=bar(repos+off-0.03,[nan(size(inspeeds1)) inspeeds1],0.30, 'r'); % second with place holder
-xlim([17 57]);
-
-hold all                            % hold axes, don't reset color order position
-hBar3=bar(repos+2*off-0.03,[nan(size(inspeeds3)) inspeeds3],0.30, 'g'); % second with place holder
-xlim([17 57]);
-
-hold all                            % hold axes, don't reset color order position
-hBar4=bar(repos+3*off-0.03,[nan(size(inspeeds6)) inspeeds6],0.30, 'b'); % second with place holder
-xlim([17 57]);
+% repos = 1:80;
+% figure
+% hBarGrp=bar(abs(randn(320,2)),'grouped','stacked');  % 160 bars, group by 2
+% off=hBarGrp(2).XOffset - 0.03;             % hidden property, offset from nominal x
+% hBar1=bar(repos-off+0.03,upspeeds1,0.25,'stacked'); % draw first stacked as wanted
+% 
+% hold all                            % hold axes, don't reset color order position
+% hBar2=bar(repos+off-0.03,[nan(size(inspeeds1)) inspeeds1],0.30, 'r'); % second with place holder
+% xlim([17 48]);
+% 
+% hold all                            % hold axes, don't reset color order position
+% hBar3=bar(repos+2*off-0.03,[nan(size(inspeeds3)) inspeeds3],0.30, 'g'); % second with place holder
+% xlim([17 48]);
+% 
+% hold all                            % hold axes, don't reset color order position
+% hBar4=bar(repos+3*off-0.03,[nan(size(inspeeds6)) inspeeds6],0.30, 'b'); % second with place holder
+% 
+% lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 200', 'message upload for 500', 'message upload for 1000');
+% lgd1.FontSize = 9;
+% xlim([17 48]);
 
 

@@ -386,25 +386,26 @@ upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
 
 % Most important part of these simulation scenarios, because the upspeed
 % varies with the compression ratio, but not with storage usage.
-figure
-
-% subplot(2,1,1);
-yyaxis left
-bar_handle = bar(upspeeds1, 'stacked');
-title('Compression rates','fontsize',16)
-xlabel('Repository number','fontsize',12) 
-ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-set(bar_handle(2),'FaceColor',[0,1,0])
-set(bar_handle(3),'FaceColor',[0,1,0.5])
-
-yyaxis right
-plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*');
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 1.2', 'message upload for 1.43', 'message upload for 1.66', 'message upload for 2', 'message upload for 2.5');
-lgd1.FontSize = 9;
-ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
+% figure
+% 
+% % subplot(2,1,1);
+% yyaxis left
+% bar_handle = bar(upspeeds1, 'stacked');
+% title('Compression rates','fontsize',16)
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Bandwidth used (B/s)','fontsize',12)
+% xlim([17 57]);
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,1,0.5])
+% 
+% yyaxis right
+% plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*');
+% lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 1.2', 'message upload for 1.43', 'message upload for 1.66', 'message upload for 2', 'message upload for 2.5', 'Location', 'southoutside');
+% lgd1.FontSize = 9;
+% lgd1.NumColumns = 3;
+% ylabel('Bandwidth used (B/s)','fontsize',12)
+% xlim([17 57]);
 
 % subplot(2,1,2);
 % inspeeds = [inspeeds1, inspeeds4];

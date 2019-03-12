@@ -295,14 +295,24 @@ end
 %plots for the different simulation scenarios)
 
 %Repos:
-%
+%19, 20, 21, 41, 42, 43
 %change mostly.
+% figure
+% stem3(S6, ':.');
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% xlabel('Repo Number','fontsize',12) 
+% ylabel('Time(s)','fontsize',12)
+% zlabel('Space used(B)','fontsize',12)
+
 figure
-stem3(S1, ':.');
+plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S6(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S6(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 1:10800, S6(:,43), ':', 'LineWidth',1);
 title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
+lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
+lgd.FontSize = 9;
+
 
 % Maybe just show one side (irrespective of repo), and how much cache is
 % used...either for all scenarios or the worst case - it simply shows that
@@ -314,16 +324,16 @@ xlabel('Repo Number','fontsize',12)
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 
-storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30)];
+storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
 
 % A potential for presenting, as mentioned above, a few different repos
 %across time with, say, different lines or point identifiers...
-figure
-plot(storage_30);
-xlabel('Time (s)','fontsize',12) 
-ylabel('Total storage used (messages stored)','fontsize',12)
-lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
-lgd.FontSize = 9;
+% figure
+% plot(storage_30);
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Total storage used (messages stored)','fontsize',12)
+% lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
+% lgd.FontSize = 9;
 
 % mdeleted = M1(10000, :)';
 % figure
@@ -332,10 +342,10 @@ lgd.FontSize = 9;
 % xlabel('Node address','fontsize',12) 
 % ylabel('No. messages deleted','fontsize',12)
 
-proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
-uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
-static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
-figure
+% proc_upspeeds_30 = [PB1(:, 30), PB2(:, 30), PB3(:, 30), PB4(:, 30), PB5(:, 30), PB6(:, 30)];
+% uproc_upspeeds_30 = [UB1(:, 30), UB2(:, 30), UB3(:, 30), UB4(:, 30), UB5(:, 30), UB6(:, 30)];
+% static_upspeeds_30 = [SB1(:, 30), SB2(:, 30), SB3(:, 30), SB4(:, 30), SB5(:, 30), SB6(:, 30)];
+% figure
 % subplot(3,1,1);
 % plot(uproc_upspeeds_30);
 % title('Upload speeds for cloud offloading','fontsize',16)
@@ -343,20 +353,20 @@ figure
 % ylabel('Bandwidth used (B)','fontsize',12)
 % lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
 % lgd.FontSize = 9;
-subplot(2,1,1);
-plot(proc_upspeeds_30);
-title('Upload speeds for processed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
-lgd.FontSize = 9;
-subplot(2,1,2);
-plot(static_upspeeds_30);
-title('Upload speeds for unprocessed messages','fontsize',16)
-xlabel('Time (s)','fontsize',12) 
-ylabel('Bandwidth used (B)','fontsize',12)
-lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
-lgd.FontSize = 9;
+% subplot(2,1,1);
+% plot(proc_upspeeds_30);
+% title('Upload speeds for processed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
+% lgd.FontSize = 9;
+% subplot(2,1,2);
+% plot(static_upspeeds_30);
+% title('Upload speeds for unprocessed messages','fontsize',16)
+% xlabel('Time (s)','fontsize',12) 
+% ylabel('Bandwidth used (B)','fontsize',12)
+% lgd = legend('2 threads', '4 threads', '8 threads', '10 threads', '12 threads' , '16 threads');
+% lgd.FontSize = 9;
 
 % figure
 % upspeeds1_30 = [SB4(:, 30) UB4(:, 30) PB4(:, 30)];
@@ -382,19 +392,35 @@ upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
                 mean(SB4(:, 30)), mean(UB4(:, 30)), mean(PB4(:, 30));
                 mean(SB5(:, 30)), mean(UB5(:, 30)), mean(PB5(:, 30));
                 mean(SB6(:, 30)), mean(UB6(:, 30)), mean(PB6(:, 30))];
+            
+storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
+                mean(RS2(:, 30)), mean(RP2(:, 30)); 
+                mean(RS3(:, 30)), mean(RP3(:, 30)); 
+                mean(RS4(:, 30)), mean(RP4(:, 30)); 
+                mean(RS5(:, 30)), mean(RP5(:, 30)); 
+                mean(RS6(:, 30)), mean(RP6(:, 30))];
 
-subplot(1,2,1);
-bar([2, 4, 8, 10, 12, 16], upspeeds1_30, 'stacked');
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
-lgd.FontSize = 9;
+% subplot(1,2,1);
+yyaxis left
+plot([2, 4, 8, 10, 12, 16], upspeeds1_30, 'LineWidth', 1);
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,1,0.5])
 xlabel('No. of threads per repository','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
-inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30)), mean(RI6(:, 30))];
 
-subplot(1,2,2);
-bar([2, 4, 8, 10, 12, 16], inspeeds1_30);
-xlabel('No. of threads per repository','fontsize',12) 
-ylabel('Bandwidth of input (B)','fontsize',12)
+yyaxis right
+semilogy([2, 4, 8, 10, 12, 16], storages_30);
+ylabel('Total storage used (B)','fontsize',12)
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
+lgd.FontSize = 9;
+
+% inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30)), mean(RI6(:, 30))];
+% 
+% subplot(1,2,2);
+% bar([2, 4, 8, 10, 12, 16], inspeeds1_30);
+% xlabel('No. of threads per repository','fontsize',12) 
+% ylabel('Bandwidth of input (B)','fontsize',12)
 
 % tstorages_30 = [RS4(:, 30) RP4(:, 30)];
 % figure
@@ -404,20 +430,16 @@ ylabel('Bandwidth of input (B)','fontsize',12)
 % xlabel('Time (s)','fontsize',12) 
 % ylabel('Total storage used (B)','fontsize',12)
 
+
 % This one is useful for showing how storage usage evolves with the
 % increase of processing power.
-storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
-                mean(RS2(:, 30)), mean(RP2(:, 30)); 
-                mean(RS3(:, 30)), mean(RP3(:, 30)); 
-                mean(RS4(:, 30)), mean(RP4(:, 30)); 
-                mean(RS5(:, 30)), mean(RP5(:, 30)); 
-                mean(RS6(:, 30)), mean(RP6(:, 30))];
-figure
-bar([2, 4, 8, 10, 12, 16], storages_30, 'stacked');
-lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
-xlabel('No. of threads per repository','fontsize',12)
-ylabel('Total storage used (B)','fontsize',12)
+% figure
+% bar([2, 4, 8, 10, 12, 16], storages_30, 'stacked');
+% lgd = legend('non-processing message storage', 'processing message storage');
+% lgd.FontSize = 9;
+% xlabel('No. of threads per repository','fontsize',12)
+% ylabel('Total storage used (B)','fontsize',12)
+
 
 % figure
 % subplot(2,2,1);
@@ -481,21 +503,24 @@ figure
 
 % subplot(2,1,1);
 yyaxis left
-bar_handle = bar(upspeeds1, 'stacked');
+bar_handle = bar(upspeeds1(:,1:2), 'stacked');
 title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
+ylim([0 5*10^6]);
+xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
 set(bar_handle(2),'FaceColor',[0,1,0])
-set(bar_handle(3),'FaceColor',[0,1,0.5])
+% set(bar_handle(3),'FaceColor',[0,1,0.5])
 
 yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x');
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16');
+lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16', 'Location', 'southoutside');
 lgd1.FontSize = 9;
+lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
-xlim([17 57]);
+ylim([0 5*10^6]);
+xlim([17 48]);
 
 % subplot(2,1,2);
 % inspeeds = [inspeeds1, inspeeds4];
