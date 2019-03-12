@@ -431,10 +431,25 @@ end
 % different scenarios instead? Could potentially look better, like in the
 % deleted mobile messages...
 figure
-upspeeds1_30 = [mean(SB1(1:10000, 30)), mean(UB1(1:10000, 30)), mean(PB1(1:10000, 30));
-                mean(SB2(1:10000, 30)), mean(UB2(1:10000, 30)), mean(PB2(1:10000, 30)); 
-                mean(SB3(1:10000, 30)), mean(UB3(1:10000, 30)), mean(PB3(1:10000, 30));
-                mean(SB4(1:10000, 30)), mean(UB4(1:10000, 30)), mean(PB4(1:10000, 30))];
+for i = 1:10000
+    SB1_mean(i) = mean(SB1(i, :));
+    UB1_mean(i) = mean(UB1(i, :));
+    PB1_mean(i) = mean(PB1(i, :));
+    SB2_mean(i) = mean(SB2(i, :));
+    UB2_mean(i) = mean(UB2(i, :));
+    PB2_mean(i) = mean(PB2(i, :));
+    SB3_mean(i) = mean(SB3(i, :));
+    UB3_mean(i) = mean(UB3(i, :));
+    PB3_mean(i) = mean(PB3(i, :));
+    SB4_mean(i) = mean(SB4(i, :));
+    UB4_mean(i) = mean(UB4(i, :));
+    PB4_mean(i) = mean(PB4(i, :));
+end
+    
+upspeeds1_30 = [mean(SB1_mean), mean(UB1_mean), mean(PB1_mean);
+                mean(SB2_mean), mean(UB2_mean), mean(PB2_mean); 
+                mean(SB3_mean), mean(UB3_mean), mean(PB3_mean);
+                mean(SB4_mean), mean(UB4_mean), mean(PB4_mean)];
 subplot(1,2,1);
 bar([40, 80, 100, 120], upspeeds1_30, 'stacked');
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
@@ -451,10 +466,20 @@ ylabel('Bandwidth of input (B)','fontsize',12)
 % Maybe could try an average over storages for the different scenarios
 % instead? Could potentially look better, like in the deleted mobile
 % messages...
-storages_30 = [mean(RS1(1:10000, 30)), mean(RP1(1:10000, 30));
-                mean(RS2(1:10000, 30)), mean(RP2(1:10000, 30)); 
-                mean(RS3(1:10000, 30)), mean(RP3(1:10000, 30));
-                mean(RS4(1:10000, 30)), mean(RP4(1:10000, 30))];
+for i = 1:10000
+    RS1_mean(i) = mean(RS1(i, :));
+    RP1_mean(i) = mean(RP1(i, :));
+    RS2_mean(i) = mean(RS2(i, :));
+    RP2_mean(i) = mean(RP2(i, :));
+    RS3_mean(i) = mean(RS3(i, :));
+    RP3_mean(i) = mean(RP3(i, :));
+    RS4_mean(i) = mean(RS4(i, :));
+    RP4_mean(i) = mean(RP4(i, :));
+end
+storages_30 = [mean(RS1_mean), mean(RP1_mean);
+                mean(RS2_mean), mean(RP2_mean); 
+                mean(RS3_mean), mean(RP3_mean);
+                mean(RS4_mean), mean(RP4_mean)];
 figure
 bar([40, 80, 100, 120], storages_30, 'stacked');
 lgd = legend('non-processing message storage', 'processing message storage');
