@@ -151,6 +151,7 @@ storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
 
 figure
 plot(storage_30);
+grid on
 xlabel('Time (s)','fontsize',12) 
 ylabel('Total storage used (messages stored)','fontsize',12)
 lgd = legend('200 cars', '300 cars', '400 cars', '500 cars', '800 cars', '1000 cars');
@@ -245,15 +246,16 @@ storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
                 mean(RS6(:, 30)), mean(RP6(:, 30))];
 % subplot(1,2,1);
 yyaxis left
+grid on
 hold on
-bar_handle = bar([200, 300, 400, 500, 800, 1000], upspeeds1_30, 'stacked');
+plot([200, 300, 400, 500, 800, 1000], upspeeds1_30);
 xlabel('No. of cars in simulation','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 ylim([0 10*10^6]);
 plot([200, 300, 400, 500, 800, 1000], inspeeds1_30);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-set(bar_handle(2),'FaceColor',[0,1,0])
-set(bar_handle(3),'FaceColor',[0,1,0.5])
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,1,0.5])
 % subplot(1,2,2);
 yyaxis right
 semilogy([200, 300, 400, 500, 800, 1000], storages_30);
@@ -297,10 +299,11 @@ upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 figure
 % subplot(1,2,1);
 yyaxis left
+grid on
 barhandle=bar(upspeeds1(:, 1:2), 'stacked');
 set(barhandle(1),'FaceColor',[1,0,0])
 set(barhandle(2),'FaceColor',[0,1,0])
-title('Number of cars vs. up-link BW vs. input BW','fontsize',14)
+% title('Number of cars vs. up-link BW vs. input BW','fontsize',14)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 10*10^6]);

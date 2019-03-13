@@ -333,23 +333,27 @@ end
 % lgd = legend('1.2', '1.43', '1.66', '2', '2.5');
 % lgd.FontSize = 9;
 
+% Maybe just mention that the input bandwidth average for repo 30 is
+% 7.2MB/s and then present this graph without the input BWs and that the 
+% storage reaches maximum capacity around time 2000 as well, since they
+% remain the same across the board (es expected).
 figure
 upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
                 mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
                 mean(SB3(:, 30)), mean(UB3(:, 30)), mean(PB3(:, 30)); 
                 mean(SB4(:, 30)), mean(UB4(:, 30)), mean(PB4(:, 30));
                 mean(SB5(:, 30)), mean(UB5(:, 30)), mean(PB5(:, 30))];
-subplot(1,2,1);
+% subplot(1,2,1);
 bar([1.2, 1.43, 1.66, 2, 2.5], upspeeds1_30, 'stacked');
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
 lgd.FontSize = 9;
 xlabel('Compression rate','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30))];
-subplot(1,2,2);
-bar([1.2, 1.43, 1.66, 2, 2.5], inspeeds1_30);
-xlabel('Compression rate','fontsize',12) 
-ylabel('Bandwidth of input (B)','fontsize',12)
+% subplot(1,2,2);
+% bar([1.2, 1.43, 1.66, 2, 2.5], inspeeds1_30);
+% xlabel('Compression rate','fontsize',12) 
+% ylabel('Bandwidth of input (B)','fontsize',12)
 
 % storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
 %                 mean(RS2(:, 30)), mean(RP2(:, 30)); 

@@ -335,7 +335,7 @@ end
 
 figure
 stem3(S5, ':.');
-title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(MB)','fontsize',12)
@@ -365,7 +365,7 @@ lgd.FontSize = 12;
 mdeleted = [M1(10000, :)', M2(10000, :)', M3(10000, :)', M4(10000, :)', M5(10000, :)', M6(10000, :)', M7(10000, :)', M8(10000, :)'];
 figure
 bar(80:634, mdeleted);
-title('No. messages deleted from mobile nodes','fontsize',16)
+% title('No. messages deleted from mobile nodes','fontsize',16)
 xlabel('Change in total output BW (B)','fontsize',12) 
 ylabel('No. messages deleted','fontsize',12)
 lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
@@ -384,14 +384,14 @@ figure
 % lgd.FontSize = 9;
 subplot(2,1,1);
 plot(proc_upspeeds_29);
-title('Upload speeds for processed messages','fontsize',16)
+% title('Upload speeds for processed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
 lgd.FontSize = 9;
 subplot(2,1,2);
 plot(static_upspeeds_29);
-title('Upload speeds for unprocessed messages','fontsize',16)
+% title('Upload speeds for unprocessed messages','fontsize',16)
 xlabel('Time (s)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 lgd = legend('5 MB/s', '7 MB/s', '9 MB/s', '10 MB/s', '15 MB/s', '20 MB/s', '25 MB/s', '30 MB/s');
@@ -466,7 +466,7 @@ figure
 %             upspeeds5;];
 subplot(1,2,1);
 bar(upspeeds1, 'stacked');
-title('5MB/s Upload','fontsize',16)
+% title('5MB/s Upload','fontsize',16)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
 lgd.FontSize = 9;
 xlabel('Repository number','fontsize',12) 
@@ -485,7 +485,7 @@ ylabel('Bandwidth used (B/s)','fontsize',12)
 % ylabel('Bandwidth used (B/s)')
 subplot(1,2,2);
 bar(upspeeds4, 'stacked');
-title('30MB/s Upload','fontsize',16)
+% title('30MB/s Upload','fontsize',16)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
 lgd.FontSize = 9;
 xlabel('Repository number','fontsize',12) 
@@ -508,7 +508,7 @@ upspeeds8_total = upspeeds8(:, 1)' + upspeeds8(:, 2)' + upspeeds8(:, 3)';
 
 figure
 plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds4_store, 1:80, upspeeds4_cloud, 1:80, upspeeds4_proc);
-title('Processing threads','fontsize',16)
+% title('Processing threads','fontsize',16)
 lgd =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'processed message upload for 2', 'non-processing message upload for 16', 'cloud offloading upload for 16', 'processed message upload for 16');
 lgd.FontSize = 9;
 xlabel('Repository number','fontsize',12) 
@@ -517,7 +517,7 @@ ylabel('Bandwidth used (B/s)','fontsize',12)
 figure
 yyaxis left
 bar(upspeeds1, 'stacked');
-title('Upload rates','fontsize',16)
+% title('Upload rates','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
 

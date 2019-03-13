@@ -306,7 +306,7 @@ end
 
 figure
 plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S6(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S6(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 1:10800, S6(:,43), ':', 'LineWidth',1);
-title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
@@ -319,7 +319,7 @@ lgd.FontSize = 9;
 % the cache is not used too much.
 figure
 stem3(RC5, ':.');
-title('3D Stem plot of Repos Cache Usage','fontsize',16)
+% title('Stem plot of Repos Cache Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
@@ -504,7 +504,7 @@ figure
 % subplot(2,1,1);
 yyaxis left
 bar_handle = bar(upspeeds1(:,1:2), 'stacked');
-title('Processing threads','fontsize',16)
+% title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 5*10^6]);

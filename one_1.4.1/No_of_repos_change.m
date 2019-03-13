@@ -299,36 +299,6 @@ maxval2 = max(maxstorM1);
 % figure
 % plot([1 2 3 4], deleted_29);
 
-mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 541:855));
-             mean(M2(10000, 1:40)), mean(M2(10000, 41:840)), mean(M2(10000, 541:855));
-             mean(M3(10000, 1:40)), mean(M3(10000, 41:840)), mean(M3(10000, 541:855));
-             mean(M4(10000, 1:40)), mean(M4(10000, 41:840)), mean(M4(10000, 541:855))];
-% mdeleted2 = M2(10000, :);
-% mdeleted3 = M3(10000, :);
-% addr1 = 80:334;
-% addr2 = 80:634;
-% addr3 = 80:1134;
-
-
-% Most important assessment in the simulations...maybe could create others
-% in the same way...? Also, try with plot instead...
-% Maybe try and integrate (average) storage with this, as well?
-figure
-% subplot(1,3,1);
-plot([40, 80, 100, 120], mdeleted1);
-lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
-lgd.FontSize = 12;
-ylabel('Average no. of messages deleted per node','fontsize',12);
-xlabel('No. of cars in environment','fontsize',12);
-% subplot(1,3,2);
-% bar(addr2, mdeleted2);
-% title('500 cars in environment');
-% xlabel('Mobile node address');
-% subplot(1,3,3);
-% bar(addr3, mdeleted3);
-% title('1000 cars in environment');
-% xlabel('Mobile node address');
-
 for repo = 1:40
     upspeeds1(repo, :) = [mean(SB1(1:10000, repo)), mean(UB1(1:10000, repo)), mean(PB1(1:10000, repo))];
     inspeeds1(repo, :) = mean(RI1(1:10000, repo));
@@ -348,6 +318,84 @@ for repo = 1:120
     upspeeds4(repo, :) = [mean(SB4(1:10000, repo)), mean(UB4(1:10000, repo)), mean(PB4(1:10000, repo))];
     inspeeds4(repo, :) = mean(RI4(1:10000, repo));
 end
+
+mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 541:855));
+             mean(M2(10000, 1:40)), mean(M2(10000, 41:840)), mean(M2(10000, 541:855));
+             mean(M3(10000, 1:40)), mean(M3(10000, 41:840)), mean(M3(10000, 541:855));
+             mean(M4(10000, 1:40)), mean(M4(10000, 41:840)), mean(M4(10000, 541:855))];
+for i = 1:10000
+    RS1_mean(i) = mean(RS1(i, :));
+    RP1_mean(i) = mean(RP1(i, :));
+    RS2_mean(i) = mean(RS2(i, :));
+    RP2_mean(i) = mean(RP2(i, :));
+    RS3_mean(i) = mean(RS3(i, :));
+    RP3_mean(i) = mean(RP3(i, :));
+    RS4_mean(i) = mean(RS4(i, :));
+    RP4_mean(i) = mean(RP4(i, :));
+end
+storages_30 = [mean(RS1_mean), mean(RP1_mean);
+                mean(RS2_mean), mean(RP2_mean); 
+                mean(RS3_mean), mean(RP3_mean);
+                mean(RS4_mean), mean(RP4_mean)];
+
+for i = 1:10000
+    RI1_mean(i) = mean(RI1(i, :));
+    RI2_mean(i) = mean(RI2(i, :));
+    RI3_mean(i) = mean(RI3(i, :));
+    RI4_mean(i) = mean(RI4(i, :));
+end
+inspeeds1_30 = [mean(RI1_mean), mean(RI2_mean), mean(RI3_mean), mean(RI4_mean)];
+
+for i = 1:10000
+    SB1_mean(i) = mean(SB1(i, :));
+    UB1_mean(i) = mean(UB1(i, :));
+    PB1_mean(i) = mean(PB1(i, :));
+    SB2_mean(i) = mean(SB2(i, :));
+    UB2_mean(i) = mean(UB2(i, :));
+    PB2_mean(i) = mean(PB2(i, :));
+    SB3_mean(i) = mean(SB3(i, :));
+    UB3_mean(i) = mean(UB3(i, :));
+    PB3_mean(i) = mean(PB3(i, :));
+    SB4_mean(i) = mean(SB4(i, :));
+    UB4_mean(i) = mean(UB4(i, :));
+    PB4_mean(i) = mean(PB4(i, :));
+end
+    
+upspeeds1_30 = [mean(SB1_mean), mean(UB1_mean), mean(PB1_mean);
+                mean(SB2_mean), mean(UB2_mean), mean(PB2_mean); 
+                mean(SB3_mean), mean(UB3_mean), mean(PB3_mean);
+                mean(SB4_mean), mean(UB4_mean), mean(PB4_mean)];
+% mdeleted2 = M2(10000, :);
+% mdeleted3 = M3(10000, :);
+% addr1 = 80:334;
+% addr2 = 80:634;
+% addr3 = 80:1134;
+
+
+% Most important assessment in the simulations...maybe could create others
+% in the same way...? Also, try with plot instead...
+% Maybe try and integrate (average) storage with this, as well?
+figure
+% subplot(1,3,1);
+yyaxis left
+plot([40, 80, 100, 120], mdeleted1(:, 1), '-d', [40, 80, 100, 120], mdeleted1(:, 2), ':d', [40, 80, 100, 120], mdeleted1(:, 3), '-.d');
+ylabel('Average no. of messages deleted per node','fontsize',12);
+xlabel('No. of Repos in environment','fontsize',12);
+
+% subplot(1,2,2);
+yyaxis right
+plot([40, 80, 100, 120], inspeeds1_30, '-^');
+ylabel('Bandwidth of input (B)','fontsize',12)
+lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated', 'Average input BW to repositories');
+lgd.FontSize = 12;
+% subplot(1,3,2);
+% bar(addr2, mdeleted2);
+% title('500 cars in environment');
+% xlabel('Mobile node address');
+% subplot(1,3,3);
+% bar(addr3, mdeleted3);
+% title('1000 cars in environment');
+% xlabel('Mobile node address');
 
 % for repo = 1:144   
 %     upspeeds5(repo, :) = [mean(SB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
@@ -430,62 +478,49 @@ end
 % Maybe could try an average over inspeeds (and upspeeds?) for the 
 % different scenarios instead? Could potentially look better, like in the
 % deleted mobile messages...
+
 figure
-for i = 1:10000
-    SB1_mean(i) = mean(SB1(i, :));
-    UB1_mean(i) = mean(UB1(i, :));
-    PB1_mean(i) = mean(PB1(i, :));
-    SB2_mean(i) = mean(SB2(i, :));
-    UB2_mean(i) = mean(UB2(i, :));
-    PB2_mean(i) = mean(PB2(i, :));
-    SB3_mean(i) = mean(SB3(i, :));
-    UB3_mean(i) = mean(UB3(i, :));
-    PB3_mean(i) = mean(PB3(i, :));
-    SB4_mean(i) = mean(SB4(i, :));
-    UB4_mean(i) = mean(UB4(i, :));
-    PB4_mean(i) = mean(PB4(i, :));
-end
-    
-upspeeds1_30 = [mean(SB1_mean), mean(UB1_mean), mean(PB1_mean);
-                mean(SB2_mean), mean(UB2_mean), mean(PB2_mean); 
-                mean(SB3_mean), mean(UB3_mean), mean(PB3_mean);
-                mean(SB4_mean), mean(UB4_mean), mean(PB4_mean)];
-subplot(1,2,1);
-bar([40, 80, 100, 120], upspeeds1_30, 'stacked');
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload');
+% subplot(1,2,1);
+yyaxis left
+grid on
+plot([40, 80, 100, 120], upspeeds1_30(:, 1), '-o', [40, 80, 100, 120], upspeeds1_30(:, 2), ':o', [40, 80, 100, 120], upspeeds1_30(:, 3), '-.o');
+lgd = legend();
 lgd.FontSize = 10;
-xlabel('No. of cars in simulation','fontsize',12) 
+xlabel('No. of Repos in simulation','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
-inspeeds1_30 = [mean(RI1(1:10000, 30)), mean(RI2(1:10000, 30)), mean(RI3(1:10000, 30)), mean(RI4(1:10000, 30))];
-subplot(1,2,2);
-bar([40, 80, 100, 120], inspeeds1_30);
-xlabel('No. of cars in simulation','fontsize',12) 
-ylabel('Bandwidth of input (B)','fontsize',12)
+
+yyaxis right
+semilogy([40, 80, 100, 120], storages_30(:, 1), '-^', [40, 80, 100, 120], storages_30(:, 2), ':v');
+grid on
+ylabel('Total storage used (B)','fontsize',12)
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
+lgd.FontSize = 9;
+
 
 
 % Maybe could try an average over storages for the different scenarios
 % instead? Could potentially look better, like in the deleted mobile
 % messages...
-for i = 1:10000
-    RS1_mean(i) = mean(RS1(i, :));
-    RP1_mean(i) = mean(RP1(i, :));
-    RS2_mean(i) = mean(RS2(i, :));
-    RP2_mean(i) = mean(RP2(i, :));
-    RS3_mean(i) = mean(RS3(i, :));
-    RP3_mean(i) = mean(RP3(i, :));
-    RS4_mean(i) = mean(RS4(i, :));
-    RP4_mean(i) = mean(RP4(i, :));
-end
-storages_30 = [mean(RS1_mean), mean(RP1_mean);
-                mean(RS2_mean), mean(RP2_mean); 
-                mean(RS3_mean), mean(RP3_mean);
-                mean(RS4_mean), mean(RP4_mean)];
-figure
-bar([40, 80, 100, 120], storages_30, 'stacked');
-lgd = legend('non-processing message storage', 'processing message storage');
-lgd.FontSize = 9;
-xlabel('No. of cars in simulation','fontsize',12)
-ylabel('Total storage used (B)','fontsize',12)
+% for i = 1:10000
+%     RS1_mean(i) = mean(RS1(i, :));
+%     RP1_mean(i) = mean(RP1(i, :));
+%     RS2_mean(i) = mean(RS2(i, :));
+%     RP2_mean(i) = mean(RP2(i, :));
+%     RS3_mean(i) = mean(RS3(i, :));
+%     RP3_mean(i) = mean(RP3(i, :));
+%     RS4_mean(i) = mean(RS4(i, :));
+%     RP4_mean(i) = mean(RP4(i, :));
+% end
+% storages_30 = [mean(RS1_mean), mean(RP1_mean);
+%                 mean(RS2_mean), mean(RP2_mean); 
+%                 mean(RS3_mean), mean(RP3_mean);
+%                 mean(RS4_mean), mean(RP4_mean)];
+% figure
+% bar([40, 80, 100, 120], storages_30, 'stacked');
+% lgd = legend('non-processing message storage', 'processing message storage');
+% lgd.FontSize = 9;
+% xlabel('No. of Repos in simulation','fontsize',12)
+% ylabel('Total storage used (B)','fontsize',12)
 
 % upspeeds1_store = upspeeds1(1:40, 1)';
 % upspeeds1_cloud = upspeeds1(1:40, 2)';
