@@ -2,14 +2,14 @@
 % the number of runs as variables;
 
 clear
-M1 = dlmread('reports/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports/RAMR1', ' ', 0, 2);
-PB1 = dlmread('reports/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('reports/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('reports/RSBWR1', ' ', 0, 2);
-RI1 = dlmread('reports/RISR1', ' ', 0, 2);
-RP1 = dlmread('reports/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('reports/RSMR1', ' ', 0, 2);
+M1 = dlmread('reports2/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports2/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports2/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports2/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports2/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports2/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports2/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports2/RSMR1', ' ', 0, 2);
 
 M2 = dlmread('reports2/MDMR2', ' ', 0, 2);
 S2 = dlmread('reports2/RAMR2', ' ', 0, 2);
