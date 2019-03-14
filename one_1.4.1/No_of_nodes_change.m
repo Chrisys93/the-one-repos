@@ -2,14 +2,14 @@
 % the number of runs as variables;
 
 clear
-M1 = dlmread('reports2/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports2/RAMR1', ' ', 0, 2);
-PB1 = dlmread('reports2/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('reports2/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('reports2/RSBWR1', ' ', 0, 2);
-RI1 = dlmread('reports2/RISR1', ' ', 0, 2);
-RP1 = dlmread('reports2/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('reports2/RSMR1', ' ', 0, 2);
+M1 = dlmread('reports/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports/RSMR1', ' ', 0, 2);
 
 M2 = dlmread('reports2/MDMR2', ' ', 0, 2);
 S2 = dlmread('reports2/RAMR2', ' ', 0, 2);
@@ -116,7 +116,7 @@ mdeleted1 = [mean(M1(10800, 1:40)), mean(M1(10800, 41:240)), mean(M1(10800, 241:
 % present better...? Either a line plot, or...associate with smth else?
 figure
 % subplot(1,3,1);
-plot([200, 300, 400, 500, 800, 1000], mdeleted1(:, 1), '-^', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 2), '-v', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 3), '-d');
+plot([200, 300, 400, 500, 800, 1000], mdeleted1(:, 1), '-^', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 2), '-v', [200, 300, 400, 500, 800, 1000], mdeleted1(:, 3), '-d', 'LineWidth', 1);
 lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
 lgd.FontSize = 12;
 ylabel('Average no. of messages deleted per node','fontsize',12);
@@ -150,7 +150,7 @@ end
 storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
 
 figure
-plot(storage_30);
+plot(storage_30, 'LineWidth', 1);
 grid on
 xlabel('Time (s)','fontsize',12) 
 ylabel('Total storage used (messages stored)','fontsize',12)
@@ -248,17 +248,17 @@ storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
 yyaxis left
 grid on
 hold on
-plot([200, 300, 400, 500, 800, 1000], upspeeds1_30);
+plot([200, 300, 400, 500, 800, 1000], upspeeds1_30, 'LineWidth', 1);
 xlabel('No. of cars in simulation','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 ylim([0 10*10^6]);
-plot([200, 300, 400, 500, 800, 1000], inspeeds1_30);
+plot([200, 300, 400, 500, 800, 1000], inspeeds1_30, 'LineWidth', 1);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
 % subplot(1,2,2);
 yyaxis right
-semilogy([200, 300, 400, 500, 800, 1000], storages_30);
+semilogy([200, 300, 400, 500, 800, 1000], storages_30, 'LineWidth', 1);
 ylabel('Bandwidth of input (B)','fontsize',12)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'total data input', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 10;
@@ -310,7 +310,7 @@ ylim([0 10*10^6]);
 xlim([17 48]);
 
 yyaxis right
-plot(1:80, upspeeds1_total, 'b-+', 1:80, upspeeds3_total, 'g-o', 1:80, upspeeds4_total, 'm-X', 1:80, upspeeds6_total, 'y-*', 1:80, inspeeds1, '-+', 1:80, inspeeds3, '-o', 1:80, inspeeds4, '-X', 1:80, inspeeds6, '-*');
+plot(1:80, upspeeds1_total, 'b-+', 1:80, upspeeds3_total, 'g-o', 1:80, upspeeds4_total, 'm-X', 1:80, upspeeds6_total, 'y-*', 1:80, inspeeds1, '-+', 1:80, inspeeds3, '-o', 1:80, inspeeds4, '-X', 1:80, inspeeds6, '-*', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000', 'message input for 200 cars', 'message input for 400 cars', 'message input for 500 cars', 'message input for 1000 cars', 'Location', 'southoutside');
 lgd1.FontSize = 9;
 lgd1.NumColumns = 3;

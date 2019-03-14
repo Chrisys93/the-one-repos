@@ -377,16 +377,14 @@ upspeeds1_30 = [mean(SB1_mean), mean(UB1_mean), mean(PB1_mean);
 % Maybe try and integrate (average) storage with this, as well?
 figure
 % subplot(1,3,1);
-yyaxis left
-plot([40, 80, 100, 120], mdeleted1(:, 1), '-d', [40, 80, 100, 120], mdeleted1(:, 2), ':d', [40, 80, 100, 120], mdeleted1(:, 3), '-.d');
+% yyaxis left
+plot([40, 80, 100, 120], mdeleted1(:, 1), '-d', [40, 80, 100, 120], mdeleted1(:, 2), ':d', [40, 80, 100, 120], mdeleted1(:, 3), '-.d', 'LineWidth', 1);
 ylabel('Average no. of messages deleted per node','fontsize',12);
 xlabel('No. of Repos in environment','fontsize',12);
 
 % subplot(1,2,2);
-yyaxis right
-plot([40, 80, 100, 120], inspeeds1_30, '-^');
-ylabel('Bandwidth of input (B)','fontsize',12)
-lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated', 'Average input BW to repositories');
+
+lgd = legend('Pedestrian generated', 'Car generated', 'Bus generated');
 lgd.FontSize = 12;
 % subplot(1,3,2);
 % bar(addr2, mdeleted2);
@@ -482,18 +480,21 @@ lgd.FontSize = 12;
 figure
 % subplot(1,2,1);
 yyaxis left
+hold on
 grid on
-plot([40, 80, 100, 120], upspeeds1_30(:, 1), '-o', [40, 80, 100, 120], upspeeds1_30(:, 2), ':o', [40, 80, 100, 120], upspeeds1_30(:, 3), '-.o');
+plot([40, 80, 100, 120], upspeeds1_30(:, 1), '-o', [40, 80, 100, 120], upspeeds1_30(:, 2), ':o', [40, 80, 100, 120], upspeeds1_30(:, 3), '-.o', 'LineWidth', 1);
+plot([40, 80, 100, 120], inspeeds1_30, '-^', 'LineWidth', 1);
+ylabel('Bandwidth of input (B)','fontsize',12)
 lgd = legend();
 lgd.FontSize = 10;
 xlabel('No. of Repos in simulation','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 
 yyaxis right
-semilogy([40, 80, 100, 120], storages_30(:, 1), '-^', [40, 80, 100, 120], storages_30(:, 2), ':v');
+semilogy([40, 80, 100, 120], storages_30(:, 1), '-^', [40, 80, 100, 120], storages_30(:, 2), ':v', 'LineWidth', 1);
 grid on
 ylabel('Total storage used (B)','fontsize',12)
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
+lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'average input BW to repositories', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 9;
 
 

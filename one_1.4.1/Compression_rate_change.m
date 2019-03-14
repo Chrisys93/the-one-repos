@@ -280,6 +280,13 @@ for repo = 1:c3
     inspeeds5(repo, :) = mean(RI5(:, repo));
 end
 
+figure
+stem3(RC5, ':.');
+% title('Stem plot of Repos Cache Usage','fontsize',16)
+xlabel('Repo Number','fontsize',12) 
+ylabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
+
 % figure
 % stem3(S4, ':.');
 % title('3D Stem plot of Repos Storage Usage','fontsize',16)

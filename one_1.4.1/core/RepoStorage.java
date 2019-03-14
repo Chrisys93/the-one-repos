@@ -161,10 +161,10 @@ public class RepoStorage {
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
-			if(!this.isProcessedFull()){
+			/*if(!this.isProcessedFull()){
 				this.processMessage(this.getOldestProcessMessage());
 			}
-			else if (this.getOldestStaticMessage() != null) {
+			else*/ if (this.getOldestStaticMessage() != null) {
 				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
 			}
 			else {

@@ -307,11 +307,12 @@ end
 figure
 plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S6(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S6(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 1:10800, S6(:,43), ':', 'LineWidth',1);
 % title('3D Stem plot of Repos Storage Usage','fontsize',16)
-xlabel('Repo Number','fontsize',12) 
-ylabel('Time(s)','fontsize',12)
+ylabel('Number of stored messages','fontsize',12) 
+xlabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
 lgd.FontSize = 9;
+lgd.NumColumns = 3;
 
 
 % Maybe just show one side (irrespective of repo), and how much cache is
@@ -322,7 +323,7 @@ stem3(RC5, ':.');
 % title('Stem plot of Repos Cache Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
-zlabel('Space used(B)','fontsize',12)
+zlabel('Number of cached messages','fontsize',12)
 
 storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30), S6(:, 30)];
 
@@ -410,7 +411,7 @@ xlabel('No. of threads per repository','fontsize',12)
 ylabel('Bandwidth used (B)','fontsize',12)
 
 yyaxis right
-semilogy([2, 4, 8, 10, 12, 16], storages_30);
+semilogy([2, 4, 8, 10, 12, 16], storages_30, 'LineWidth', 1);
 ylabel('Total storage used (B)','fontsize',12)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 9;
@@ -514,7 +515,7 @@ set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
 
 yyaxis right
-plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x');
+plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16', 'Location', 'southoutside');
 lgd1.FontSize = 9;
 lgd1.NumColumns = 3;
