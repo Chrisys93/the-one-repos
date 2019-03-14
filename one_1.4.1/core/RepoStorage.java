@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import core.Settings;
 import core.SimClock;
 
+import applications.ProcApplication;
+
 /** 
  * @author Adrian-Cristian Nicolaescu, University College London
  */
@@ -40,16 +42,22 @@ public class RepoStorage {
 	private long depletedUnProcMessages;
 	private long depletedUnProcMessagesSize;
 	private long oldDepletedUnProcMessagesSize;
+	private long depletedPUnProcMessages;
+	private long depletedPUnProcMessagesSize;
+	private long oldDepletedPUnProcMessagesSize;
 	private long depletedStaticMessages;
 	private long oldDepletedStaticMessagesSize;
 	private long depletedStaticMessagesSize;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
+	private int cachedMessages;
 
 	protected ArrayList<Message> staticMessages;
 	protected ArrayList<Message> processMessages;
 	protected ArrayList<Message> processedMessages;
 	protected ArrayList<Message> storedMessages;
+	
+	private ProcApplication procApp;
 
 	/** value to keep track of used storage */
 	//protected long usedStorage;
@@ -75,10 +83,13 @@ public class RepoStorage {
 		this.depletedProcMessagesSize = 0;
 		this.depletedUnProcMessages = 0;
 		this.depletedUnProcMessagesSize = 0;
+		this.depletedPUnProcMessages = 0;
+		this.depletedPUnProcMessagesSize = 0;
 		this.oldDepletedUnProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
 		this.oldDepletedStaticMessagesSize = 0;
 		this.depletedStaticMessagesSize = 0;
+		this.cachedMessages = 0;
 		if (this.getHost().hasProcessingCapability()){
 			//this.processSize = processSize;
 			this.compressionRate = compressionRate;
@@ -161,10 +172,14 @@ public class RepoStorage {
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
-			/*if(!this.isProcessedFull()){
-				this.processMessage(this.getOldestProcessMessage());
+			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
+				this.procApp = (ProcApplication) app;
 			}
-			else*/ if (this.getOldestStaticMessage() != null) {
+			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
+				this.processMessage(this.getOldestProcessMessage());
+				this.cachedMessages ++;
+			}
+			else if (this.getOldestStaticMessage() != null) {
 				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
 			}
 			else {
@@ -197,8 +212,8 @@ public class RepoStorage {
 	public void addToDeplUnProcMessages(Message sm) {
 		if (sm != null) {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				this.depletedUnProcMessages++;
-				this.depletedUnProcMessagesSize += sm.getSize();
+				this.depletedPUnProcMessages++;
+				this.depletedPUnProcMessagesSize += sm.getSize();
 				this.deleteProcMessage(sm.getId());
 			}
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
@@ -301,6 +316,17 @@ public class RepoStorage {
 		}
 		return processedUsed;
 	}
+	
+	/**
+	 * Returns processed messages as a result of new messages being added.
+	 * This is called every application update. 
+	 * @return The number of messages processed as a result of full storage
+	 */
+	public int getFullCachedMessagesNo() {
+		int proc = this.cachedMessages;
+		this.cachedMessages = 0;
+		return proc;
+	}
 		
 	
 	/**
@@ -401,6 +427,10 @@ public class RepoStorage {
 		return this.depletedUnProcMessages;
 	}
 	
+	public long getNrofDepletedPUnProcMessages() {
+		return this.depletedPUnProcMessages;
+	}
+	
 	public long getNrofDepletedStaticMessages() {		
 		return this.depletedStaticMessages;
 	}
@@ -428,15 +458,29 @@ public class RepoStorage {
 	}
 	
 	/**
-	 * Method that returns depletion BW used in off-loading unprocessed messages to the cloud.
+	 * Method that returns depletion BW used in off-loading static messages to the cloud.
 	 * @param reporting Whether the function is used for reporting, 
 	 * as a final method of the update, or for checking BW usage.
-	 * @return the unprocessed depletion BW used upstream
+	 * @return the static depletion BW used upstream
 	 */
 	public long getDepletedUnProcMessagesBW(boolean reporting) {
 		long procBW = this.depletedUnProcMessagesSize - this.oldDepletedUnProcMessagesSize;
 		if (reporting) {
 			this.oldDepletedUnProcMessagesSize = this.depletedUnProcMessagesSize;
+		}
+		return (procBW);
+	}
+	
+	/**
+	 * Method that returns depletion BW used in off-loading unprocessed messages to the cloud.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the unprocessed depletion BW used upstream
+	 */
+	public long getDepletedPUnProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedPUnProcMessagesSize - this.oldDepletedPUnProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedPUnProcMessagesSize = this.depletedPUnProcMessagesSize;
 		}
 		return (procBW);
 	}
