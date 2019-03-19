@@ -2,59 +2,59 @@
 % the number of runs as variables;
 
 clear
-M1 = dlmread('reports2/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports2/RAMR1', ' ', 0, 2);
-PB1 = dlmread('reports2/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('reports2/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('reports2/RSBWR1', ' ', 0, 2);
-RI1 = dlmread('reports2/RISR1', ' ', 0, 2);
-RP1 = dlmread('reports2/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('reports2/RSMR1', ' ', 0, 2);
+M1 = dlmread('reports2_full_proc/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports2_full_proc/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports2_full_proc/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports2_full_proc/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports2_full_proc/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports2_full_proc/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports2_full_proc/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports2_full_proc/RSMR1', ' ', 0, 2);
 
-M2 = dlmread('reports2/MDMR2', ' ', 0, 2);
-S2 = dlmread('reports2/RAMR2', ' ', 0, 2);
-UB2 = dlmread('reports2/RUPBWR2', ' ', 0, 2);
-PB2 = dlmread('reports2/RPBWR2', ' ', 0, 2);
-SB2 = dlmread('reports2/RSBWR2', ' ', 0, 2);
-RI2 = dlmread('reports2/RISR2', ' ', 0, 2);
-RP2 = dlmread('reports2/RPrMR2', ' ', 0, 2);
-RS2 = dlmread('reports2/RSMR2', ' ', 0, 2);
+M2 = dlmread('reports2_full_proc/MDMR2', ' ', 0, 2);
+S2 = dlmread('reports2_full_proc/RAMR2', ' ', 0, 2);
+UB2 = dlmread('reports2_full_proc/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('reports2_full_proc/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('reports2_full_proc/RSBWR2', ' ', 0, 2);
+RI2 = dlmread('reports2_full_proc/RISR2', ' ', 0, 2);
+RP2 = dlmread('reports2_full_proc/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('reports2_full_proc/RSMR2', ' ', 0, 2);
 
-M3 = dlmread('reports2/MDMR3', ' ', 0, 2);
-S3 = dlmread('reports2/RAMR3', ' ', 0, 2);
-PB3 = dlmread('reports2/RPBWR3', ' ', 0, 2);
-UB3 = dlmread('reports2/RUPBWR3', ' ', 0, 2);
-SB3 = dlmread('reports2/RSBWR3', ' ', 0, 2);
-RI3 = dlmread('reports2/RISR3', ' ', 0, 2);
-RP3 = dlmread('reports2/RPrMR3', ' ', 0, 2);
-RS3 = dlmread('reports2/RSMR3', ' ', 0, 2);
+M3 = dlmread('reports2_full_proc/MDMR3', ' ', 0, 2);
+S3 = dlmread('reports2_full_proc/RAMR3', ' ', 0, 2);
+PB3 = dlmread('reports2_full_proc/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('reports2_full_proc/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('reports2_full_proc/RSBWR3', ' ', 0, 2);
+RI3 = dlmread('reports2_full_proc/RISR3', ' ', 0, 2);
+RP3 = dlmread('reports2_full_proc/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('reports2_full_proc/RSMR3', ' ', 0, 2);
 
-M4 = dlmread('reports2/MDMR4', ' ', 0, 2);
-S4 = dlmread('reports2/RAMR4', ' ', 0, 2);
-PB4 = dlmread('reports2/RPBWR4', ' ', 0, 2);
-UB4 = dlmread('reports2/RUPBWR4', ' ', 0, 2);
-SB4 = dlmread('reports2/RSBWR4', ' ', 0, 2);
-RI4 = dlmread('reports2/RISR4', ' ', 0, 2);
-RP4 = dlmread('reports2/RPrMR4', ' ', 0, 2);
-RS4 = dlmread('reports2/RSMR4', ' ', 0, 2);
+M4 = dlmread('reports2_full_proc/MDMR4', ' ', 0, 2);
+S4 = dlmread('reports2_full_proc/RAMR4', ' ', 0, 2);
+PB4 = dlmread('reports2_full_proc/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('reports2_full_proc/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('reports2_full_proc/RSBWR4', ' ', 0, 2);
+RI4 = dlmread('reports2_full_proc/RISR4', ' ', 0, 2);
+RP4 = dlmread('reports2_full_proc/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('reports2_full_proc/RSMR4', ' ', 0, 2);
 
-M5 = dlmread('reports2/MDMR5', ' ', 0, 2);
-S5 = dlmread('reports2/RAMR5', ' ', 0, 2);
-UB5 = dlmread('reports2/RUPBWR5', ' ', 0, 2);
-PB5 = dlmread('reports2/RPBWR5', ' ', 0, 2);
-SB5 = dlmread('reports2/RSBWR5', ' ', 0, 2);
-RI5 = dlmread('reports2/RISR5', ' ', 0, 2);
-RP5 = dlmread('reports2/RPrMR5', ' ', 0, 2);
-RS5 = dlmread('reports2/RSMR5', ' ', 0, 2);
+M5 = dlmread('reports2_full_proc/MDMR5', ' ', 0, 2);
+S5 = dlmread('reports2_full_proc/RAMR5', ' ', 0, 2);
+UB5 = dlmread('reports2_full_proc/RUPBWR5', ' ', 0, 2);
+PB5 = dlmread('reports2_full_proc/RPBWR5', ' ', 0, 2);
+SB5 = dlmread('reports2_full_proc/RSBWR5', ' ', 0, 2);
+RI5 = dlmread('reports2_full_proc/RISR5', ' ', 0, 2);
+RP5 = dlmread('reports2_full_proc/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('reports2_full_proc/RSMR5', ' ', 0, 2);
 
-M6 = dlmread('reports2/MDMR6', ' ', 0, 2);
-S6 = dlmread('reports2/RAMR6', ' ', 0, 2);
-PB6 = dlmread('reports2/RPBWR6', ' ', 0, 2);
-UB6 = dlmread('reports2/RUPBWR6', ' ', 0, 2);
-SB6 = dlmread('reports2/RSBWR6', ' ', 0, 2);
-RI6 = dlmread('reports2/RISR6', ' ', 0, 2);
-RP6 = dlmread('reports2/RPrMR6', ' ', 0, 2);
-RS6 = dlmread('reports2/RSMR6', ' ', 0, 2);
+M6 = dlmread('reports2_full_proc/MDMR6', ' ', 0, 2);
+S6 = dlmread('reports2_full_proc/RAMR6', ' ', 0, 2);
+PB6 = dlmread('reports2_full_proc/RPBWR6', ' ', 0, 2);
+UB6 = dlmread('reports2_full_proc/RUPBWR6', ' ', 0, 2);
+SB6 = dlmread('reports2_full_proc/RSBWR6', ' ', 0, 2);
+RI6 = dlmread('reports2_full_proc/RISR6', ' ', 0, 2);
+RP6 = dlmread('reports2_full_proc/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('reports2_full_proc/RSMR6', ' ', 0, 2);
 
 % R6 = dlmread('proc_sims/RDMR6', ' ', 0, 1);
 % M6 = dlmread('proc_sims/MDMR6', ' ', 0, 1);
@@ -313,7 +313,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'b-+', 1:80, upspeeds3_total, 'g-o', 1:80, upspeeds4_total, 'm-X', 1:80, upspeeds6_total, 'y-*', 1:80, inspeeds1, '-+', 1:80, inspeeds3, '-o', 1:80, inspeeds4, '-X', 1:80, inspeeds6, '-*', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000', 'message input for 200 cars', 'message input for 400 cars', 'message input for 500 cars', 'message input for 1000 cars', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-lgd1.NumColumns = 3;
+% lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 xlim([17 48]);
 ylim([0 10*10^6]);

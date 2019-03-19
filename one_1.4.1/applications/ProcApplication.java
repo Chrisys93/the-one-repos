@@ -137,7 +137,8 @@ public class ProcApplication extends Application {
 		if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
 			Message tempp = host.getStorageSystem().getOldestProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
-			for (int i = 0; i<this.proc_rate && 
+			
+			for (int i = host.getStorageSystem().getFullCachedMessagesNo(); i<this.proc_rate && 
 				!host.getStorageSystem().isProcessingEmpty() && 
 				!host.getStorageSystem().isProcessedFull(); i++) {
 				tempp = host.getStorageSystem().getOldestProcessMessage();
