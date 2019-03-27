@@ -319,10 +319,10 @@ for repo = 1:120
     inspeeds4(repo, :) = mean(RI4(1:10000, repo));
 end
 
-mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 541:855));
-             mean(M2(10000, 1:40)), mean(M2(10000, 41:840)), mean(M2(10000, 541:855));
-             mean(M3(10000, 1:40)), mean(M3(10000, 41:840)), mean(M3(10000, 541:855));
-             mean(M4(10000, 1:40)), mean(M4(10000, 41:840)), mean(M4(10000, 541:855))];
+mdeleted1 = [mean(M1(10000, 1:40)), mean(M1(10000, 41:840)), mean(M1(10000, 841:855));
+             mean(M2(10000, 1:40)), mean(M2(10000, 41:840)), mean(M2(10000, 841:855));
+             mean(M3(10000, 1:40)), mean(M3(10000, 41:840)), mean(M3(10000, 841:855));
+             mean(M4(10000, 1:40)), mean(M4(10000, 41:840)), mean(M4(10000, 841:855))];
 for i = 1:10000
     RS1_mean(i) = mean(RS1(i, :));
     RP1_mean(i) = mean(RP1(i, :));
@@ -485,8 +485,6 @@ grid on
 plot([40, 80, 100, 120], upspeeds1_30(:, 1), '-o', [40, 80, 100, 120], upspeeds1_30(:, 2), ':o', [40, 80, 100, 120], upspeeds1_30(:, 3), '-.o', 'LineWidth', 1);
 plot([40, 80, 100, 120], inspeeds1_30, '-^', 'LineWidth', 1);
 ylabel('Bandwidth of input (B)','fontsize',12)
-lgd = legend();
-lgd.FontSize = 10;
 xlabel('No. of Repos in simulation','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 
