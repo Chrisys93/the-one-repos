@@ -4,6 +4,9 @@
  */
 
 package applications;
+
+import java.util.Random;
+
 import core.Application;
 import core.DTNHost;
 import core.Message;
@@ -19,10 +22,12 @@ import core.SimClock;
 public class ProcApplication extends Application {
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
-	/** Run in passive mode - don't process messages, but store */
+	/** Maximum depletion bandwidth */
 	public static final String DEPL_RATE = "depletionRate";
-	/** Run in passive mode - don't process messages, but store */
+	/** Number of processing threads */
 	public static final String PROC_NO = "coreNo";
+	/** Maximum period of time (minimum update frequency) allocated to subscriber for data request */
+	public static final String DEPL_REQ = "maxReq";
 	
 	/** Application ID */
 	public static final String APP_ID = "ProcApplication";
@@ -33,8 +38,11 @@ public class ProcApplication extends Application {
 	private double 	lastCheck = 0;
 	private boolean passive = false;
 	private long 	depl_rate = 0;
+	private double	maxReq = 1;
 	private int		proc_rate = 4;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
+
+	private Random rng;
 	
 	/** 
 	 * Creates a new proc application with the given settings.
@@ -48,9 +56,15 @@ public class ProcApplication extends Application {
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
 		}
+		if (s.contains(DEPL_REQ)){
+			this.maxReq = s.getDouble(DEPL_REQ);
+		}
 		if (s.contains(PROC_NO)){
 			this.proc_rate = s.getInt(PROC_NO);
 		}
+		
+		this.rng = new Random();
+		
 		super.setAppID(APP_ID);
 	}
 	
@@ -66,6 +80,7 @@ public class ProcApplication extends Application {
 		this.passive = a.isPassive();
 		this.depl_rate = a.getDeplRate();
 		this.proc_rate = a.getProcRate();
+		this.maxReq = a.getDeplReq();
 		//this.processedSize = a.getProcessedSize();
 	}
 	
@@ -92,12 +107,6 @@ public class ProcApplication extends Application {
 
 			host.getStorageSystem().addToStoredMessages(msg);
 			
-			/**
-			 * TODO:
-			 * PROCESSING PART HERE, with processing rate and delay:
-			 * messages are processed at a certain rate/sec, obtaining messages according 
-			 * to processMessage() method, in RepoStorage
-			 */
 			if (type.equalsIgnoreCase("proc")) {				
 				if ((!host.getStorageSystem().isProcessingEmpty()) && (!host.getStorageSystem().isProcessedFull())) {
 					double delayed = (double)msg.getProperty("delay");
@@ -120,14 +129,7 @@ public class ProcApplication extends Application {
 	public void update(DTNHost host) {
 
 		//System.out.println("processor update is accessed");
-
-		/**
-		 * TODO:
-		 * DEPLETION PART HERE, with depletion rate:
-		 * messages are depleted at a certain rate/sec, with priority
-		 * being given to processed messages, and if not, unprocessed messages
-		 * being depleted instead
-		 */
+		double request = rng.nextDouble()*this.maxReq;
 		double curTime = SimClock.getTime();
 		int procno = 0;
 		
@@ -139,13 +141,14 @@ public class ProcApplication extends Application {
 
 			Message tempp = host.getStorageSystem().getOldestProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
+			double creation = (double)tempp.getProperty("created");
+			double freshness = (double)tempp.getProperty("freshness");
 			for (int i = host.getStorageSystem().getFullCachedMessagesNo(); i<this.proc_rate && 
 				!host.getStorageSystem().isProcessingEmpty() && 
 				!host.getStorageSystem().isProcessedFull(); i++) {
 				tempp = host.getStorageSystem().getOldestProcessMessage();
-				double creation = (double)tempp.getProperty("created");
-				double freshness = (double)tempp.getProperty("freshness");
-				tempp = host.getStorageSystem().getOldestProcessMessage();
+				creation = (double)tempp.getProperty("created");
+				freshness = (double)tempp.getProperty("freshness");
 				delayed = (double)tempp.getProperty("delay");
 				
 				if (curTime - this.lastProc >= delayed && curTime -  creation < freshness) {
@@ -159,7 +162,7 @@ public class ProcApplication extends Application {
 					break;
 				}
 			}
-			if (procno == this.proc_rate) {
+			if (procno == this.proc_rate - 1) {
 				this.lastProc = curTime;
 			}
 		}
@@ -171,7 +174,7 @@ public class ProcApplication extends Application {
 		/* TODO:
 		 * All of this needs to be modified.
 		 */
-		if (curTime - this.lastDepl >= 1) {
+		if (curTime - this.lastDepl >= request) {
 			//int sdepleted = 0;
 			//int pdepleted = 0;
 			
@@ -190,10 +193,12 @@ public class ProcApplication extends Application {
 					if (!host.getStorageSystem().isProcessedEmpty()) {
 						Message temp = host.getStorageSystem().getOldestProcessedMessage();
 						host.getStorageSystem().deleteProcessedMessage(temp.getId());
+						Message tempp = host.getStorageSystem().getNewestProcessMessage();
+						double delayed = (double)tempp.getProperty("delay");
+						double creation = (double)tempp.getProperty("created");
+						double freshness = (double)tempp.getProperty("freshness");
 						if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
-							Message tempp = host.getStorageSystem().getNewestProcessMessage();
-							double delayed = (double)tempp.getProperty("delay");
-							if (curTime - this.lastProc >= delayed) {
+							if (curTime - this.lastProc >= delayed && curTime -  creation < freshness) {
 								if (!host.getStorageSystem().isProcessingEmpty() && 
 									!host.getStorageSystem().isProcessedFull() ) {
 									host.getStorageSystem().processMessage(tempp);
@@ -302,6 +307,13 @@ public class ProcApplication extends Application {
 	 */
 	public long getDeplRate() {
 		return depl_rate;
+	}
+
+	/**
+	 * @return depletion rate
+	 */
+	public long getDeplReq() {
+		return maxReq;
 	}
 
 	/**
