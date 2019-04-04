@@ -1,0 +1,103 @@
+#
+# Default settings for the simulation
+#
+
+## Scenario settings
+Scenario.name = sim1_scenario
+Scenario.endTime = 10800
+
+
+RepoMessageLocationReport.output = [reports1/RMLR1;reports1/RMLR2; reports1/RMLR3; reports1/RMLR4; reports1/RMLR5; reports1/RMLR6; reports1/RMLR7; reports1/RMLR8]
+RepoStoredMessageLocationReport.output = [reports1/RSMR1;reports1/RSMR2; reports1/RSMR3; reports1/RSMR4; reports1/RSMR5; reports1/RSMR6; reports1/RSMR7; reports1/RSMR8]
+MobileMessageLocationReport.output = [reports1/MMLR1;reports1/MMLR2; reports1/MMLR3; reports1/MMLR4; reports1/MMLR5; reports1/MMLR6; reports1/MMLR7; reports1/MMLR8]
+RepoIncomingSpeedsReport.output = [reports1/RISR1;reports1/RISR2; reports1/RISR3; reports1/RISR4; reports1/RISR5; reports1/RISR6; reports1/RISR7; reports1/RISR8]
+RepoDeletedMessagesReport.output = [reports1/RDMR1;reports1/RDMR2; reports1/RDMR3; reports1/RDMR4; reports1/RDMR5; reports1/RDMR6; reports1/RDMR7; reports1/RDMR8]
+MobileDeletedMessagesReport.output = [reports1/MDMR1;reports1/MDMR2; reports1/MDMR3; reports1/MDMR4; reports1/MDMR5; reports1/MDMR6; reports1/MDMR7; reports1/MDMR8]
+RepoProcessingMessageLocationReport.output = [reports1/RPrMR1; reports1/RPrMR2; reports1/RPrMR3; reports1/RPrMR4; reports1/RPrMR5; reports1/RPrMR6; reports1/RPrMR7; reports1/RPrMR8]
+RepoProcessedMessageLocationReport.output = [reports1/RPMR1; reports1/RPMR2; reports1/RPMR3; reports1/RPMR4; reports1/RPMR5; reports1/RPMR6; reports1/RPMR7; reports1/RPMR8]
+RepoAllMessagesLocationReport.output = [reports1/RAMR1;reports1/RAMR2; reports1/RAMR3; reports1/RAMR4; reports1/RAMR5; reports1/RAMR6; reports1/RAMR7; reports1/RAMR8]
+
+RepoDepletedProcBWReport.output = [reports1/RPBWR1;reports1/RPBWR2; reports1/RPBWR3; reports1/RPBWR4; reports1/RPBWR5; reports1/RPBWR6; reports1/RPBWR7; reports1/RPBWR8]
+RepoDepletedUnProcBWReport.output = [reports1/RUPBWR1;reports1/RUPBWR2; reports1/RUPBWR3; reports1/RUPBWR4; reports1/RUPBWR5; reports1/RUPBWR6; reports1/RUPBWR7; reports1/RUPBWR8]
+RepoDepletedStorageBWReport.output = [reports1/RSBWR1; reports1/RSBWR2; reports1/RSBWR3; reports1/RSBWR4; reports1/RSBWR5; reports1/RSBWR6; reports1/RSBWR7; reports1/RSBWR8]
+
+## Default settings for some routers settings
+ProphetRouter.secondsInTimeUnit = 30
+SprayAndWaitRouter.nrofCopies = 6
+SprayAndWaitRouter.binaryMode = true
+
+## Optimization settings -- these affect the speed of the simulation
+## see World class for details.
+Optimization.cellSizeMult = 5
+Optimization.randomizeUpdateOrder = true
+
+
+## GUI settings
+
+# GUI underlay image settings
+GUI.UnderlayImage.fileName = data/helsinki_underlay.png
+# Image offset in pixels (x, y)
+GUI.UnderlayImage.offset = 64, 20
+# Scaling factor for the image
+GUI.UnderlayImage.scale = 4.75
+# Image rotation (radians)
+GUI.UnderlayImage.rotate = -0.015
+
+# how many events to show in the log panel (default = 30)
+GUI.EventLogPanel.nrofEvents = 100
+# Regular Expression log filter (see Pattern-class from the Java API for RE-matching details)
+#GUI.EventLogPanel.REfilter = .*p[1-9]<->p[1-9]$
+
+
+# Define new application
+procApp.type = ProcApplication
+# Messages to be depleted (processing first and, if any left, nonprocessing, after)
+procApp.depletionRate = [5M; 7M; 9M; 10M; 15M; 20M; 25M; 30M]
+procApp.passive = false
+procApp.coreNo = 8
+
+# Define new application
+procApp1.type = ProcGenApplication
+procApp1.interval = 5
+procApp1.delay = 0.5
+procApp1.destinationName = r
+procApp1.procSize = 1M
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp1.passiveRate = 2,0
+procApp1.passive = false
+
+# Define new application
+procApp2.type = ProcGenApplication
+procApp2.interval = 2
+procApp2.delay = 0.1
+procApp2.destinationName = r
+procApp2.procSize = 1M
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp2.passiveRate = 0,2
+procApp2.passive = false
+
+# Define new application
+procApp3.type = ProcGenApplication
+procApp3.interval = 2
+procApp3.delay = 0.2
+procApp3.destinationName = r
+procApp3.procSize = 1M
+# Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
+procApp3.passiveRate = 1,2
+procApp3.passive = false
+
+# Set proc app for all nodes
+Group1.nrofApplications = 1
+Group2.nrofApplications = 1
+Group3.nrofApplications = 1
+Group4.nrofApplications = 1
+Group5.nrofApplications = 1
+Group6.nrofApplications = 1
+Group1.application1 = procApp
+Group2.application1 = procApp1
+Group3.application1 = procApp2
+Group4.application1 = procApp3
+Group5.application1 = procApp3
+Group6.application1 = procApp3
+
+

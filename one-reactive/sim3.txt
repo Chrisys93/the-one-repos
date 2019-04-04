@@ -1,0 +1,27 @@
+## Scenario settings
+Scenario.name = sim3_scenario
+
+Group1.nrofHosts = [40; 80; 100; 120; 144]
+
+Group3.nrofHosts = 800
+
+procApp.depletionRate = 15M
+procApp.coreNo = 10
+
+
+RepoStoredMessageLocationReport.output = [reports3/RSMR1;reports3/RSMR2;reports3/RSMR3; reports3/RSMR4; reports3/RSMR5]
+RepoIncomingSpeedsReport.output = [reports3/RISR1;reports3/RISR2;reports3/RISR3; reports3/RISR4; reports3/RISR5]
+RepoDeletedMessagesReport.output = [reports3/RDMR1;reports3/RDMR2;reports3/RDMR3; reports3/RDMR4; reports3/RDMR5]
+MobileDeletedMessagesReport.output = [reports3/MDMR1;reports3/MDMR2;reports3/MDMR3; reports3/MDMR4; reports3/MDMR5]
+RepoProcessingMessageLocationReport.output = [reports3/RPrMR1;reports3/RPrMR2;reports3/RPrMR3; reports3/RPrMR4; reports3/RPrMR5]
+RepoProcessedMessageLocationReport.output = [reports3/RPMR1;reports3/RPMR2;reports3/RPMR3; reports3/RPMR4; reports3/RPMR5]
+RepoAllMessagesLocationReport.output = [reports3/RAMR1;reports3/RAMR2;reports3/RAMR3; reports3/RAMR4; reports3/RAMR5]
+
+RepoDepletedProcBWReport.output = [reports3/RPBWR1;reports3/RPBWR2;reports3/RPBWR3; reports3/RPBWR4; reports3/RPBWR5]
+RepoDepletedUnProcBWReport.output = [reports3/RUPBWR1;reports3/RUPBWR2;reports3/RUPBWR3; reports3/RUPBWR4; reports3/RUPBWR5]
+RepoDepletedStorageBWReport.output = [reports3/RSBWR1; reports3/RSBWR2; reports3/RSBWR3; reports3/RSBWR4; reports3/RSBWR5]
+
+
+
+
+
