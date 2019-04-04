@@ -86,6 +86,7 @@ public class ProcApplication extends Application {
 		if (host.hasStorageCapability()){
 			double curTime = SimClock.getTime();
 			String type = (String) msg.getProperty("type");
+			//msg.updateProperty("received", curTime);;
 	
 			//System.out.println("handle is accessed on host: " + host);
 
@@ -135,15 +136,19 @@ public class ProcApplication extends Application {
 		 * accepted, for any reason.
 		 */
 		if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
+
 			Message tempp = host.getStorageSystem().getOldestProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
-			
 			for (int i = host.getStorageSystem().getFullCachedMessagesNo(); i<this.proc_rate && 
 				!host.getStorageSystem().isProcessingEmpty() && 
 				!host.getStorageSystem().isProcessedFull(); i++) {
 				tempp = host.getStorageSystem().getOldestProcessMessage();
+				double creation = (double)tempp.getProperty("created");
+				double freshness = (double)tempp.getProperty("freshness");
+				tempp = host.getStorageSystem().getOldestProcessMessage();
 				delayed = (double)tempp.getProperty("delay");
-				if (curTime - this.lastProc >= delayed) {
+				
+				if (curTime - this.lastProc >= delayed && curTime -  creation < freshness) {
 					host.getStorageSystem().processMessage(tempp);
 				}
 				else if (curTime - this.lastProc >= (double)host.getStorageSystem().getNewestProcessMessage().getProperty("delay")){
@@ -154,7 +159,7 @@ public class ProcApplication extends Application {
 					break;
 				}
 			}
-			if (procno == this.proc_rate - 1) {
+			if (procno == this.proc_rate) {
 				this.lastProc = curTime;
 			}
 		}
@@ -163,6 +168,9 @@ public class ProcApplication extends Application {
 		 * Depleting processed messages; and if there are none, deplete stored messages
 		 */
 		
+		/* TODO:
+		 * All of this needs to be modified.
+		 */
 		if (curTime - this.lastDepl >= 1) {
 			//int sdepleted = 0;
 			//int pdepleted = 0;

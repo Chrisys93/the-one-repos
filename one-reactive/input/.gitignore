@@ -26,3 +26,6 @@
 /ReposDepletionCreateEvent.class
 /ReposDepletionEvent.class
 /ReposStorageConstantDepletion.class
+/ReposProcDepletionCreateEvent.class
+/ReposProcDepletionEvent.class
+/ReposStorageConstantProcDepletion.class

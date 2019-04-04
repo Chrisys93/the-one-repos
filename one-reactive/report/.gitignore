@@ -33,3 +33,14 @@
 /TotalContactTimeReport.class
 /TotalEncountersReport.class
 /UniqueEncountersReport.class
+/MobileDeletedMessagesReport.class
+/RepoAllMessagesLocationReport.class
+/RepoDepletedPUnProcBWReport.class
+/RepoDepletedProcBWReport.class
+/RepoDepletedProcReport.class
+/RepoDepletedStorageBWReport.class
+/RepoDepletedStorageReport.class
+/RepoDepletedUnProcBWReport.class
+/RepoProcessedMessageLocationReport.class
+/RepoProcessingMessageLocationReport.class
+/RepoUnprocessedMessagesLocationReport.class

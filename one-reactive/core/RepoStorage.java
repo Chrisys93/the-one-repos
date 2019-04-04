@@ -175,9 +175,15 @@ public class RepoStorage {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
 			}
-			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
-				this.processMessage(this.getOldestProcessMessage());
+			Message tempp = host.getStorageSystem().getOldestProcessMessage();
+			double creation = (double)tempp.getProperty("created");
+			double freshness = (double)tempp.getProperty("freshness");
+			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate() && SimClock.getTime() -  creation < freshness){
+				this.processMessage(tempp);
 				this.cachedMessages ++;
+			}
+			else if ((double)(this.getOldestStaticMessage().getProperty("freshness")) < SimClock.getTime() - (double)(this.getOldestStaticMessage().getProperty("created"))) {
+				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
 			}
 			else if (this.getOldestStaticMessage() != null) {
 				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
@@ -585,7 +591,7 @@ public class RepoStorage {
 			if (oldest == null ) {
 				oldest = m;
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+			else if ((double)(oldest.getProperty("created")) > (double)(m.getProperty("created"))) {
 				oldest = m;
 			}
 		}

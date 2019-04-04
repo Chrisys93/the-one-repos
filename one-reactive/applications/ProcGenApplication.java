@@ -36,8 +36,12 @@ public class ProcGenApplication extends Application {
 	public static final String PROC_PASSIVE_RATE = "passiveRate";
 	/** Proc generation interval */
 	public static final String PROC_INTERVAL = "interval";
-	/** Processing delay */
+	/** Message delay */
 	public static final String PROC_DELAY = "delay";
+	/** Processing freshness period for processing messages */
+	public static final String PROC_FRESHP = "fresh_proc";
+	/** Processing freshness period for non-processing messages */
+	public static final String PROC_FRESHS = "fresh_nonproc";
 	/** Destination address range - inclusive lower, exclusive upper */
 	public static final String PROC_DEST_NAME = "destinationName";
 	/** Seed for the app's random number generator */
@@ -52,6 +56,8 @@ public class ProcGenApplication extends Application {
 	private double	lastProc = 0;
 	private double	interval = 5;
 	private double	delay = 1;
+	private double	freshp = 2;
+	private double	freshs = 2;
 	private boolean passive = false;
 	private double[] passive_rate = {1, 1};
 	private int		seed = 0;
@@ -76,6 +82,12 @@ public class ProcGenApplication extends Application {
 		}
 		if (s.contains(PROC_DELAY)){
 			this.delay = s.getDouble(PROC_DELAY);
+		}
+		if (s.contains(PROC_FRESHP)){
+			this.freshp = s.getDouble(PROC_FRESHP);
+		}
+		if (s.contains(PROC_FRESHS)){
+			this.freshs = s.getDouble(PROC_FRESHS);
 		}
 		if (s.contains(PROC_SEED)){
 			this.seed = s.getInt(PROC_SEED);
@@ -106,7 +118,9 @@ public class ProcGenApplication extends Application {
 		this.procSize = a.getProcSize();
 		this.rng = new Random(this.seed);
 		this.passive_rate = a.getPassiveRate();
-		this.delay = 1;
+		this.delay = a.getDelay();
+		this.freshp = a.getFreshp();
+		this.freshs = a.getFreshs();
 	}
 
 	/** 
@@ -166,7 +180,9 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 					SimClock.getIntTime() + "-" + host.getAddress(),
 					getProcSize());
+				m.addProperty("created", curTime);
 				m.addProperty("type", "nonproc");
+				m.addProperty("freshness", this.freshs);
 				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
 				
@@ -182,7 +198,9 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "proc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
+				m.addProperty("created", curTime);
 				m.addProperty("type", "proc");
+				m.addProperty("freshness", this.freshp);
 				m.addProperty("delay", this.delay);
 				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
@@ -192,7 +210,9 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
+				m.addProperty("created", curTime);
 				m.addProperty("type", "nonproc");
+				m.addProperty("freshness", this.freshs);
 				m.setAppID("ProcApplication");
 				host.createNewMessage(m);
 			}
@@ -230,6 +250,48 @@ public class ProcGenApplication extends Application {
 	 */
 	public void setInterval(double interval) {
 		this.interval = interval;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getDelay() {
+		return delay;
+	}
+
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setDelay(double delay) {
+		this.delay = delay;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getFreshp() {
+		return freshp;
+	}
+
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setFreshp(double freshp) {
+		this.freshp = freshp;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getFreshs() {
+		return freshp;
+	}
+
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setFreshs(double freshs) {
+		this.freshs = freshs;
 	}
 	
 	/**
