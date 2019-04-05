@@ -333,6 +333,15 @@ public class RepoStorage {
 		this.cachedMessages = 0;
 		return proc;
 	}
+	
+	/**
+	 * Adds processed messages to cache and sets more processed messages for the update. 
+	 * @return The number of messages processed as a result of full storage
+	 */
+	public int addToCachedMessagesNo(int no) {
+		this.cachedMessages += no;
+		return this.cachedMessages;
+	}
 		
 	
 	/**

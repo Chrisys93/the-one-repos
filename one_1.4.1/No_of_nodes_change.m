@@ -259,7 +259,7 @@ plot([200, 300, 400, 500, 800, 1000], inspeeds1_30, 'LineWidth', 1);
 % subplot(1,2,2);
 yyaxis right
 semilogy([200, 300, 400, 500, 800, 1000], storages_30, 'LineWidth', 1);
-ylabel('Bandwidth of input (B)','fontsize',12)
+ylabel('Total storage used (B)','fontsize',12)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'total data input', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 10;
 
