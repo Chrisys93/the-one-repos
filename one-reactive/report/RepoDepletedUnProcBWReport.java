@@ -118,7 +118,7 @@ public class RepoDepletedUnProcBWReport extends Report implements UpdateListener
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getDepletedUnProcMessagesBW(true);
+							double totalStoredMsgs =  host.getStorageSystem().getDepletedUnProcMessagesBW(true, false);
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

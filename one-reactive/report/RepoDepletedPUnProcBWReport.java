@@ -118,7 +118,7 @@ public class RepoDepletedPUnProcBWReport extends Report implements UpdateListene
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getDepletedPUnProcMessagesBW(true);
+							double totalStoredMsgs =  host.getStorageSystem().getDepletedPUnProcMessagesBW(true, false);
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;

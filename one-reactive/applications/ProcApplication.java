@@ -6,6 +6,7 @@
 package applications;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import core.Application;
 import core.DTNHost;
@@ -42,7 +43,7 @@ public class ProcApplication extends Application {
 	private int		proc_rate = 4;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
 
-	//private Random rng;
+	private Random rng;
 	
 	/** 
 	 * Creates a new proc application with the given settings.
@@ -101,7 +102,7 @@ public class ProcApplication extends Application {
 		if (host.hasStorageCapability()){
 			double curTime = SimClock.getTime();
 			String type = (String) msg.getProperty("type");
-			//msg.updateProperty("received", curTime);;
+			msg.updateProperty("received", curTime);
 	
 			//System.out.println("handle is accessed on host: " + host);
 
@@ -113,7 +114,7 @@ public class ProcApplication extends Application {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.lastProc >= delayed) {
 						host.getStorageSystem().processMessage(msg);
-						this.lastProc = curTime;
+						host.getStorageSystem().addToCachedMessagesNo(1);
 					}
 				}
 			}
@@ -128,45 +129,47 @@ public class ProcApplication extends Application {
 	 */
 	@Override
 	public void update(DTNHost host) {
+		
+		/**
+		 * TODO:
+		 * Review this whole update process, for freshness, priority and 
+		 * processing/non-processing precedence
+		 */
 
 		//System.out.println("processor update is accessed");
 		double curTime = SimClock.getTime();
-		int procno = 0;
 		
 		/**
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason.
 		 */
-		if (host.getStorageSystem().getOldestProcessMessage() != null && 
+		if (host.getStorageSystem().getOldestProcessMessage(true) != null && 
 			(!host.getStorageSystem().isProcessedFull())) {
-
-			Message tempp = host.getStorageSystem().getOldestProcessMessage();
-			double delayed = (double)tempp.getProperty("delay");
-			double creation = (double)tempp.getProperty("created");
-			double freshness = (double)tempp.getProperty("freshness");
+			
+			/**
+			 * NOTE: It can be safely assumed that, when information is sent from the
+			 * 		Edge and received, the producer app provides the freshest information
+			 * 		available.
+			 */
 			
 			for (int i = host.getStorageSystem().getFullCachedMessagesNo(); i<this.proc_rate && 
 				!host.getStorageSystem().isProcessingEmpty() && 
-				!host.getStorageSystem().isProcessedFull(); i++) {
+				!host.getStorageSystem().isProcessedFull() &&
+				host.getStorageSystem().getOldestProcessMessage(true) != null;i++) {
 				
-				tempp = host.getStorageSystem().getOldestProcessMessage();
-				creation = (double)tempp.getProperty("created");
-				freshness = (double)tempp.getProperty("freshness");
-				delayed = (double)tempp.getProperty("delay");
+				Message tempp = host.getStorageSystem().getOldestProcessMessage(true);
+				double delayed = (double)tempp.getProperty("delay");
 				
-				if (curTime - this.lastProc >= delayed && curTime -  creation < freshness) {
+				if (curTime - this.lastProc >= delayed) {
 					host.getStorageSystem().processMessage(tempp);
 				}
-				else if (curTime - this.lastProc >= (double)host.getStorageSystem().getNewestProcessMessage().getProperty("delay")){
+				/*else if (curTime - this.lastProc >= (double)host.getStorageSystem().getNewestProcessMessage().getProperty("delay")){
 					tempp = host.getStorageSystem().getNewestProcessMessage();
 					host.getStorageSystem().processMessage(tempp);
-				}
+				}*/
 				else {
 					break;
 				}
-			}
-			if (procno == this.proc_rate - 1) {
-				this.lastProc = curTime;
 			}
 		}
 		
@@ -177,13 +180,15 @@ public class ProcApplication extends Application {
 		/* TODO:
 		 * All of this needs to be modified.
 		 */
-		double request = new Random().nextDouble() * this.maxReq;
+		//double cst = new rng.nextDouble();
+		double request = ThreadLocalRandom.current().nextDouble(0.1, this.maxReq);
+		//System.out.println("Request is: "+request+" and maxReq is "+this.maxReq+ " and proc rate "+this.proc_rate);
 		if (curTime - this.lastDepl >= request) {
-			//int sdepleted = 0;
-			//int pdepleted = 0;
 			
 			long deplBW = 0;
-			while (deplBW<this.depl_rate && ((host.getStorageSystem().getProcessedMessagesSize() + host.getStorageSystem().getStaticMessagesSize()) > this.depl_rate)) {
+			while (deplBW<this.depl_rate && 
+					host.getStorageSystem().getProcessedMessagesSize() + host.getStorageSystem().getStaticMessagesSize() + host.getStorageSystem().getProcMessagesSize() > this.depl_rate &&
+					!host.getStorageSystem().isProcessedEmpty() && !host.getStorageSystem().isStorageEmpty()) {
 				/* 
 				 * In order to make the system (kind of) fair, we want to make sure that it does not get overflowed 
 				 * by static messages and processed messages are not depleted, past a point, and neither the other
@@ -201,49 +206,60 @@ public class ProcApplication extends Application {
 						
 						Message tempp = host.getStorageSystem().getNewestProcessMessage();
 						double delayed = (double)tempp.getProperty("delay");
-						double creation = (double)tempp.getProperty("created");
+						double received = (double)tempp.getProperty("received");
 						double freshness = (double)tempp.getProperty("freshness");
 						
-						if (host.getStorageSystem().getOldestProcessMessage() != null && 
+						if (host.getStorageSystem().getOldestProcessMessage(true) != null && 
 							(!host.getStorageSystem().isProcessedFull())) {
-							if (curTime - this.lastProc >= delayed && curTime -  creation < freshness) {
+							if (curTime - this.lastProc >= delayed && curTime -  received < freshness) {
 								if (!host.getStorageSystem().isProcessingEmpty() && 
 									!host.getStorageSystem().isProcessedFull() ) {
 									host.getStorageSystem().processMessage(tempp);
-									procno++;
+									host.getStorageSystem().addToCachedMessagesNo(1);
 								}
-								this.lastProc = curTime;
 							}
 						}
 						//pdepleted += 1;
 						//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 					}
 					/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
-					else if (host.getStorageSystem().getOldestStaticMessage() != null){
-						Message temp = host.getStorageSystem().getOldestStaticMessage();
+					else if (host.getStorageSystem().getOldestStaticMessage(true) != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage(true);
+						host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().deleteStaticMessage(temp.getId());
+					}
+					else if (host.getStorageSystem().getOldestStaticMessage(false) != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage(false);
+						host.getStorageSystem().addToDeplUnProcMessages(temp);
+					}
+					/* Message to be processed is offloaded to the cloud */
+					else {
+						Message tempc = host.getStorageSystem().getNewestProcessMessage();
+						host.getStorageSystem().addToDeplUnProcMessages(tempc);
+						System.out.println("Request is: "+request+" and maxReq is "+this.maxReq+ " and current BW: "+deplBW);
+					}
+				}
+				else {
+					if (host.getStorageSystem().getOldestStaticMessage(true) != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage(true);
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
 						host.getStorageSystem().addToDeplStaticMessages(temp);
 						host.getStorageSystem().deleteStaticMessage(temp.getId());
 						//sdepleted += 1;
 					}
-					/* Message to be processed is offloaded to the cloud */
-					else if(host.getStorageSystem().getProcessedMessagesSize() > (host.getStorageSystem().getTotalProcessedSpace() - 2000000)) {
-						Message tempc = host.getStorageSystem().getNewestProcessMessage();
-						host.getStorageSystem().addToDeplUnProcMessages(tempc);
-					}
-				}
-				else {
-					if (host.getStorageSystem().getOldestStaticMessage() != null){
-						Message temp = host.getStorageSystem().getOldestStaticMessage();
+					else if (host.getStorageSystem().getOldestStaticMessage(false) != null){
+						Message temp = host.getStorageSystem().getOldestStaticMessage(false);
 						//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-						host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().addToDeplUnProcMessages(temp);
 						host.getStorageSystem().deleteStaticMessage(temp.getId());
 						//sdepleted += 1;
 					}
 					else if (!host.getStorageSystem().isProcessedEmpty()) {
+						
 							Message temp = host.getStorageSystem().getOldestProcessedMessage();
 							host.getStorageSystem().deleteProcessedMessage(temp.getId());
-							if (host.getStorageSystem().getOldestProcessMessage() != null && 
+							
+							if (host.getStorageSystem().getOldestProcessMessage(true) != null && 
 								(!host.getStorageSystem().isProcessedFull())) {
 								Message tempp = host.getStorageSystem().getNewestProcessMessage();
 								double delayed = (double)tempp.getProperty("delay");
@@ -251,18 +267,24 @@ public class ProcApplication extends Application {
 									if (!host.getStorageSystem().isProcessingEmpty() && 
 										!host.getStorageSystem().isProcessedFull() ) {
 										host.getStorageSystem().processMessage(tempp);
-										procno++;
+										host.getStorageSystem().addToCachedMessagesNo(1);
 									}
-									this.lastProc = curTime;
 								}
 							}
 							//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 							//pdepleted += 1;
 					}
 				}
-				deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
+				deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false, true) + 
+						host.getStorageSystem().getDepletedUnProcMessagesBW(false, true) + 
+						host.getStorageSystem().getDepletedPUnProcMessagesBW(false, true) + 
+						host.getStorageSystem().getDepletedStaticMessagesBW(false, true);
 				//System.out.println("Depletion is at: "+ deplBW);
 			}
+			deplBW = host.getStorageSystem().getDepletedProcMessagesBW(true, true) + 
+					host.getStorageSystem().getDepletedUnProcMessagesBW(true, true) + 
+					host.getStorageSystem().getDepletedPUnProcMessagesBW(true, true) + 
+					host.getStorageSystem().getDepletedStaticMessagesBW(true, true);
 			this.lastDepl = curTime;
 			//System.out.println("Depleted processed messages: "+ pdepleted);
 			//System.out.println("Depleted static messages: "+ sdepleted);

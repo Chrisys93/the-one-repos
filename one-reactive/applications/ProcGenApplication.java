@@ -180,7 +180,7 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 					SimClock.getIntTime() + "-" + host.getAddress(),
 					getProcSize());
-				m.addProperty("created", curTime);
+				m.addProperty("received", curTime);
 				m.addProperty("type", "nonproc");
 				m.addProperty("freshness", this.freshs);
 				m.setAppID("ProcApplication");
@@ -198,7 +198,7 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "proc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
-				m.addProperty("created", curTime);
+				m.addProperty("received", curTime);
 				m.addProperty("type", "proc");
 				m.addProperty("freshness", this.freshp);
 				m.addProperty("delay", this.delay);
@@ -210,7 +210,7 @@ public class ProcGenApplication extends Application {
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 						SimClock.getIntTime() + "-" + host.getAddress(),
 						getProcSize());
-				m.addProperty("created", curTime);
+				m.addProperty("received", curTime);
 				m.addProperty("type", "nonproc");
 				m.addProperty("freshness", this.freshs);
 				m.setAppID("ProcApplication");

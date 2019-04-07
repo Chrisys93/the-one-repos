@@ -55,6 +55,7 @@ procApp.type = ProcApplication
 procApp.depletionRate = [5M; 7M; 9M; 10M; 15M; 20M; 25M; 30M]
 procApp.passive = false
 procApp.coreNo = 8
+procApp.maxReq = 5
 
 # Define new application
 procApp1.type = ProcGenApplication

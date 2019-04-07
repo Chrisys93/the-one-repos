@@ -39,14 +39,18 @@ public class RepoStorage {
 	private long depletedProcMessages;
 	private long depletedProcMessagesSize;
 	private long oldDepletedProcMessagesSize;
+	private long olderDepletedProcMessagesSize;
 	private long depletedUnProcMessages;
 	private long depletedUnProcMessagesSize;
 	private long oldDepletedUnProcMessagesSize;
+	private long olderDepletedUnProcMessagesSize;
 	private long depletedPUnProcMessages;
 	private long depletedPUnProcMessagesSize;
 	private long oldDepletedPUnProcMessagesSize;
+	private long olderDepletedPUnProcMessagesSize;
 	private long depletedStaticMessages;
 	private long oldDepletedStaticMessagesSize;
+	private long olderDepletedStaticMessagesSize;
 	private long depletedStaticMessagesSize;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
@@ -80,14 +84,19 @@ public class RepoStorage {
 		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
 		this.oldDepletedProcMessagesSize = 0;
+		this.olderDepletedProcMessagesSize = 0;
 		this.depletedProcMessagesSize = 0;
 		this.depletedUnProcMessages = 0;
 		this.depletedUnProcMessagesSize = 0;
+		this.oldDepletedUnProcMessagesSize = 0;
+		this.olderDepletedUnProcMessagesSize = 0;
 		this.depletedPUnProcMessages = 0;
 		this.depletedPUnProcMessagesSize = 0;
-		this.oldDepletedUnProcMessagesSize = 0;
+		this.oldDepletedPUnProcMessagesSize = 0;
+		this.olderDepletedPUnProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
 		this.oldDepletedStaticMessagesSize = 0;
+		this.olderDepletedStaticMessagesSize = 0;
 		this.depletedStaticMessagesSize = 0;
 		this.cachedMessages = 0;
 		if (this.getHost().hasProcessingCapability()){
@@ -157,13 +166,28 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */			
 	public void addToStoredMessages(Message sm) {
+		double received = (double)sm.getProperty("received");
+		double freshness = (double)sm.getProperty("freshness");
+		double curTime = SimClock.getTime();
 		if (sm != null) {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
-				this.staticMessages.add(sm);
+				if (curTime - received < freshness) {
+					this.staticMessages.add(0, sm);
+				}
+				else {
+					this.staticMessages.add(sm);					
+				}
 				this.staticSize += sm.getSize();
+				
 			}
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				this.processMessages.add(sm);
+				double delayed = (double)sm.getProperty("delay");
+				if (curTime - received + delayed < freshness) {
+					this.processMessages.add(0, sm);
+				}
+				else {
+					this.processMessages.add(sm);
+				}
 				this.processSize += sm.getSize();				
 			}
 			this.totalReceivedMessages++;
@@ -175,18 +199,16 @@ public class RepoStorage {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
 			}
-			Message tempp = host.getStorageSystem().getOldestProcessMessage();
-			double creation = (double)tempp.getProperty("created");
-			double freshness = (double)tempp.getProperty("freshness");
-			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate() && SimClock.getTime() -  creation < freshness){
-				this.processMessage(tempp);
+			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate() && 
+			   this.getOldestProcessMessage(true) != null){
+				this.processMessage(this.getOldestProcessMessage(true));
 				this.cachedMessages ++;
 			}
-			else if ((double)(this.getOldestStaticMessage().getProperty("freshness")) < SimClock.getTime() - (double)(this.getOldestStaticMessage().getProperty("created"))) {
-				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
+			else if (this.getOldestStaticMessage(true) != null) {
+				this.addToDeplUnProcMessages(this.getOldestStaticMessage(true));
 			}
-			else if (this.getOldestStaticMessage() != null) {
-				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
+			else if (this.getOldestStaticMessage(false) != null) {
+				this.addToDeplUnProcMessages(this.getOldestStaticMessage(false));
 			}
 			else {
 				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
@@ -459,17 +481,35 @@ public class RepoStorage {
 	}
 	
 	/**
+	 * TODO:
+	 * Main problems are here, due to the changing depletion frequency.
+	 * This needs to be sorted by adding another variable, and resetting 
+	 * them alternatively, depending on the need.
+	 */
+	
+	/**
 	 * Method that returns depletion BW used for processed messages.
 	 * @param reporting Whether the function is used for reporting, 
 	 * as a final method of the update, or for checking BW usage.
 	 * @return the processed depletion BW used upstream
 	 */
-	public long getDepletedProcMessagesBW(boolean reporting) {
+	public long getDepletedProcMessagesBW(boolean reporting, boolean depletion) {
 		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
-		if (reporting) {
+		long deplBW = this.depletedProcMessagesSize - this.olderDepletedProcMessagesSize;
+		if (reporting && !depletion) {
 			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+			return procBW;
 		}
-		return (procBW);
+		else if(depletion && !reporting) {
+			return deplBW;
+		}
+		else if(depletion && reporting){
+			this.olderDepletedProcMessagesSize = this.depletedProcMessagesSize;
+			return deplBW;
+		}
+		else {
+			return procBW;
+		}
 	}
 	
 	/**
@@ -478,12 +518,23 @@ public class RepoStorage {
 	 * as a final method of the update, or for checking BW usage.
 	 * @return the static depletion BW used upstream
 	 */
-	public long getDepletedUnProcMessagesBW(boolean reporting) {
+	public long getDepletedUnProcMessagesBW(boolean reporting, boolean depletion) {
 		long procBW = this.depletedUnProcMessagesSize - this.oldDepletedUnProcMessagesSize;
-		if (reporting) {
+		long deplBW = this.depletedUnProcMessagesSize - this.olderDepletedUnProcMessagesSize;
+		if (reporting && !depletion) {
 			this.oldDepletedUnProcMessagesSize = this.depletedUnProcMessagesSize;
+			return procBW;
 		}
-		return (procBW);
+		else if(depletion && !reporting) {
+			return deplBW;
+		}
+		else if(depletion && reporting){
+			this.olderDepletedUnProcMessagesSize = this.depletedUnProcMessagesSize;
+			return deplBW;
+		}
+		else {
+			return procBW;			
+		}
 	}
 	
 	/**
@@ -492,12 +543,23 @@ public class RepoStorage {
 	 * as a final method of the update, or for checking BW usage.
 	 * @return the unprocessed depletion BW used upstream
 	 */
-	public long getDepletedPUnProcMessagesBW(boolean reporting) {
+	public long getDepletedPUnProcMessagesBW(boolean reporting, boolean depletion) {
 		long procBW = this.depletedPUnProcMessagesSize - this.oldDepletedPUnProcMessagesSize;
-		if (reporting) {
+		long deplBW = this.depletedPUnProcMessagesSize - this.olderDepletedPUnProcMessagesSize;
+		if (reporting && !depletion) {
 			this.oldDepletedPUnProcMessagesSize = this.depletedPUnProcMessagesSize;
+			return procBW;
 		}
-		return (procBW);
+		else if(depletion && !reporting) {
+			return deplBW;
+		}
+		else if(depletion && reporting){
+			this.olderDepletedPUnProcMessagesSize = this.depletedPUnProcMessagesSize;
+			return deplBW;
+		}
+		else {
+			return procBW;			
+		}
 	}
 	
 	/**
@@ -506,12 +568,23 @@ public class RepoStorage {
 	 * as a final method of the update, or for checking BW usage.
 	 * @return the non-processing depletion BW used upstream
 	 */
-	public long getDepletedStaticMessagesBW(boolean reporting) {
+	public long getDepletedStaticMessagesBW(boolean reporting, boolean depletion) {
 		long statBW = this.depletedStaticMessagesSize - this.oldDepletedStaticMessagesSize;
-		if (reporting) {
+		long deplBW = this.depletedStaticMessagesSize - this.olderDepletedStaticMessagesSize;
+		if (reporting && !depletion) {
 			this.oldDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+			return statBW;
 		}
-		return (statBW);
+		else if(depletion && !reporting) {
+			return deplBW;
+		}
+		else if(depletion && reporting){
+			this.olderDepletedStaticMessagesSize = this.depletedStaticMessagesSize;
+			return deplBW;
+		}
+		else {
+			return statBW;
+		}
 	}
 	
 	public boolean clearAllStaticMessages(){
@@ -563,6 +636,20 @@ public class RepoStorage {
 		}
 	}
 
+	public boolean isStorageEmpty() {
+		//try {
+		//	System.setOut(new PrintStream(new FileOutputStream("log.txt")));
+		//} catch(Exception e) {}
+		if (this.processSize + this.staticSize <= 2000000){
+			//System.out.println("There is enough storage space: " + freeStorage);
+			return true;
+		}
+		else{
+			//System.out.println("There is not enough storage space: " + freeStorage);
+			return false;
+		}
+	}
+
 	public boolean isProcessedFull() {
 		long usedProcessed = this.getProcessedMessagesSize();
 		//try {
@@ -593,18 +680,34 @@ public class RepoStorage {
 		}
 	}
 	
-	public Message getOldestProcessMessage(){
-		Message oldest = null;
-		for (Message m : this.processMessages) {
-			
-			if (oldest == null ) {
-				oldest = m;
+	public Message getOldestProcessMessage(boolean fresh){
+		double curTime = SimClock.getTime();
+		if (fresh) {
+			Message oldestfresh = null;
+			for (Message m : this.processMessages) {
+				
+				if (oldestfresh == null && curTime - (double)m.getProperty("received") + (double)m.getProperty("delay") < (double)m.getProperty("freshness")) {
+					oldestfresh = m;
+				}
+				else if (oldestfresh != null && oldestfresh.getReceiveTime() > m.getReceiveTime() && curTime - (double)m.getProperty("received") + (double)m.getProperty("delay") < (double)m.getProperty("freshness")) {
+					oldestfresh = m;
+				}
 			}
-			else if ((double)(oldest.getProperty("created")) > (double)(m.getProperty("created"))) {
-				oldest = m;
-			}
+			return oldestfresh;
 		}
-		return oldest;
+		else {
+			Message oldest = null;
+			for (Message m : this.processMessages) {
+				
+				if (oldest == null ) {
+					oldest = m;
+				}
+				else if ((double)(oldest.getProperty("received")) > (double)(m.getProperty("received"))) {
+					oldest = m;
+				}
+			}
+			return oldest;
+		}
 	}
 	
 
@@ -637,18 +740,36 @@ public class RepoStorage {
 		return oldest;
 	}
 	
-	public Message getOldestStaticMessage(){
-		Message oldest = null;
-		for (Message m : this.staticMessages) {
-			
-			if (oldest == null ) {
-				oldest = m;
+	public Message getOldestStaticMessage(boolean fresh){
+
+		double curTime = SimClock.getTime();
+		if (fresh) {
+			Message oldestfresh = null;
+			for (Message m : this.processMessages) {
+				
+				if (oldestfresh == null && curTime - (double)m.getProperty("received") < (double)m.getProperty("freshness")) {
+					oldestfresh = m;
+				}
+				else if (oldestfresh != null && (double)(oldestfresh.getProperty("received")) > (double)(m.getProperty("received")) && 
+						curTime - (double)m.getProperty("received") < (double)m.getProperty("freshness")) {
+					oldestfresh = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				oldest = m;
-			}
+			return oldestfresh;
 		}
-		return oldest;
+		else {
+			Message oldest = null;
+			for (Message m : this.processMessages) {
+				
+				if (oldest == null ) {
+					oldest = m;
+				}
+				else if ((double)(oldest.getProperty("received")) > (double)(m.getProperty("received"))) {
+					oldest = m;
+				}
+			}
+			return oldest;
+		}
 	}
 
 }
