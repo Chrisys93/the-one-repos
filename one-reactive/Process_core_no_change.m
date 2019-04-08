@@ -312,7 +312,7 @@ xlabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
 lgd.FontSize = 9;
-lgd.NumColumns = 3;
+% lgd.NumColumns = 3;
 
 
 % Maybe just show one side (irrespective of repo), and how much cache is
@@ -518,7 +518,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-lgd1.NumColumns = 3;
+% lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 5*10^6]);
 xlim([17 48]);

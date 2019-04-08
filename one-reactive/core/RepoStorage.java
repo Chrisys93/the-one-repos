@@ -199,13 +199,20 @@ public class RepoStorage {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
 			}
-			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate() && 
-			   this.getOldestProcessMessage(true) != null){
+			if(!this.isProcessedFull() && 
+			  this.cachedMessages < procApp.getProcRate() && 
+			  this.getOldestProcessMessage(true) != null){
 				this.processMessage(this.getOldestProcessMessage(true));
 				this.cachedMessages ++;
 			}
-			else if (this.getOldestStaticMessage(true) != null) {
-				this.addToDeplUnProcMessages(this.getOldestStaticMessage(true));
+			else if (this.isProcessedFull() && 
+					this.cachedMessages < procApp.getProcRate() && 
+					this.getOldestProcessMessage(true) != null) {
+				/**
+				 * Could potentially pre-process if power is available and forward new, 
+				 * processed message at earliest opportunity to other repo/sub.
+				 */
+				this.addToDeplUnProcMessages(this.getOldestProcessMessage(true));
 			}
 			else if (this.getOldestStaticMessage(false) != null) {
 				this.addToDeplUnProcMessages(this.getOldestStaticMessage(false));
