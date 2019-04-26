@@ -313,7 +313,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'b-+', 1:80, upspeeds3_total, 'g-o', 1:80, upspeeds4_total, 'm-X', 1:80, upspeeds6_total, 'y-*', 1:80, inspeeds1, '-+', 1:80, inspeeds3, '-o', 1:80, inspeeds4, '-X', 1:80, inspeeds6, '-*', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 200', 'message upload for 400', 'message upload for 500', 'message upload for 1000', 'message input for 200 cars', 'message input for 400 cars', 'message input for 500 cars', 'message input for 1000 cars', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-% lgd1.NumColumns = 3;
+lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 xlim([17 48]);
 ylim([0 10*10^6]);

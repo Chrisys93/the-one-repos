@@ -515,8 +515,8 @@ set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
 
 yyaxis right
-plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k-*', 1:80, upspeeds6_total, 'g-x', 'LineWidth', 1);
-lgd1 =legend('non-processing message upload', 'cloud offloading upload', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16', 'Location', 'southoutside');
+plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k->', 1:80, upspeeds6_total, 'g-<', 'LineWidth', 1);
+lgd1 =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'message upload for 16', 'Location', 'southoutside');
 lgd1.FontSize = 9;
 lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)

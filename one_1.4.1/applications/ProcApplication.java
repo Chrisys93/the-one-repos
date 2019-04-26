@@ -128,7 +128,6 @@ public class ProcApplication extends Application {
 		 * being depleted instead
 		 */
 		double curTime = SimClock.getTime();
-		int procno = 0;
 		
 		/**
 		 * Processing older messages, that could not be processed as soon as
@@ -151,11 +150,12 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().processMessage(tempp);
 				}
 				else {
+					this.lastProc = curTime;
 					break;
 				}
-			}
-			if (procno == this.proc_rate - 1) {
-				this.lastProc = curTime;
+				if (i == this.proc_rate - 1) {
+					this.lastProc = curTime;
+				}
 			}
 		}
 		
@@ -189,7 +189,6 @@ public class ProcApplication extends Application {
 								if (!host.getStorageSystem().isProcessingEmpty() && 
 									!host.getStorageSystem().isProcessedFull() ) {
 									host.getStorageSystem().processMessage(tempp);
-									procno++;
 								}
 								this.lastProc = curTime;
 							}
@@ -229,7 +228,6 @@ public class ProcApplication extends Application {
 									if (!host.getStorageSystem().isProcessingEmpty() && 
 										!host.getStorageSystem().isProcessedFull() ) {
 										host.getStorageSystem().processMessage(tempp);
-										procno++;
 									}
 									this.lastProc = curTime;
 								}

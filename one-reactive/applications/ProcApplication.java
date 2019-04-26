@@ -90,6 +90,12 @@ public class ProcApplication extends Application {
 		return new ProcApplication(this);
 	}
 	
+	/**
+	 * TODO:
+	 * Make sure to check that all the storages and checks are updated
+	 * everywhere, where needed.
+	 */
+	
 	/** 
 	 * Handles an incoming message and stores it. If the message is a proc message,
 	 * it processes it.
