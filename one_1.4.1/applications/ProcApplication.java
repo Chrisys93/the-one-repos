@@ -153,7 +153,7 @@ public class ProcApplication extends Application {
 					this.lastProc = curTime;
 					break;
 				}
-				if (i == this.proc_rate - 1) {
+				if (i == this.proc_rate) {
 					this.lastProc = curTime;
 				}
 			}
