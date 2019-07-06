@@ -166,6 +166,14 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */			
 	public void addToStoredMessages(Message sm) {
+		
+		/**
+		 * TODO:
+		 * SHOULD RETAIN DATA REGARDLESS OF WHETHER PROCESSED OR NOT.
+		 * IF PROCESSED AND STORAGE FULL, DELETE;
+		 * IF NON-PROCESSING AND STORAGE FULL, OFFLOAD TO CLOUD.
+		 */
+		
 		double received = (double)sm.getProperty("received");
 		double freshness = (double)sm.getProperty("freshness");
 		double curTime = SimClock.getTime();

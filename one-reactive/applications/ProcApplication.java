@@ -16,6 +16,20 @@ import core.SimClock;
 
 
 /**
+ * TODO: CHECK HOW BUFFER INTERFERES WITH MESSAGE RECEPTION INTO STORAGE!
+ * (if buffer is full, repo might refuse connections and messages! - buffer 
+ * should basically be avoided by most messages, and only used if absolutely
+ * necessary!)
+ */
+
+/**
+ * TODO:
+ * SHOULD RETAIN DATA REGARDLESS OF WHETHER PROCESSED OR NOT.
+ * IF PROCESSED AND STORAGE FULL, DELETE;
+ * IF NON-PROCESSING AND STORAGE FULL, OFFLOAD TO CLOUD.
+ */
+
+/**
  * Processing application, implemented on each of the repositories, for
  * processing/storing and depleting all incoming messages, according to 
  * the scope and age of each message.
