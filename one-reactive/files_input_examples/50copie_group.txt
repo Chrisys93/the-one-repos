@@ -1,2 +1,0 @@
-#creates 50 copies of the file and distributes them to hosts in groups 1 and 3
-G	song2.mp3	3000000	50	1	3

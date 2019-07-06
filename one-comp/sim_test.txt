@@ -1,0 +1,24 @@
+#
+# Default settings for the simulation
+#
+
+## Scenario settings
+Scenario.name = sim6_scenario
+
+
+procApp.depletionRate = 10M
+procApp.coreNo = [2; 4; 8; 10; 12; 16]
+
+RepoStoredMessageLocationReport.output = [reports_test/RSMR1;reports_test/RSMR2;reports_test/RSMR3; reports_test/RSMR4; reports_test/RSMR5; reports_test/RSMR6;reports_test/RSMR7;reports_test/RSMR8; reports_test/RSMR9; reports_test/RSMR10; reports_test/RSMR11;reports_test/RSMR12;reports_test/RSMR13; reports_test/RSMR14; reports_test/RSMR15]
+RepoIncomingSpeedsReport.output = [reports_test/RISR1;reports_test/RISR2;reports_test/RISR3; reports_test/RISR4; reports_test/RISR5; reports_test/RISR6;reports_test/RISR7; reports_test/RISR8; reports_test/RISR9; reports_test/RISR10; reports_test/RISR11;reports_test/RISR12;reports_test/RISR13; reports_test/RISR14; reports_test/RISR15]
+RepoDeletedMessagesReport.output = [reports_test/RDMR1;reports_test/RDMR2;reports_test/RDMR3; reports_test/RDMR4; reports_test/RDMR5; reports_test/RDMR6;reports_test/RDMR7; reports_test/RDMR8; reports_test/RDMR9; reports_test/RDMR10; reports_test/RDMR11;reports_test/RDMR12;reports_test/RDMR13; reports_test/RDMR14; reports_test/RDMR15]
+MobileDeletedMessagesReport.output = [reports_test/MDMR1;reports_test/MDMR2;reports_test/MDMR3; reports_test/MDMR4; reports_test/MDMR5; reports_test/MDMR6;reports_test/MDMR7;reports_test/MDMR8; reports_test/MDMR9; reports_test/MDMR10; reports_test/MDMR11;reports_test/MDMR12;reports_test/MDMR13; reports_test/MDMR14; reports_test/MDMR15]
+RepoProcessingMessageLocationReport.output = [reports_test/RPrMR1;reports_test/RPrMR2;reports_test/RPrMR3; reports_test/RPrMR4; reports_test/RPrMR5; reports_test/RPrMR6; reports_test/RPrMR7; reports_test/RPrMR8; reports_test/RPrMR9; reports_test/RPrMR10; reports_test/RPrMR11;reports_test/RPrMR12;reports_test/RPrMR13; reports_test/RPrMR14; reports_test/RPrMR15]
+RepoProcessedMessageLocationReport.output = [reports_test/RPMR1;reports_test/RPMR2;reports_test/RPMR3; reports_test/RPMR4; reports_test/RPMR5; reports_test/RPMR6; reports_test/RPMR7; reports_test/RPMR8; reports_test/RPMR9; reports_test/RPMR10; reports_test/RPMR11;reports_test/RPMR12;reports_test/RPMR13; reports_test/RPMR14; reports_test/RPMR15]
+RepoAllMessagesLocationReport.output = [reports_test/RAMR1;reports_test/RAMR2;reports_test/RAMR3; reports_test/RAMR4; reports_test/RAMR5; reports_test/RAMR6; reports_test/RAMR7; reports_test/RAMR8; reports_test/RAMR9; reports_test/RAMR10; reports_test/RAMR11;reports_test/RAMR12;reports_test/RAMR13; reports_test/RAMR14; reports_test/RAMR15]
+
+RepoDepletedProcBWReport.output = [reports_test/RPBWR1;reports_test/RPBWR2;reports_test/RPBWR3; reports_test/RPBWR4; reports_test/RPBWR5; reports_test/RPBWR6]
+RepoDepletedUnProcBWReport.output = [reports_test/RUPBWR1;reports_test/RUPBWR2;reports_test/RUPBWR3; reports_test/RUPBWR4; reports_test/RUPBWR5; reports_test/RUPBWR6]
+RepoDepletedStorageBWReport.output = [reports_test/RSBWR1; reports_test/RSBWR2; reports_test/RSBWR3; reports_test/RSBWR4; reports_test/RSBWR5; reports_test/RSBWR6]
+
+

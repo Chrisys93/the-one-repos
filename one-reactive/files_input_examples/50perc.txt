@@ -1,2 +1,0 @@
-#creates one file and copies it to 50 percent of nodes
-P	song2.mp3	3000000	50	

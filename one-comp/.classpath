@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/The ONE/the-one-repos-unstable/one_1.4.1/lib/DTNConsoleConnection.jar"/>
+	<classpathentry kind="lib" path="C:/The ONE/the-one-repos-unstable/one_1.4.1/lib/ECLA.jar"/>
+	<classpathentry kind="lib" path="D:/UCL/Data Repositories Sim/unstable/the-one-repos/one_1.4.1/lib/DTNConsoleConnection.jar"/>
+	<classpathentry kind="lib" path="D:/UCL/Data Repositories Sim/unstable/the-one-repos/one_1.4.1/lib/ECLA.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
