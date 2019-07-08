@@ -730,7 +730,25 @@ public class RepoStorage {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
-					!((String) oldest.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getOldestInvalidProcessMessage(){
+		double curTime = SimClock.getTime();
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null && 
+					((String) m.getProperty("type")).equalsIgnoreCase("processing") && 
+					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 				oldest = m;
 			}
 		}
@@ -746,7 +764,7 @@ public class RepoStorage {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
-					((String) oldest.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
 				oldest = m;
 			}
 		}
@@ -835,11 +853,11 @@ public class RepoStorage {
 		for (Message m : this.staticMessages) {
 			
 			if (oldest == null && 
-					((double) m.getProperty("shelfLife")) >= curTime - m.getReceiveTime()) {
+					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
-					((double) m.getProperty("shelfLife")) >= curTime - m.getReceiveTime()) {
+					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 				oldest = m;
 			}
 		}
