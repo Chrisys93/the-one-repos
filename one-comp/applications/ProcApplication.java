@@ -438,6 +438,17 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().deleteMessage(tempc);
 				}
 			}
+			else if (host.getStorageSystem().getNewestProcessMessage() != null){
+				Message temp = host.getStorageSystem().getNewestProcessMessage();
+				String tempc = host.getStorageSystem().compressMessage(temp);
+				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+				double storTime = curTime - ctemp.getReceiveTime();
+				ctemp.addProperty("storTime", storTime);
+				ctemp.addProperty("satisfied", false);
+				ctemp.addProperty("overtime", true);
+				host.getStorageSystem().addToDeplStaticMessages(ctemp);
+				host.getStorageSystem().deleteMessage(tempc);
+			}
 			else if (host.getStorageSystem().getOldestStaticMessage() != null){
 				Message temp = host.getStorageSystem().getOldestStaticMessage();
 				if((Boolean)temp.getProperty("comp") == false) {
