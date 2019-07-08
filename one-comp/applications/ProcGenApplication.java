@@ -30,6 +30,18 @@ import core.World;
  * @author teemuk
  */
 public class ProcGenApplication extends Application {
+	
+	/**
+	 * TODO:
+	 * Add comp/deletion flag - think about periods/ratios for this, 
+	 * as well - correlated with proc, or not? - comp = true, del = false;
+	 * Add compression delay;
+	 * Add freshness period;
+	 * Add shelf-life;
+	 * Add storage-time field, to be completed by EDRs;
+	 * Add deletion/storage boolean tag;
+	 */
+	
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
 	/** Run in passive mode - don't process messages, but store */

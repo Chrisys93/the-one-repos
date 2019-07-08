@@ -209,17 +209,11 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
-	public void addToDeplUnProcMessages(Message sm) {
-		if (sm != null) {
+	public void addToDeplUnProcMessages(String smID) {
+		if (this.getProcessMessage(smID) != null ) {
+			Message sm = this.getProcessMessage(smID);
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				this.depletedPUnProcMessages++;
-				this.depletedPUnProcMessagesSize += sm.getSize();
-				this.deleteProcMessage(sm.getId());
-			}
-			else if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
-				this.depletedUnProcMessages++;
-				this.depletedUnProcMessagesSize += sm.getSize();
-				this.deleteStaticMessage(sm.getId());
+				sm.updateProperty("type", "unprocessed");
 			}
 		}
 	}
@@ -256,13 +250,48 @@ public class RepoStorage {
 		return processedMessage;
 	}
 	
+	/**
+	 * Returns a processing message by ID.
+	 * @param MessageId ID of the file
+	 * @return The message
+	 */
+	public Message getProcessMessage(String MessageId) {
+		Message processMessage = this.processMessages.get(0);
+		for (Message temp : processMessages){
+			if (temp.getId() == MessageId){
+				int i = this.processMessages.indexOf(temp);
+				processMessage = this.processMessages.get(i);
+			}
+		}
+		return processMessage;
+	}
+	
 	public boolean processMessage(Message procMessage) {
 		int initsize = procMessage.getSize();
-		int processedsize = (int) (initsize/this.compressionRate);
+		int processedsize = (int) (initsize/(2*this.compressionRate));
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
+		procMessage.updateProperty("type", "processed");
 		this.processedMessages.add(processedMessage);
-		this.deleteProcMessage(procMessage.getId());
+		
+		if((Boolean)procMessage.getProperty("comp") == false)
+			this.deleteMessage(procMessage.getId());
+		
+		
 		return true;
+	}
+	
+	public String compressMessage(Message compMessage) {
+		if ((Boolean)compMessage.getProperty("compression") == true) {
+			int initsize = compMessage.getSize();
+			int processedsize = (int) (initsize/this.compressionRate);
+			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
+			compMessage.updateProperty("compression", "compressed");
+			this.processMessages.add(compressedMessage);
+			this.deleteMessage(compMessage.getId());
+			return compressedMessage.getId();
+		}
+		else
+			return null;
 	}
 	
 	/**
@@ -342,21 +371,20 @@ public class RepoStorage {
 	 * @param hash hash of the file
 	 * @return true if this file system has the file
 	 */
-	public boolean hasMessage(String MessageId) {
-		boolean answer = false;
+	public Message hasMessage(String MessageId) {
+		Message answer = null;
 
 		for (int j=0; j<this.processedMessages.size(); j++){
 			if(this.processedMessages.get(j).getId() == MessageId){
-				answer =  true;
-				return answer;
+				answer =  this.processedMessages.get(j);
 			}
 		}
 		for(int i=0; i<this.staticMessages.size(); i++){
 			if(this.staticMessages.get(i).getId() == MessageId){
-				answer =  true;
+				answer =  this.staticMessages.get(i);
 			}
 			else{
-				answer =  false;
+				answer =  null;
 			}
 		}
 		return answer;
@@ -389,6 +417,24 @@ public class RepoStorage {
 				this.processSize -= processMessages.get(i).getSize();
 				this.processMessages.remove(i);
 				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for deleting specific message from storage
+	 * @param MessageId ID of message to be deleted
+	 * @return successful deletion status
+	 */
+	public boolean deleteMessage(String MessageId){
+		Message m = this.hasMessage(MessageId);
+		if(m != null){
+			if (((String)m.getProperty("type")).equalsIgnoreCase("proc")) {
+				deleteProcMessage(MessageId);
+			}
+			else if (((String)m.getProperty("type")).equalsIgnoreCase("nonproc")) {
+				deleteStaticMessage(MessageId);
 			}
 		}
 		return false;
@@ -592,6 +638,22 @@ public class RepoStorage {
 		return oldest;
 	}
 	
+	public Message getOldestValidProcessMessage(){
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null && 
+					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					!((String) oldest.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
 
 	
 	public Message getNewestProcessMessage(){
@@ -616,6 +678,38 @@ public class RepoStorage {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getOldestFreshMessage(){
+		Message oldest = null;
+		for (Message m : this.processedMessages) {
+			
+			if (oldest == null  && 
+					((Boolean) m.getProperty("Fresh")) == true) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					((Boolean) m.getProperty("Fresh")) == true) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getOldestShelfMessage(){
+		Message oldest = null;
+		for (Message m : this.processedMessages) {
+			
+			if (oldest == null  && 
+					((Boolean) m.getProperty("Fresh")) == false) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					((Boolean) m.getProperty("Fresh")) == false) {
 				oldest = m;
 			}
 		}
