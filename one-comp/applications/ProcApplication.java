@@ -40,6 +40,8 @@ public class ProcApplication extends Application {
 	public static final String PROC_PASSIVE = "passive";
 	/** Percentage (below unity) of maximum storage occupied */
 	public static final String MAX_STOR = "maxStorage";
+	/** Percentage (below unity) of minimum storage occupied before any depletion */
+	public static final String MIN_STOR = "minStorage";
 	/** Depletion rate */
 	public static final String DEPL_RATE = "depletionRate";
 	/** Numbers of processing cores */
@@ -56,10 +58,9 @@ public class ProcApplication extends Application {
 	
 	private boolean passive = false;
 	private long	max_stor = (long) 0.9;
-	private long	min_stor = (long) 0.1;
+	private long	min_stor = (long) 0.001;
 	private long 	depl_rate = 0;
 	private long	deplBW = 0;
-	private long	servBW = 0;
 	private long	cloudBW = 0;	
 	private int		proc_rate = 4;
 	private int		procMinI = 0;
@@ -80,6 +81,9 @@ public class ProcApplication extends Application {
 		}
 		if (s.contains(MAX_STOR)){
 			this.max_stor = s.getLong(MAX_STOR);
+		}
+		if (s.contains(MIN_STOR)){
+			this.min_stor = s.getLong(MIN_STOR);
 		}
 		if (s.contains(PROC_NO)){
 			int m = s.getInt(PROC_NO);
@@ -103,6 +107,8 @@ public class ProcApplication extends Application {
 		this.passive = a.isPassive();
 		this.depl_rate = a.getDeplRate();
 		this.proc_rate = a.getProcRate();
+		this.max_stor = a.getMaxStor();
+		this.min_stor = a.getMinStor();
 		for (int n=0; n<4; n++)
 		{
 			this.procEndTimes.add((double) 0);
@@ -152,7 +158,7 @@ public class ProcApplication extends Application {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.procMin >= delayed) {
 						host.getStorageSystem().processMessage(msg);
-						tempp.addProperty("Fresh", true);
+						msg.addProperty("Fresh", true);
 						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 					}
 				}
@@ -182,7 +188,8 @@ public class ProcApplication extends Application {
 		
 		/**
 		 * Processing older messages, that could not be processed as soon as
-		 * accepted, for any reason.
+		 * accepted, for any reason. Processing is a separate process, inside
+		 * the EDRs and does not interfere with compression or offloading.
 		 */
 		
 		this.getProcMin();
@@ -258,43 +265,60 @@ public class ProcApplication extends Application {
 		
 		if (curTime - this.lastDepl >= 1) {
 			this.deplBW = 0;
-			this.servBW = 0;
 			this.cloudBW = 0;
 		}
 		
 		/**
-		 * Here, the messages which are processed should be sent to their destinations (servBW),
-		 * and the ones which have expired shelf-life tags should be sent to the cloud (cloudBW) 
+		 * Here, the messages which are processed should be sent to their destinations (supposing 
+		 * that they are in the cloud, still going to account for them in cloudBW), and the ones 
+		 * which have expired shelf-life tags should be sent to the cloud (cloudBW), no questions asked.
+		 * 
+		 * Content, in order of offloading preference - to customers: Fresh messages, Stale messages
+		 * Content, in order of offloading preference - to cloud (all to be compressed): Stale unprocessed 
+		 * messages, Stale processed messages, Stale non-processing messages
+		 * 
+		 * All added up to a maximum cloud BW (should be pretty high)
 		 */
 		
 		if((host.getStorageSystem().getProcessedMessagesSize() + host.getStorageSystem().getStaticMessagesSize()) > this.min_stor) {
-			if (host.getStorageSystem().getOldestStaticMessage() != null){
-				Message temp = host.getStorageSystem().getOldestStaticMessage();
-				//System.out.println("The message to be deleted is "+this.msgNo+" from host "+host.name.toString());
-				host.getStorageSystem().addToDeplStaticMessages(temp);
-				host.getStorageSystem().deleteStaticMessage(temp.getId());
-				//sdepleted += 1;
-			}
-			else if (!host.getStorageSystem().isProcessedEmpty()) {
-					Message temp = host.getStorageSystem().getOldestProcessedMessage();
+			/* 
+			 * Oldest processed message is depleted (as a FIFO type of storage,
+			 * and a new message for processing is processed
+			 */
+			if (!host.getStorageSystem().isProcessedEmpty()) {
+				if (host.getStorageSystem().getOldestFreshMessage() != null) {
+					Message temp = host.getStorageSystem().getOldestFreshMessage();
+					/**
+					 * Make sure here that the added message to the cloud depletion
+					 * tracking is also tracked by whether it's Fresh or Stale.
+					 */
 					host.getStorageSystem().deleteProcessedMessage(temp.getId());
-					if (host.getStorageSystem().getOldestProcessMessage() != null && (!host.getStorageSystem().isProcessedFull())) {
-						Message tempp = host.getStorageSystem().getNewestProcessMessage();
-						double delayed = (double)tempp.getProperty("delay");
-						if (curTime - this.lastProc >= delayed) {
-							if (!host.getStorageSystem().isProcessingEmpty() && 
-								!host.getStorageSystem().isProcessedFull() ) {
-								host.getStorageSystem().processMessage(tempp);
-							}
-							this.lastProc = curTime;
-						}
-					}
-					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
-					//pdepleted += 1;
+				}
+				else if (host.getStorageSystem().getOldestShelfMessage() != null) {
+					Message temp = host.getStorageSystem().getOldestShelfMessage();
+					/**
+					 * Make sure here that the added message to the cloud depletion
+					 * tracking is also tracked by whether it's Fresh or Stale.
+					 */
+					host.getStorageSystem().deleteProcessedMessage(temp.getId());
+				}
+			}
+			/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
+			else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
+				Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
+				host.getStorageSystem().compressMessage(temp);
+				host.getStorageSystem().addToCloudDeplStaticMessages(temp);
+				host.getStorageSystem().deleteMessage(temp.getId());
+			}
+			/* Message to be processed is offloaded to the cloud */
+			else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null)) {
+				Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
+				host.getStorageSystem().compressMessage(temp);
+				host.getStorageSystem().addToDepletedUnprocMessages(temp);
+				host.getStorageSystem().deleteMessage(temp.getId());
 			}
 			//Revise:
-			servBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
-			cloudBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
+			cloudBW = host.getStorageSystem().getDepletedCloudProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedCloudStaticMessagesBW(false);
 			//System.out.println("Depletion is at: "+ deplBW);
 			this.lastDepl = curTime;
 			//System.out.println("Depleted processed messages: "+ pdepleted);
@@ -303,7 +327,16 @@ public class ProcApplication extends Application {
 		
 		/**
 		 * This can only be entered if forced depletion has to happen (there are no other options), 
-		 * and all the messages are making the storage overflow.
+		 * and all the messages are making the storage overflow. No questions asked.
+		 * 
+		 * Content, in order of offloading preference - to cloud (all to be compressed): stale unprocessed 
+		 * messages, depletion-destined unprocessed messages, Stale processed messages, Stale non-processing messages
+		 * 
+		 * All added up to a maximum depletion BW (should be pretty low)
+		 */
+		
+		/**
+		 * YOU ARE HERE!
 		 */
 		
 		if (deplBW<this.depl_rate && ((host.getStorageSystem().getProcessedMessagesSize() + host.getStorageSystem().getStaticMessagesSize()) > this.depl_rate)) {
@@ -410,6 +443,20 @@ public class ProcApplication extends Application {
 	 */
 	public void setPassive(boolean passive) {
 		this.passive = passive;
+	}
+
+	/**
+	 * @return depletion rate
+	 */
+	public long getMaxStor() {
+		return max_stor;
+	}
+
+	/**
+	 * @return depletion rate
+	 */
+	public long getMinStor() {
+		return min_stor;
 	}
 
 	/**

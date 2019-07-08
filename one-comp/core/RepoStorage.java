@@ -35,10 +35,15 @@ public class RepoStorage {
 	private long processSize;
 	private long staticSize;
 	private long processedSize;
+	private long mFresh;
+	private long mStale;
 	private long nrofDeletedMessages;
 	private long depletedProcMessages;
-	private long depletedProcMessagesSize;
 	private long oldDepletedProcMessagesSize;
+	private long depletedProcMessagesSize;
+	private long depletedCloudProcMessages;
+	private long depletedCloudProcMessagesSize;
+	private long oldDepletedCloudProcMessagesSize;
 	private long depletedUnProcMessages;
 	private long depletedUnProcMessagesSize;
 	private long oldDepletedUnProcMessagesSize;
@@ -46,8 +51,11 @@ public class RepoStorage {
 	private long depletedPUnProcMessagesSize;
 	private long oldDepletedPUnProcMessagesSize;
 	private long depletedStaticMessages;
-	private long oldDepletedStaticMessagesSize;
 	private long depletedStaticMessagesSize;
+	private long oldDepletedStaticMessagesSize;
+	private long depletedCloudStaticMessages;
+	private long oldDepletedCloudStaticMessagesSize;
+	private long depletedCloudStaticMessagesSize;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
 	private int cachedMessages;
@@ -75,20 +83,28 @@ public class RepoStorage {
 		this.processSize = 0;
 		this.staticSize = 0;
 		this.processedSize = 0;
+		this.mFresh = 0;
+		this.mStale = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
 		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
 		this.oldDepletedProcMessagesSize = 0;
 		this.depletedProcMessagesSize = 0;
+		this.depletedCloudProcMessages = 0;
+		this.oldDepletedCloudProcMessagesSize = 0;
+		this.depletedCloudProcMessagesSize = 0;
 		this.depletedUnProcMessages = 0;
 		this.depletedUnProcMessagesSize = 0;
 		this.depletedPUnProcMessages = 0;
 		this.depletedPUnProcMessagesSize = 0;
 		this.oldDepletedUnProcMessagesSize = 0;
 		this.depletedStaticMessages = 0;
-		this.oldDepletedStaticMessagesSize = 0;
 		this.depletedStaticMessagesSize = 0;
+		this.oldDepletedStaticMessagesSize = 0;
+		this.depletedCloudStaticMessages = 0;
+		this.oldDepletedCloudStaticMessagesSize = 0;
+		this.depletedCloudStaticMessagesSize = 0;
 		this.cachedMessages = 0;
 		if (this.getHost().hasProcessingCapability()){
 			//this.processSize = processSize;
@@ -171,7 +187,7 @@ public class RepoStorage {
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
-		if ((this.staticSize + this.processSize) >= this.storageSize) {
+		/*if ((this.staticSize + this.processSize) >= this.storageSize) {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
 			}
@@ -185,7 +201,7 @@ public class RepoStorage {
 			else {
 				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -197,6 +213,18 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedStaticMessages++;
 			this.depletedStaticMessagesSize += sm.getSize();
+		}
+	}
+	
+	/**
+	 * Adds a message to the depleted stored messages
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToCloudDeplStaticMessages(Message sm) {
+		if (sm != null) {
+			this.depletedCloudStaticMessages++;
+			this.depletedCloudStaticMessagesSize += sm.getSize();
 		}
 	}
 	
@@ -215,6 +243,18 @@ public class RepoStorage {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
 				sm.updateProperty("type", "unprocessed");
 			}
+		}
+	}
+	
+	/**
+	 * Adds a message to the depleted stored messages
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDepletedUnprocMessages(Message sm) {
+		if (sm != null) {
+			this.depletedUnProcMessages++;
+			this.depletedUnProcMessagesSize += sm.getSize();
 		}
 	}
 	
@@ -275,7 +315,10 @@ public class RepoStorage {
 		
 		if((Boolean)procMessage.getProperty("comp") == false)
 			this.deleteMessage(procMessage.getId());
-		
+		else {
+			this.staticMessages.add(procMessage);
+			this.deleteMessage(procMessage.getId());
+		}
 		
 		return true;
 	}
@@ -286,7 +329,7 @@ public class RepoStorage {
 			int processedsize = (int) (initsize/this.compressionRate);
 			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
 			compMessage.updateProperty("compression", "compressed");
-			this.processMessages.add(compressedMessage);
+			this.staticMessages.add(compressedMessage);
 			this.deleteMessage(compMessage.getId());
 			return compressedMessage.getId();
 		}
@@ -452,8 +495,12 @@ public class RepoStorage {
 		 */
 		for(int i=0; i<processedMessages.size(); i++){
 			if(processedMessages.get(i).getId() == MessageId){
-				this.depletedProcMessages++;
-				this.depletedProcMessagesSize += this.processedMessages.get(i).getSize();
+				this.depletedCloudProcMessages++;
+				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
+				if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
+					this.mFresh++;
+				else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
+					this.mStale++
 				this.processedMessages.remove(i);
 				return true;
 			}
@@ -465,8 +512,16 @@ public class RepoStorage {
 		return this.nrofDeletedMessages;
 	}
 	
-	public long getNrofDepletedProcMessages() {
-		return this.depletedProcMessages;
+	public long getNrofdepletedCloudProcMessages() {
+		return this.depletedCloudProcMessages;
+	}
+	
+	public long getNrofFreshMessages() {
+		return this.mFresh;
+	}
+	
+	public long getNrofStaleMessages() {
+		return this.mStale;
 	}
 	
 	public long getNrofDepletedUnProcMessages() {
@@ -477,8 +532,8 @@ public class RepoStorage {
 		return this.depletedPUnProcMessages;
 	}
 	
-	public long getNrofDepletedStaticMessages() {		
-		return this.depletedStaticMessages;
+	public long getNrofdepletedCloudStaticMessages() {		
+		return this.depletedCloudStaticMessages;
 	}
 	
 	public double getOverallMeanIncomingMesssageNo() {
@@ -495,10 +550,10 @@ public class RepoStorage {
 	 * as a final method of the update, or for checking BW usage.
 	 * @return the processed depletion BW used upstream
 	 */
-	public long getDepletedProcMessagesBW(boolean reporting) {
-		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
+	public long getDepletedCloudProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedCloudProcMessagesSize - this.oldDepletedCloudProcMessagesSize;
 		if (reporting) {
-			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
+			this.oldDepletedCloudProcMessagesSize = this.depletedCloudProcMessagesSize;
 		}
 		return (procBW);
 	}
@@ -527,6 +582,34 @@ public class RepoStorage {
 		long procBW = this.depletedPUnProcMessagesSize - this.oldDepletedPUnProcMessagesSize;
 		if (reporting) {
 			this.oldDepletedPUnProcMessagesSize = this.depletedPUnProcMessagesSize;
+		}
+		return (procBW);
+	}
+	
+	/**
+	 * Method that returns depletion BW used for non-processing messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the non-processing depletion BW used upstream
+	 */
+	public long getDepletedCloudStaticMessagesBW(boolean reporting) {
+		long statBW = this.depletedCloudStaticMessagesSize - this.oldDepletedCloudStaticMessagesSize;
+		if (reporting) {
+			this.oldDepletedCloudStaticMessagesSize = this.depletedCloudStaticMessagesSize;
+		}
+		return (statBW);
+	}
+	
+	/**
+	 * Method that returns depletion BW used for processed messages.
+	 * @param reporting Whether the function is used for reporting, 
+	 * as a final method of the update, or for checking BW usage.
+	 * @return the processed depletion BW used upstream
+	 */
+	public long getDepletedProcMessagesBW(boolean reporting) {
+		long procBW = this.depletedProcMessagesSize - this.oldDepletedProcMessagesSize;
+		if (reporting) {
+			this.oldDepletedProcMessagesSize = this.depletedProcMessagesSize;
 		}
 		return (procBW);
 	}
@@ -654,6 +737,22 @@ public class RepoStorage {
 		return oldest;
 	}
 	
+	public Message getOldestDeplUnProcMessage(){
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null && 
+					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					((String) oldest.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
 
 	
 	public Message getNewestProcessMessage(){
@@ -724,6 +823,23 @@ public class RepoStorage {
 				oldest = m;
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				oldest = m;
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getOldestStaleStaticMessage(){
+		double curTime = SimClock.getTime();
+		Message oldest = null;
+		for (Message m : this.staticMessages) {
+			
+			if (oldest == null && 
+					((double) m.getProperty("shelfLife")) >= curTime - m.getReceiveTime()) {
+				oldest = m;
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+					((double) m.getProperty("shelfLife")) >= curTime - m.getReceiveTime()) {
 				oldest = m;
 			}
 		}
