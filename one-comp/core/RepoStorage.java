@@ -37,6 +37,12 @@ public class RepoStorage {
 	private long processedSize;
 	private long mFresh;
 	private long mStale;
+	private long mOvertime;
+	private long mSatisfied;
+	private long mUnSatisfied;
+	private long mStorTimeNo;
+	private long mStorTimeAvg;
+	private long mStorTimeMax;
 	private long nrofDeletedMessages;
 	private long depletedProcMessages;
 	private long oldDepletedProcMessagesSize;
@@ -85,6 +91,12 @@ public class RepoStorage {
 		this.processedSize = 0;
 		this.mFresh = 0;
 		this.mStale = 0;
+		this.mOvertime = 0;
+		this.mSatisfied = 0;
+		this.mUnSatisfied = 0;
+		this.mStorTimeNo = 0;
+		this.mStorTimeAvg = 0;
+		this.mStorTimeMax = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
 		this.totalReceivedMessagesSize = 0;
@@ -213,6 +225,12 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedStaticMessages++;
 			this.depletedStaticMessagesSize += sm.getSize();
+			if ((Boolean)sm.getProperty("overtime") == true)
+				this.mOvertime ++;
+			if ((Boolean)sm.getProperty("satisfied") == true)
+				this.mSatisfied ++;
+			else
+				this.mUnSatisfied ++;
 		}
 	}
 	
@@ -225,6 +243,12 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedCloudStaticMessages++;
 			this.depletedCloudStaticMessagesSize += sm.getSize();
+			if ((Boolean)sm.getProperty("overtime") == true)
+				this.mOvertime ++;
+			if ((Boolean)sm.getProperty("satisfied") == true)
+				this.mSatisfied ++;
+			else
+				this.mUnSatisfied ++;
 		}
 	}
 	
@@ -255,6 +279,12 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedUnProcMessages++;
 			this.depletedUnProcMessagesSize += sm.getSize();
+			if ((Boolean)sm.getProperty("overtime") == true)
+				this.mOvertime ++;
+			if ((Boolean)sm.getProperty("satisfied") == true)
+				this.mSatisfied ++;
+			else
+				this.mUnSatisfied ++;
 		}
 	}
 	
@@ -497,10 +527,16 @@ public class RepoStorage {
 			if(processedMessages.get(i).getId() == MessageId){
 				this.depletedCloudProcMessages++;
 				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
+				if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
+					this.mOvertime ++;
+				if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
+					this.mSatisfied ++;
+				else
+					this.mUnSatisfied ++;
 				if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
 					this.mFresh++;
 				else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
-					this.mStale++
+					this.mStale++;
 				this.processedMessages.remove(i);
 				return true;
 			}
