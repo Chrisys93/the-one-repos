@@ -56,7 +56,7 @@ public class ProcApplication extends Application {
 	
 	private boolean passive = false;
 	private long	max_stor = (long) 0.9;
-	private long	min_stor = (long) 0.9;
+	private long	min_stor = (long) 0.1;
 	private long 	depl_rate = 0;
 	private long	deplBW = 0;
 	private long	servBW = 0;
@@ -152,6 +152,7 @@ public class ProcApplication extends Application {
 					double delayed = (double)msg.getProperty("delay");
 					if (curTime - this.procMin >= delayed) {
 						host.getStorageSystem().processMessage(msg);
+						tempp.addProperty("Fresh", true);
 						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 					}
 				}
@@ -291,7 +292,9 @@ public class ProcApplication extends Application {
 					//System.out.println(curTime + ": The message was deleted at: "+host.name.toString());
 					//pdepleted += 1;
 			}
+			//Revise:
 			servBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
+			cloudBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
 			//System.out.println("Depletion is at: "+ deplBW);
 			this.lastDepl = curTime;
 			//System.out.println("Depleted processed messages: "+ pdepleted);
@@ -341,6 +344,12 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().addToDeplUnProcMessages(tempc);
 				}
 			}
+			//Revise:
+			deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + host.getStorageSystem().getDepletedUnProcMessagesBW(false) + host.getStorageSystem().getDepletedStaticMessagesBW(false);
+			//System.out.println("Depletion is at: "+ deplBW);
+			this.lastDepl = curTime;
+			//System.out.println("Depleted processed messages: "+ pdepleted);
+			//System.out.println("Depleted static messages: "+ sdepleted);
 		}
 	}
 	
