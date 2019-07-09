@@ -64,11 +64,6 @@ public class RepoDepletedStorageBWReport extends Report implements UpdateListene
 		} else {
 			this.reportedMessages = null; /* all messages */
 		}
-
-		/*this.reportedMessages = new HashSet<String>();
-		for (String msgId : settings.getCsvSetting(REPORTED_MESSAGES)) {
-			this.reportedMessages.add(msgId);
-		}*/
 		
 		init();
 	}
@@ -106,27 +101,15 @@ public class RepoDepletedStorageBWReport extends Report implements UpdateListene
 	protected void createSnapshot(List<DTNHost> hosts) {
 		boolean isFirstMessage;
 		String reportLine;
-		
-		//write ("[" + (int)getSimTime() + "]"); /* write sim time stamp */
 		reportLine = (int)getSimTime() + " ";
 		for (DTNHost host : hosts) {
 			isFirstMessage = true;
-			//reportLine = "";
-			//for (Message m : host.getMessageCollection()) {
-				//if (isTracked(m)) {
-					//if (isFirstMessage) {
-						String hostname = host.name.toString();
-						if (hostname.contains("r") ){
-							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getDepletedStaticMessagesBW(true);
-							reportLine += " " + totalStoredMsgs;
-							//reportLine = host.getLocation().toString();
-							isFirstMessage = false;
-						}
-					//}		
-					//reportLine += " " + m.getId();
-				//}
-			//}
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				double totalStoredMsgs =  host.getStorageSystem().getDepletedStaticMessagesBW(true);
+				reportLine += " " + totalStoredMsgs;
+				isFirstMessage = false;
+			}
 			
 		}
 		if (reportLine.length() > 0) {

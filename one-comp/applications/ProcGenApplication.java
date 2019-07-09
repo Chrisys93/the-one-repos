@@ -35,21 +35,26 @@ public class ProcGenApplication extends Application {
 	 * TODO:
 	 * Add comp/deletion flag - think about periods/ratios for this, 
 	 * as well - correlated with proc, or not? - comp = true, del = false;
-	 * Add compression delay;
 	 * Add freshness period;
 	 * Add shelf-life;
-	 * Add storage-time field, to be completed by EDRs;
-	 * Add deletion/storage boolean tag;
 	 */
 	
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE_RATE = "passiveRate";
+	/** Run in passive mode - don't process messages, but store */
+	public static final String PROC_COMPRESS_RATE = "compressRate";
 	/** Proc generation interval */
 	public static final String PROC_INTERVAL = "interval";
 	/** Processing delay */
 	public static final String PROC_DELAY = "delay";
+	/** Proc messages freshness period delay */
+	public static final String FRESH_PERIOD = "freshPer";
+	/** Proc messages freshness period delay */
+	public static final String PROC_SHELF = "procShelf";
+	/** Proc messages freshness period delay */
+	public static final String NONPROC_SHELF = "nonprocShelf";
 	/** Destination address range - inclusive lower, exclusive upper */
 	public static final String PROC_DEST_NAME = "destinationName";
 	/** Seed for the app's random number generator */
@@ -62,11 +67,20 @@ public class ProcGenApplication extends Application {
 	
 	// Private vars
 	private double	lastProc = 0;
+	private double	lastMsg = 0;
 	private double	interval = 5;
-	private double	delay = 1;
+	private double	delay = 0.1;
+	private double	fresh_period = 1;
+	private double	proc_shelf = 1.5;
+	private double	nonproc_shelf = 1.5;
 	private boolean passive = false;
-	private double[] passive_rate = {1, 1};
+	private int[] 	passive_rate = {1, 1};
+	private int[] 	comp_rate = {1, 1};
 	private int		seed = 0;
+	private int		noProc = 0;
+	private int		noPassive = 0;
+	private int		noComp = 0;
+	private int		noDel = 0;
 	private String	destination = "r";
 	private int		procSize=1000000;
 	private Random	rng;
@@ -77,17 +91,36 @@ public class ProcGenApplication extends Application {
 	 * @param s	Settings to use for initializing the application.
 	 */
 	public ProcGenApplication(Settings s) {
+		
+		/**
+		 * TODO:
+		 * Remodel so that each second it creates a certain amount of messages,
+		 * of a certain type instead.
+		 */
+		
 		if (s.contains(PROC_PASSIVE)){
 			this.passive = s.getBoolean(PROC_PASSIVE);
 		}
 		if (s.contains(PROC_PASSIVE_RATE)){
-			this.passive_rate = s.getCsvDoubles(PROC_PASSIVE_RATE, 2);
+			this.passive_rate = s.getCsvInts(PROC_PASSIVE_RATE, 2);
+		}
+		if (s.contains(PROC_COMPRESS_RATE)){
+			this.comp_rate = s.getCsvInts(PROC_COMPRESS_RATE, 2);
 		}
 		if (s.contains(PROC_INTERVAL)){
 			this.interval = s.getDouble(PROC_INTERVAL);
 		}
 		if (s.contains(PROC_DELAY)){
 			this.delay = s.getDouble(PROC_DELAY);
+		}
+		if (s.contains(FRESH_PERIOD)){
+			this.fresh_period = s.getDouble(FRESH_PERIOD);
+		}
+		if (s.contains(PROC_SHELF)){
+			this.proc_shelf = s.getDouble(PROC_SHELF);
+		}
+		if (s.contains(NONPROC_SHELF)){
+			this.nonproc_shelf = s.getDouble(NONPROC_SHELF);
 		}
 		if (s.contains(PROC_SEED)){
 			this.seed = s.getInt(PROC_SEED);
@@ -111,6 +144,7 @@ public class ProcGenApplication extends Application {
 	public ProcGenApplication(ProcGenApplication a) {
 		super(a);
 		this.lastProc = a.getLastProc();
+		this.lastMsg = a.getLastMsg();
 		this.interval = a.getInterval();
 		this.passive = a.isPassive();
 		this.destination = a.getDestination();
@@ -119,6 +153,10 @@ public class ProcGenApplication extends Application {
 		this.rng = new Random(this.seed);
 		this.passive_rate = a.getPassiveRate();
 		this.delay = 1;
+		this.noProc = 0;
+		this.noPassive = 0;
+		this.noComp = 0;
+		this.noDel = 0;
 	}
 
 	/** 
@@ -170,10 +208,26 @@ public class ProcGenApplication extends Application {
 	@Override
 	public void update(DTNHost host) {
 		double curTime = SimClock.getTime();
+		
+		/**
+		 * TODO:
+		 * Remodel so that each second it creates a certain amount of messages,
+		 * of a certain type instead.
+		 * 
+		 * Every time it goes through a loop, it should increment (or reset) a
+		 * counter, which counts up to the different amounts of messages
+		 * (proc/non-proc, comp/del) specified in the sim settings.
+		 * If a value is 0, then make sure it skips it, and creates the right 
+		 * amount of messages of the other types.
+		 * 
+		 * To give a better understanding: Interval should be used for interval
+		 * BETWEEN messages, and then the different counters can be used to change 
+		 * the different tags of the messages.
+		 */
 
 		//System.out.println("generator update is accessed on: " + host);
 		if (this.passive) {
-			if (curTime - this.lastProc >= this.interval) {
+			if (curTime - this.lastMsg >= this.interval) {
 				// Time to send a new proc
 				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
 					SimClock.getIntTime() + "-" + host.getAddress(),
@@ -188,26 +242,44 @@ public class ProcGenApplication extends Application {
 				this.lastProc = curTime;
 			}
 		}
-		else if (curTime - this.lastProc >= this.interval) {
+		else if (curTime - this.lastMsg >= this.interval) {
+			Message m = new Message(host, connectedRepoHost(host), SimClock.getIntTime() + "-" + host.getAddress(), getProcSize());
+			host.createNewMessage(m);
 			// Time to send a new proc
-			for (int noProc = 0; noProc<(this.passive_rate[1]); noProc++) {
-				Message m = new Message(host, connectedRepoHost(host), "proc" +
-						SimClock.getIntTime() + "-" + host.getAddress(),
-						getProcSize());
+			if (this.noPassive<(this.passive_rate[0])) {
+				m.addProperty("type", "nonproc");
+				m.addProperty("shelfLife", this.nonproc_shelf);
+				m.setAppID("ProcApplication");
+				host.createNewMessage(m);
+				noPassive++;
+			}
+			else if (this.noProc<(this.passive_rate[1])) {
 				m.addProperty("type", "proc");
 				m.addProperty("delay", this.delay);
+				m.addProperty("freshPer", this.fresh_period);
+				m.addProperty("shelfLife", this.proc_shelf);
 				m.setAppID("ProcApplication");
-				host.createNewMessage(m);
+				this.noProc++;
 			}
-			for (int noPassive = 0; noPassive<(this.passive_rate[0]); noPassive++) {
-
-				Message m = new Message(host, connectedRepoHost(host), "nonproc" +
-						SimClock.getIntTime() + "-" + host.getAddress(),
-						getProcSize());
-				m.addProperty("type", "nonproc");
+			else {
+				this.noPassive = 0;
+				this.noProc = 0;
+			}
+			if (this.noComp<(this.comp_rate[0])) {
+				m.addProperty("comp", true);
 				m.setAppID("ProcApplication");
-				host.createNewMessage(m);
+				noComp++;
 			}
+			else if (this.noDel<(this.comp_rate[1])) {
+				m.addProperty("comp", false);
+				m.setAppID("ProcApplication");
+				this.noDel++;
+			}
+			else {
+				this.noComp = 0;
+				this.noDel = 0;
+			}
+			
 			
 			// Call listeners
 			super.sendEventToListeners("SentProc", null, host);
@@ -221,6 +293,13 @@ public class ProcGenApplication extends Application {
 	 */
 	public double getLastProc() {
 		return lastProc;
+	}
+
+	/**
+	 * @return the lastProc
+	 */
+	public double getLastMsg() {
+		return lastMsg;
 	}
 
 	/**
@@ -248,7 +327,7 @@ public class ProcGenApplication extends Application {
 	 * Return passive v for Processing rate
 	 * @return
 	 */
-	private double[] getPassiveRate() {
+	private int[] getPassiveRate() {
 		return passive_rate;
 	}
 

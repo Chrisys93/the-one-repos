@@ -55,7 +55,6 @@ public class ProcApplication extends Application {
 	// Private vars
 	private double	lastProc = 0;
 	private double 	lastDepl = 0;
-	private double 	lastCheck = 0;
 	private double 	procMin = 0;	
 	
 	private boolean passive = false;
@@ -292,6 +291,8 @@ public class ProcApplication extends Application {
 		 * 
 		 * NEED TO SORT OUT HOW TO KEEP TRACK OF "storTime" TAGS IN RepoStorage!
 		 * 
+		 * Need to add compression delays
+		 * 
 		 */
 		
 		while(this.cloudBW<this.cloud_lim && host.getStorageSystem().getProcessedMessagesSize()+ 
@@ -399,22 +400,28 @@ public class ProcApplication extends Application {
 				else {
 					temp.addProperty("overtime", false);
 				}
-				host.getStorageSystem().addToDepletedUnprocMessages(temp);
+				host.getStorageSystem().addToDepletedUnProcMessages(temp);
 				host.getStorageSystem().deleteMessage(temp.getId());
 			}
 			
 			else if(host.getStorageSystem().getOldestInvalidProcessMessage() != null) {
 				Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-				double storTime = curTime - temp.getReceiveTime();
-				temp.addProperty("storTime", storTime);
-				if (storTime > (double)temp.getProperty("shelfLife")) {
-					temp.addProperty("overtime", true);
+				String tempc = host.getStorageSystem().compressMessage(temp);
+				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+				double storTime = curTime - ctemp.getReceiveTime();
+				ctemp.addProperty("storTime", storTime);
+				ctemp.addProperty("satisfied", true);
+				if (storTime == (double)ctemp.getProperty("shelfLife")) {
+					ctemp.addProperty("overtime", false);
+				}
+				else if (storTime > (double)ctemp.getProperty("shelfLife")) {
+					ctemp.addProperty("overtime", true);
 				}
 				else {
-					temp.addProperty("overtime", false);
+					ctemp.addProperty("overtime", true);
 				}
-				host.getStorageSystem().addToDepletedUnprocMessages(temp);
-				host.getStorageSystem().deleteMessage(temp.getId());
+				host.getStorageSystem().addToCloudDeplStaticMessages(ctemp);
+				host.getStorageSystem().deleteMessage(tempc);
 			}
 			/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
 			else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
@@ -438,17 +445,6 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().deleteMessage(tempc);
 				}
 			}
-			else if (host.getStorageSystem().getNewestProcessMessage() != null){
-				Message temp = host.getStorageSystem().getNewestProcessMessage();
-				String tempc = host.getStorageSystem().compressMessage(temp);
-				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-				double storTime = curTime - ctemp.getReceiveTime();
-				ctemp.addProperty("storTime", storTime);
-				ctemp.addProperty("satisfied", false);
-				ctemp.addProperty("overtime", true);
-				host.getStorageSystem().addToDeplStaticMessages(ctemp);
-				host.getStorageSystem().deleteMessage(tempc);
-			}
 			else if (host.getStorageSystem().getOldestStaticMessage() != null){
 				Message temp = host.getStorageSystem().getOldestStaticMessage();
 				if((Boolean)temp.getProperty("comp") == false) {
@@ -464,6 +460,17 @@ public class ProcApplication extends Application {
 					host.getStorageSystem().addToDeplStaticMessages(ctemp);
 					host.getStorageSystem().deleteMessage(tempc);
 				}
+			}
+			else if (host.getStorageSystem().getNewestProcessMessage() != null){
+				Message temp = host.getStorageSystem().getNewestProcessMessage();
+				String tempc = host.getStorageSystem().compressMessage(temp);
+				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+				double storTime = curTime - ctemp.getReceiveTime();
+				ctemp.addProperty("storTime", storTime);
+				ctemp.addProperty("satisfied", false);
+				ctemp.addProperty("overtime", true);
+				host.getStorageSystem().addToDeplProcMessages(ctemp);
+				host.getStorageSystem().deleteMessage(tempc);
 			}
 			//Revise:
 			deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + 

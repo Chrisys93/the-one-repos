@@ -35,14 +35,6 @@ public class RepoStorage {
 	private long processSize;
 	private long staticSize;
 	private long processedSize;
-	private long mFresh;
-	private long mStale;
-	private long mOvertime;
-	private long mSatisfied;
-	private long mUnSatisfied;
-	private long mStorTimeNo;
-	private long mStorTimeAvg;
-	private long mStorTimeMax;
 	private long nrofDeletedMessages;
 	private long depletedProcMessages;
 	private long oldDepletedProcMessagesSize;
@@ -62,6 +54,14 @@ public class RepoStorage {
 	private long depletedCloudStaticMessages;
 	private long oldDepletedCloudStaticMessagesSize;
 	private long depletedCloudStaticMessagesSize;
+	private int  mStorTimeNo;
+	private int  mFresh;
+	private int  mStale;
+	private int  mOvertime;
+	private int  mSatisfied;
+	private int  mUnSatisfied;
+	private double mStorTimeAvg;
+	private double mStorTimeMax;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
 	private int cachedMessages;
@@ -231,6 +231,49 @@ public class RepoStorage {
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
+			if(sm.getProperty("storTime") != null) {
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
+			else {
+				double curTime = SimClock.getTime();
+				sm.addProperty("storTime", curTime - sm.getReceiveTime());
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
+		}
+	}
+	
+	/**
+	 * Adds a message to the depleted processing messages
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDeplProcMessages(Message sm) {
+		if (sm != null) {
+			this.depletedProcMessages++;
+			this.depletedProcMessagesSize += sm.getSize();
+			if ((Boolean)sm.getProperty("overtime") == true)
+				this.mOvertime ++;
+			this.mUnSatisfied ++;
+			if(sm.getProperty("storTime") != null) {
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
+			else {
+				double curTime = SimClock.getTime();
+				sm.addProperty("storTime", curTime - sm.getReceiveTime());
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
 		}
 	}
 	
@@ -249,6 +292,20 @@ public class RepoStorage {
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
+			if(sm.getProperty("storTime") != null) {
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
+			else {
+				double curTime = SimClock.getTime();
+				sm.addProperty("storTime", curTime - sm.getReceiveTime());
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
 		}
 	}
 	
@@ -275,7 +332,7 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
-	public void addToDepletedUnprocMessages(Message sm) {
+	public void addToDepletedUnProcMessages(Message sm) {
 		if (sm != null) {
 			this.depletedUnProcMessages++;
 			this.depletedUnProcMessagesSize += sm.getSize();
@@ -285,6 +342,20 @@ public class RepoStorage {
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
+			if(sm.getProperty("storTime") != null) {
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
+			else {
+				double curTime = SimClock.getTime();
+				sm.addProperty("storTime", curTime - sm.getReceiveTime());
+				this.mStorTimeNo ++;
+				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
+					this.mStorTimeMax = (double)sm.getProperty("storTime");
+			}
 		}
 	}
 	
@@ -340,6 +411,8 @@ public class RepoStorage {
 		int initsize = procMessage.getSize();
 		int processedsize = (int) (initsize/(2*this.compressionRate));
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
+		processedMessage.copyFrom(procMessage);
+		processedMessage.setReceiveTime(procMessage.getReceiveTime());
 		procMessage.updateProperty("type", "processed");
 		this.processedMessages.add(processedMessage);
 		
@@ -358,6 +431,8 @@ public class RepoStorage {
 			int initsize = compMessage.getSize();
 			int processedsize = (int) (initsize/this.compressionRate);
 			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
+			compressedMessage.copyFrom(compMessage);
+			compressedMessage.setReceiveTime(compMessage.getReceiveTime());
 			compMessage.updateProperty("compression", "compressed");
 			this.staticMessages.add(compressedMessage);
 			this.deleteMessage(compMessage.getId());
@@ -365,6 +440,30 @@ public class RepoStorage {
 		}
 		else
 			return null;
+	}
+	
+	/**
+	 * Returns the number of messages having storage times registered
+	 * @return How many files this file system has
+	 */
+	public int getStorTimeNo() {
+		return this.mStorTimeNo;
+	}
+	
+	/**
+	 * Returns the number of messages having storage times registered
+	 * @return How many files this file system has
+	 */
+	public double getStorTimeAvg() {
+		return this.mStorTimeAvg;
+	}
+	
+	/**
+	 * Returns the number of messages having storage times registered
+	 * @return How many files this file system has
+	 */
+	public double getStorTimeMax() {
+		return this.mStorTimeMax;
 	}
 	
 	/**
@@ -548,16 +647,28 @@ public class RepoStorage {
 		return this.nrofDeletedMessages;
 	}
 	
-	public long getNrofdepletedCloudProcMessages() {
+	public long getNrofDepletedCloudProcMessages() {
 		return this.depletedCloudProcMessages;
 	}
 	
-	public long getNrofFreshMessages() {
+	public int getNrofFreshMessages() {
 		return this.mFresh;
 	}
 	
-	public long getNrofStaleMessages() {
+	public int getNrofStaleMessages() {
 		return this.mStale;
+	}
+	
+	public int getNrofSatisfiedMessages() {
+		return this.mSatisfied;
+	}
+	
+	public int getNrofUnSatisfiedMessages() {
+		return this.mUnSatisfied;
+	}
+	
+	public int getNrofOvertimeMessages() {
+		return this.mOvertime;
 	}
 	
 	public long getNrofDepletedUnProcMessages() {
@@ -568,7 +679,7 @@ public class RepoStorage {
 		return this.depletedPUnProcMessages;
 	}
 	
-	public long getNrofdepletedCloudStaticMessages() {		
+	public long getNrofDepletedCloudStaticMessages() {		
 		return this.depletedCloudStaticMessages;
 	}
 	
