@@ -679,6 +679,10 @@ public class RepoStorage {
 		return this.depletedPUnProcMessages;
 	}
 	
+	public long getNrofDepletedStaticMessages() {		
+		return this.depletedStaticMessages;
+	}
+	
 	public long getNrofDepletedCloudStaticMessages() {		
 		return this.depletedCloudStaticMessages;
 	}

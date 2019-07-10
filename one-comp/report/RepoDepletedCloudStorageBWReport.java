@@ -19,7 +19,7 @@ import core.SimScenario;
  * Message location report. Reports the location (coordinates) of messages.
  * The messages that are reported and the reporting interval can be configured.
  */
-public class RepoCloudDepletedStorageBWReport extends Report implements UpdateListener {
+public class RepoDepletedCloudStorageBWReport extends Report implements UpdateListener {
 	/** Reporting granularity -setting id ({@value}). 
 	 * Defines the interval how often (seconds) a new snapshot of message 
 	 * locations is created */
@@ -50,7 +50,7 @@ public class RepoCloudDepletedStorageBWReport extends Report implements UpdateLi
 	/**
 	 * Constructor. Reads the settings and initializes the report module.
 	 */
-	public RepoCloudDepletedStorageBWReport() {
+	public RepoDepletedCloudStorageBWReport() {
 		Settings settings = getSettings();
 		this.lastUpdate = 0;	
 		this.granularity = settings.getInt(GRANULARITY);

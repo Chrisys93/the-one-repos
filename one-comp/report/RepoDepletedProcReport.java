@@ -118,7 +118,7 @@ public class RepoDepletedProcReport extends Report implements UpdateListener {
 						String hostname = host.name.toString();
 						if (hostname.contains("r") ){
 							//reportLine += " " + hostname;
-							double totalStoredMsgs =  host.getStorageSystem().getNrofdepletedCloudProcMessages() ;
+							double totalStoredMsgs =  host.getStorageSystem().getNrofDepletedCloudProcMessages() ;
 							reportLine += " " + totalStoredMsgs;
 							//reportLine = host.getLocation().toString();
 							isFirstMessage = false;
