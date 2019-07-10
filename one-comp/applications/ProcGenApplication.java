@@ -41,19 +41,19 @@ public class ProcGenApplication extends Application {
 	
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
-	/** Run in passive mode - don't process messages, but store */
+	/** Rate of non-processing - and - processing message generation */
 	public static final String PROC_PASSIVE_RATE = "passiveRate";
-	/** Run in passive mode - don't process messages, but store */
+	/** Rate of compression- and deletion-destined message generation */
 	public static final String PROC_COMPRESS_RATE = "compressRate";
 	/** Proc generation interval */
 	public static final String PROC_INTERVAL = "interval";
 	/** Processing delay */
 	public static final String PROC_DELAY = "delay";
-	/** Proc messages freshness period delay */
+	/** Proc messages freshness period */
 	public static final String FRESH_PERIOD = "freshPer";
-	/** Proc messages freshness period delay */
+	/** Proc messages shelf life period delay */
 	public static final String PROC_SHELF = "procShelf";
-	/** Proc messages freshness period delay */
+	/** Non-Proc messages shelf life period delay */
 	public static final String NONPROC_SHELF = "nonprocShelf";
 	/** Destination address range - inclusive lower, exclusive upper */
 	public static final String PROC_DEST_NAME = "destinationName";
@@ -72,7 +72,7 @@ public class ProcGenApplication extends Application {
 	private double	delay = 0.1;
 	private double	fresh_period = 1;
 	private double	proc_shelf = 1.5;
-	private double	nonproc_shelf = 1.5;
+	private double	nonproc_shelf = 2;
 	private boolean passive = false;
 	private int[] 	passive_rate = {1, 1};
 	private int[] 	comp_rate = {1, 1};
@@ -152,7 +152,10 @@ public class ProcGenApplication extends Application {
 		this.procSize = a.getProcSize();
 		this.rng = new Random(this.seed);
 		this.passive_rate = a.getPassiveRate();
-		this.delay = 1;
+		this.delay = a.getDelay();
+		this.fresh_period = a.getFreshPer();
+		this.proc_shelf = a.getProcShelf();
+		this.nonproc_shelf = a.getNonProcShelf();
 		this.noProc = 0;
 		this.noPassive = 0;
 		this.noComp = 0;
@@ -314,6 +317,34 @@ public class ProcGenApplication extends Application {
 	 */
 	public double getInterval() {
 		return interval;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getDelay() {
+		return delay;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getFreshPer() {
+		return fresh_period;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getProcShelf() {
+		return proc_shelf;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public double getNonProcShelf() {
+		return nonproc_shelf;
 	}
 
 	/**
