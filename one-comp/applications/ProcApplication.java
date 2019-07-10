@@ -58,8 +58,8 @@ public class ProcApplication extends Application {
 	private double 	procMin = 0;	
 	
 	private boolean passive = false;
-	private long	max_stor = (long) 0.9;
-	private long	min_stor = (long) 0.001;
+	private double	max_stor = (long) 0.9;
+	private double	min_stor = (long) 0.001;
 	private long 	depl_rate = 0;
 	private long 	cloud_lim = 0;
 	private long	deplBW = 0;
@@ -85,10 +85,10 @@ public class ProcApplication extends Application {
 			this.cloud_lim = s.getLong(CLOUD);
 		}
 		if (s.contains(MAX_STOR)){
-			this.max_stor = s.getLong(MAX_STOR);
+			this.max_stor = s.getDouble(MAX_STOR);
 		}
 		if (s.contains(MIN_STOR)){
-			this.min_stor = s.getLong(MIN_STOR);
+			this.min_stor = s.getDouble(MIN_STOR);
 		}
 		if (s.contains(PROC_NO)){
 			int m = s.getInt(PROC_NO);
