@@ -876,13 +876,21 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.processMessages) {
 			
-			if (oldest == null && 
-					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
-				oldest = m;
+			if (oldest == null) {
+				
+				if(m.getProperty("type")!=null && 
+					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
+					!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+						oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
-					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
-				oldest = m;
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+					
+					if(m.getProperty("type")!=null &&
+					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
+					!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+						oldest = m;
+					}
 			}
 		}
 		return oldest;
@@ -893,14 +901,21 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.processMessages) {
 			
-			if (oldest == null && 
+			if (oldest == null) {
+				
+				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null &&
 					((String) m.getProperty("type")).equalsIgnoreCase("processing") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 				oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				
+				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null && 
+					((String) m.getProperty("type")).equalsIgnoreCase("processing") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-				oldest = m;
+						oldest = m;
+				}
 			}
 		}
 		return oldest;
@@ -910,13 +925,19 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.processMessages) {
 			
-			if (oldest == null && 
+			if (oldest == null) {
+				
+				if(m.getProperty("type")!=null && 
 					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
-				oldest = m;
+						oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				
+				if(m.getProperty("type")!=null && 
 					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
-				oldest = m;
+						oldest = m;
+				}
 			}
 		}
 		return oldest;

@@ -115,10 +115,7 @@ public class ProcApplication extends Application {
 		this.proc_rate 	= a.getProcRate();
 		this.max_stor 	= a.getMaxStor();
 		this.min_stor 	= a.getMinStor();
-		for (int n=0; n<4; n++)
-		{
-			this.procEndTimes.add((double) 0);
-		}
+		this.procEndTimes = a.getProcEndTimes();
 		//this.processedSize = a.getProcessedSize();
 	}
 	
@@ -149,9 +146,7 @@ public class ProcApplication extends Application {
 			//System.out.println("handle is accessed on host: " + host);
 
 			host.getStorageSystem().addToStoredMessages(msg);
-			
 			this.getProcMin();
-			
 			
 			/**
 			 * TODO:
@@ -190,16 +185,12 @@ public class ProcApplication extends Application {
 		//System.out.println("processor update is accessed");
 		double curTime = SimClock.getTime();
 		
-		this.getProcMin();
-		
 		/**
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason. Processing is a separate process, inside
 		 * the EDRs and does not interfere with compression or offloading.
 		 */
-		
-		this.getProcMin();
-		while (host.getStorageSystem().getOldestProcessMessage() != null) {
+		if (host.getStorageSystem().getOldestValidProcessMessage() != null) {
 			
 			this.getProcMin();
 			
@@ -220,7 +211,8 @@ public class ProcApplication extends Application {
 					}
 				}
 					
-				else if (curTime-this.procMin+delayed <= temppShelf - (curTime-tempp.getReceiveTime())) {
+				else if (curTime-this.procMin+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
+						tempp.getProperty("Fresh") == null) {
 			
 			/**
 			 * TODO:
@@ -555,6 +547,13 @@ public class ProcApplication extends Application {
 	 */
 	public double getMinStor() {
 		return min_stor;
+	}
+
+	/**
+	 * @return depletion rate
+	 */
+	public ArrayList <Double> getProcEndTimes() {
+		return procEndTimes;
 	}
 
 	/**

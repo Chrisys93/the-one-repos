@@ -131,6 +131,10 @@ public class ProcGenApplication extends Application {
 		if (s.contains(PROC_DEST_NAME)){
 			this.destination = s.getSetting(PROC_DEST_NAME);
 		}
+		this.noProc = 0;
+		this.noPassive = 0;
+		this.noComp = 0;
+		this.noDel = 0;
 		
 		rng = new Random(this.seed);
 		super.setAppID(APP_ID);
@@ -242,18 +246,23 @@ public class ProcGenApplication extends Application {
 				// Call listeners
 				super.sendEventToListeners("SentProc", null, host);
 				
-				this.lastProc = curTime;
+				this.lastMsg = curTime;
 			}
 		}
 		else if (curTime - this.lastMsg >= this.interval) {
-			Message m = new Message(host, connectedRepoHost(host), SimClock.getIntTime() + "-" + host.getAddress(), getProcSize());
-			host.createNewMessage(m);
+			Message m = new Message(host, connectedRepoHost(host), SimClock.getIntTime() + "-" + host.getAddress() + connectedRepoHost(host), getProcSize());
 			// Time to send a new proc
+			/**
+			 * BIG PROBLEM here:
+			 * Need to find a way to reset the passive, proc,
+			 * comp and del counters, while also assigning the
+			 * appropriate tags, and not skipping messages!
+			 */
+			
 			if (this.noPassive<(this.passive_rate[0])) {
 				m.addProperty("type", "nonproc");
 				m.addProperty("shelfLife", this.nonproc_shelf);
 				m.setAppID("ProcApplication");
-				host.createNewMessage(m);
 				noPassive++;
 			}
 			else if (this.noProc<(this.passive_rate[1])) {
@@ -282,12 +291,13 @@ public class ProcGenApplication extends Application {
 				this.noComp = 0;
 				this.noDel = 0;
 			}
+			host.createNewMessage(m);
 			
 			
 			// Call listeners
 			super.sendEventToListeners("SentProc", null, host);
 			
-			this.lastProc = curTime;
+			this.lastMsg = curTime;
 		}
 	}
 
