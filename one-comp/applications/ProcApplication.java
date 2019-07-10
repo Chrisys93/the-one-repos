@@ -546,14 +546,14 @@ public class ProcApplication extends Application {
 	/**
 	 * @return depletion rate
 	 */
-	public long getMaxStor() {
+	public double getMaxStor() {
 		return max_stor;
 	}
 
 	/**
 	 * @return depletion rate
 	 */
-	public long getMinStor() {
+	public double getMinStor() {
 		return min_stor;
 	}
 
