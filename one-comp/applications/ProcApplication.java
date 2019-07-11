@@ -154,7 +154,7 @@ public class ProcApplication extends Application {
 			 * change processMessage(msg) to do this in RepoStorage, to change the message "destination" and 
 			 * not to delete the message from storage.
 			 */	
-			processOldestValidMessage(host);
+			processNewestValidMessage(host);
 		}
 		return msg;
 	}
@@ -236,6 +236,156 @@ public class ProcApplication extends Application {
 		 * 
 		 */
 		this.updateCloudBW(host);
+		this.deplCloud(host);
+		
+		/**
+		 * This can only be entered if forced depletion has to happen (there are no other options), 
+		 * and all the messages are making the storage overflow. No questions asked.
+		 * 
+		 * Content, in order of offloading preference - to cloud (all to be compressed): depletion-destined 
+		 * unprocessed messages, stale unprocessed messages, Stale non-processing messages, if needed,
+		 * oldest non-processing messages, regardless of satisfaction.
+		 * 
+		 * All added up to a maximum depletion BW (should be pretty low)
+		 */
+
+		this.updateDeplBW(host);
+		this.deplStorage(host);
+
+	}
+	
+	public void getProcMin() {
+		for (int i = 0; i<this.procEndTimes.size()-2; i++)
+			if (i == 0)
+				if(this.procEndTimes.get(i)<this.procEndTimes.get(this.procEndTimes.size()-1)) {
+					this.procMin = (double)this.procEndTimes.get(i);
+					this.procMinI = i;
+				}
+			else if (this.procEndTimes.get(i)<this.procEndTimes.get(i+1)) {
+				this.procMin = (double)this.procEndTimes.get(i);
+				this.procMinI = i;
+			}
+			else {
+				this.procMin = (double)this.procEndTimes.get(i+1);
+				this.procMinI = i+1;
+			}
+	}
+	
+	public boolean processOldestValidMessage(DTNHost host) {
+		boolean ans = false;
+		if (host.getStorageSystem().getOldestValidProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
+			double curTime = SimClock.getTime();
+			this.getProcMin();
+			
+			Message tempp = host.getStorageSystem().getOldestValidProcessMessage();
+			double delayed = (double)tempp.getProperty("delay");
+			double temppFresh = (double)tempp.getProperty("freshPer");
+			double temppShelf = (double)tempp.getProperty("shelfLife");
+			
+			if(curTime-this.procMin+delayed <= temppShelf) {
+	
+				if (curTime-this.procMin+delayed <= temppFresh - (curTime-tempp.getReceiveTime())) {
+					if ((!host.getStorageSystem().isProcessingEmpty()) && (!host.getStorageSystem().isProcessedFull())) {
+						if (curTime - this.procMin >= delayed) {
+							host.getStorageSystem().processMessage(tempp);
+							tempp.addProperty("Fresh", true);
+							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+						}
+					}
+				}
+					
+				else if (curTime-this.procMin+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
+						tempp.getProperty("Fresh") == null) {
+					if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
+						if (curTime - this.procMin >= delayed) {
+							host.getStorageSystem().processMessage(tempp);
+							tempp.addProperty("Fresh", false);
+							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+						}
+					}
+				}
+				ans = true;
+			}
+			
+			else {
+				if((Boolean)tempp.getProperty("comp") == false) {
+					host.getStorageSystem().deleteMessage(tempp.getId());
+				}
+				else {
+					String mID = host.getStorageSystem().compressMessage(tempp);
+					host.getStorageSystem().addToDeplUnProcMessages(mID);
+				}
+			}
+		}
+		return ans;
+	}
+	
+
+	
+	public boolean processNewestValidMessage(DTNHost host) {
+		boolean ans = false;
+		if (host.getStorageSystem().getNewestProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
+			double curTime = SimClock.getTime();
+			this.getProcMin();
+			
+			Message tempp = host.getStorageSystem().getNewestProcessMessage();
+			double delayed = (double)tempp.getProperty("delay");
+			double temppFresh = (double)tempp.getProperty("freshPer");
+			double temppShelf = (double)tempp.getProperty("shelfLife");
+			
+			if(curTime-this.procMin+delayed <= temppShelf) {
+	
+				if (curTime-this.procMin+delayed <= temppFresh - (curTime-tempp.getReceiveTime())) {
+					if ((!host.getStorageSystem().isProcessingEmpty()) && (!host.getStorageSystem().isProcessedFull())) {
+						if (curTime - this.procMin >= delayed) {
+							host.getStorageSystem().processMessage(tempp);
+							tempp.addProperty("Fresh", true);
+							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+						}
+					}
+				}
+					
+				else if (curTime-this.procMin+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
+						tempp.getProperty("Fresh") == null) {
+					if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
+						if (curTime - this.procMin >= delayed) {
+							host.getStorageSystem().processMessage(tempp);
+							tempp.addProperty("Fresh", false);
+							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+						}
+					}
+				}
+				ans = true;
+			}
+			
+			else {
+				if((Boolean)tempp.getProperty("comp") == false) {
+					host.getStorageSystem().deleteMessage(tempp.getId());
+				}
+				else {
+					String mID = host.getStorageSystem().compressMessage(tempp);
+					host.getStorageSystem().addToDeplUnProcMessages(mID);
+				}
+			}
+		}
+		return ans;
+	}
+	
+	
+	public void updateCloudBW(DTNHost host) {
+		this.cloudBW = host.getStorageSystem().getDepletedCloudProcMessagesBW(false) + 
+				host.getStorageSystem().getDepletedUnProcMessagesBW(false) + 
+				host.getStorageSystem().getDepletedCloudStaticMessagesBW(false);
+	}
+	
+	public void updateDeplBW(DTNHost host) {
+	this.deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + 
+			host.getStorageSystem().getDepletedUnProcMessagesBW(false) + 
+			host.getStorageSystem().getDepletedStaticMessagesBW(false);
+	}
+	
+	public void deplCloud(DTNHost host) {
+		double curTime = SimClock.getTime();
 		if (host.getStorageSystem().getProcessedMessagesSize()+
 				host.getStorageSystem().getStaleStaticMessagesSize() > 
 				(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)){
@@ -348,22 +498,13 @@ public class ProcApplication extends Application {
 				//System.out.println("Depleted static messages: "+ sdepleted);
 			}
 		}
-		
-		/**
-		 * This can only be entered if forced depletion has to happen (there are no other options), 
-		 * and all the messages are making the storage overflow. No questions asked.
-		 * 
-		 * Content, in order of offloading preference - to cloud (all to be compressed): depletion-destined 
-		 * unprocessed messages, stale unprocessed messages, Stale non-processing messages, if needed,
-		 * oldest non-processing messages, regardless of satisfaction.
-		 * 
-		 * All added up to a maximum depletion BW (should be pretty low)
-		 */
-
-		this.updateDeplBW(host);
+	}
+	
+	public void  deplStorage(DTNHost host) {
+		double curTime = SimClock.getTime();
 		if(host.getStorageSystem().getProcMessagesSize() + 
-		host.getStorageSystem().getStaticMessagesSize() > 
-		host.getStorageSystem().getTotalStorageSpace()*this.max_stor) {
+				host.getStorageSystem().getStaticMessagesSize() > 
+				host.getStorageSystem().getTotalStorageSpace()*this.max_stor) {
 			while (this.deplBW<this.depl_rate && this.deplEmptyLoop == false) {
 				
 				if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
@@ -465,85 +606,6 @@ public class ProcApplication extends Application {
 				this.lastDepl = curTime;
 			}
 		}
-
-	}
-	
-	public void getProcMin() {
-		for (int i = 0; i<this.procEndTimes.size()-2; i++)
-			if (i == 0)
-				if(this.procEndTimes.get(i)<this.procEndTimes.get(this.procEndTimes.size()-1)) {
-					this.procMin = (double)this.procEndTimes.get(i);
-					this.procMinI = i;
-				}
-			else if (this.procEndTimes.get(i)<this.procEndTimes.get(i+1)) {
-				this.procMin = (double)this.procEndTimes.get(i);
-				this.procMinI = i;
-			}
-			else {
-				this.procMin = (double)this.procEndTimes.get(i+1);
-				this.procMinI = i+1;
-			}
-	}
-	
-	public boolean processOldestValidMessage(DTNHost host) {
-		boolean ans = false;
-		if (host.getStorageSystem().getOldestValidProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
-			double curTime = SimClock.getTime();
-			this.getProcMin();
-			
-			Message tempp = host.getStorageSystem().getOldestValidProcessMessage();
-			double delayed = (double)tempp.getProperty("delay");
-			double temppFresh = (double)tempp.getProperty("freshPer");
-			double temppShelf = (double)tempp.getProperty("shelfLife");
-			
-			if(curTime-this.procMin+delayed <= temppShelf) {
-	
-				if (curTime-this.procMin+delayed <= temppFresh - (curTime-tempp.getReceiveTime())) {
-					if ((!host.getStorageSystem().isProcessingEmpty()) && (!host.getStorageSystem().isProcessedFull())) {
-						if (curTime - this.procMin >= delayed) {
-							host.getStorageSystem().processMessage(tempp);
-							tempp.addProperty("Fresh", true);
-							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						}
-					}
-				}
-					
-				else if (curTime-this.procMin+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
-						tempp.getProperty("Fresh") == null) {
-					if (!host.getStorageSystem().isProcessingEmpty() && !host.getStorageSystem().isProcessedFull()) {
-						if (curTime - this.procMin >= delayed) {
-							host.getStorageSystem().processMessage(tempp);
-							tempp.addProperty("Fresh", false);
-							this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						}
-					}
-				}
-				ans = true;
-			}
-			
-			else {
-				if((Boolean)tempp.getProperty("comp") == false) {
-					host.getStorageSystem().deleteMessage(tempp.getId());
-				}
-				else {
-					String mID = host.getStorageSystem().compressMessage(tempp);
-					host.getStorageSystem().addToDeplUnProcMessages(mID);
-				}
-			}
-		}
-		return ans;
-	}
-	
-	public void updateCloudBW(DTNHost host) {
-		this.cloudBW = host.getStorageSystem().getDepletedCloudProcMessagesBW(false) + 
-				host.getStorageSystem().getDepletedUnProcMessagesBW(false) + 
-				host.getStorageSystem().getDepletedCloudStaticMessagesBW(false);
-	}
-	
-	public void updateDeplBW(DTNHost host) {
-	this.deplBW = host.getStorageSystem().getDepletedProcMessagesBW(false) + 
-			host.getStorageSystem().getDepletedUnProcMessagesBW(false) + 
-			host.getStorageSystem().getDepletedStaticMessagesBW(false);
 	}
 
 	/**

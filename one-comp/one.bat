@@ -1,1 +1,1 @@
-java -Xmx1G -cp .;lib/ECLA.jar;lib/DTNConsoleConnection.jar core.DTNSim %*
+java -Xmx2G -cp .;lib/ECLA.jar;lib/DTNConsoleConnection.jar core.DTNSim %*

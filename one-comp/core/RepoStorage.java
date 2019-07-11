@@ -203,8 +203,13 @@ public class RepoStorage {
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
+				System.out.println("App ID is: "+ this.procApp.getAppID());
 			}
-			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
+
+			procApp.updateDeplBW(host);
+			procApp.deplStorage(host);
+			
+			/*if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
 				this.procApp.processOldestValidMessage(this.getHost());
 			}
 			else if (this.getOldestStaticMessage() != null) {
@@ -238,7 +243,7 @@ public class RepoStorage {
 					this.addToDeplProcMessages(ctemp);
 					this.deleteMessage(tempc);
 				}
-			}
+			}*/
 		}
 	}
 	
@@ -993,11 +998,19 @@ public class RepoStorage {
 		Message newest = null;
 		for (Message m : this.processMessages) {
 			
-			if (newest == null ) {
-				newest = m;
+			if (newest == null) {
+				
+				if(m.getProperty("type")!=null && 
+					((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+					newest = m;
+				}
 			}
 			else if (newest.getReceiveTime() < m.getReceiveTime()) {
-				newest = m;
+				
+				if(m.getProperty("type")!=null && 
+					((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+					newest = m;
+				}
 			}
 		}
 		return newest;
