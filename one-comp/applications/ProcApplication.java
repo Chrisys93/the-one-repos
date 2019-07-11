@@ -297,7 +297,8 @@ public class ProcApplication extends Application {
 			}
 			
 			else {
-				if((Boolean)tempp.getProperty("comp") == false) {
+				if((Boolean)tempp.getProperty("comp") != null) {
+					if(!(Boolean)tempp.getProperty("comp")) {
 					host.getStorageSystem().deleteMessage(tempp.getId());
 				}
 				else {
@@ -348,8 +349,10 @@ public class ProcApplication extends Application {
 			}
 			
 			else {
-				if((Boolean)tempp.getProperty("comp") == false) {
-					host.getStorageSystem().deleteMessage(tempp.getId());
+				if((Boolean)temp.getProperty("comp") != null) {
+					if(!(Boolean)temp.getProperty("comp")) {
+						host.getStorageSystem().deleteMessage(tempp.getId());
+					}
 				}
 				else {
 					String mID = host.getStorageSystem().compressMessage(tempp);
@@ -439,8 +442,10 @@ public class ProcApplication extends Application {
 				}
 				else if (host.getStorageSystem().getOldestStaticMessage() != null){
 					Message temp = host.getStorageSystem().getOldestStaticMessage();
-					if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-						host.getStorageSystem().deleteMessage(temp.getId());
+					if((Boolean)temp.getProperty("comp") != null) {
+						if(!(Boolean)temp.getProperty("comp")) {
+							host.getStorageSystem().deleteMessage(temp.getId());
+						}
 					}
 					else if ((Boolean)temp.getProperty("comp") != null) {
 						String tempc = host.getStorageSystem().compressMessage(temp);
@@ -455,8 +460,10 @@ public class ProcApplication extends Application {
 				}
 				else if (host.getStorageSystem().getNewestProcessMessage() != null){
 					Message temp = host.getStorageSystem().getNewestProcessMessage();
-					if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-						host.getStorageSystem().deleteMessage(temp.getId());
+					if((Boolean)temp.getProperty("comp") != null) {
+						if(!(Boolean)temp.getProperty("comp")) {
+							host.getStorageSystem().deleteMessage(temp.getId());
+						}
 					}
 					else if ((Boolean)temp.getProperty("comp") != null) {
 						String tempc = host.getStorageSystem().compressMessage(temp);
@@ -523,8 +530,10 @@ public class ProcApplication extends Application {
 	public void oldestSatisfiedStaticDepletion(DTNHost host) {
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
-		if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-			host.getStorageSystem().deleteMessage(temp.getId());
+		if((Boolean)temp.getProperty("comp") != null) {
+			if(!(Boolean)temp.getProperty("comp")) {
+				host.getStorageSystem().deleteMessage(temp.getId());
+			}
 		}
 		else if ((Boolean)temp.getProperty("comp") != null){
 			String tempc = host.getStorageSystem().compressMessage(temp);
@@ -574,8 +583,10 @@ public class ProcApplication extends Application {
 	public void oldestInvalidProcDepletion(DTNHost host){
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-		if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-			host.getStorageSystem().deleteMessage(temp.getId());
+		if((Boolean)temp.getProperty("comp") != null) {
+			if(!(Boolean)temp.getProperty("comp")) {
+				host.getStorageSystem().deleteMessage(temp.getId());
+			}
 		}
 		else if ((Boolean)temp.getProperty("comp") != null) {
 			String tempc = host.getStorageSystem().compressMessage(temp);
