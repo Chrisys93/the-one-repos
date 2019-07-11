@@ -389,7 +389,7 @@ public class ProcApplication extends Application {
 		if (host.getStorageSystem().getProcessedMessagesSize()+
 				host.getStorageSystem().getStaleStaticMessagesSize() > 
 				(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)){
-			while (this.cloudBW<this.cloud_lim && this.cloudEmptyLoop == false) {
+			while (this.cloudBW<this.cloud_lim && !this.cloudEmptyLoop) {
 				/* 
 				 * Oldest processed message is depleted (as a FIFO type of storage,
 				 * and a new message for processing is processed
@@ -505,7 +505,7 @@ public class ProcApplication extends Application {
 		if(host.getStorageSystem().getProcMessagesSize() + 
 				host.getStorageSystem().getStaticMessagesSize() > 
 				host.getStorageSystem().getTotalStorageSpace()*this.max_stor) {
-			while (this.deplBW<this.depl_rate && this.deplEmptyLoop == false) {
+			while (this.deplBW<this.depl_rate && !this.deplEmptyLoop) {
 				
 				if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
