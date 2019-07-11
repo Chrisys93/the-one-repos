@@ -29,7 +29,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	 * (comma separated list)*/
 	public static final String REPORTED_MESSAGES = "messages";
 	/** value of the granularity setting */
-	protected final int granularity;
+	//protected final int granularity;
 	protected final double endTime;
 	/** time of last update*/
 	protected double lastUpdate; 
@@ -54,7 +54,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	public RepoOvertimeReport() {
 		Settings settings = getSettings();
 		this.lastUpdate = 0;	
-		this.granularity = settings.getInt(GRANULARITY);
+		//this.granularity = settings.getInt(GRANULARITY);
 		this.endTime = settings.getDouble(SimScenario.END_TIME_S);
 		
 		//The old way to determine how many messages are reported (all by default)
