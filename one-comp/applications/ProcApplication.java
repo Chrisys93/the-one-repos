@@ -299,7 +299,8 @@ public class ProcApplication extends Application {
 			else {
 				if((Boolean)tempp.getProperty("comp") != null) {
 					if(!(Boolean)tempp.getProperty("comp")) {
-					host.getStorageSystem().deleteMessage(tempp.getId());
+						host.getStorageSystem().deleteMessage(tempp.getId());
+					}
 				}
 				else {
 					String mID = host.getStorageSystem().compressMessage(tempp);
