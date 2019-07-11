@@ -57,8 +57,8 @@ public class ProcApplication extends Application {
 	private double 	lastDepl = 0;
 	private double 	procMin = 0;	
 
-	private boolean cloudEmptyLoop = false;
-	private boolean deplEmptyLoop = false;
+	private boolean cloudEmptyLoop = true;
+	private boolean deplEmptyLoop = true;
 	private boolean passive = false;
 	private double	max_stor;
 	private double	min_stor;
@@ -166,24 +166,14 @@ public class ProcApplication extends Application {
 	 */
 	@Override
 	public void update(DTNHost host) {
-		
-		/**
-		 * TODO:
-		 * Review this whole update process, for freshness, priority and 
-		 * processing/non-processing precedence
-		 */
 
 		//System.out.println("processor update is accessed");
-		double curTime = SimClock.getTime();
 		
 		/**
 		 * Processing older messages, that could not be processed as soon as
 		 * accepted, for any reason. Processing is a separate process, inside
 		 * the EDRs and does not interfere with compression or offloading.
-		 */
-		
-		/**
-		 * TODO:
+		 *
 		 * Add "processed" flag and "send to customer" - separate BW association - need to
 		 * change processMessage(msg) to do this in RepoStorage, to change the message "destination" and 
 		 * not to delete the message from storage.
@@ -198,7 +188,6 @@ public class ProcApplication extends Application {
 		processOldestValidMessage(host);
 
 		/**
-		 * TODO:
 		 * DEPLETION PART HERE
 		 *
 		 * Depletion has to be done in the following order, and ONLY WHEN STORAGE IS FULL; up to a certain lower limit!
@@ -389,180 +378,64 @@ public class ProcApplication extends Application {
 		if (host.getStorageSystem().getProcessedMessagesSize()+
 				host.getStorageSystem().getStaleStaticMessagesSize() > 
 				(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)){
-			while (this.cloudBW<this.cloud_lim && !this.cloudEmptyLoop) {
+			this.cloudEmptyLoop = true;
+			for (int i = 0; this.cloudBW<this.cloud_lim && this.cloudEmptyLoop && i<50; i++) {
 				/* 
 				 * Oldest processed message is depleted (as a FIFO type of storage,
 				 * and a new message for processing is processed
 				 */
+
 				if (!host.getStorageSystem().isProcessedEmpty()) {
-					if (host.getStorageSystem().getOldestFreshMessage() != null) {
-							Message temp = host.getStorageSystem().getOldestFreshMessage();
-							/**
-							 * Make sure here that the added message to the cloud depletion
-							 * tracking is also tracked by whether it's Fresh or Stale.
-							 */
-							double storTime = curTime - temp.getReceiveTime();
-							temp.addProperty("storTime", storTime);
-							temp.addProperty("satisfied", true);
-							if (storTime == (double)temp.getProperty("shelfLife")) {
-								temp.addProperty("overtime", false);
-							}
-							else if (storTime > (double)temp.getProperty("shelfLife")) {
-								temp.addProperty("overtime", true);
-							}
-							host.getStorageSystem().deleteProcessedMessage(temp.getId());
-					}
-					else if (host.getStorageSystem().getOldestShelfMessage() != null) {
-						
-						Message temp = host.getStorageSystem().getOldestShelfMessage();
-						/**
-						 * Make sure here that the added message to the cloud depletion
-						 * tracking is also tracked by whether it's Fresh or Stale.
-						 */
-						double storTime = curTime - temp.getReceiveTime();
-						temp.addProperty("storTime", storTime);
-						temp.addProperty("satisfied", false);
-						if (storTime == (double)temp.getProperty("shelfLife")) {
-							temp.addProperty("overtime", false);
-						}
-						else if (storTime > (double)temp.getProperty("shelfLife")) {
-							temp.addProperty("overtime", true);
-						}
-						host.getStorageSystem().deleteProcessedMessage(temp.getId());
-					}
+					this.processedDepletion(host);
 				}
 				
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
 				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
-					Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
-					if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-						host.getStorageSystem().deleteMessage(temp.getId());
-					}
-					else if ((Boolean)temp.getProperty("comp") != null){
-						String tempc = host.getStorageSystem().compressMessage(temp);
-						Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-						double storTime = curTime - ctemp.getReceiveTime();
-						ctemp.addProperty("storTime", storTime);
-						ctemp.addProperty("satisfied", true);
-						if (storTime == (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", false);
-						}
-						else if (storTime > (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", true);
-						}
-						host.getStorageSystem().addToCloudDeplStaticMessages(ctemp);
-						host.getStorageSystem().deleteMessage(tempc);
-					}
-					else if((Boolean)temp.getProperty("comp") == null) {
-						double storTime = curTime - temp.getReceiveTime();
-						temp.addProperty("storTime", storTime);
-						temp.addProperty("satisfied", true);
-						if (storTime == (double)temp.getProperty("shelfLife")) {
-							temp.addProperty("overtime", false);
-						}
-						else if (storTime > (double)temp.getProperty("shelfLife")) {
-							temp.addProperty("overtime", true);
-						}
-						host.getStorageSystem().addToCloudDeplStaticMessages(temp);
-						host.getStorageSystem().deleteMessage(temp.getId());
-					}
+					oldestSatisfiedStaticDepletion(host);
 				}
 				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
-					Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-					double storTime = curTime - temp.getReceiveTime();
-					temp.addProperty("storTime", storTime);
-					if (storTime > (double)temp.getProperty("shelfLife")) {
-						temp.addProperty("overtime", true);
-					}
-					else if ((Boolean)temp.getProperty("comp") != null) {
-						temp.addProperty("overtime", false);
-					}
-					host.getStorageSystem().addToDepletedUnProcMessages(temp);
-					host.getStorageSystem().deleteMessage(temp.getId());
+					oldestUnProcDepletion(host);
 				}
 				else {
-					this.cloudEmptyLoop = true;
-					System.out.println("Depletion is at: "+ cloudBW);
+					this.cloudEmptyLoop = false;
+					System.out.println("Depletion is at: "+ this.cloudBW);
 				}
 				//Revise:
 				this.updateCloudBW(host);
 				//System.out.println("Depletion is at: "+ deplBW);
 				this.lastDepl = curTime;
-				System.out.println("this.cloudBW is at " + 
+				/*System.out.println("this.cloudBW is at " + 
 						this.cloudBW +
 						" this.cloud_lim is at " + 
 						this.cloud_lim +
 						" host.getStorageSystem().getTotalStorageSpace()*this.min_stor equal "+
 						(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)+
-						" Total space is "+host.getStorageSystem().getTotalStorageSpace());
+						" Total space is "+host.getStorageSystem().getTotalStorageSpace());*/
 				//System.out.println("Depleted static messages: "+ sdepleted);
 			}
 		}
 	}
+
+	
 	
 	public void  deplStorage(DTNHost host) {
 		double curTime = SimClock.getTime();
 		if(host.getStorageSystem().getProcMessagesSize() + 
 				host.getStorageSystem().getStaticMessagesSize() > 
 				host.getStorageSystem().getTotalStorageSpace()*this.max_stor) {
-			while (this.deplBW<this.depl_rate && !this.deplEmptyLoop) {
+			this.deplEmptyLoop = true;
+			for (int i = 0; this.deplBW<this.depl_rate && this.deplEmptyLoop && i<50; i++) {
 				
 				if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
-					Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-					double storTime = curTime - temp.getReceiveTime();
-					temp.addProperty("storTime", storTime);
-					if (storTime > (double)temp.getProperty("shelfLife")) {
-						temp.addProperty("overtime", true);
-					}
-					else if ((Boolean)temp.getProperty("comp") != null) {
-						temp.addProperty("overtime", false);
-					}
-					host.getStorageSystem().addToDepletedUnProcMessages(temp);
-					host.getStorageSystem().deleteMessage(temp.getId());
+					oldestUnProcDepletion(host);
 				}
 				
 				else if(host.getStorageSystem().getOldestInvalidProcessMessage() != null) {
-					Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-					if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-						host.getStorageSystem().deleteMessage(temp.getId());
-					}
-					else if ((Boolean)temp.getProperty("comp") != null) {
-						String tempc = host.getStorageSystem().compressMessage(temp);
-						Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-						double storTime = curTime - ctemp.getReceiveTime();
-						ctemp.addProperty("storTime", storTime);
-						ctemp.addProperty("satisfied", true);
-						if (storTime == (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", false);
-						}
-						else if (storTime > (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", true);
-						}
-						host.getStorageSystem().addToDeplStaticMessages(ctemp);
-						host.getStorageSystem().deleteMessage(tempc);
-					}
+					oldestInvalidProcDepletion(host);
 				}
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
 				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
-					Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
-					if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-						host.getStorageSystem().deleteMessage(temp.getId());
-					}
-					else if ((Boolean)temp.getProperty("comp") != null) {
-						String tempc = host.getStorageSystem().compressMessage(temp);
-						Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-						double storTime = curTime - ctemp.getReceiveTime();
-						ctemp.addProperty("storTime", storTime);
-						ctemp.addProperty("satisfied", true);
-						if (storTime == (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", false);
-						}
-						else if (storTime > (double)ctemp.getProperty("shelfLife")) {
-							ctemp.addProperty("overtime", true);
-						}
-						host.getStorageSystem().addToDeplStaticMessages(ctemp);
-						host.getStorageSystem().deleteMessage(tempc);
-					}
+					oldestSatisfiedStaticDepletion(host);
 				}
 				else if (host.getStorageSystem().getOldestStaticMessage() != null){
 					Message temp = host.getStorageSystem().getOldestStaticMessage();
@@ -598,13 +471,126 @@ public class ProcApplication extends Application {
 				}
 	
 				else {
-					deplEmptyLoop = true;
-					System.out.println("Depletion is at: "+ deplBW);
+					this.deplEmptyLoop = false;
+					System.out.println("Depletion is at: "+ this.deplBW);
 				}
 				this.updateDeplBW(host);
 				//Revise:
 				this.lastDepl = curTime;
 			}
+		}
+	}
+	
+	public void processedDepletion(DTNHost host) {
+		double curTime = SimClock.getTime();
+		if (host.getStorageSystem().getOldestFreshMessage() != null) {
+				Message temp = host.getStorageSystem().getOldestFreshMessage();
+				/**
+				 * Make sure here that the added message to the cloud depletion
+				 * tracking is also tracked by whether it's Fresh or Stale.
+				 */
+				double storTime = curTime - temp.getReceiveTime();
+				temp.addProperty("storTime", storTime);
+				temp.addProperty("satisfied", true);
+				if (storTime == (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", false);
+				}
+				else if (storTime > (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", true);
+				}
+				host.getStorageSystem().deleteProcessedMessage(temp.getId());
+		}
+		else if (host.getStorageSystem().getOldestShelfMessage() != null) {
+			
+			Message temp = host.getStorageSystem().getOldestShelfMessage();
+			/**
+			 * Make sure here that the added message to the cloud depletion
+			 * tracking is also tracked by whether it's Fresh or Stale.
+			 */
+			double storTime = curTime - temp.getReceiveTime();
+			temp.addProperty("storTime", storTime);
+			temp.addProperty("satisfied", false);
+			if (storTime == (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", false);
+			}
+			else if (storTime > (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", true);
+			}
+			host.getStorageSystem().deleteProcessedMessage(temp.getId());
+		}
+	}
+	
+	public void oldestSatisfiedStaticDepletion(DTNHost host) {
+		double curTime = SimClock.getTime();
+		Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
+		if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
+			host.getStorageSystem().deleteMessage(temp.getId());
+		}
+		else if ((Boolean)temp.getProperty("comp") != null){
+			String tempc = host.getStorageSystem().compressMessage(temp);
+			Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+			double storTime = curTime - ctemp.getReceiveTime();
+			ctemp.addProperty("storTime", storTime);
+			ctemp.addProperty("satisfied", true);
+			if (storTime == (double)ctemp.getProperty("shelfLife")) {
+				ctemp.addProperty("overtime", false);
+			}
+			else if (storTime > (double)ctemp.getProperty("shelfLife")) {
+				ctemp.addProperty("overtime", true);
+			}
+			host.getStorageSystem().addToCloudDeplStaticMessages(ctemp);
+			host.getStorageSystem().deleteMessage(tempc);
+		}
+		else if((Boolean)temp.getProperty("comp") == null) {
+			double storTime = curTime - temp.getReceiveTime();
+			temp.addProperty("storTime", storTime);
+			temp.addProperty("satisfied", true);
+			if (storTime == (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", false);
+			}
+			else if (storTime > (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", true);
+			}
+			host.getStorageSystem().addToCloudDeplStaticMessages(temp);
+			host.getStorageSystem().deleteMessage(temp.getId());
+		}
+	}
+	
+	public void oldestUnProcDepletion(DTNHost host) {
+		double curTime = SimClock.getTime();
+		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
+		double storTime = curTime - temp.getReceiveTime();
+		temp.addProperty("storTime", storTime);
+		if (storTime > (double)temp.getProperty("shelfLife")) {
+			temp.addProperty("overtime", true);
+		}
+		else if ((Boolean)temp.getProperty("comp") != null) {
+			temp.addProperty("overtime", false);
+		}
+		host.getStorageSystem().addToDepletedUnProcMessages(temp);
+		host.getStorageSystem().deleteMessage(temp.getId());
+	}
+	
+	public void oldestInvalidProcDepletion(DTNHost host){
+		double curTime = SimClock.getTime();
+		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
+		if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
+			host.getStorageSystem().deleteMessage(temp.getId());
+		}
+		else if ((Boolean)temp.getProperty("comp") != null) {
+			String tempc = host.getStorageSystem().compressMessage(temp);
+			Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+			double storTime = curTime - ctemp.getReceiveTime();
+			ctemp.addProperty("storTime", storTime);
+			ctemp.addProperty("satisfied", true);
+			if (storTime == (double)ctemp.getProperty("shelfLife")) {
+				ctemp.addProperty("overtime", false);
+			}
+			else if (storTime > (double)ctemp.getProperty("shelfLife")) {
+				ctemp.addProperty("overtime", true);
+			}
+			host.getStorageSystem().addToDeplStaticMessages(ctemp);
+			host.getStorageSystem().deleteMessage(tempc);
 		}
 	}
 

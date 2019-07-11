@@ -304,9 +304,9 @@ Report.report6 = RepoAllMessagesLocationReport
 Report.report7 = RepoDepletedProcBWReport
 Report.report8 = RepoDepletedUnProcBWReport
 Report.report9 = RepoDepletedStorageBWReport
-Report.report10= RepoDepletedCloudStorageBWReport
-Report.report11= RepoSatisfactionReport
-Report.report12= RepoStorTimesReport
+Report.report10 = RepoDepletedCloudStorageBWReport
+Report.report11 = RepoSatisfactionReport
+Report.report12 = RepoStorTimesReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
