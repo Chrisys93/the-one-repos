@@ -288,6 +288,7 @@ RepoDepletedProcBWReport.granularity = 1
 RepoDepletedUnProcBWReport.granularity = 1
 RepoDepletedStorageBWReport.granularity = 1
 RepoDepletedCloudStorageBWReport.granularity = 1
+Report.endTime = 10750
 FileLocationReport.granularity = 5
 
 # default directory of reports (can be overridden per Report with output setting)
