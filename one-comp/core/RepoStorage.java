@@ -185,6 +185,7 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */			
 	public void addToStoredMessages(Message sm) {
+		double curTime = SimClock.getTime();
 		if (sm != null) {
 			if (((String) sm.getProperty("type")).equalsIgnoreCase("nonproc")) {
 				this.staticMessages.add(sm);
@@ -199,21 +200,46 @@ public class RepoStorage {
 			/* add space used in the storage space */
 			//System.out.println("There is " + this.getStaticMessagesSize() + " storage used");
 		}
-		/*if ((this.staticSize + this.processSize) >= this.storageSize) {
+		if ((this.staticSize + this.processSize) >= this.storageSize) {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
 			}
 			if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
-				this.processMessage(this.getOldestProcessMessage());
-				this.cachedMessages ++;
+				this.procApp.processOldestValidMessage(this.getHost());
 			}
 			else if (this.getOldestStaticMessage() != null) {
-				this.addToDeplUnProcMessages(this.getOldestStaticMessage());
+				Message temp = this.getOldestStaticMessage();
+				if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
+					this.deleteMessage(temp.getId());
+				}
+				else if ((Boolean)temp.getProperty("comp") != null) {
+					String tempc = this.compressMessage(temp);
+					Message ctemp = this.getStaticMessage(tempc);
+					double storTime = curTime - ctemp.getReceiveTime();
+					ctemp.addProperty("storTime", storTime);
+					ctemp.addProperty("satisfied", false);
+					ctemp.addProperty("overtime", true);
+					this.addToDeplStaticMessages(ctemp);
+					this.deleteMessage(tempc);
+				}
 			}
 			else {
-				this.addToDeplUnProcMessages(this.getNewestProcessMessage());
+				Message temp = this.getNewestProcessMessage();
+				if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
+					this.deleteMessage(temp.getId());
+				}
+				else if ((Boolean)temp.getProperty("comp") != null) {
+					String tempc = this.compressMessage(temp);
+					Message ctemp = this.getStaticMessage(tempc);
+					double storTime = curTime - ctemp.getReceiveTime();
+					ctemp.addProperty("storTime", storTime);
+					ctemp.addProperty("satisfied", false);
+					ctemp.addProperty("overtime", true);
+					this.addToDeplProcMessages(ctemp);
+					this.deleteMessage(tempc);
+				}
 			}
-		}*/
+		}
 	}
 	
 	/**
@@ -397,7 +423,7 @@ public class RepoStorage {
 	 * @return The message
 	 */
 	public Message getProcessMessage(String MessageId) {
-		Message processMessage = this.processMessages.get(0);
+		Message processMessage = null;
 		for (Message temp : processMessages){
 			if (temp.getId() == MessageId){
 				int i = this.processMessages.indexOf(temp);
@@ -427,13 +453,13 @@ public class RepoStorage {
 	}
 	
 	public String compressMessage(Message compMessage) {
-		if ((Boolean)compMessage.getProperty("compression") == true) {
+		if ((Boolean)compMessage.getProperty("comp") == true) {
 			int initsize = compMessage.getSize();
 			int processedsize = (int) (initsize/this.compressionRate);
 			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
 			compressedMessage.copyFrom(compMessage);
 			compressedMessage.setReceiveTime(compMessage.getReceiveTime());
-			compMessage.updateProperty("compression", "compressed");
+			compMessage.updateProperty("comp", null);
 			this.staticMessages.add(compressedMessage);
 			this.deleteMessage(compMessage.getId());
 			return compressedMessage.getId();
@@ -496,6 +522,24 @@ public class RepoStorage {
 	 */
 	public long getStaticMessagesSize() {
 		return this.staticSize;
+	}
+	
+	/**
+	 * Returns the total size of messages that have stayed in storage over
+	 * their shelf lives.
+	 * @return The size of the used storage for valid, satisfied shelf-life
+	 * messages in this storage system
+	 */
+	public long getStaleStaticMessagesSize(){
+		double curTime = SimClock.getTime();
+		long size = 0;
+		for (Message m : this.staticMessages) {
+			if(m.getProperty("shelfLife")!=null && 
+				((double) m.getProperty("shelfLife")) >= curTime - m.getReceiveTime()) {
+				size += m.getSize();
+			}
+		}
+		return size;
 	}
 
 	/**
@@ -904,7 +948,7 @@ public class RepoStorage {
 			if (oldest == null) {
 				
 				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null &&
-					((String) m.getProperty("type")).equalsIgnoreCase("processing") && 
+					((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 				oldest = m;
 				}
@@ -912,7 +956,7 @@ public class RepoStorage {
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
 				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("processing") && 
+					((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 						oldest = m;
 				}
@@ -923,7 +967,7 @@ public class RepoStorage {
 	
 	public Message getOldestDeplUnProcMessage(){
 		Message oldest = null;
-		for (Message m : this.processMessages) {
+		for (Message m : this.staticMessages) {
 			
 			if (oldest == null) {
 				
@@ -977,13 +1021,19 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.processedMessages) {
 			
-			if (oldest == null  && 
+			if (oldest == null) {
+				
+				if(m.getProperty("Fresh")!=null && 
 					((Boolean) m.getProperty("Fresh")) == true) {
-				oldest = m;
+					oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				
+				if(m.getProperty("Fresh")!=null  && 
 					((Boolean) m.getProperty("Fresh")) == true) {
-				oldest = m;
+					oldest = m;
+				}
 			}
 		}
 		return oldest;
@@ -993,13 +1043,19 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.processedMessages) {
 			
-			if (oldest == null  && 
+			if (oldest == null) {
+				
+				if(m.getProperty("Fresh")!=null && 
 					((Boolean) m.getProperty("Fresh")) == false) {
-				oldest = m;
+					oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				
+				if(m.getProperty("Fresh")!=null && 
 					((Boolean) m.getProperty("Fresh")) == false) {
-				oldest = m;
+					oldest = m;
+				}
 			}
 		}
 		return oldest;
@@ -1024,13 +1080,19 @@ public class RepoStorage {
 		Message oldest = null;
 		for (Message m : this.staticMessages) {
 			
-			if (oldest == null && 
+			if (oldest == null) {
+				
+				if(m.getProperty("shelfLife")!=null && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-				oldest = m;
+					oldest = m;
+				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime() && 
+			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
+				
+				if(m.getProperty("shelfLife")!=null && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-				oldest = m;
+					oldest = m;
+				}
 			}
 		}
 		return oldest;

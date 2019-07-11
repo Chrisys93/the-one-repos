@@ -259,13 +259,13 @@ public class ProcGenApplication extends Application {
 			 * appropriate tags, and not skipping messages!
 			 */
 			
-			if (this.noPassive<(this.passive_rate[0])) {
+			if (this.noPassive<this.passive_rate[0]) {
 				m.addProperty("type", "nonproc");
 				m.addProperty("shelfLife", this.nonproc_shelf);
 				m.setAppID("ProcApplication");
 				noPassive++;
 			}
-			else if (this.noProc<(this.passive_rate[1])) {
+			else if (this.noProc<this.passive_rate[1]) {
 				m.addProperty("type", "proc");
 				m.addProperty("delay", this.delay);
 				m.addProperty("freshPer", this.fresh_period);
@@ -273,10 +273,12 @@ public class ProcGenApplication extends Application {
 				m.setAppID("ProcApplication");
 				this.noProc++;
 			}
-			else {
+			
+			if (this.noPassive >= this.passive_rate[0])
 				this.noPassive = 0;
+			if (this.noProc >= this.passive_rate[1])
 				this.noProc = 0;
-			}
+			
 			if (this.noComp<(this.comp_rate[0])) {
 				m.addProperty("comp", true);
 				m.setAppID("ProcApplication");
@@ -287,10 +289,12 @@ public class ProcGenApplication extends Application {
 				m.setAppID("ProcApplication");
 				this.noDel++;
 			}
-			else {
+			
+			if (this.noComp >= this.comp_rate[0])
 				this.noComp = 0;
+			if (this.noDel >= this.comp_rate[1])
 				this.noDel = 0;
-			}
+			
 			host.createNewMessage(m);
 			
 			
