@@ -255,7 +255,7 @@ public class Message implements Comparable<Message> {
 	 * (unless done in constructor).
 	 * @param m The message where the data is copied
 	 */
-	protected void copyFrom(Message m) {
+	public void copyFrom(Message m) {
 		this.path = new ArrayList<DTNHost>(m.path);
 		this.timeCreated = m.timeCreated;
 		this.responseSize = m.responseSize;

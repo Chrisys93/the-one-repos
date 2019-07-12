@@ -195,6 +195,10 @@ public class RepoStorage {
 				this.processMessages.add(sm);
 				this.processSize += sm.getSize();				
 			}
+			else if (((String) sm.getProperty("type")).equalsIgnoreCase("processed")) {
+				this.processedMessages.add(sm);
+				this.processedSize += sm.getSize();				
+			}
 			this.totalReceivedMessages++;
 			this.totalReceivedMessagesSize += sm.getSize();
 			/* add space used in the storage space */
@@ -438,41 +442,6 @@ public class RepoStorage {
 		return processMessage;
 	}
 	
-	public boolean processMessage(Message procMessage) {
-		int initsize = procMessage.getSize();
-		int processedsize = (int) (initsize/(2*this.compressionRate));
-		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
-		processedMessage.copyFrom(procMessage);
-		processedMessage.setReceiveTime(procMessage.getReceiveTime());
-		procMessage.updateProperty("type", "processed");
-		this.processedMessages.add(processedMessage);
-		
-		if((Boolean)procMessage.getProperty("comp") == false)
-			this.deleteMessage(procMessage.getId());
-		else {
-			this.staticMessages.add(procMessage);
-			this.deleteMessage(procMessage.getId());
-		}
-		
-		return true;
-	}
-	
-	public String compressMessage(Message compMessage) {
-		if ((Boolean)compMessage.getProperty("comp") == true) {
-			int initsize = compMessage.getSize();
-			int processedsize = (int) (initsize/this.compressionRate);
-			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
-			compressedMessage.copyFrom(compMessage);
-			compressedMessage.setReceiveTime(compMessage.getReceiveTime());
-			compMessage.updateProperty("comp", null);
-			this.staticMessages.add(compressedMessage);
-			this.deleteMessage(compMessage.getId());
-			return compressedMessage.getId();
-		}
-		else
-			return null;
-	}
-	
 	/**
 	 * Returns the number of messages having storage times registered
 	 * @return How many files this file system has
@@ -604,8 +573,10 @@ public class RepoStorage {
 			if(this.staticMessages.get(i).getId() == MessageId){
 				answer =  this.staticMessages.get(i);
 			}
-			else{
-				answer =  null;
+		}
+		for(int i=0; i<this.processMessages.size(); i++){
+			if(this.processMessages.get(i).getId() == MessageId){
+				answer =  this.processMessages.get(i);
 			}
 		}
 		return answer;
@@ -657,6 +628,9 @@ public class RepoStorage {
 			else if (((String)m.getProperty("type")).equalsIgnoreCase("nonproc") && deleteStaticMessage(MessageId)) {
 				return true;
 			}
+			else if (((String)m.getProperty("type")).equalsIgnoreCase("unprocessed") && deleteProcMessage(MessageId)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -675,16 +649,22 @@ public class RepoStorage {
 			if(processedMessages.get(i).getId() == MessageId){
 				this.depletedCloudProcMessages++;
 				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
-				if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
-					this.mOvertime ++;
-				if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
-					this.mSatisfied ++;
-				else
-					this.mUnSatisfied ++;
-				if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
-					this.mFresh++;
-				else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
-					this.mStale++;
+				if(this.processedMessages.get(i).getProperty("overtime")!=null) {
+					if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
+						this.mOvertime ++;
+				}
+				if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
+					if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
+						this.mSatisfied ++;
+					else
+						this.mUnSatisfied ++;
+				}
+				if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
+					if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
+						this.mFresh++;
+					else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
+						this.mStale++;
+				}
 				this.processedMessages.remove(i);
 				return true;
 			}
@@ -1123,6 +1103,10 @@ public class RepoStorage {
 			}
 		}
 		return oldest;
+	}
+
+	public double getCompressionRate() {
+		return this.compressionRate;
 	}
 
 }
