@@ -586,7 +586,6 @@ public class ProcApplication extends Application {
 	public void oldestInvalidProcDepletion(DTNHost host){
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestInvalidProcessMessage();
-		try {
 		if(temp.getProperty("comp") != null) {
 			if(!(Boolean)temp.getProperty("comp")) {
 				host.getStorageSystem().deleteMessage(temp.getId());
@@ -606,9 +605,6 @@ public class ProcApplication extends Application {
 			}
 			host.getStorageSystem().addToDeplStaticMessages(ctemp);
 			host.getStorageSystem().deleteMessage(tempc);
-		}}
-		catch(Exception e) {
-			System.out.println(e);			
 		}
 	}
 

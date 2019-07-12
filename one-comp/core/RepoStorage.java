@@ -927,19 +927,21 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("type")!=null && 
-					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
-					!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+				if(m.getProperty("type")!=null) {
+					if(!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
+						!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
 						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 					
-					if(m.getProperty("type")!=null &&
-					!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
-					!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+				if(m.getProperty("type")!=null) {
+					if(!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
+						!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
 						oldest = m;
 					}
+				}
 			}
 		}
 		return oldest;
@@ -952,18 +954,20 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null &&
-					((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
+				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-				oldest = m;
+						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
-				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
+				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 						oldest = m;
+					}
 				}
 			}
 		}
@@ -976,16 +980,18 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("type")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				if(m.getProperty("type")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
 						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
-				if(m.getProperty("type")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				if(m.getProperty("type")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
 						oldest = m;
+					}
 				}
 			}
 		}
@@ -1000,16 +1006,18 @@ public class RepoStorage {
 			
 			if (newest == null) {
 				
-				if(m.getProperty("type")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
-					newest = m;
+				if(m.getProperty("type")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+						newest = m;
+					}
 				}
 			}
 			else if (newest.getReceiveTime() < m.getReceiveTime()) {
 				
-				if(m.getProperty("type")!=null && 
-					((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
-					newest = m;
+				if(m.getProperty("type")!=null) {
+					if(((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+						newest = m;
+					}
 				}
 			}
 		}
@@ -1036,16 +1044,18 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("Fresh")!=null && 
-					((Boolean) m.getProperty("Fresh")) == true) {
-					oldest = m;
+				if(m.getProperty("Fresh")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) == true) {
+						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
-				if(m.getProperty("Fresh")!=null  && 
-					((Boolean) m.getProperty("Fresh")) == true) {
-					oldest = m;
+				if(m.getProperty("Fresh")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) == true) {
+						oldest = m;
+					}
 				}
 			}
 		}
@@ -1058,16 +1068,18 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("Fresh")!=null && 
-					((Boolean) m.getProperty("Fresh")) == false) {
-					oldest = m;
+				if(m.getProperty("Fresh")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) == false) {
+						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
-				if(m.getProperty("Fresh")!=null && 
-					((Boolean) m.getProperty("Fresh")) == false) {
-					oldest = m;
+				if(m.getProperty("Fresh")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) == false) {
+						oldest = m;
+					}
 				}
 			}
 		}
@@ -1095,16 +1107,18 @@ public class RepoStorage {
 			
 			if (oldest == null) {
 				
-				if(m.getProperty("shelfLife")!=null && 
-					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-					oldest = m;
+				if(m.getProperty("shelfLife")!=null) {
+					if(((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
+						oldest = m;
+					}
 				}
 			}
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
-				if(m.getProperty("shelfLife")!=null && 
-					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-					oldest = m;
+				if(m.getProperty("shelfLife")!=null) {
+					if(((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
+						oldest = m;
+					}
 				}
 			}
 		}
