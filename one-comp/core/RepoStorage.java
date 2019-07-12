@@ -651,11 +651,11 @@ public class RepoStorage {
 	public boolean deleteMessage(String MessageId){
 		Message m = this.hasMessage(MessageId);
 		if(m != null){
-			if (((String)m.getProperty("type")).equalsIgnoreCase("proc")) {
-				deleteProcMessage(MessageId);
+			if (((String)m.getProperty("type")).equalsIgnoreCase("proc") && deleteProcMessage(MessageId)) {
+				return true;
 			}
-			else if (((String)m.getProperty("type")).equalsIgnoreCase("nonproc")) {
-				deleteStaticMessage(MessageId);
+			else if (((String)m.getProperty("type")).equalsIgnoreCase("nonproc") && deleteStaticMessage(MessageId)) {
+				return true;
 			}
 		}
 		return false;
