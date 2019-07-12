@@ -203,11 +203,11 @@ public class RepoStorage {
 		if ((this.staticSize + this.processSize) >= this.storageSize) {
 			for (Application app : this.getHost().getRouter().getApplications("ProcApplication")) {
 				this.procApp = (ProcApplication) app;
-				System.out.println("App ID is: "+ this.procApp.getAppID());
+				//System.out.println("App ID is: "+ this.procApp.getAppID());
 			}
 
-			procApp.updateDeplBW(host);
-			procApp.deplStorage(host);
+			procApp.updateDeplBW(this.getHost());
+			procApp.deplStorage(this.getHost());
 			
 			/*if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
 				this.procApp.processOldestValidMessage(this.getHost());

@@ -238,8 +238,8 @@ public class ProcApplication extends Application {
 		 * All added up to a maximum depletion BW (should be pretty low)
 		 */
 
-		this.updateDeplBW(host);
-		this.deplStorage(host);
+		//this.updateDeplBW(host);
+		//this.deplStorage(host);
 
 	}
 	
