@@ -23,7 +23,7 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 	/** Reporting granularity -setting id ({@value}). 
 	 * Defines the interval how often (seconds) a new snapshot of message 
 	 * locations is created */
-	public static final String GRANULARITY = "granularity";
+	//public static final String GRANULARITY = "granularity";
 	/** Reported messages -setting id ({@value}). 
 	 * Defines the IDs of the messages that are reported 
 	 * (comma separated list)*/
