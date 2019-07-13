@@ -548,7 +548,7 @@ public class ProcApplication extends Application {
 						}
 						else {
 							String tempc = this.compressMessage(host, temp);
-							Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
+							Message ctemp = host.getStorageSystem().hasMessage(tempc);
 							host.getStorageSystem().deleteMessage(temp.getId());
 							double storTime = curTime - ctemp.getReceiveTime();
 							ctemp.addProperty("storTime", storTime);
