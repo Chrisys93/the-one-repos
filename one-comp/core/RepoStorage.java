@@ -640,7 +640,7 @@ public class RepoStorage {
 	 * @param MessageId ID of message to be deleted
 	 * @return successful deletion status
 	 */
-	public boolean deleteProcessedMessage(String MessageId){
+	public boolean deleteProcessedMessage(String MessageId, boolean report){
 		/* 
 		 * To be used in event, for deleting processed messages 
 		 * after "sending"/depleting them.
@@ -649,21 +649,23 @@ public class RepoStorage {
 			if(processedMessages.get(i).getId() == MessageId){
 				this.depletedCloudProcMessages++;
 				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
-				if(this.processedMessages.get(i).getProperty("overtime")!=null) {
-					if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
-						this.mOvertime ++;
-				}
-				if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
-					if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
-						this.mSatisfied ++;
-					else
-						this.mUnSatisfied ++;
-				}
-				if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
-					if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
-						this.mFresh++;
-					else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
-						this.mStale++;
+				if(report) {
+					if(this.processedMessages.get(i).getProperty("overtime")!=null) {
+						if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
+							this.mOvertime ++;
+					}
+					if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
+						if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
+							this.mSatisfied ++;
+						else
+							this.mUnSatisfied ++;
+					}
+					if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
+						if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
+							this.mFresh++;
+						else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
+							this.mStale++;
+					}
 				}
 				this.processedMessages.remove(i);
 				return true;

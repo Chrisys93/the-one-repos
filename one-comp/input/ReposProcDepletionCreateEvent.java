@@ -53,7 +53,7 @@ public class ReposProcDepletionCreateEvent extends ReposProcDepletionEvent {
 							//System.out.println("The message to be deleted is "+this.msgNo+" from host "+currNode.name.toString());
 							//currNode.getStorageSystem().processMessage(temp);
 							while (currNode.getStorageSystem().hasMessage(temp.getId()) != null) {}
-							currNode.getStorageSystem().deleteProcessedMessage(temp.getId());
+							//currNode.getStorageSystem().deleteProcessedMessage(temp.getId());
 						}
 					}
 					else {
