@@ -196,8 +196,7 @@ public class RepoStorage {
 				this.processSize += sm.getSize();				
 			}
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("processed")) {
-				this.processedMessages.add(sm);
-				this.processedSize += sm.getSize();				
+				this.processedMessages.add(sm);	
 			}
 			this.totalReceivedMessages++;
 			this.totalReceivedMessagesSize += sm.getSize();
