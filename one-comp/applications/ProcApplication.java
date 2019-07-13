@@ -219,9 +219,7 @@ public class ProcApplication extends Application {
 		 * 
 		 * Need to add compression delays
 		 * 
-		 *  ||
-				host.getStorageSystem().getProcessedMessagesSize() > this.cloud_lim ||
-				host.getStorageSystem().getStaleStaticMessagesSize() > this.cloud_lim)
+!!!!!!!!!!!MAKE SURE "PROCESS" MESSAGES ARE DELETED EITHER AFTER USE OR IN DUE TIME!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * 
 		 */
 		this.updateCloudBW(host);
