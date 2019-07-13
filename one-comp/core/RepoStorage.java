@@ -399,7 +399,7 @@ public class RepoStorage {
 	 * @return The message
 	 */
 	public Message getStaticMessage(String MessageId) {
-		Message staticMessage = this.staticMessages.get(0);
+		Message staticMessage = null;
 		for (Message temp : staticMessages){
 			if (temp.getId() == MessageId){
 				int i = this.staticMessages.indexOf(temp);
@@ -415,7 +415,7 @@ public class RepoStorage {
 	 * @return The message
 	 */
 	public Message getProcessedMessage(String MessageId) {
-		Message processedMessage = this.processedMessages.get(0);
+		Message processedMessage = null;
 		for (Message temp : processedMessages){
 			if (temp.getId() == MessageId){
 				int i = this.processedMessages.indexOf(temp);
