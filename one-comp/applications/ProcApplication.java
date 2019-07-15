@@ -277,7 +277,7 @@ public class ProcApplication extends Application {
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
 				
-				if (this.procMin-curTime+delayed <= temppFresh - (curTime-tempp.getReceiveTime())) {
+				if (this.procMin-curTime+delayed <= tempp.getReceiveTime() - temppFresh + curTime) {
 					if (!host.getStorageSystem().isProcessedFull()) {
 						tempp.addProperty("Fresh", true);
 						this.processMessage(host, tempp);
@@ -286,7 +286,7 @@ public class ProcApplication extends Application {
 					}
 				}
 					
-				else if (this.procMin-curTime+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
+				else if (this.procMin-curTime+delayed <= tempp.getReceiveTime() - temppShelf + curTime && 
 						tempp.getProperty("Fresh") == null) {
 					if (!host.getStorageSystem().isProcessedFull()) {
 						tempp.addProperty("Fresh", false);

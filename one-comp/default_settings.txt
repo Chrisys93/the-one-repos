@@ -271,7 +271,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 14
+Report.nrofReports = 15
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -310,6 +310,7 @@ Report.report11 = RepoSatisfactionReport
 Report.report12 = RepoStorTimesReport
 Report.report13 = RepoProcFreshnessReport
 Report.report14 = RepoUnProcessedReport
+Report.report15 = RepoOvertimeReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
@@ -326,6 +327,7 @@ RepoSatisfactionReport.output = [reports/RSR1; reports/RSR2; reports/RSR3; repor
 RepoProcFreshnessReport.output = [reports/RPFR1; reports/RPFR2; reports/RPFR3; reports/RPFR4; reports/RPFR5]
 RepoStorTimesReport.output = [reports/RSTR1; reports/RSTR2; reports/RSTR3; reports/RSTR4; reports/RSTR5]
 RepoUnProcessedReport.output = [reports/RUR1; reports/RUR2; reports/RUR3; reports/RUR4; reports/RUR5]
+RepoOvertimeReport.output = [reports/ROR1; reports/ROR2; reports/ROR3; reports/ROR4; reports/ROR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -380,10 +382,10 @@ procApp1.passive = false
 # Define new application
 procApp2.type = ProcGenApplication
 procApp2.interval = 1
-procApp2.delay = [0.1; 0.3; 0.2]
-procApp2.freshPer = [1; 1.5; 2; 1] 
-procApp2.procShelf = [2; 2.5; 2]
-procApp2.nonprocShelf = [2; 3; 5; 10]
+procApp2.delay = [0.1; 0.3; 0.2; 0.1; 0.3]
+procApp2.freshPer = [1; 1.5; 2; 1.5; 3] 
+procApp2.procShelf = [2; 2.5; 2; 15; 5]
+procApp2.nonprocShelf = [2; 3; 5; 20; 10]
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
