@@ -47,6 +47,8 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 	/** Array list for storing overall mean incoming speeds of repos */	
 	private ArrayList<Double> overallMeanRepoSpeeds;
 	
+	private List<DTNHost> hosts;
+	
 	
 	/**
 	 * Constructor. Reads the settings and initializes the report module.
@@ -86,6 +88,7 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 		if (simTime + 1 == this.endTime) {
 			createSnapshot(hosts);
 		}
+		this.hosts = hosts;
 	}
 	
 	
@@ -138,6 +141,56 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 		if (reportLine3.length() > 0) {
 		write(reportLine3); /* write coordinate and message IDs */
 		}
+	}
+	
+	@Override
+	public void done() {
+		String reportLine1;
+		reportLine1 = "StorTimeNo ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int StorTimeNo = host.getStorageSystem().getStorTimeNo();
+				
+				reportLine1 += " " + StorTimeNo;
+			}			
+		}
+		if (reportLine1.length() > 0) {
+		write(reportLine1); /* write coordinate and message IDs */
+		}
+		
+		String reportLine2;
+		reportLine2 = "StorTimeAvg ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				double getStorTimeAvg =  host.getStorageSystem().getStorTimeAvg();
+				
+				reportLine2 += " " + getStorTimeAvg;
+			}			
+		}
+		if (reportLine2.length() > 0) {
+		write(reportLine2); /* write coordinate and message IDs */
+		}
+		
+		String reportLine3;
+		reportLine3 = "StorTimeMax ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				double getStorTimeMax =  host.getStorageSystem().getStorTimeMax();
+				
+				reportLine3 += " " + getStorTimeMax;
+			}			
+		}
+		if (reportLine3.length() > 0) {
+		write(reportLine3); /* write coordinate and message IDs */
+		}
+		super.done();
+		
 	}
 	 
 }

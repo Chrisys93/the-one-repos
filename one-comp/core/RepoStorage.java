@@ -60,6 +60,7 @@ public class RepoStorage {
 	private int  mOvertime;
 	private int  mSatisfied;
 	private int  mUnSatisfied;
+	private int  mUnProcessed;
 	private double mStorTimeAvg;
 	private double mStorTimeMax;
 	private double totalReceivedMessages;
@@ -94,6 +95,7 @@ public class RepoStorage {
 		this.mOvertime = 0;
 		this.mSatisfied = 0;
 		this.mUnSatisfied = 0;
+		this.mUnProcessed = 0;
 		this.mStorTimeNo = 0;
 		this.mStorTimeAvg = 0;
 		this.mStorTimeMax = 0;
@@ -259,9 +261,11 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedStaticMessages++;
 			this.depletedStaticMessagesSize += sm.getSize();
-			if ((Boolean)sm.getProperty("overtime") == true)
+			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
-			if ((Boolean)sm.getProperty("satisfied") == true)
+			if ((String)sm.getProperty("type") == "unprocessed")
+				this.mUnProcessed ++;
+			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
@@ -291,9 +295,11 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedProcMessages++;
 			this.depletedProcMessagesSize += sm.getSize();
-			if ((Boolean)sm.getProperty("overtime") == true)
+			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
 			this.mUnSatisfied ++;
+			if ((String)sm.getProperty("type") == "unprocessed")
+				this.mUnProcessed ++;
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
 				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
@@ -320,9 +326,11 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedCloudStaticMessages++;
 			this.depletedCloudStaticMessagesSize += sm.getSize();
-			if ((Boolean)sm.getProperty("overtime") == true)
+			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
-			if ((Boolean)sm.getProperty("satisfied") == true)
+			if ((String)sm.getProperty("type") == "unprocessed")
+				this.mUnProcessed ++;
+			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
@@ -353,11 +361,9 @@ public class RepoStorage {
 	 * @return true if the message is added correctly
 	 */			
 	public void addToDeplUnProcMessages(String smID) {
-		if (this.getProcessMessage(smID) != null ) {
-			Message sm = this.getProcessMessage(smID);
-			if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				sm.updateProperty("type", "unprocessed");
-			}
+		if (this.hasMessage(smID) != null ) {
+			Message sm = this.hasMessage(smID);
+			sm.updateProperty("type", "unprocessed");
 		}
 	}
 	
@@ -370,9 +376,11 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedUnProcMessages++;
 			this.depletedUnProcMessagesSize += sm.getSize();
-			if ((Boolean)sm.getProperty("overtime") == true)
+			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
-			if ((Boolean)sm.getProperty("satisfied") == true)
+			if ((String)sm.getProperty("type") == "unprocessed")
+				this.mUnProcessed ++;
+			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
 				this.mUnSatisfied ++;
@@ -400,7 +408,7 @@ public class RepoStorage {
 	 */
 	public Message getStaticMessage(String MessageId) {
 		Message staticMessage = null;
-		for (Message temp : staticMessages){
+		for (Message temp : this.staticMessages){
 			if (temp.getId() == MessageId){
 				int i = this.staticMessages.indexOf(temp);
 				staticMessage = this.staticMessages.get(i);
@@ -416,7 +424,7 @@ public class RepoStorage {
 	 */
 	public Message getProcessedMessage(String MessageId) {
 		Message processedMessage = null;
-		for (Message temp : processedMessages){
+		for (Message temp : this.processedMessages){
 			if (temp.getId() == MessageId){
 				int i = this.processedMessages.indexOf(temp);
 				processedMessage = this.processedMessages.get(i);
@@ -432,7 +440,7 @@ public class RepoStorage {
 	 */
 	public Message getProcessMessage(String MessageId) {
 		Message processMessage = null;
-		for (Message temp : processMessages){
+		for (Message temp : this.processMessages){
 			if (temp.getId() == MessageId){
 				int i = this.processMessages.indexOf(temp);
 				processMessage = this.processMessages.get(i);
@@ -650,19 +658,19 @@ public class RepoStorage {
 				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
 				if(report) {
 					if(this.processedMessages.get(i).getProperty("overtime")!=null) {
-						if ((Boolean)this.processedMessages.get(i).getProperty("overtime") == true)
+						if ((Boolean)this.processedMessages.get(i).getProperty("overtime"))
 							this.mOvertime ++;
 					}
 					if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
-						if ((Boolean)this.processedMessages.get(i).getProperty("satisfied") == true)
+						if ((Boolean)this.processedMessages.get(i).getProperty("satisfied"))
 							this.mSatisfied ++;
 						else
 							this.mUnSatisfied ++;
 					}
 					if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
-						if ((Boolean)processedMessages.get(i).getProperty("Fresh") == true)
+						if ((Boolean)processedMessages.get(i).getProperty("Fresh"))
 							this.mFresh++;
-						else if ((Boolean)processedMessages.get(i).getProperty("Fresh") == false)
+						else if (!(Boolean)processedMessages.get(i).getProperty("Fresh"))
 							this.mStale++;
 					}
 				}
@@ -699,6 +707,10 @@ public class RepoStorage {
 	
 	public int getNrofOvertimeMessages() {
 		return this.mOvertime;
+	}
+	
+	public int getNrofUnProcessedMessages() {
+		return this.mUnProcessed;
 	}
 	
 	public long getNrofDepletedUnProcMessages() {
@@ -1026,7 +1038,7 @@ public class RepoStorage {
 			if (oldest == null) {
 				
 				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh")) == true) {
+					if(((Boolean) m.getProperty("Fresh"))) {
 						oldest = m;
 					}
 				}
@@ -1034,7 +1046,7 @@ public class RepoStorage {
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
 				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh")) == true) {
+					if(((Boolean) m.getProperty("Fresh"))) {
 						oldest = m;
 					}
 				}
@@ -1050,7 +1062,7 @@ public class RepoStorage {
 			if (oldest == null) {
 				
 				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh")) == false) {
+					if(!((Boolean) m.getProperty("Fresh"))) {
 						oldest = m;
 					}
 				}
@@ -1058,7 +1070,7 @@ public class RepoStorage {
 			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
 				
 				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh")) == false) {
+					if(!((Boolean) m.getProperty("Fresh"))) {
 						oldest = m;
 					}
 				}

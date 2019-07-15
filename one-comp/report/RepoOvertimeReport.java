@@ -38,6 +38,8 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	/** Need to internally define simScenario*/
 	private SimScenario simScenario;
 	
+	private List<DTNHost> hosts;
+	
 	/** 
 	 * TODO:
 	 * \/ For these two, I need to create separate reports \/ 
@@ -83,9 +85,10 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	public void updated(List<DTNHost> hosts) {
 		double simTime = getSimTime();
 		/* creates a snapshot once every granularity seconds */
-		if (simTime + 1 == this.endTime) {
+		if (simTime + 5 == this.endTime) {
 			createSnapshot(hosts);
 		}
+		this.hosts = hosts;
 	}
 	
 	
@@ -96,7 +99,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	protected void createSnapshot(List<DTNHost> hosts) {
 		String reportLine1;
 		reportLine1 = (int)getSimTime() + " ";
-		for (DTNHost host : hosts) {
+		for (DTNHost host : this.hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
 				
@@ -108,6 +111,26 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 		if (reportLine1.length() > 0) {
 		write(reportLine1); /* write coordinate and message IDs */
 		}
+	}
+	
+	@Override
+	public void done() {
+		String reportLine1;
+		reportLine1 = (int)getSimTime() + " ";
+		for (DTNHost host : this.hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int NrofOvertimeMessages = host.getStorageSystem().getNrofOvertimeMessages();
+				
+				reportLine1 += " " + NrofOvertimeMessages;
+			}			
+		}
+		if (reportLine1.length() > 0) {
+			write(reportLine1); /* write coordinate and message IDs */
+		}
+		super.done();
+		
 	}
 	 
 }

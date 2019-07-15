@@ -38,6 +38,8 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 	/** Need to internally define simScenario*/
 	private SimScenario simScenario;
 	
+	private List<DTNHost> hosts;
+	
 	/** 
 	 * TODO:
 	 * \/ For these two, I need to create separate reports \/ 
@@ -86,6 +88,7 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 		if (simTime + 1 == this.endTime) {
 			createSnapshot(hosts);
 		}
+		this.hosts = hosts;
 	}
 	
 	
@@ -123,6 +126,41 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 		if (reportLine2.length() > 0) {
 		write(reportLine2); /* write coordinate and message IDs */
 		}
+	}
+	
+	@Override
+	public void done() {
+		String reportLine1;
+		reportLine1 = "Satisfied Messages: ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int NrofSatisfiedMessages = host.getStorageSystem().getNrofSatisfiedMessages();
+				
+				reportLine1 += " " + NrofSatisfiedMessages;
+			}			
+		}
+		if (reportLine1.length() > 0) {
+		write(reportLine1); /* write coordinate and message IDs */
+		}
+		
+		String reportLine2;
+		reportLine2 = "Unsatisfied Messages: ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int NrofUnSatisfiedMessages =  host.getStorageSystem().getNrofUnSatisfiedMessages();
+				
+				reportLine2 += " " + NrofUnSatisfiedMessages;
+			}			
+		}
+		if (reportLine2.length() > 0) {
+		write(reportLine2); /* write coordinate and message IDs */
+		}
+		super.done();
+		
 	}
 	 
 }

@@ -365,7 +365,7 @@ procApp.minStorage = 0.001
 procApp1.type = ProcGenApplication
 procApp1.interval = 2
 procApp1.delay = 0.5
-procApp2.nonproc_shelf = 6
+procApp1.nonproc_shelf = 6
 procApp1.destinationName = r
 procApp1.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -377,27 +377,27 @@ procApp1.passive = false
 procApp2.type = ProcGenApplication
 procApp2.interval = 1
 procApp2.delay = 0.1
-procApp2.freshPer = 1
+procApp2.freshPer = 1.5
 procApp2.procShelf = 3
-procApp2.nonprocShelf = 3
+procApp2.nonprocShelf = 4
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp1.compressRate = 3,1
+procApp2.compressRate = 3,1
 procApp2.passiveRate = 0,2
 procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
-procApp3.interval = 1
+procApp3.interval = 0.7
 procApp3.delay = 0.2
-procApp2.freshPer = 1.5
-procApp2.procShelf = 2
-procApp2.nonprocShelf = 4
+procApp3.freshPer = 2
+procApp3.procShelf = 4
+procApp3.nonprocShelf = 5
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp1.compressRate = 1,4
+procApp3.compressRate = 1,3
 procApp3.passiveRate = 1,2
 procApp3.passive = false
 

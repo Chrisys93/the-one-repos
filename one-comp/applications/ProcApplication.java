@@ -304,8 +304,8 @@ public class ProcApplication extends Application {
 						host.getStorageSystem().deleteMessage(tempp.getId());
 					}
 					else {
-						String mID = this.compressMessage(host, tempp);
-						host.getStorageSystem().addToDeplUnProcMessages(mID);
+						Message m = this.compressMessage(host, tempp);
+						host.getStorageSystem().addToDeplUnProcMessages(m.getId());
 					}
 				}
 			}
@@ -354,8 +354,8 @@ public class ProcApplication extends Application {
 						host.getStorageSystem().deleteMessage(tempp.getId());
 					}
 					else {
-						String mID = this.compressMessage(host, tempp);
-						host.getStorageSystem().addToDeplUnProcMessages(mID);
+						Message m = this.compressMessage(host, tempp);
+						host.getStorageSystem().addToDeplUnProcMessages(m.getId());
 					}
 				}
 			}
@@ -364,7 +364,7 @@ public class ProcApplication extends Application {
 	}
 	
 	public boolean processMessage(DTNHost host, Message procMessage) {
-		host.getStorageSystem().deleteMessage(procMessage.getId());
+		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		int initsize = procMessage.getSize();
 		int processedsize = (int) (initsize/(2*host.getStorageSystem().getCompressionRate()));
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
@@ -374,23 +374,24 @@ public class ProcApplication extends Application {
 		procMessage.updateProperty("type", "nonproc");
 		host.getStorageSystem().addToStoredMessages(processedMessage);
 		
-		if((Boolean)procMessage.getProperty("comp") == true)
+		if((Boolean)procMessage.getProperty("comp"))
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		
 		return true;
 	}
 	
-	public String compressMessage(DTNHost host, Message compMessage) {
-		if ((Boolean)compMessage.getProperty("comp") == true) {
+	public Message compressMessage(DTNHost host, Message compMessage) {
+		if ((Boolean)compMessage.getProperty("comp")) {
 			int initsize = compMessage.getSize();
 			int processedsize = (int) (initsize/ host.getStorageSystem().getCompressionRate());
 			Message compressedMessage = new Message(compMessage.getFrom(), compMessage.getTo(), compMessage.getId(), processedsize);
 			compressedMessage.copyFrom(compMessage);
 			compressedMessage.setReceiveTime(compMessage.getReceiveTime());
-			compMessage.updateProperty("comp", null);
+			compressedMessage.updateProperty("comp", null);
+			//compressedMessage.updateProperty("type", "nonproc");
 			host.getStorageSystem().deleteMessage(compMessage.getId());
-			host.getStorageSystem().addToStoredMessages(compressedMessage);
-			return compressedMessage.getId();
+			//host.getStorageSystem().addToStoredMessages(compressedMessage);
+			return compressedMessage;
 		}
 		else
 			return null;
@@ -429,9 +430,9 @@ public class ProcApplication extends Application {
 				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
 					oldestSatisfiedStaticDepletion(host);
 				}
-				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
+				/*else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					oldestUnProcDepletion(host);
-				}
+				}*/
 				else {
 					this.cloudEmptyLoop = false;
 					//System.out.println("Depletion is at: "+ this.cloudBW);
@@ -467,9 +468,9 @@ public class ProcApplication extends Application {
 				 * at a certain point.
 				 */
 				
-				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
+				/*else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					oldestUnProcDepletion(host);
-				}
+				}*/
 				
 				/* 
 				 * Oldest processed message is depleted (as a FIFO type of storage,
@@ -509,27 +510,25 @@ public class ProcApplication extends Application {
 			for (int i = 0; this.deplBW<this.depl_rate && 
 				this.deplEmptyLoop && i<50 || this.cloudBW<this.cloud_lim; i++) {
 				
-				if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
+				/*if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					oldestUnProcDepletion(host);
+				}
+				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
+				
+				/*else*/ if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
+					oldestSatisfiedStaticDepletion(host);
 				}
 				
 				else if(host.getStorageSystem().getOldestInvalidProcessMessage() != null) {
 					oldestInvalidProcDepletion(host);
 				}
-				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
-				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
-					oldestSatisfiedStaticDepletion(host);
-				}
 				else if (host.getStorageSystem().getOldestStaticMessage() != null){
 					Message temp = host.getStorageSystem().getOldestStaticMessage();
+					host.getStorageSystem().deleteMessage(temp.getId());
 					if(temp.getProperty("comp") != null) {
-						if(!(Boolean)temp.getProperty("comp")) {
-							host.getStorageSystem().deleteMessage(temp.getId());
-						}
-						else {
-							String tempc = this.compressMessage(host, temp);
-							Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-							host.getStorageSystem().deleteMessage(temp.getId());
+						if((Boolean)temp.getProperty("comp")) {
+							Message ctemp = this.compressMessage(host, temp);
+							host.getStorageSystem().deleteMessage(ctemp.getId());
 							double storTime = curTime - ctemp.getReceiveTime();
 							ctemp.addProperty("storTime", storTime);
 							ctemp.addProperty("satisfied", false);
@@ -537,23 +536,52 @@ public class ProcApplication extends Application {
 							host.getStorageSystem().addToDeplStaticMessages(ctemp);
 						}
 					}
+					else if(temp.getProperty("comp") == null) {
+						double storTime = curTime - temp.getReceiveTime();
+						temp.addProperty("storTime", storTime);
+						temp.addProperty("satisfied", true);
+						if (storTime == (double)temp.getProperty("shelfLife")) {
+							temp.addProperty("overtime", false);
+						}
+						else if (storTime > (double)temp.getProperty("shelfLife")) {
+							temp.addProperty("overtime", true);
+						}
+						
+						if (((String)temp.getProperty("type")).equalsIgnoreCase("unprocessed"))
+							host.getStorageSystem().addToDepletedUnProcMessages(temp);
+						else
+							host.getStorageSystem().addToDeplStaticMessages(temp);
+					}
 				}
 				else if (host.getStorageSystem().getNewestProcessMessage() != null){
 					Message temp = host.getStorageSystem().getNewestProcessMessage();
+					host.getStorageSystem().deleteMessage(temp.getId());
 					if(temp.getProperty("comp") != null) {
-						if(!(Boolean)temp.getProperty("comp")) {
-							host.getStorageSystem().deleteMessage(temp.getId());
-						}
-						else {
-							String tempc = this.compressMessage(host, temp);
-							Message ctemp = host.getStorageSystem().hasMessage(tempc);
-							host.getStorageSystem().deleteMessage(temp.getId());
+						if((Boolean)temp.getProperty("comp")) {
+							Message ctemp = this.compressMessage(host, temp);
+							host.getStorageSystem().deleteMessage(ctemp.getId());
 							double storTime = curTime - ctemp.getReceiveTime();
 							ctemp.addProperty("storTime", storTime);
 							ctemp.addProperty("satisfied", false);
 							ctemp.addProperty("overtime", true);
 							host.getStorageSystem().addToDeplProcMessages(ctemp);
 						}
+					}
+					else if(temp.getProperty("comp") == null) {
+						double storTime = curTime - temp.getReceiveTime();
+						temp.addProperty("storTime", storTime);
+						temp.addProperty("satisfied", true);
+						if (storTime == (double)temp.getProperty("shelfLife")) {
+							temp.addProperty("overtime", false);
+						}
+						else if (storTime > (double)temp.getProperty("shelfLife")) {
+							temp.addProperty("overtime", true);
+						}
+						
+						if (((String)temp.getProperty("type")).equalsIgnoreCase("unprocessed"))
+							host.getStorageSystem().addToDepletedUnProcMessages(temp);
+						else
+							host.getStorageSystem().addToDeplStaticMessages(temp);
 					}
 				}
 	
@@ -620,14 +648,11 @@ public class ProcApplication extends Application {
 	public void oldestSatisfiedStaticDepletion(DTNHost host) {
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestStaleStaticMessage();
+		host.getStorageSystem().deleteMessage(temp.getId());
 		if(temp.getProperty("comp") != null) {
-			if(!(Boolean)temp.getProperty("comp")) {
-				host.getStorageSystem().deleteMessage(temp.getId());
-			}
-			else {
-				String tempc = this.compressMessage(host, temp);
-				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-				host.getStorageSystem().deleteMessage(temp.getId());
+			if((Boolean)temp.getProperty("comp")) {
+				Message ctemp = this.compressMessage(host, temp);
+				host.getStorageSystem().deleteMessage(ctemp.getId());
 				double storTime = curTime - ctemp.getReceiveTime();
 				ctemp.addProperty("storTime", storTime);
 				ctemp.addProperty("satisfied", true);
@@ -640,8 +665,7 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().addToCloudDeplStaticMessages(ctemp);
 			}
 		}
-		else if((Boolean)temp.getProperty("comp") == null) {
-			host.getStorageSystem().deleteMessage(temp.getId());
+		else if(temp.getProperty("comp") == null) {
 			double storTime = curTime - temp.getReceiveTime();
 			temp.addProperty("storTime", storTime);
 			temp.addProperty("satisfied", true);
@@ -651,35 +675,22 @@ public class ProcApplication extends Application {
 			else if (storTime > (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", true);
 			}
-			host.getStorageSystem().addToCloudDeplStaticMessages(temp);
-		}
-	}
-	
-	public void oldestUnProcDepletion(DTNHost host) {
-		double curTime = SimClock.getTime();
-		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
-		host.getStorageSystem().deleteMessage(temp.getId());
-		double storTime = curTime - temp.getReceiveTime();
-		temp.addProperty("storTime", storTime);
-		temp.addProperty("overtime", false);
-		if (storTime > (double)temp.getProperty("shelfLife")) {
-			temp.updateProperty("overtime", true);
-		}
 			
-		host.getStorageSystem().addToDepletedUnProcMessages(temp);
+			if ((String)temp.getProperty("type") == "unprocessed")
+				host.getStorageSystem().addToDepletedUnProcMessages(temp);
+			else
+				host.getStorageSystem().addToCloudDeplStaticMessages(temp);
+		}
 	}
 	
 	public void oldestInvalidProcDepletion(DTNHost host){
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestInvalidProcessMessage();
+		host.getStorageSystem().deleteMessage(temp.getId());
 		if(temp.getProperty("comp") != null) {
-			if(!(Boolean)temp.getProperty("comp")) {
-				host.getStorageSystem().deleteMessage(temp.getId());
-			}
-			else {
-				String tempc = this.compressMessage(host, temp);
-				Message ctemp = host.getStorageSystem().getStaticMessage(tempc);
-				host.getStorageSystem().deleteMessage(temp.getId());
+			if((Boolean)temp.getProperty("comp")) {
+				Message ctemp = this.compressMessage(host, temp);
+				host.getStorageSystem().deleteMessage(ctemp.getId());
 				double storTime = curTime - ctemp.getReceiveTime();
 				ctemp.addProperty("storTime", storTime);
 				ctemp.addProperty("satisfied", true);
@@ -689,8 +700,24 @@ public class ProcApplication extends Application {
 				else if (storTime > (double)ctemp.getProperty("shelfLife")) {
 					ctemp.addProperty("overtime", true);
 				}
-				host.getStorageSystem().addToDeplStaticMessages(ctemp);
+				host.getStorageSystem().addToDeplProcMessages(ctemp);
 			}
+		}
+		else if(temp.getProperty("comp") == null) {
+			double storTime = curTime - temp.getReceiveTime();
+			temp.addProperty("storTime", storTime);
+			temp.addProperty("satisfied", true);
+			if (storTime == (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", false);
+			}
+			else if (storTime > (double)temp.getProperty("shelfLife")) {
+				temp.addProperty("overtime", true);
+			}
+			
+			if ((String)temp.getProperty("type") == "unprocessed")
+				host.getStorageSystem().addToDepletedUnProcMessages(temp);
+			else
+				host.getStorageSystem().addToDeplProcMessages(temp);
 		}
 	}
 

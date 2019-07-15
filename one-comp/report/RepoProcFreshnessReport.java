@@ -38,6 +38,8 @@ public class RepoProcFreshnessReport extends Report implements UpdateListener {
 	/** Need to internally define simScenario*/
 	private SimScenario simScenario;
 	
+	private List<DTNHost> hosts;
+	
 	/** 
 	 * TODO:
 	 * \/ For these two, I need to create separate reports \/ 
@@ -86,6 +88,7 @@ public class RepoProcFreshnessReport extends Report implements UpdateListener {
 		if (simTime + 1 == this.endTime) {
 			createSnapshot(hosts);
 		}
+		this.hosts = hosts;
 	}
 	
 	
@@ -123,6 +126,41 @@ public class RepoProcFreshnessReport extends Report implements UpdateListener {
 		if (reportLine2.length() > 0) {
 		write(reportLine2); /* write coordinate and message IDs */
 		}
+	}
+	
+	@Override
+	public void done() {
+		String reportLine1;
+		reportLine1 = "Fresh messages ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int getNrofFreshMessages = host.getStorageSystem().getNrofFreshMessages();
+				
+				reportLine1 += " " + getNrofFreshMessages;
+			}			
+		}
+		if (reportLine1.length() > 0) {
+		write(reportLine1); /* write coordinate and message IDs */
+		}
+		
+		String reportLine2;
+		reportLine2 = "Shelf messages ";
+		for (DTNHost host : hosts) {
+			String hostname = host.name.toString();
+			if (hostname.contains("r") ){
+				
+				int getNrofStaleMessages =  host.getStorageSystem().getNrofStaleMessages();
+				
+				reportLine2 += " " + getNrofStaleMessages;
+			}			
+		}
+		if (reportLine2.length() > 0) {
+		write(reportLine2); /* write coordinate and message IDs */
+		}
+		super.done();
+		
 	}
 	 
 }
