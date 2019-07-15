@@ -98,7 +98,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	 */
 	protected void createSnapshot(List<DTNHost> hosts) {
 		String reportLine1;
-		reportLine1 = (int)getSimTime() + " ";
+		reportLine1 = "No. of overtime messages";
 		for (DTNHost host : this.hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
@@ -116,7 +116,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	@Override
 	public void done() {
 		String reportLine1;
-		reportLine1 = (int)getSimTime() + " ";
+		reportLine1 = "No. of overtime messages";
 		for (DTNHost host : this.hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){

@@ -271,7 +271,7 @@ MapBasedMovement.mapFile4 = data/shops.wkt
 ## Reports - all report names have to be valid report classes
 
 # how many reports to load
-Report.nrofReports = 12
+Report.nrofReports = 14
 # length of the warm up period (simulated seconds)
 Report.warmup = 0
 RepoMessageLocationReport.granularity = 1
@@ -308,6 +308,8 @@ Report.report9 = RepoDepletedStorageBWReport
 Report.report10 = RepoDepletedCloudStorageBWReport
 Report.report11 = RepoSatisfactionReport
 Report.report12 = RepoStorTimesReport
+Report.report13 = RepoProcFreshnessReport
+Report.report14 = RepoUnProcessedReport
 
 RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5]
 RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5]
@@ -321,7 +323,9 @@ RepoDepletedUnProcBWReport.output = [reports/RUPBWR1;reports/RUPBWR2;reports/RUP
 RepoDepletedCloudStorageBWReport.output = [reports/RCSBWR1; reports/RCSBWR2; reports/RCSBWR3; reports/RCSBWR4; reports/RCSBWR5]
 RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5]
 RepoSatisfactionReport.output = [reports/RSR1; reports/RSR2; reports/RSR3; reports/RSR4; reports/RSR5]
+RepoProcFreshnessReport.output = [reports/RPFR1; reports/RPFR2; reports/RPFR3; reports/RPFR4; reports/RPFR5]
 RepoStorTimesReport.output = [reports/RSTR1; reports/RSTR2; reports/RSTR3; reports/RSTR4; reports/RSTR5]
+RepoUnProcessedReport.output = [reports/RUR1; reports/RUR2; reports/RUR3; reports/RUR4; reports/RUR5]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -365,7 +369,7 @@ procApp.minStorage = 0.001
 procApp1.type = ProcGenApplication
 procApp1.interval = 2
 procApp1.delay = 0.5
-procApp1.nonproc_shelf = 6
+procApp1.nonproc_shelf = 3
 procApp1.destinationName = r
 procApp1.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -378,8 +382,8 @@ procApp2.type = ProcGenApplication
 procApp2.interval = 1
 procApp2.delay = 0.1
 procApp2.freshPer = 1.5
-procApp2.procShelf = 3
-procApp2.nonprocShelf = 4
+procApp2.procShelf = 2
+procApp2.nonprocShelf = 3
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
@@ -390,10 +394,10 @@ procApp2.passive = false
 # Define new application
 procApp3.type = ProcGenApplication
 procApp3.interval = 0.7
-procApp3.delay = 0.2
-procApp3.freshPer = 2
-procApp3.procShelf = 4
-procApp3.nonprocShelf = 5
+procApp3.delay = 0.3
+procApp3.freshPer = 1.5
+procApp3.procShelf = 2
+procApp3.nonprocShelf = 1.5
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
