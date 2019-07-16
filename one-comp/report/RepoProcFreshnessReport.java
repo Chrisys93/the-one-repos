@@ -131,7 +131,7 @@ public class RepoProcFreshnessReport extends Report implements UpdateListener {
 	@Override
 	public void done() {
 		String reportLine1;
-		reportLine1 = "Fresh messages ";
+		reportLine1 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
@@ -146,7 +146,7 @@ public class RepoProcFreshnessReport extends Report implements UpdateListener {
 		}
 		
 		String reportLine2;
-		reportLine2 = "Shelf messages ";
+		reportLine2 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){

@@ -610,7 +610,7 @@ public class ProcApplication extends Application {
 			 */
 			double storTime = curTime - temp.getReceiveTime();
 			temp.addProperty("storTime", storTime);
-			temp.addProperty("satisfied", true);
+			//temp.addProperty("satisfied", true);
 			if (storTime == (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", false);
 			}
@@ -632,7 +632,7 @@ public class ProcApplication extends Application {
 			 */
 			double storTime = curTime - temp.getReceiveTime();
 			temp.addProperty("storTime", storTime);
-			temp.addProperty("satisfied", false);
+			//temp.addProperty("satisfied", false);
 			if (storTime == (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", false);
 			}

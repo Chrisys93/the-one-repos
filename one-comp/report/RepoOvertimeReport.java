@@ -116,7 +116,7 @@ public class RepoOvertimeReport extends Report implements UpdateListener {
 	@Override
 	public void done() {
 		String reportLine1;
-		reportLine1 = "No. of overtime messages";
+		reportLine1 = "";
 		for (DTNHost host : this.hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
