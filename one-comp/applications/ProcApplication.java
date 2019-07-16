@@ -277,24 +277,10 @@ public class ProcApplication extends Application {
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
 				
-				if (this.procMin-curTime+delayed <= tempp.getReceiveTime() - temppFresh + curTime) {
-					if (!host.getStorageSystem().isProcessedFull()) {
-						tempp.addProperty("Fresh", true);
-						this.processMessage(host, tempp);
-						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						ans = true;
-					}
+				if (!host.getStorageSystem().isProcessedFull()) {
+					processMessage(host, tempp);
 				}
-					
-				else if (this.procMin-curTime+delayed <= tempp.getReceiveTime() - temppShelf + curTime && 
-						tempp.getProperty("Fresh") == null) {
-					if (!host.getStorageSystem().isProcessedFull()) {
-						tempp.addProperty("Fresh", false);
-						this.processMessage(host, tempp);
-						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						ans = true;
-					}
-				}
+				
 				ans = true;
 			}
 			
@@ -323,29 +309,15 @@ public class ProcApplication extends Application {
 			
 			Message tempp = host.getStorageSystem().getNewestProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
-			double temppFresh = (double)tempp.getProperty("freshPer");
 			double temppShelf = (double)tempp.getProperty("shelfLife");
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
-	
-				if (this.procMin-curTime+delayed <= temppFresh - (curTime-tempp.getReceiveTime())) {
-					if (!host.getStorageSystem().isProcessedFull()) {
-						tempp.addProperty("Fresh", true);
-						this.processMessage(host, tempp);
-						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						ans = true;
-					}
+				
+				if (!host.getStorageSystem().isProcessedFull()) {
+					processMessage(host, tempp);
 				}
-					
-				else if (this.procMin-curTime+delayed <= temppShelf - (curTime-tempp.getReceiveTime()) && 
-						tempp.getProperty("Fresh") == null) {
-					if (!host.getStorageSystem().isProcessedFull()) {
-						tempp.addProperty("Fresh", false);
-						this.processMessage(host, tempp);
-						this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-						ans = true;
-					}
-				}
+				
+				ans = true;
 			}
 			
 			else {
@@ -364,6 +336,23 @@ public class ProcApplication extends Application {
 	}
 	
 	public boolean processMessage(DTNHost host, Message procMessage) {
+		double curTime = SimClock.getTime();
+		boolean ans = false;
+		double delayed = (double)procMessage.getProperty("delay");
+		double procMessageFresh = (double)procMessage.getProperty("freshPer");
+		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
+		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
+			procMessage.addProperty("Fresh", true);
+			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			ans = true;
+		}
+			
+		else if (this.procMin-curTime+delayed <= procMessageShelf - (curTime-procMessage.getReceiveTime()) && 
+			procMessage.getProperty("Fresh") == null) {
+			procMessage.addProperty("Fresh", false);
+			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			ans = true;
+		}
 		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		int initsize = procMessage.getSize();
 		int processedsize = (int) (initsize/(2*host.getStorageSystem().getCompressionRate()));
@@ -377,7 +366,7 @@ public class ProcApplication extends Application {
 		if((Boolean)procMessage.getProperty("comp"))
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		
-		return true;
+		return ans;
 	}
 	
 	public Message compressMessage(DTNHost host, Message compMessage) {
