@@ -274,10 +274,10 @@ public class ProcGenApplication extends Application {
 				this.noProc++;
 			}
 			
-			if (this.noPassive >= this.passive_rate[0])
+			if (this.noPassive >= this.passive_rate[0] && this.noProc >= this.passive_rate[1]) {
 				this.noPassive = 0;
-			if (this.noProc >= this.passive_rate[1])
 				this.noProc = 0;
+			}
 			
 			if (this.noComp<(this.comp_rate[0])) {
 				m.addProperty("comp", true);
@@ -290,10 +290,10 @@ public class ProcGenApplication extends Application {
 				this.noDel++;
 			}
 			
-			if (this.noComp >= this.comp_rate[0])
+			if (this.noComp >= this.comp_rate[0] && this.noDel >= this.comp_rate[1]) {
 				this.noComp = 0;
-			if (this.noDel >= this.comp_rate[1])
 				this.noDel = 0;
+			}
 			
 			host.createNewMessage(m);
 			

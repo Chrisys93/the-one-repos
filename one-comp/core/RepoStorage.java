@@ -200,6 +200,10 @@ public class RepoStorage {
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("processed")) {
 				this.processedMessages.add(sm);
 			}
+			else if (((String) sm.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+				this.staticMessages.add(sm);
+				this.staticSize += sm.getSize();
+			}
 			this.totalReceivedMessages++;
 			this.totalReceivedMessagesSize += sm.getSize();
 			/* add space used in the storage space */
@@ -324,11 +328,9 @@ public class RepoStorage {
 	 * @param sm The message to add
 	 * @return true if the message is added correctly
 	 */			
-	public void addToDeplUnProcMessages(String smID) {
-		if (this.hasMessage(smID) != null ) {
-			Message sm = this.hasMessage(smID);
-			sm.updateProperty("type", "unprocessed");
-		}
+	public void addToDeplUnProcMessages(Message sm) {
+		sm.updateProperty("type", "unprocessed");
+		host.getStorageSystem().addToStoredMessages(sm);
 	}
 	
 	/**
@@ -600,7 +602,7 @@ public class RepoStorage {
 			else if (((String)m.getProperty("type")).equalsIgnoreCase("nonproc") && deleteStaticMessage(MessageId)) {
 				return true;
 			}
-			else if (((String)m.getProperty("type")).equalsIgnoreCase("unprocessed") && deleteProcMessage(MessageId)) {
+			else if (((String)m.getProperty("type")).equalsIgnoreCase("unprocessed") && deleteStaticMessage(MessageId)) {
 				return true;
 			}
 		}

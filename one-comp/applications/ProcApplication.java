@@ -297,7 +297,7 @@ public class ProcApplication extends Application {
 					}
 					else {
 						Message m = this.compressMessage(host, tempp);
-						host.getStorageSystem().addToDeplUnProcMessages(m.getId());
+						host.getStorageSystem().addToDeplUnProcMessages(m);
 					}
 				}
 			}
@@ -339,7 +339,7 @@ public class ProcApplication extends Application {
 					}
 					else {
 						Message m = this.compressMessage(host, tempp);
-						host.getStorageSystem().addToDeplUnProcMessages(m.getId());
+						host.getStorageSystem().addToDeplUnProcMessages(m);
 					}
 				}
 			}
@@ -348,25 +348,27 @@ public class ProcApplication extends Application {
 	}
 	
 	public boolean processNewestMessage(DTNHost host, Message procMessage) {
-		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		double curTime = SimClock.getTime();
 		boolean ans = false;
 		double delayed = (double)procMessage.getProperty("delay");
 		double procMessageFresh = (double)procMessage.getProperty("freshPer");
 		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
 		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
+			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 			procMessage.addProperty("procTime", this.procMin + delayed);
+			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
 			
 		else if (this.procMin-curTime+delayed <= procMessageShelf - (curTime-procMessage.getReceiveTime()) && 
 			procMessage.getProperty("Fresh") == null) {
+			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 			procMessage.addProperty("procTime", this.procMin + delayed);
+			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
-		host.getStorageSystem().addToStoredMessages(procMessage);
 		
 		if ((double)procMessage.getProperty("procTime") <= curTime) {
 			this.processMessage(host, procMessage);
@@ -387,27 +389,29 @@ public class ProcApplication extends Application {
 
 	
 	public boolean processOldestMessage(DTNHost host, Message procMessage) {
-		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		double curTime = SimClock.getTime();
 		boolean ans = false;
 		double delayed = (double)procMessage.getProperty("delay");
 		double procMessageFresh = (double)procMessage.getProperty("freshPer");
 		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
 		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
+			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 			procMessage.addProperty("procTime", this.procMin + delayed);
+			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
 		}
 			
 		else if (this.procMin-curTime+delayed <= procMessageShelf - (curTime-procMessage.getReceiveTime()) && 
 			procMessage.getProperty("Fresh") == null) {
+			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
 			procMessage.addProperty("procTime", this.procMin + delayed);
+			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
 		}
-		host.getStorageSystem().addToStoredMessages(procMessage);
 		
 		if(host.getStorageSystem().getOldestQueueFreshMessage() != null) {
 			this.processMessage(host, host.getStorageSystem().getOldestQueueFreshMessage());
@@ -420,7 +424,7 @@ public class ProcApplication extends Application {
 	}
 	
 	public void processMessage(DTNHost host, Message procMessage) {
-		host.getStorageSystem().deleteProcessedMessage(procMessage.getId(), false);
+		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		int initsize = procMessage.getSize();
 		int processedsize = (int) (initsize/(2*host.getStorageSystem().getCompressionRate()));
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
