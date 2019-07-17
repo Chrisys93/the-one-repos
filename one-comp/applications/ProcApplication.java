@@ -264,6 +264,15 @@ public class ProcApplication extends Application {
 			this.procMin = curTime;
 	}
 	
+
+	/**
+	 * Add Oldest processing message to the queue and process the freshest message 
+	 * in storage, up for processing and in the queue. Need to check some associated
+	 * result return times when "processing" each message.
+	 * @param host Host of the storage system.
+	 * @return Result of processing action.
+	 */	
+	
 	public boolean processOldestValidMessage(DTNHost host) {
 		boolean ans = false;
 		if (host.getStorageSystem().getOldestValidProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
@@ -272,15 +281,12 @@ public class ProcApplication extends Application {
 			
 			Message tempp = host.getStorageSystem().getOldestValidProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
-			double temppFresh = (double)tempp.getProperty("freshPer");
 			double temppShelf = (double)tempp.getProperty("shelfLife");
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
-				
 				if (!host.getStorageSystem().isProcessedFull()) {
-					processMessage(host, tempp);
+					processOldestMessage(host, tempp);
 				}
-				
 				ans = true;
 			}
 			
@@ -301,6 +307,14 @@ public class ProcApplication extends Application {
 	
 
 	
+	/**
+	 * Add newest processing message to the queue and process the freshest message 
+	 * in storage, up for processing and in the queue. Need to check some associated
+	 * result return times when "processing" each message.
+	 * @param host Host of the storage system.
+	 * @return Result of processing action.
+	 */	
+	
 	public boolean processNewestValidMessage(DTNHost host) {
 		boolean ans = false;
 		if (host.getStorageSystem().getNewestProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
@@ -312,11 +326,9 @@ public class ProcApplication extends Application {
 			double temppShelf = (double)tempp.getProperty("shelfLife");
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
-				
 				if (!host.getStorageSystem().isProcessedFull()) {
-					processMessage(host, tempp);
+					processNewestMessage(host, tempp);
 				}
-				
 				ans = true;
 			}
 			
@@ -335,7 +347,8 @@ public class ProcApplication extends Application {
 		return ans;
 	}
 	
-	public boolean processMessage(DTNHost host, Message procMessage) {
+	public boolean processNewestMessage(DTNHost host, Message procMessage) {
+		host.getStorageSystem().deleteProcMessage(procMessage.getId());
 		double curTime = SimClock.getTime();
 		boolean ans = false;
 		double delayed = (double)procMessage.getProperty("delay");
@@ -344,6 +357,46 @@ public class ProcApplication extends Application {
 		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			procMessage.addProperty("procTime", this.procMin + delayed);
+		}
+			
+		else if (this.procMin-curTime+delayed <= procMessageShelf - (curTime-procMessage.getReceiveTime()) && 
+			procMessage.getProperty("Fresh") == null) {
+			procMessage.addProperty("Fresh", false);
+			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			procMessage.addProperty("procTime", this.procMin + delayed);
+		}
+		host.getStorageSystem().addToStoredMessages(procMessage);
+		
+		if ((double)procMessage.getProperty("procTime") <= curTime) {
+			this.processMessage(host, procMessage);
+			ans = true;
+		}
+		else if(host.getStorageSystem().getNewestQueueFreshMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getNewestQueueFreshMessage());
+			ans = true;
+		}
+		else if(host.getStorageSystem().getNewestQueueShelfMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getNewestQueueShelfMessage());
+			ans = true;			
+		}
+		
+		return ans;
+	}
+	
+
+	
+	public boolean processOldestMessage(DTNHost host, Message procMessage) {
+		host.getStorageSystem().deleteProcMessage(procMessage.getId());
+		double curTime = SimClock.getTime();
+		boolean ans = false;
+		double delayed = (double)procMessage.getProperty("delay");
+		double procMessageFresh = (double)procMessage.getProperty("freshPer");
+		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
+		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
+			procMessage.addProperty("Fresh", true);
+			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			procMessage.addProperty("procTime", this.procMin + delayed);
 			ans = true;
 		}
 			
@@ -351,22 +404,35 @@ public class ProcApplication extends Application {
 			procMessage.getProperty("Fresh") == null) {
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			procMessage.addProperty("procTime", this.procMin + delayed);
 			ans = true;
 		}
-		host.getStorageSystem().deleteProcMessage(procMessage.getId());
+		host.getStorageSystem().addToStoredMessages(procMessage);
+		
+		if(host.getStorageSystem().getOldestQueueFreshMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getOldestQueueFreshMessage());
+		}
+		else if(host.getStorageSystem().getOldestQueueShelfMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getOldestQueueShelfMessage());			
+		}
+		
+		return ans;
+	}
+	
+	public void processMessage(DTNHost host, Message procMessage) {
+		host.getStorageSystem().deleteProcessedMessage(procMessage.getId(), false);
 		int initsize = procMessage.getSize();
 		int processedsize = (int) (initsize/(2*host.getStorageSystem().getCompressionRate()));
 		Message processedMessage = new Message(procMessage.getFrom(), procMessage.getTo(), procMessage.getId(), processedsize);
 		processedMessage.copyFrom(procMessage);
 		processedMessage.setReceiveTime(procMessage.getReceiveTime());
 		processedMessage.updateProperty("type", "processed");
+		processedMessage.updateProperty("procTime", null);
 		procMessage.updateProperty("type", "nonproc");
 		host.getStorageSystem().addToStoredMessages(processedMessage);
 		
 		if((Boolean)procMessage.getProperty("comp"))
 			host.getStorageSystem().addToStoredMessages(procMessage);
-		
-		return ans;
 	}
 	
 	public Message compressMessage(DTNHost host, Message compMessage) {
@@ -589,48 +655,54 @@ public class ProcApplication extends Application {
 	public void processedDepletion(DTNHost host) {
 		double curTime = SimClock.getTime();
 		if (host.getStorageSystem().getOldestFreshMessage() != null) {
+			if (host.getStorageSystem().getOldestFreshMessage().getProperty("procTime") == null) {
 			
-			Message temp = host.getStorageSystem().getOldestFreshMessage();
-			boolean report = false;
-			host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
-			/**
-			 * Make sure here that the added message to the cloud depletion
-			 * tracking is also tracked by whether it's Fresh or Stale.
-			 */
-			double storTime = curTime - temp.getReceiveTime();
-			temp.addProperty("storTime", storTime);
-			//temp.addProperty("satisfied", true);
-			if (storTime == (double)temp.getProperty("shelfLife")) {
-				temp.addProperty("overtime", false);
+				Message temp = host.getStorageSystem().getOldestFreshMessage();
+				boolean report = false;
+				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
+				/**
+				 * Make sure here that the added message to the cloud depletion
+				 * tracking is also tracked by whether it's Fresh or Stale.
+				 */
+				double storTime = curTime - temp.getReceiveTime();
+				temp.addProperty("storTime", storTime);
+				//temp.addProperty("satisfied", true);
+				if (storTime == (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", false);
+				}
+				else if (storTime > (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", true);
+				}
+				report = true;
+				host.getStorageSystem().addToStoredMessages(temp);
+				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
+				
 			}
-			else if (storTime > (double)temp.getProperty("shelfLife")) {
-				temp.addProperty("overtime", true);
-			}
-			report = true;
-			host.getStorageSystem().addToStoredMessages(temp);
-			host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
 		}
 		else if (host.getStorageSystem().getOldestShelfMessage() != null) {
+			if (host.getStorageSystem().getOldestShelfMessage().getProperty("procTime") == null) {
 			
-			Message temp = host.getStorageSystem().getOldestShelfMessage();
-			boolean report = false;
-			host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
-			/**
-			 * Make sure here that the added message to the cloud depletion
-			 * tracking is also tracked by whether it's Fresh or Stale.
-			 */
-			double storTime = curTime - temp.getReceiveTime();
-			temp.addProperty("storTime", storTime);
-			//temp.addProperty("satisfied", false);
-			if (storTime == (double)temp.getProperty("shelfLife")) {
-				temp.addProperty("overtime", false);
+				Message temp = host.getStorageSystem().getOldestShelfMessage();
+				boolean report = false;
+				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
+				/**
+				 * Make sure here that the added message to the cloud depletion
+				 * tracking is also tracked by whether it's Fresh or Stale.
+				 */
+				double storTime = curTime - temp.getReceiveTime();
+				temp.addProperty("storTime", storTime);
+				//temp.addProperty("satisfied", false);
+				if (storTime == (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", false);
+				}
+				else if (storTime > (double)temp.getProperty("shelfLife")) {
+					temp.addProperty("overtime", true);
+				}
+				report = true;
+				host.getStorageSystem().addToStoredMessages(temp);
+				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
+			
 			}
-			else if (storTime > (double)temp.getProperty("shelfLife")) {
-				temp.addProperty("overtime", true);
-			}
-			report = true;
-			host.getStorageSystem().addToStoredMessages(temp);
-			host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
 		}
 	}
 	

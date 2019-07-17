@@ -3,79 +3,79 @@
 
 clear
 
-M1 = dlmread('reports/MDMR1', ' ', 0, 2);
-S1 = dlmread('reports/RAMR1', ' ', 0, 2);
-PB1 = dlmread('reports/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('reports/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('reports/RCSBWR1', ' ', 0, 2);
-RI1 = dlmread('reports/RISR1', ' ', 0, 2);
-RP1 = dlmread('reports/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('reports/RSMR1', ' ', 0, 2);
-RC1 = dlmread('reports/RPMR1', ' ', 0, 2);
+M1 = dlmread('reports6/MDMR1', ' ', 0, 2);
+S1 = dlmread('reports6/RAMR1', ' ', 0, 2);
+PB1 = dlmread('reports6/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('reports6/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('reports6/RSBWR1', ' ', 0, 2);
+RI1 = dlmread('reports6/RISR1', ' ', 0, 2);
+RP1 = dlmread('reports6/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('reports6/RSMR1', ' ', 0, 2);
+RC1 = dlmread('reports6/RPMR1', ' ', 0, 2);
 
 
-M2 = dlmread('reports/MDMR2', ' ', 0, 2);
-S2 = dlmread('reports/RAMR2', ' ', 0, 2);
-UB2 = dlmread('reports/RUPBWR2', ' ', 0, 2);
-PB2 = dlmread('reports/RPBWR2', ' ', 0, 2);
-SB2 = dlmread('reports/RSBWR2', ' ', 0, 2);
-RI2 = dlmread('reports/RISR2', ' ', 0, 2);
-RP2 = dlmread('reports/RPrMR2', ' ', 0, 2);
-RS2 = dlmread('reports/RSMR2', ' ', 0, 2);
-RC2 = dlmread('reports/RPMR2', ' ', 0, 2);
+M2 = dlmread('reports6/MDMR2', ' ', 0, 2);
+S2 = dlmread('reports6/RAMR2', ' ', 0, 2);
+UB2 = dlmread('reports6/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('reports6/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('reports6/RSBWR2', ' ', 0, 2);
+RI2 = dlmread('reports6/RISR2', ' ', 0, 2);
+RP2 = dlmread('reports6/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('reports6/RSMR2', ' ', 0, 2);
+RC2 = dlmread('reports6/RPMR2', ' ', 0, 2);
 
 
-M3 = dlmread('reports/MDMR3', ' ', 0, 2);
-S3 = dlmread('reports/RAMR3', ' ', 0, 2);
-PB3 = dlmread('reports/RPBWR3', ' ', 0, 2);
-UB3 = dlmread('reports/RUPBWR3', ' ', 0, 2);
-SB3 = dlmread('reports/RSBWR3', ' ', 0, 2);
-RI3 = dlmread('reports/RISR3', ' ', 0, 2);
-RP3 = dlmread('reports/RPrMR3', ' ', 0, 2);
-RS3 = dlmread('reports/RSMR3', ' ', 0, 2);
-RC3 = dlmread('reports/RPMR3', ' ', 0, 2);
+M3 = dlmread('reports6/MDMR3', ' ', 0, 2);
+S3 = dlmread('reports6/RAMR3', ' ', 0, 2);
+PB3 = dlmread('reports6/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('reports6/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('reports6/RSBWR3', ' ', 0, 2);
+RI3 = dlmread('reports6/RISR3', ' ', 0, 2);
+RP3 = dlmread('reports6/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('reports6/RSMR3', ' ', 0, 2);
+RC3 = dlmread('reports6/RPMR3', ' ', 0, 2);
 
 
-M4 = dlmread('reports/MDMR4', ' ', 0, 2);
-S4 = dlmread('reports/RAMR4', ' ', 0, 2);
-PB4 = dlmread('reports/RPBWR4', ' ', 0, 2);
-UB4 = dlmread('reports/RUPBWR4', ' ', 0, 2);
-SB4 = dlmread('reports/RSBWR4', ' ', 0, 2);
-RI4 = dlmread('reports/RISR4', ' ', 0, 2);
-RP4 = dlmread('reports/RPrMR4', ' ', 0, 2);
-RS4 = dlmread('reports/RSMR4', ' ', 0, 2);
-RC4 = dlmread('reports/RPMR4', ' ', 0, 2);
+M4 = dlmread('reports6/MDMR4', ' ', 0, 2);
+S4 = dlmread('reports6/RAMR4', ' ', 0, 2);
+PB4 = dlmread('reports6/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('reports6/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('reports6/RSBWR4', ' ', 0, 2);
+RI4 = dlmread('reports6/RISR4', ' ', 0, 2);
+RP4 = dlmread('reports6/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('reports6/RSMR4', ' ', 0, 2);
+RC4 = dlmread('reports6/RPMR4', ' ', 0, 2);
 
 
-M5 = dlmread('reports/MDMR5', ' ', 0, 2);
-S5 = dlmread('reports/RAMR5', ' ', 0, 2);
-PB5 = dlmread('reports/RPBWR5', ' ', 0, 2);
-UB5 = dlmread('reports/RUPBWR5', ' ', 0, 2);
-SB5 = dlmread('reports/RSBWR5', ' ', 0, 2);
-RI5 = dlmread('reports/RISR5', ' ', 0, 2);
-RP5 = dlmread('reports/RPrMR5', ' ', 0, 2);
-RS5 = dlmread('reports/RSMR5', ' ', 0, 2);
-RC5 = dlmread('reports/RPMR5', ' ', 0, 2);
+M5 = dlmread('reports6/MDMR5', ' ', 0, 2);
+S5 = dlmread('reports6/RAMR5', ' ', 0, 2);
+PB5 = dlmread('reports6/RPBWR5', ' ', 0, 2);
+UB5 = dlmread('reports6/RUPBWR5', ' ', 0, 2);
+SB5 = dlmread('reports6/RSBWR5', ' ', 0, 2);
+RI5 = dlmread('reports6/RISR5', ' ', 0, 2);
+RP5 = dlmread('reports6/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('reports6/RSMR5', ' ', 0, 2);
+RC5 = dlmread('reports6/RPMR5', ' ', 0, 2);
 
 
-M6 = dlmread('reports/MDMR6', ' ', 0, 2);
-S6 = dlmread('reports/RAMR6', ' ', 0, 2);
-UB6 = dlmread('reports/RUPBWR6', ' ', 0, 2);
-PB6 = dlmread('reports/RPBWR6', ' ', 0, 2);
-SB6 = dlmread('reports/RSBWR6', ' ', 0, 2);
-RI6 = dlmread('reports/RISR6', ' ', 0, 2);
-RP6 = dlmread('reports/RPrMR6', ' ', 0, 2);
-RS6 = dlmread('reports/RSMR6', ' ', 0, 2);
-RC6 = dlmread('reports/RPMR6', ' ', 0, 2);
+M6 = dlmread('reports6/MDMR6', ' ', 0, 2);
+S6 = dlmread('reports6/RAMR6', ' ', 0, 2);
+UB6 = dlmread('reports6/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('reports6/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('reports6/RSBWR6', ' ', 0, 2);
+RI6 = dlmread('reports6/RISR6', ' ', 0, 2);
+RP6 = dlmread('reports6/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('reports6/RSMR6', ' ', 0, 2);
+RC6 = dlmread('reports6/RPMR6', ' ', 0, 2);
 
-% M5 = dlmread('reports/MDMR5', ' ', 0, 2);
-% S5 = dlmread('reports/RAMR5', ' ', 0, 2);
-% PB5 = dlmread('reports/RPBWR5', ' ', 0, 2);
-% UB5 = dlmread('reports/RUPBWR5', ' ', 0, 2);
-% SB5 = dlmread('reports/RSBWR5', ' ', 0, 2);
-% RI5 = dlmread('reports/RISR5', ' ', 0, 2);
-% RP5 = dlmread('reports/RPrMR5', ' ', 0, 2);
-% RS5 = dlmread('reports/RSMR5', ' ', 0, 2);
+% M5 = dlmread('reports6/MDMR5', ' ', 0, 2);
+% S5 = dlmread('reports6/RAMR5', ' ', 0, 2);
+% PB5 = dlmread('reports6/RPBWR5', ' ', 0, 2);
+% UB5 = dlmread('reports6/RUPBWR5', ' ', 0, 2);
+% SB5 = dlmread('reports6/RSBWR5', ' ', 0, 2);
+% RI5 = dlmread('reports6/RISR5', ' ', 0, 2);
+% RP5 = dlmread('reports6/RPrMR5', ' ', 0, 2);
+% RS5 = dlmread('reports6/RSMR5', ' ', 0, 2);
 
 % M6 = dlmread('reports1/MDMR6', ' ', 0, 1);
 % S6 = dlmread('reports1/RSMLR6', ' ', 0, 2);

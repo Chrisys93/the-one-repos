@@ -198,7 +198,7 @@ public class RepoStorage {
 				this.processSize += sm.getSize();				
 			}
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("processed")) {
-				this.processedMessages.add(sm);	
+				this.processedMessages.add(sm);
 			}
 			this.totalReceivedMessages++;
 			this.totalReceivedMessagesSize += sm.getSize();
@@ -213,42 +213,6 @@ public class RepoStorage {
 
 			procApp.updateDeplBW(this.getHost());
 			procApp.deplStorage(this.getHost());
-			
-			/*if(!this.isProcessedFull() && this.cachedMessages < procApp.getProcRate()){
-				this.procApp.processOldestValidMessage(this.getHost());
-			}
-			else if (this.getOldestStaticMessage() != null) {
-				Message temp = this.getOldestStaticMessage();
-				if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-					this.deleteMessage(temp.getId());
-				}
-				else if ((Boolean)temp.getProperty("comp") != null) {
-					String tempc = this.compressMessage(temp);
-					Message ctemp = this.getStaticMessage(tempc);
-					double storTime = curTime - ctemp.getReceiveTime();
-					ctemp.addProperty("storTime", storTime);
-					ctemp.addProperty("satisfied", false);
-					ctemp.addProperty("overtime", true);
-					this.addToDeplStaticMessages(ctemp);
-					this.deleteMessage(tempc);
-				}
-			}
-			else {
-				Message temp = this.getNewestProcessMessage();
-				if((Boolean)temp.getProperty("comp") != null && (Boolean)temp.getProperty("comp") == false) {
-					this.deleteMessage(temp.getId());
-				}
-				else if ((Boolean)temp.getProperty("comp") != null) {
-					String tempc = this.compressMessage(temp);
-					Message ctemp = this.getStaticMessage(tempc);
-					double storTime = curTime - ctemp.getReceiveTime();
-					ctemp.addProperty("storTime", storTime);
-					ctemp.addProperty("satisfied", false);
-					ctemp.addProperty("overtime", true);
-					this.addToDeplProcMessages(ctemp);
-					this.deleteMessage(tempc);
-				}
-			}*/
 		}
 	}
 	
@@ -400,6 +364,7 @@ public class RepoStorage {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Returns a stored message by ID.
@@ -919,21 +884,18 @@ public class RepoStorage {
 		for (Message m : this.processMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("type")!=null) {
+				if (m.getProperty("type")!=null && m.getProperty("Fresh")==null) {
 					if(!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
 						!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-					
-				if(m.getProperty("type")!=null) {
-					if(!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
-						!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("type")!=null && 
+					m.getProperty("Fresh")==null) {
+				if(!((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")&& 
+					!((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+					oldest = m;
 				}
 			}
 		}
@@ -946,21 +908,17 @@ public class RepoStorage {
 		for (Message m : this.processMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
+				if (m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
 					if(((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
 					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				
-				if(m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
-					if(((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
-					((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("type")!=null && m.getProperty("shelfLife")!=null) {
+				if(((String) m.getProperty("type")).equalsIgnoreCase("proc") && 
+				((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
+					oldest = m;
 				}
 			}
 		}
@@ -972,19 +930,15 @@ public class RepoStorage {
 		for (Message m : this.staticMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("type")!=null) {
+				if (m.getProperty("type")!=null) {
 					if(((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				
-				if(m.getProperty("type")!=null) {
-					if(((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("type")!=null) {
+				if(((String) m.getProperty("type")).equalsIgnoreCase("unprocessed")) {
+					oldest = m;
 				}
 			}
 		}
@@ -998,19 +952,16 @@ public class RepoStorage {
 		for (Message m : this.processMessages) {
 			
 			if (newest == null) {
-				
-				if(m.getProperty("type")!=null) {
+				if (m.getProperty("type")!=null && m.getProperty("Fresh")==null) {
 					if(((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
 						newest = m;
 					}
 				}
 			}
-			else if (newest.getReceiveTime() < m.getReceiveTime()) {
-				
-				if(m.getProperty("type")!=null) {
-					if(((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
-						newest = m;
-					}
+			else if (newest.getReceiveTime() < m.getReceiveTime() && m.getProperty("type")!=null && 
+					m.getProperty("Fresh")==null) {
+				if(((String) m.getProperty("type")).equalsIgnoreCase("proc")) {
+					newest = m;
 				}
 			}
 		}
@@ -1032,52 +983,185 @@ public class RepoStorage {
 	}
 	
 	public Message getOldestFreshMessage(){
+		double curTime = SimClock.getTime();
 		Message oldest = null;
 		for (Message m : this.processedMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh"))) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("type")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				
-				if(m.getProperty("Fresh")!=null) {
-					if(((Boolean) m.getProperty("Fresh"))) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("Fresh")!=null && 
+					 m.getProperty("type")!=null) {
+				if(((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+					oldest = m;
 				}
 			}
 		}
 		return oldest;
 	}
 	
+	public Message getNewestFreshMessage(){
+		double curTime = SimClock.getTime();
+		Message newest = null;
+		for (Message m : this.processedMessages) {
+			
+			if (newest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("type")!=null) {
+					if(((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+						newest = m;
+					}
+				}
+			}
+			else if (newest.getReceiveTime() < m.getReceiveTime() && m.getProperty("Fresh")!=null &&
+					 m.getProperty("type")!=null) {
+				if(((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+					newest = m;
+				}
+			}
+		}
+		return newest;
+	}
+	
 	public Message getOldestShelfMessage(){
+		double curTime = SimClock.getTime();
 		Message oldest = null;
 		for (Message m : this.processedMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("Fresh")!=null) {
-					if(!((Boolean) m.getProperty("Fresh"))) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("type")!=null) {
+					if(!((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				
-				if(m.getProperty("Fresh")!=null) {
-					if(!((Boolean) m.getProperty("Fresh"))) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("Fresh")!=null &&
+					 m.getProperty("type")!=null) {
+				if(!((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+					oldest = m;
 				}
 			}
 		}
 		return oldest;
 	}
+	
+	public Message getNewestShelfMessage(){
+		double curTime = SimClock.getTime();
+		Message newest = null;
+		for (Message m : this.processedMessages) {
+			
+			if (newest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("procTime") != null) {
+					if(!((Boolean) m.getProperty("Fresh")) && ((String) m.getProperty("type")).equalsIgnoreCase("processed")) {
+						newest = m;
+					}
+				}
+			}
+			else if (newest.getReceiveTime() < m.getReceiveTime() && m.getProperty("Fresh")!=null && 
+					 m.getProperty("type")!=null) {
+				if(!((Boolean) m.getProperty("Fresh") && ((String) m.getProperty("type")).equalsIgnoreCase("processed"))) {
+					newest = m;
+				}
+			}
+		}
+		return newest;
+	}
+	
+	
+	
+	
+	public Message getOldestQueueFreshMessage(){
+		double curTime = SimClock.getTime();
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("procTime") != null) {
+					if(((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+						oldest = m;
+					}
+				}
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("Fresh")!=null && 
+					m.getProperty("procTime") != null) {
+				if(((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+					oldest = m;
+				}
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getNewestQueueFreshMessage(){
+		double curTime = SimClock.getTime();
+		Message newest = null;
+		for (Message m : this.processMessages) {
+			
+			if (newest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("procTime") != null) {
+					if(((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+						newest = m;
+					}
+				}
+			}
+			else if (newest.getReceiveTime() < m.getReceiveTime() && m.getProperty("Fresh")!=null &&
+					m.getProperty("procTime") != null) {
+				if(((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+					newest = m;
+				}
+			}
+		}
+		return newest;
+	}
+	
+	public Message getOldestQueueShelfMessage(){
+		double curTime = SimClock.getTime();
+		Message oldest = null;
+		for (Message m : this.processMessages) {
+			
+			if (oldest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("procTime") != null) {
+					if(!((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+						oldest = m;
+					}
+				}
+			}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("Fresh")!=null &&
+					m.getProperty("procTime") != null) {
+				if(!((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+					oldest = m;
+				}
+			}
+		}
+		return oldest;
+	}
+	
+	public Message getNewestQueueShelfMessage(){
+		double curTime = SimClock.getTime();
+		Message newest = null;
+		for (Message m : this.processMessages) {
+			
+			if (newest == null) {
+				if (m.getProperty("Fresh")!=null && m.getProperty("procTime") != null) {
+					if(!((Boolean) m.getProperty("Fresh")) && (double)m.getProperty("procTime") <= curTime) {
+						newest = m;
+					}
+				}
+			}
+			else if (newest.getReceiveTime() < m.getReceiveTime() && m.getProperty("Fresh")!=null && 
+					m.getProperty("procTime") != null) {
+				if(!((Boolean) m.getProperty("Fresh") && (double)m.getProperty("procTime") <= curTime)) {
+					newest = m;
+				}
+			}
+		}
+		return newest;
+	}
+	
+	
 	
 	public Message getOldestStaticMessage(){
 		Message oldest = null;
@@ -1099,19 +1183,15 @@ public class RepoStorage {
 		for (Message m : this.staticMessages) {
 			
 			if (oldest == null) {
-				
-				if(m.getProperty("shelfLife")!=null) {
+				if (m.getProperty("shelfLife")!=null) {
 					if(((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
 						oldest = m;
 					}
 				}
 			}
-			else if (oldest.getReceiveTime() > m.getReceiveTime()) {
-				
-				if(m.getProperty("shelfLife")!=null) {
-					if(((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
-						oldest = m;
-					}
+			else if (oldest.getReceiveTime() > m.getReceiveTime() && m.getProperty("shelfLife")!=null) {
+				if(((double) m.getProperty("shelfLife")) <= curTime - m.getReceiveTime()) {
+					oldest = m;
 				}
 			}
 		}

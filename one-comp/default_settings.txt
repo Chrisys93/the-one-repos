@@ -384,8 +384,8 @@ procApp2.type = ProcGenApplication
 procApp2.interval = 1
 procApp2.delay = [0.1; 0.3; 0.1; 0.1; 0.3]
 procApp2.freshPer = [1; 1.5; 2; 1.5; 3] 
-procApp2.procShelf = [2; 2.5; 2.5; 15; 5]
-procApp2.nonprocShelf = [2; 3; 10; 20; 15]
+procApp2.procShelf = [2; 2.5; 2.5; 15; 25]
+procApp2.nonprocShelf = [2; 3; 10; 20; 40]
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

@@ -10,9 +10,9 @@ RS1 = dlmread('reports_server/RSMR1', ' ', 0, 2);
 PB1 = dlmread('reports_server/RPBWR1', ' ', 0, 2);
 UB1 = dlmread('reports_server/RUPBWR1', ' ', 0, 2);
 SB1 = dlmread('reports_server/RSBWR1', ' ', 0, 2);
-RC1 = dlmread('reports_server/RCSBWR1', ' ', 0, 2);
+CB1 = dlmread('reports_server/RCSBWR1', ' ', 0, 2);
 RI1 = dlmread('reports_server/RISR1', ' ', 0, 2);
-RP1 = dlmread('reports_server/RPMR1', ' ', 0, 2);
+P1 = dlmread('reports_server/RPMR1', ' ', 0, 2);
 ST1 = dlmread('reports_server/RSTR1', ' ', 0, 0);
 PF1 = dlmread('reports_server/RPFR1', ' ', 0, 0);
 PS1 = dlmread('reports_server/RSR1', ' ', 0, 0);
@@ -27,9 +27,9 @@ RS2 = dlmread('reports_server/RSMR2', ' ', 0, 2);
 UB2 = dlmread('reports_server/RUPBWR2', ' ', 0, 2);
 PB2 = dlmread('reports_server/RPBWR2', ' ', 0, 2);
 SB2 = dlmread('reports_server/RSBWR2', ' ', 0, 2);
-CS2 = dlmread('reports_server/RCSBWR3', ' ', 0, 2);
+CB2 = dlmread('reports_server/RCSBWR3', ' ', 0, 2);
 RI2 = dlmread('reports_server/RISR2', ' ', 0, 2);
-RC2 = dlmread('reports_server/RPMR2', ' ', 0, 2);
+P2 = dlmread('reports_server/RPMR2', ' ', 0, 2);
 ST2 = dlmread('reports_server/RSTR2', ' ', 0, 0);
 PF2 = dlmread('reports_server/RPFR2', ' ', 0, 0);
 PS2 = dlmread('reports_server/RSR2', ' ', 0, 0);
@@ -42,11 +42,11 @@ S3 = dlmread('reports_server/RAMR3', ' ', 0, 2);
 PB3 = dlmread('reports_server/RPBWR3', ' ', 0, 2);
 UB3 = dlmread('reports_server/RUPBWR3', ' ', 0, 2);
 SB3 = dlmread('reports_server/RSBWR3', ' ', 0, 2);
-CS3 = dlmread('reports_server/RCSBWR3', ' ', 0, 2);
+CB3 = dlmread('reports_server/RCSBWR3', ' ', 0, 2);
 RI3 = dlmread('reports_server/RISR3', ' ', 0, 2);
 RP3 = dlmread('reports_server/RPrMR3', ' ', 0, 2);
 RS3 = dlmread('reports_server/RSMR3', ' ', 0, 2);
-RC3 = dlmread('reports_server/RPMR3', ' ', 0, 2);
+P3 = dlmread('reports_server/RPMR3', ' ', 0, 2);
 ST3 = dlmread('reports_server/RSTR3', ' ', 0, 0);
 PF3 = dlmread('reports_server/RPFR3', ' ', 0, 0);
 PS3 = dlmread('reports_server/RSR3', ' ', 0, 0);
@@ -59,11 +59,11 @@ S4 = dlmread('reports_server/RAMR4', ' ', 0, 2);
 PB4 = dlmread('reports_server/RPBWR4', ' ', 0, 2);
 UB4 = dlmread('reports_server/RUPBWR4', ' ', 0, 2);
 SB4 = dlmread('reports_server/RSBWR4', ' ', 0, 2);
-CS4 = dlmread('reports_server/RCSBWR4', ' ', 0, 2);
+CB4 = dlmread('reports_server/RCSBWR4', ' ', 0, 2);
 RI4 = dlmread('reports_server/RISR4', ' ', 0, 2);
 RP4 = dlmread('reports_server/RPrMR4', ' ', 0, 2);
 RS4 = dlmread('reports_server/RSMR4', ' ', 0, 2);
-RC4 = dlmread('reports_server/RPMR4', ' ', 0, 2);
+P4 = dlmread('reports_server/RPMR4', ' ', 0, 2);
 ST4 = dlmread('reports_server/RSTR4', ' ', 0, 0);
 PF4 = dlmread('reports_server/RPFR4', ' ', 0, 0);
 PS4 = dlmread('reports_server/RSR4', ' ', 0, 0);
@@ -76,11 +76,11 @@ S5 = dlmread('reports_server/RAMR5', ' ', 0, 2);
 PB5 = dlmread('reports_server/RPBWR5', ' ', 0, 2);
 UB5 = dlmread('reports_server/RUPBWR5', ' ', 0, 2);
 SB5 = dlmread('reports_server/RSBWR5', ' ', 0, 2);
-CS5 = dlmread('reports_server/RCSBWR5', ' ', 0, 2);
+CB5 = dlmread('reports_server/RCSBWR5', ' ', 0, 2);
 RI5 = dlmread('reports_server/RISR5', ' ', 0, 2);
 RP5 = dlmread('reports_server/RPrMR5', ' ', 0, 2);
 RS5 = dlmread('reports_server/RSMR5', ' ', 0, 2);
-RC5 = dlmread('reports_server/RPMR5', ' ', 0, 2);
+P5 = dlmread('reports_server/RPMR5', ' ', 0, 2);
 ST5 = dlmread('reports_server/RSTR5', ' ', 0, 0);
 PF5 = dlmread('reports_server/RPFR5', ' ', 0, 0);
 PS5 = dlmread('reports_server/RSR5', ' ', 0, 0);
@@ -93,28 +93,16 @@ O5 = dlmread('reports_server/ROR5', ' ', 0, 0);
 % UB6 = dlmread('reports_server/RUPBWR6', ' ', 0, 2);
 % PB6 = dlmread('reports_server/RPBWR6', ' ', 0, 2);
 % SB6 = dlmread('reports_server/RSBWR6', ' ', 0, 2);
-% CS6 = dlmread('reports_server/RCSBWR6', ' ', 0, 2);
+% CB6 = dlmread('reports_server/RCSBWR6', ' ', 0, 2);
 % RI6 = dlmread('reports_server/RISR6', ' ', 0, 2);
 % RP6 = dlmread('reports_server/RPrMR6', ' ', 0, 2);
 % RS6 = dlmread('reports_server/RSMR6', ' ', 0, 2);
-% RC6 = dlmread('reports_server/RPMR6', ' ', 0, 2);
+% P6 = dlmread('reports_server/RPMR6', ' ', 0, 2);
 % ST6 = dlmread('reports_server/RSTR6', ' ', 0, 2);
 % PF6 = dlmread('reports_server/RPFR6', ' ', 0, 2);
 % PS6 = dlmread('reports_server/RSR6', ' ', 0, 2);
 % U6 = dlmread('reports_server/RUR6', ' ', 0, 2);
 % O6 = dlmread('reports_server/ROR6', ' ', 0, 2);
-
-% M5 = dlmread('reports_server/MDMR5', ' ', 0, 2);
-% S5 = dlmread('reports_server/RAMR5', ' ', 0, 2);
-% PB5 = dlmread('reports_server/RPBWR5', ' ', 0, 2);
-% UB5 = dlmread('reports_server/RUPBWR5', ' ', 0, 2);
-% SB5 = dlmread('reports_server/RSBWR5', ' ', 0, 2);
-% RI5 = dlmread('reports_server/RISR5', ' ', 0, 2);
-% RP5 = dlmread('reports_server/RPrMR5', ' ', 0, 2);
-% RS5 = dlmread('reports_server/RSMR5', ' ', 0, 2);
-
-% M6 = dlmread('reports_server1/MDMR6', ' ', 0, 1);
-% S6 = dlmread('reports_server1/RSMLR6', ' ', 0, 2);
 [r2, c2] = size(M1);
 [r3, c3] = size(S1);
 maxstorM1 = zeros(c2, 0);
@@ -305,12 +293,12 @@ end
 % hold off
 
 for repo = 1:c3
-    upspeeds1(repo, :) = [mean(SB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
-    upspeeds2(repo, :) = [mean(SB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
-    upspeeds3(repo, :) = [mean(SB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
-    upspeeds4(repo, :) = [mean(SB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
-    upspeeds5(repo, :) = [mean(SB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
-%     upspeeds6(repo, :) = [mean(SB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
+    upspeeds1(repo, :) = [mean(CB1(:, repo)), mean(UB1(:, repo)), mean(PB1(:, repo))];
+    upspeeds2(repo, :) = [mean(CB2(:, repo)), mean(UB2(:, repo)), mean(PB2(:, repo))];
+    upspeeds3(repo, :) = [mean(CB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
+    upspeeds4(repo, :) = [mean(CB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
+    upspeeds5(repo, :) = [mean(CB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
+%     upspeeds6(repo, :) = [mean(CB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
     inspeeds1(repo, :) = mean(RI1(:, repo));
     inspeeds2(repo, :) = mean(RI2(:, repo));
     inspeeds3(repo, :) = mean(RI3(:, repo));
@@ -355,14 +343,14 @@ xlabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
 lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
 lgd.FontSize = 9;
-lgd.NumColumns = 3;
+% lgd.NumColumns = 3;
 
 
 % Maybe just show one side (irrespective of repo), and how much cache is
 % used...either for all scenarios or the worst case - it simply shows that
 % the cache is not used too much.
 figure
-stem3(RC5, ':.');
+stem3(P5, ':.');
 % title('Stem plot of Repos Cache Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)
@@ -561,7 +549,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k->', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-lgd1.NumColumns = 3;
+% lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 5*10^6]);
 xlim([17 48]);
@@ -610,7 +598,19 @@ figure
 % yyaxis left
 bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5);
 % title('Processing threads','fontsize',16)
-xlabel('Repository number','fontsize',12) 
+xlabel('Repository number','fontsize',12)
+ylabel('No. of Overtime Messages/repo','fontsize',12)
+% ylim([0 5*10^6]);
+% xlim([17 48]);
+
+
+figure
+
+% subplot(2,1,1);
+% yyaxis left
+bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5);
+% title('Processing threads','fontsize',16)
+xlabel('Repository number','fontsize',12)
 ylabel('No. of Overtime Messages/repo','fontsize',12)
 % ylim([0 5*10^6]);
 % xlim([17 48]);
