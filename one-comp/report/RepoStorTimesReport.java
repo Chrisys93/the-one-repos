@@ -146,7 +146,7 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 	@Override
 	public void done() {
 		String reportLine1;
-		reportLine1 = "StorTimeNo ";
+		reportLine1 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
@@ -161,7 +161,7 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 		}
 		
 		String reportLine2;
-		reportLine2 = "StorTimeAvg ";
+		reportLine2 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
@@ -176,7 +176,7 @@ public class RepoStorTimesReport extends Report implements UpdateListener {
 		}
 		
 		String reportLine3;
-		reportLine3 = "StorTimeMax ";
+		reportLine3 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){

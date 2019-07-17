@@ -13,11 +13,11 @@ SB1 = dlmread('reports_server/RSBWR1', ' ', 0, 2);
 CB1 = dlmread('reports_server/RCSBWR1', ' ', 0, 2);
 RI1 = dlmread('reports_server/RISR1', ' ', 0, 2);
 P1 = dlmread('reports_server/RPMR1', ' ', 0, 2);
-ST1 = dlmread('reports_server/RSTR1', ' ', 0, 0);
-PF1 = dlmread('reports_server/RPFR1', ' ', 0, 0);
-PS1 = dlmread('reports_server/RSR1', ' ', 0, 0);
-U1 = dlmread('reports_server/RUR1', ' ', 0, 0);
-O1 = dlmread('reports_server/ROR1', ' ', 0, 0);
+ST1 = dlmread('reports_server/RSTR1', ' ', 0, 1);
+PF1 = dlmread('reports_server/RPFR1', ' ', 0, 1);
+PS1 = dlmread('reports_server/RSR1', ' ', 0, 1);
+U1 = dlmread('reports_server/RUR1', ' ', 0, 1);
+O1 = dlmread('reports_server/ROR1', ' ', 0, 1);
 
 
 M2 = dlmread('reports_server/MDMR2', ' ', 0, 2);
@@ -30,11 +30,11 @@ SB2 = dlmread('reports_server/RSBWR2', ' ', 0, 2);
 CB2 = dlmread('reports_server/RCSBWR3', ' ', 0, 2);
 RI2 = dlmread('reports_server/RISR2', ' ', 0, 2);
 P2 = dlmread('reports_server/RPMR2', ' ', 0, 2);
-ST2 = dlmread('reports_server/RSTR2', ' ', 0, 0);
-PF2 = dlmread('reports_server/RPFR2', ' ', 0, 0);
-PS2 = dlmread('reports_server/RSR2', ' ', 0, 0);
-U2 = dlmread('reports_server/RUR2', ' ', 0, 0);
-O2 = dlmread('reports_server/ROR2', ' ', 0, 0);
+ST2 = dlmread('reports_server/RSTR2', ' ', 0, 1);
+PF2 = dlmread('reports_server/RPFR2', ' ', 0, 1);
+PS2 = dlmread('reports_server/RSR2', ' ', 0, 1);
+U2 = dlmread('reports_server/RUR2', ' ', 0, 1);
+O2 = dlmread('reports_server/ROR2', ' ', 0, 1);
 
 
 M3 = dlmread('reports_server/MDMR3', ' ', 0, 2);
@@ -47,11 +47,11 @@ RI3 = dlmread('reports_server/RISR3', ' ', 0, 2);
 RP3 = dlmread('reports_server/RPrMR3', ' ', 0, 2);
 RS3 = dlmread('reports_server/RSMR3', ' ', 0, 2);
 P3 = dlmread('reports_server/RPMR3', ' ', 0, 2);
-ST3 = dlmread('reports_server/RSTR3', ' ', 0, 0);
-PF3 = dlmread('reports_server/RPFR3', ' ', 0, 0);
-PS3 = dlmread('reports_server/RSR3', ' ', 0, 0);
-U3 = dlmread('reports_server/RUR3', ' ', 0, 0);
-O3 = dlmread('reports_server/ROR3', ' ', 0, 0);
+ST3 = dlmread('reports_server/RSTR3', ' ', 0, 1);
+PF3 = dlmread('reports_server/RPFR3', ' ', 0, 1);
+PS3 = dlmread('reports_server/RSR3', ' ', 0, 1);
+U3 = dlmread('reports_server/RUR3', ' ', 0, 1);
+O3 = dlmread('reports_server/ROR3', ' ', 0, 1);
 
 
 M4 = dlmread('reports_server/MDMR4', ' ', 0, 2);
@@ -64,11 +64,11 @@ RI4 = dlmread('reports_server/RISR4', ' ', 0, 2);
 RP4 = dlmread('reports_server/RPrMR4', ' ', 0, 2);
 RS4 = dlmread('reports_server/RSMR4', ' ', 0, 2);
 P4 = dlmread('reports_server/RPMR4', ' ', 0, 2);
-ST4 = dlmread('reports_server/RSTR4', ' ', 0, 0);
-PF4 = dlmread('reports_server/RPFR4', ' ', 0, 0);
-PS4 = dlmread('reports_server/RSR4', ' ', 0, 0);
-U4 = dlmread('reports_server/RUR4', ' ', 0, 0);
-O4 = dlmread('reports_server/ROR4', ' ', 0, 0);
+ST4 = dlmread('reports_server/RSTR4', ' ', 0, 1);
+PF4 = dlmread('reports_server/RPFR4', ' ', 0, 1);
+PS4 = dlmread('reports_server/RSR4', ' ', 0, 1);
+U4 = dlmread('reports_server/RUR4', ' ', 0, 1);
+O4 = dlmread('reports_server/ROR4', ' ', 0, 1);
 
 
 M5 = dlmread('reports_server/MDMR5', ' ', 0, 2);
@@ -81,11 +81,11 @@ RI5 = dlmread('reports_server/RISR5', ' ', 0, 2);
 RP5 = dlmread('reports_server/RPrMR5', ' ', 0, 2);
 RS5 = dlmread('reports_server/RSMR5', ' ', 0, 2);
 P5 = dlmread('reports_server/RPMR5', ' ', 0, 2);
-ST5 = dlmread('reports_server/RSTR5', ' ', 0, 0);
-PF5 = dlmread('reports_server/RPFR5', ' ', 0, 0);
-PS5 = dlmread('reports_server/RSR5', ' ', 0, 0);
-U5 = dlmread('reports_server/RUR5', ' ', 0, 0);
-O5 = dlmread('reports_server/ROR5', ' ', 0, 0);
+ST5 = dlmread('reports_server/RSTR5', ' ', 0, 1);
+PF5 = dlmread('reports_server/RPFR5', ' ', 0, 1);
+PS5 = dlmread('reports_server/RSR5', ' ', 0, 1);
+U5 = dlmread('reports_server/RUR5', ' ', 0, 1);
+O5 = dlmread('reports_server/ROR5', ' ', 0, 1);
 
 
 % M6 = dlmread('reports_server/MDMR6', ' ', 0, 2);
@@ -98,11 +98,11 @@ O5 = dlmread('reports_server/ROR5', ' ', 0, 0);
 % RP6 = dlmread('reports_server/RPrMR6', ' ', 0, 2);
 % RS6 = dlmread('reports_server/RSMR6', ' ', 0, 2);
 % P6 = dlmread('reports_server/RPMR6', ' ', 0, 2);
-% ST6 = dlmread('reports_server/RSTR6', ' ', 0, 2);
-% PF6 = dlmread('reports_server/RPFR6', ' ', 0, 2);
-% PS6 = dlmread('reports_server/RSR6', ' ', 0, 2);
-% U6 = dlmread('reports_server/RUR6', ' ', 0, 2);
-% O6 = dlmread('reports_server/ROR6', ' ', 0, 2);
+% ST6 = dlmread('reports_server/RSTR6', ' ', 0, 1);
+% PF6 = dlmread('reports_server/RPFR6', ' ', 0, 1);
+% PS6 = dlmread('reports_server/RSR6', ' ', 0, 1);
+% U6 = dlmread('reports_server/RUR6', ' ', 0, 1);
+% O6 = dlmread('reports_server/ROR6', ' ', 0, 1);
 [r2, c2] = size(M1);
 [r3, c3] = size(S1);
 maxstorM1 = zeros(c2, 0);
@@ -418,23 +418,23 @@ storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
 %This one is good for demonstrating the association between processing
 %capacity and output bandwidth.
 figure
-upspeeds1_30 = [mean(SB1(:, 30)), mean(UB1(:, 30)), mean(PB1(:, 30));
-                mean(SB2(:, 30)), mean(UB2(:, 30)), mean(PB2(:, 30)); 
-                mean(SB3(:, 30)), mean(UB3(:, 30)), mean(PB3(:, 30)); 
-                mean(SB4(:, 30)), mean(UB4(:, 30)), mean(PB4(:, 30));
-                mean(SB5(:, 30)), mean(UB5(:, 30)), mean(PB5(:, 30))];
-%                 mean(SB6(:, 30)), mean(UB6(:, 30)), mean(PB6(:, 30))];
+upspeeds1_21 = [mean(SB1(:, 21)), mean(UB1(:, 21)), mean(PB1(:, 21));
+                mean(SB2(:, 21)), mean(UB2(:, 21)), mean(PB2(:, 21)); 
+                mean(SB3(:, 21)), mean(UB3(:, 21)), mean(PB3(:, 21)); 
+                mean(SB4(:, 21)), mean(UB4(:, 21)), mean(PB4(:, 21));
+                mean(SB5(:, 21)), mean(UB5(:, 21)), mean(PB5(:, 21))];
+%                 mean(SB6(:, 21)), mean(UB6(:, 21)), mean(PB6(:, 21))];
             
-storages_30 = [mean(RS1(:, 30)), mean(RP1(:, 30));
-                mean(RS2(:, 30)), mean(RP2(:, 30)); 
-                mean(RS3(:, 30)), mean(RP3(:, 30)); 
-                mean(RS4(:, 30)), mean(RP4(:, 30)); 
-                mean(RS5(:, 30)), mean(RP5(:, 30))]; 
-%                 mean(RS6(:, 30)), mean(RP6(:, 30))];
+storages_21 = [mean(RS1(:, 21)), mean(RP1(:, 21));
+                mean(RS2(:, 21)), mean(RP2(:, 21)); 
+                mean(RS3(:, 21)), mean(RP3(:, 21)); 
+                mean(RS4(:, 21)), mean(RP4(:, 21)); 
+                mean(RS5(:, 21)), mean(RP5(:, 21))]; 
+%                 mean(RS6(:, 21)), mean(RP6(:, 21))];
 
 % subplot(1,2,1);
 yyaxis left
-plot([2, 4, 8, 10, 12], upspeeds1_30, 'LineWidth', 1);
+plot([2, 4, 8, 10, 12], upspeeds1_21, 'LineWidth', 1);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
@@ -442,7 +442,7 @@ xlabel('No. of threads per repository','fontsize',12)
 ylabel('Bandwidth used (B)','fontsize',12)
 
 yyaxis right
-semilogy([2, 4, 8, 10, 12], storages_30, 'LineWidth', 1);
+semilogy([2, 4, 8, 10, 12], storages_21, 'LineWidth', 1);
 ylabel('Total storage used (B)','fontsize',12)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 9;
@@ -606,12 +606,23 @@ ylabel('No. of Overtime Messages/repo','fontsize',12)
 
 figure
 
-% subplot(2,1,1);
-% yyaxis left
-bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5);
-% title('Processing threads','fontsize',16)
+yyaxis left
+bar_handle = bar(ST1(1,:));
 xlabel('Repository number','fontsize',12)
-ylabel('No. of Overtime Messages/repo','fontsize',12)
+ylabel('No. of Messages/repo','fontsize',12)
 % ylim([0 5*10^6]);
 % xlim([17 48]);
+set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(3),'FaceColor',[0,1,0.5])
+
+yyaxis right
+hold on
+plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 'LineWidth', 1);
+plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 'LineWidth', 1);
+
+lgd1 =legend('Number of messages counted for storage time extractuion', 'Average Storage Times', 'Maximum Storage Times');
+lgd1.FontSize = 9;
+% lgd1.NumColumns = 3;
+ylabel('Storage times (s)','fontsize',12)
 

@@ -131,7 +131,7 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 	@Override
 	public void done() {
 		String reportLine1;
-		reportLine1 = "Satisfied Messages: ";
+		reportLine1 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){
@@ -146,7 +146,7 @@ public class RepoSatisfactionReport extends Report implements UpdateListener {
 		}
 		
 		String reportLine2;
-		reportLine2 = "Unsatisfied Messages: ";
+		reportLine2 = "";
 		for (DTNHost host : hosts) {
 			String hostname = host.name.toString();
 			if (hostname.contains("r") ){

@@ -63,6 +63,7 @@ public class RepoStorage {
 	private int  mUnProcessed;
 	private double mStorTimeAvg;
 	private double mStorTimeMax;
+	private double mStorTime;
 	private double totalReceivedMessages;
 	private double totalReceivedMessagesSize;
 	private int cachedMessages;
@@ -99,6 +100,7 @@ public class RepoStorage {
 		this.mStorTimeNo = 0;
 		this.mStorTimeAvg = 0;
 		this.mStorTimeMax = 0;
+		this.mStorTime = 0;
 		this.nrofDeletedMessages = 0;
 		this.totalReceivedMessages = 0;
 		this.totalReceivedMessagesSize = 0;
@@ -239,7 +241,7 @@ public class RepoStorage {
 				this.mUnSatisfied ++;
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -247,7 +249,7 @@ public class RepoStorage {
 				double curTime = SimClock.getTime();
 				sm.addProperty("storTime", curTime - sm.getReceiveTime());
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -270,7 +272,7 @@ public class RepoStorage {
 				this.mUnProcessed ++;
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -278,7 +280,7 @@ public class RepoStorage {
 				double curTime = SimClock.getTime();
 				sm.addProperty("storTime", curTime - sm.getReceiveTime());
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -304,7 +306,7 @@ public class RepoStorage {
 				this.mUnSatisfied ++;
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -312,7 +314,7 @@ public class RepoStorage {
 				double curTime = SimClock.getTime();
 				sm.addProperty("storTime", curTime - sm.getReceiveTime());
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -352,7 +354,7 @@ public class RepoStorage {
 				this.mUnSatisfied ++;
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -360,7 +362,7 @@ public class RepoStorage {
 				double curTime = SimClock.getTime();
 				sm.addProperty("storTime", curTime - sm.getReceiveTime());
 				this.mStorTimeNo ++;
-				this.mStorTimeAvg = (double)sm.getProperty("storTime")/this.mStorTimeNo;
+				this.mStorTime += (double)sm.getProperty("storTime");
 				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
 					this.mStorTimeMax = (double)sm.getProperty("storTime");
 			}
@@ -429,6 +431,7 @@ public class RepoStorage {
 	 * @return How many files this file system has
 	 */
 	public double getStorTimeAvg() {
+		this.mStorTimeAvg = this.mStorTime/this.mStorTimeNo;
 		return this.mStorTimeAvg;
 	}
 	
