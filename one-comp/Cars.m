@@ -418,11 +418,11 @@ storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
 %This one is good for demonstrating the association between processing
 %capacity and output bandwidth.
 figure
-upspeeds1_21 = [mean(SB1(:, 21)), mean(UB1(:, 21)), mean(PB1(:, 21));
-                mean(SB2(:, 21)), mean(UB2(:, 21)), mean(PB2(:, 21)); 
-                mean(SB3(:, 21)), mean(UB3(:, 21)), mean(PB3(:, 21)); 
-                mean(SB4(:, 21)), mean(UB4(:, 21)), mean(PB4(:, 21));
-                mean(SB5(:, 21)), mean(UB5(:, 21)), mean(PB5(:, 21))];
+upspeeds1_21 = [mean(CB1(:, 21)), mean(UB1(:, 21)), mean(PB1(:, 21));
+                mean(CB2(:, 21)), mean(UB2(:, 21)), mean(PB2(:, 21)); 
+                mean(CB3(:, 21)), mean(UB3(:, 21)), mean(PB3(:, 21)); 
+                mean(CB4(:, 21)), mean(UB4(:, 21)), mean(PB4(:, 21));
+                mean(CB5(:, 21)), mean(UB5(:, 21)), mean(PB5(:, 21))];
 %                 mean(SB6(:, 21)), mean(UB6(:, 21)), mean(PB6(:, 21))];
             
 storages_21 = [mean(RS1(:, 21)), mean(RP1(:, 21));
