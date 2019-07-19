@@ -70,9 +70,9 @@ public class ProcGenApplication extends Application {
 	private double	lastMsg = 0;
 	private double	interval = 5;
 	private double	delay = 0.1;
-	private double	fresh_period = 1;
-	private double	proc_shelf = 1.5;
-	private double	nonproc_shelf = 2;
+	private double	fresh_period;
+	private double	proc_shelf;
+	private double	nonproc_shelf;
 	private boolean passive = false;
 	private int[] 	passive_rate = {1, 1};
 	private int[] 	comp_rate = {1, 1};

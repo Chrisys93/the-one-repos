@@ -236,8 +236,8 @@ public class ProcApplication extends Application {
 		 * All added up to a maximum depletion BW (should be pretty low)
 		 */
 
-		//this.updateDeplBW(host);
-		//this.deplStorage(host);
+		this.updateDeplBW(host);
+		this.deplStorage(host);
 
 	}
 	
@@ -622,7 +622,6 @@ public class ProcApplication extends Application {
 							double storTime = curTime - ctemp.getReceiveTime();
 							ctemp.addProperty("storTime", storTime);
 							ctemp.addProperty("satisfied", false);
-							ctemp.addProperty("overtime", true);
 							host.getStorageSystem().addToDeplProcMessages(ctemp);
 						}
 					}
@@ -668,7 +667,7 @@ public class ProcApplication extends Application {
 				 * Make sure here that the added message to the cloud depletion
 				 * tracking is also tracked by whether it's Fresh or Stale.
 				 */
-				double storTime = curTime - temp.getReceiveTime();
+				/*double storTime = curTime - temp.getReceiveTime();
 				temp.addProperty("storTime", storTime);
 				//temp.addProperty("satisfied", true);
 				if (storTime == (double)temp.getProperty("shelfLife")) {
@@ -676,7 +675,7 @@ public class ProcApplication extends Application {
 				}
 				else if (storTime > (double)temp.getProperty("shelfLife")) {
 					temp.addProperty("overtime", true);
-				}
+				}*/
 				report = true;
 				host.getStorageSystem().addToStoredMessages(temp);
 				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
@@ -693,7 +692,7 @@ public class ProcApplication extends Application {
 				 * Make sure here that the added message to the cloud depletion
 				 * tracking is also tracked by whether it's Fresh or Stale.
 				 */
-				double storTime = curTime - temp.getReceiveTime();
+				/*double storTime = curTime - temp.getReceiveTime();
 				temp.addProperty("storTime", storTime);
 				//temp.addProperty("satisfied", false);
 				if (storTime == (double)temp.getProperty("shelfLife")) {
@@ -701,7 +700,7 @@ public class ProcApplication extends Application {
 				}
 				else if (storTime > (double)temp.getProperty("shelfLife")) {
 					temp.addProperty("overtime", true);
-				}
+				}*/
 				report = true;
 				host.getStorageSystem().addToStoredMessages(temp);
 				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
@@ -758,7 +757,7 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().deleteMessage(ctemp.getId());
 				double storTime = curTime - ctemp.getReceiveTime();
 				ctemp.addProperty("storTime", storTime);
-				ctemp.addProperty("satisfied", true);
+				ctemp.addProperty("satisfied", false);
 				if (storTime == (double)ctemp.getProperty("shelfLife")) {
 					ctemp.addProperty("overtime", false);
 				}
@@ -771,7 +770,7 @@ public class ProcApplication extends Application {
 		else if(temp.getProperty("comp") == null) {
 			double storTime = curTime - temp.getReceiveTime();
 			temp.addProperty("storTime", storTime);
-			temp.addProperty("satisfied", true);
+			temp.addProperty("satisfied", false);
 			if (storTime == (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", false);
 			}
