@@ -88,27 +88,29 @@ U5 = dlmread('reports_server/RUR5', ' ', 0, 1);
 O5 = dlmread('reports_server/ROR5', ' ', 0, 1);
 
 
-% M6 = dlmread('reports_server/MDMR6', ' ', 0, 2);
-% S6 = dlmread('reports_server/RAMR6', ' ', 0, 2);
-% UB6 = dlmread('reports_server/RUPBWR6', ' ', 0, 2);
-% PB6 = dlmread('reports_server/RPBWR6', ' ', 0, 2);
-% SB6 = dlmread('reports_server/RSBWR6', ' ', 0, 2);
-% CB6 = dlmread('reports_server/RCSBWR6', ' ', 0, 2);
-% RI6 = dlmread('reports_server/RISR6', ' ', 0, 2);
-% RP6 = dlmread('reports_server/RPrMR6', ' ', 0, 2);
-% RS6 = dlmread('reports_server/RSMR6', ' ', 0, 2);
-% P6 = dlmread('reports_server/RPMR6', ' ', 0, 2);
-% ST6 = dlmread('reports_server/RSTR6', ' ', 0, 1);
-% PF6 = dlmread('reports_server/RPFR6', ' ', 0, 1);
-% PS6 = dlmread('reports_server/RSR6', ' ', 0, 1);
-% U6 = dlmread('reports_server/RUR6', ' ', 0, 1);
-% O6 = dlmread('reports_server/ROR6', ' ', 0, 1);
+M6 = dlmread('reports_server/MDMR6', ' ', 0, 2);
+S6 = dlmread('reports_server/RAMR6', ' ', 0, 2);
+UB6 = dlmread('reports_server/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('reports_server/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('reports_server/RSBWR6', ' ', 0, 2);
+CB6 = dlmread('reports_server/RCSBWR6', ' ', 0, 2);
+RI6 = dlmread('reports_server/RISR6', ' ', 0, 2);
+RP6 = dlmread('reports_server/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('reports_server/RSMR6', ' ', 0, 2);
+P6 = dlmread('reports_server/RPMR6', ' ', 0, 2);
+ST6 = dlmread('reports_server/RSTR6', ' ', 0, 1);
+PF6 = dlmread('reports_server/RPFR6', ' ', 0, 1);
+PS6 = dlmread('reports_server/RSR6', ' ', 0, 1);
+U6 = dlmread('reports_server/RUR6', ' ', 0, 1);
+O6 = dlmread('reports_server/ROR6', ' ', 0, 1);
+
+
 [r2, c2] = size(M1);
 [r3, c3] = size(S1);
 maxstorM1 = zeros(c2, 0);
 maxstor = zeros(c3, 0);
 
-for inc = 5
+for inc = 6
     if inc == 1
         S = S1;
     end
@@ -129,9 +131,9 @@ for inc = 5
         S = S5;
     end
   
-%     if inc == 6
-%         S = S6;
-%     end
+    if inc == 6
+        S = S6;
+    end
     
     s = 10000;
     col = 1;
@@ -250,15 +252,15 @@ for inc = 5
 %         fillerrbarS3 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
     end
     
-%     if inc == 6
-%         maxstorS6 = maxstor;
-%         fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-%         for repo = 1:c3
-%             reposfillS6(repo) = mean(S(:, repo));
-%             reposfill(repo, inc) = reposfillS6(repo);           
-%         end
-% %         fillerrbarS4 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
-%     end
+    if inc == 6
+        maxstorS6 = maxstor;
+        fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            reposfillS6(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS6(repo);           
+        end
+%         fillerrbarS4 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
+    end
     
     fillerrbar(:, inc) = [sum(filled100(r3, :)), sum(filled50(r3, :)), sum(filled25(r3, :))];
 
@@ -298,25 +300,61 @@ for repo = 1:c3
     upspeeds3(repo, :) = [mean(CB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
     upspeeds4(repo, :) = [mean(CB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
     upspeeds5(repo, :) = [mean(CB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
-%     upspeeds6(repo, :) = [mean(CB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
+    upspeeds6(repo, :) = [mean(CB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
     inspeeds1(repo, :) = mean(RI1(:, repo));
     inspeeds2(repo, :) = mean(RI2(:, repo));
     inspeeds3(repo, :) = mean(RI3(:, repo));
     inspeeds4(repo, :) = mean(RI4(:, repo));
     inspeeds5(repo, :) = mean(RI5(:, repo));
-%     inspeeds6(repo, :) = mean(RI6(:, repo));
+    inspeeds6(repo, :) = mean(RI6(:, repo));
     sat_perc1(repo, :) = PS1(1, repo)/sum(PS1(:, repo));
+    if (isnan(PS1(1, repo)/sum(PS1(:, repo))))
+        sat_perc1(repo, :) = 0;
+    end
     sat_perc2(repo, :) = PS2(1, repo)/sum(PS2(:, repo));
+    if (isnan(PS2(1, repo)/sum(PS2(:, repo))))
+        sat_perc2(repo, :) = 0;
+    end
     sat_perc3(repo, :) = PS3(1, repo)/sum(PS3(:, repo));
+    if (isnan(PS3(1, repo)/sum(PS3(:, repo))))
+        sat_perc3(repo, :) = 0;
+    end
     sat_perc4(repo, :) = PS4(1, repo)/sum(PS4(:, repo));
+    if (isnan(PS4(1, repo)/sum(PS4(:, repo))))
+        sat_perc4(repo, :) = 0;
+    end
     sat_perc5(repo, :) = PS5(1, repo)/sum(PS5(:, repo));
-%     sat_perc6(repo, :) = mean(PS6(:, repo));
+    if (isnan(PS5(1, repo)/sum(PS5(:, repo))))
+        sat_perc5(repo, :) = 0;
+    end
+    sat_perc6(repo, :) = mean(PS6(:, repo));
+    if (isnan(PS6(1, repo)/sum(PS6(:, repo))))
+        sat_perc6(repo, :) = 0;
+    end
     fresh_perc1(repo, :) = PF1(1, repo)/sum(PF1(:, repo));
+    if (isnan(PF1(1, repo)/sum(PF1(:, repo))))
+        fresh_perc1(repo, :) = 0;
+    end
     fresh_perc2(repo, :) = PF2(1, repo)/sum(PF2(:, repo));
+    if (isnan(PF2(1, repo)/sum(PF2(:, repo))))
+        fresh_perc2(repo, :) = 0;
+    end
     fresh_perc3(repo, :) = PF3(1, repo)/sum(PF3(:, repo));
+    if (isnan(PF3(1, repo)/sum(PF3(:, repo))))
+        fresh_perc3(repo, :) = 0;
+    end
     fresh_perc4(repo, :) = PF4(1, repo)/sum(PF4(:, repo));
+    if (isnan(PF4(1, repo)/sum(PF4(:, repo))))
+        fresh_perc4(repo, :) = 0;
+    end
     fresh_perc5(repo, :) = PF5(1, repo)/sum(PF5(:, repo));
-%     sat_perc6(repo, :) = mean(PF6(:, repo));
+    if (isnan(PF5(1, repo)/sum(PF5(:, repo))))
+        fresh_perc5(repo, :) = 0;
+    end
+    fresh_perc6(repo, :) = mean(PF6(:, repo));
+    if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
+        fresh_perc6(repo, :) = 0;
+    end
 end
 
 % For this, maybe take a few repositories, concentrate their storage
@@ -422,19 +460,19 @@ upspeeds1_21 = [mean(CB1(:, 21)), mean(UB1(:, 21)), mean(PB1(:, 21));
                 mean(CB2(:, 21)), mean(UB2(:, 21)), mean(PB2(:, 21)); 
                 mean(CB3(:, 21)), mean(UB3(:, 21)), mean(PB3(:, 21)); 
                 mean(CB4(:, 21)), mean(UB4(:, 21)), mean(PB4(:, 21));
-                mean(CB5(:, 21)), mean(UB5(:, 21)), mean(PB5(:, 21))];
-%                 mean(SB6(:, 21)), mean(UB6(:, 21)), mean(PB6(:, 21))];
+                mean(CB5(:, 21)), mean(UB5(:, 21)), mean(PB5(:, 21));
+                mean(SB6(:, 21)), mean(UB6(:, 21)), mean(PB6(:, 21))];
             
 storages_21 = [mean(RS1(:, 21)), mean(RP1(:, 21));
                 mean(RS2(:, 21)), mean(RP2(:, 21)); 
                 mean(RS3(:, 21)), mean(RP3(:, 21)); 
                 mean(RS4(:, 21)), mean(RP4(:, 21)); 
-                mean(RS5(:, 21)), mean(RP5(:, 21))]; 
-%                 mean(RS6(:, 21)), mean(RP6(:, 21))];
+                mean(RS5(:, 21)), mean(RP5(:, 21)); 
+                mean(RS6(:, 21)), mean(RP6(:, 21))];
 
 % subplot(1,2,1);
 yyaxis left
-plot([2, 4, 8, 10, 12], upspeeds1_21, 'LineWidth', 1);
+plot([2, 4, 8, 10, 12, 16], upspeeds1_21, 'LineWidth', 1);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
@@ -442,7 +480,7 @@ xlabel('No. of threads per repository','fontsize',12)
 ylabel('Bandwidth used (B)','fontsize',12)
 
 yyaxis right
-semilogy([2, 4, 8, 10, 12], storages_21, 'LineWidth', 1);
+semilogy([2, 4, 8, 10, 12, 16], storages_21, 'LineWidth', 1);
 ylabel('Total storage used (B)','fontsize',12)
 lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 9;
@@ -520,7 +558,7 @@ upspeeds2_total = upspeeds2(:, 1)' + upspeeds2(:, 2)' + upspeeds2(:, 3)';
 upspeeds3_total = upspeeds3(:, 1)' + upspeeds3(:, 2)' + upspeeds3(:, 3)';
 upspeeds4_total = upspeeds4(:, 1)' + upspeeds4(:, 2)' + upspeeds4(:, 3)';
 upspeeds5_total = upspeeds5(:, 1)' + upspeeds5(:, 2)' + upspeeds5(:, 3)';
-% upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
+upspeeds6_total = upspeeds6(:, 1)' + upspeeds6(:, 2)' + upspeeds6(:, 3)';
 
 % figure
 % plot(1:80, upspeeds1_store, 1:80, upspeeds1_cloud, 1:80, upspeeds1_proc, 1:80, upspeeds6_store, 1:80, upspeeds6_cloud, 1:80, upspeeds6_proc);
@@ -549,7 +587,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k->', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-% lgd1.NumColumns = 3;
+lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 5*10^6]);
 xlim([17 48]);
@@ -568,7 +606,7 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5]);
+bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
@@ -582,7 +620,7 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = bar([fresh_perc1, fresh_perc2, fresh_perc4, fresh_perc5]);
+bar_handle = bar([fresh_perc1, fresh_perc2, fresh_perc4, fresh_perc5, fresh_perc6]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
@@ -598,24 +636,27 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = bar([fresh_perc1, fresh_perc2, fresh_perc4, fresh_perc5]);
+bar_handle = bar([mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
 ylim([0 1]);
 % xlim([17 48]);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-set(bar_handle(2),'FaceColor',[0,1,0])
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
 
 
 figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5);
+bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5, 1:80,  O6);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12)
 ylabel('No. of Overtime Messages/repo','fontsize',12)
+lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', 'Location', 'southoutside');
+lgd1.FontSize = 9;
+lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
 % xlim([17 48]);
 
@@ -634,8 +675,8 @@ set(bar_handle(1),'FaceColor',[0,0.5,1])
 
 yyaxis right
 hold on
-plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 'LineWidth', 1);
-plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 'LineWidth', 1);
+plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 1:80,  ST6(2,:), 'v', 'LineWidth', 1);
+plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 1:80,  ST6(3,:), '^', 'LineWidth', 1);
 
 lgd1 =legend('Number of messages counted for storage time extractuion', 'Average Storage Times', 'Maximum Storage Times');
 lgd1.FontSize = 9;
