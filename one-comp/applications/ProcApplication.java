@@ -88,9 +88,6 @@ public class ProcApplication extends Application {
 		if (s.contains(STOR_MODE)){
 			this.storMode = s.getBoolean(STOR_MODE);
 		}
-		else {
-			this.storMode = false;		
-		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
 		}
@@ -123,6 +120,7 @@ public class ProcApplication extends Application {
 		this.lastProc 	= a.getLastProc();
 		this.lastDepl 	= a.getLastDepl();
 		this.passive 	= a.isPassive();
+		this.storMode 	= a.inStorMode();
 		this.depl_rate 	= a.getDeplRate();
 		this.cloud_lim 	= a.getCloudLim();
 		this.proc_rate 	= a.getProcRate();
@@ -830,6 +828,13 @@ public class ProcApplication extends Application {
 	 */
 	public boolean isPassive() {
 		return passive;
+	}
+
+	/**
+	 * @return storMode
+	 */
+	public boolean inStorMode() {
+		return storMode;
 	}
 
 	/**
