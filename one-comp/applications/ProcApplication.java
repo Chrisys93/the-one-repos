@@ -71,7 +71,7 @@ public class ProcApplication extends Application {
 	private long 	cloud_lim;
 	private long	deplBW = 0;
 	private long	cloudBW = 0;	
-	private int		proc_rate = 4;
+	//private int		proc_rate;
 	private int		procMinI = 0;
 	//private int 	processedSize = (int) (procSize*proc_ratio);
 	protected ArrayList<Double> procEndTimes = new ArrayList<Double>();
@@ -110,6 +110,12 @@ public class ProcApplication extends Application {
 				this.procEndTimes.add((double) 0);
 			} 
 		}
+		else {
+			for (int n=0; n<4; n++)
+			{
+				this.procEndTimes.add((double) 0);
+			} 
+		}
 		super.setAppID(APP_ID);
 	}
 	
@@ -126,7 +132,7 @@ public class ProcApplication extends Application {
 		this.storMode 	= a.inStorMode();
 		this.depl_rate 	= a.getDeplRate();
 		this.cloud_lim 	= a.getCloudLim();
-		this.proc_rate 	= a.getProcRate();
+		//this.proc_rate 	= a.getProcRate();
 		this.max_stor 	= a.getMaxStor();
 		this.min_stor 	= a.getMinStor();
 		this.procEndTimes = a.getProcEndTimes();
@@ -884,8 +890,8 @@ public class ProcApplication extends Application {
 	/**
 	 * @return n. of processing cores
 	 */
-	public int getProcRate() {
+	/*public int getProcRate() {
 		return proc_rate;
-	}
+	}*/
 
 }
