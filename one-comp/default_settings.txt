@@ -366,7 +366,7 @@ procApp.passive = false
 procApp.coreNo = 10
 procApp.maxStorage = 0.95
 procApp.minStorage = 0.001
-procApp.storageMode = store
+procApp.storageMode = true
 
 # Define new application
 procApp1.type = ProcGenApplication

@@ -289,40 +289,40 @@ RepoDepletedUnProcBWReport.granularity = 1
 RepoDepletedStorageBWReport.granularity = 1
 RepoDepletedCloudStorageBWReport.granularity = 1
 Report.endTime = 10750
-FileLocationReport.granularity = 5
+FileLocationReport.granularity = 15
 
 # default directory of reports (can be overridden per Report with output setting)
 Report.reportDir = reports/
 # Report classes to load
-#Report.report1 = RepoIncomingSpeedsReport
-#Report.report2 = MobileDeletedMessagesReport
+Report.report1 = RepoIncomingSpeedsReport
+Report.report2 = MobileDeletedMessagesReport
 
-#Report.report3 = RepoProcessingMessageLocationReport
-#Report.report4 = RepoStoredMessageLocationReport
+Report.report3 = RepoProcessingMessageLocationReport
+Report.report4 = RepoStoredMessageLocationReport
 
-#Report.report5 = RepoProcessedMessageLocationReport
-#Report.report6 = RepoAllMessagesLocationReport
-#Report.report7 = RepoDepletedProcBWReport
-#Report.report8 = RepoDepletedUnProcBWReport
-#Report.report9 = RepoDepletedStorageBWReport
-#Report.report10 = RepoDepletedCloudStorageBWReport
-Report.report1 = RepoSatisfactionReport
-Report.report2 = RepoStorTimesReport
-Report.report3 = RepoProcFreshnessReport
-Report.report4 = RepoUnProcessedReport
-Report.report5 = RepoOvertimeReport
+Report.report5 = RepoProcessedMessageLocationReport
+Report.report6 = RepoAllMessagesLocationReport
+Report.report7 = RepoDepletedProcBWReport
+Report.report8 = RepoDepletedUnProcBWReport
+Report.report9 = RepoDepletedStorageBWReport
+Report.report10 = RepoDepletedCloudStorageBWReport
+Report.report11 = RepoSatisfactionReport
+Report.report12 = RepoStorTimesReport
+Report.report13 = RepoProcFreshnessReport
+Report.report14 = RepoUnProcessedReport
+Report.report15 = RepoOvertimeReport
 
-#RepoIncomingSpeedsReport.output = [non-proc_proc/RISR1;non-proc_proc/RISR2;non-proc_proc/RISR3; non-proc_proc/RISR4; non-proc_proc/RISR5; non-proc_proc/RISR6]
-#RepoDeletedMessagesReport.output = [non-proc_proc/RDMR1;non-proc_proc/RDMR2;non-proc_proc/RDMR3; non-proc_proc/RDMR4; non-proc_proc/RDMR5; non-proc_proc/RDMR6]
-#MobileDeletedMessagesReport.output = [non-proc_proc/MDMR1;non-proc_proc/MDMR2;non-proc_proc/MDMR3; non-proc_proc/MDMR4; non-proc_proc/MDMR5; non-proc_proc/MDMR6]
-#RepoProcessingMessageLocationReport.output = [non-proc_proc/RPrMR1;non-proc_proc/RPrMR2;non-proc_proc/RPrMR3; non-proc_proc/RPrMR4; non-proc_proc/RPrMR5; non-proc_proc/RPrMR6]
-#RepoStoredMessageLocationReport.output = [non-proc_proc/RSMR1;non-proc_proc/RSMR2;non-proc_proc/RSMR3; non-proc_proc/RSMR4; non-proc_proc/RSMR5; non-proc_proc/RSMR6]
-#RepoProcessedMessageLocationReport.output = [non-proc_proc/RPMR1;non-proc_proc/RPMR2;non-proc_proc/RPMR3; non-proc_proc/RPMR4; non-proc_proc/RPMR5; non-proc_proc/RPMR6]
-#RepoAllMessagesLocationReport.output = [non-proc_proc/RAMR1;non-proc_proc/RAMR2;non-proc_proc/RAMR3; non-proc_proc/RAMR4; non-proc_proc/RAMR5; non-proc_proc/RAMR6]
-#RepoDepletedProcBWReport.output = [non-proc_proc/RPBWR1;non-proc_proc/RPBWR2;non-proc_proc/RPBWR3; non-proc_proc/RPBWR4; non-proc_proc/RPBWR5; non-proc_proc/RPBWR6]
-#RepoDepletedUnProcBWReport.output = [non-proc_proc/RUPBWR1;non-proc_proc/RUPBWR2;non-proc_proc/RUPBWR3; non-proc_proc/RUPBWR4; non-proc_proc/RUPBWR5; non-proc_proc/RUPBWR6]
-#RepoDepletedCloudStorageBWReport.output = [non-proc_proc/RCSBWR1; non-proc_proc/RCSBWR2; non-proc_proc/RCSBWR3; non-proc_proc/RCSBWR4; non-proc_proc/RCSBWR5; non-proc_proc/RCSBWR6]
-#RepoDepletedStorageBWReport.output = [non-proc_proc/RSBWR1; non-proc_proc/RSBWR2; non-proc_proc/RSBWR3; non-proc_proc/RSBWR4; non-proc_proc/RSBWR5; non-proc_proc/RSBWR6]
+RepoIncomingSpeedsReport.output = [non-proc_proc/RISR1;non-proc_proc/RISR2;non-proc_proc/RISR3; non-proc_proc/RISR4; non-proc_proc/RISR5; non-proc_proc/RISR6]
+RepoDeletedMessagesReport.output = [non-proc_proc/RDMR1;non-proc_proc/RDMR2;non-proc_proc/RDMR3; non-proc_proc/RDMR4; non-proc_proc/RDMR5; non-proc_proc/RDMR6]
+MobileDeletedMessagesReport.output = [non-proc_proc/MDMR1;non-proc_proc/MDMR2;non-proc_proc/MDMR3; non-proc_proc/MDMR4; non-proc_proc/MDMR5; non-proc_proc/MDMR6]
+RepoProcessingMessageLocationReport.output = [non-proc_proc/RPrMR1;non-proc_proc/RPrMR2;non-proc_proc/RPrMR3; non-proc_proc/RPrMR4; non-proc_proc/RPrMR5; non-proc_proc/RPrMR6]
+RepoStoredMessageLocationReport.output = [non-proc_proc/RSMR1;non-proc_proc/RSMR2;non-proc_proc/RSMR3; non-proc_proc/RSMR4; non-proc_proc/RSMR5; non-proc_proc/RSMR6]
+RepoProcessedMessageLocationReport.output = [non-proc_proc/RPMR1;non-proc_proc/RPMR2;non-proc_proc/RPMR3; non-proc_proc/RPMR4; non-proc_proc/RPMR5; non-proc_proc/RPMR6]
+RepoAllMessagesLocationReport.output = [non-proc_proc/RAMR1;non-proc_proc/RAMR2;non-proc_proc/RAMR3; non-proc_proc/RAMR4; non-proc_proc/RAMR5; non-proc_proc/RAMR6]
+RepoDepletedProcBWReport.output = [non-proc_proc/RPBWR1;non-proc_proc/RPBWR2;non-proc_proc/RPBWR3; non-proc_proc/RPBWR4; non-proc_proc/RPBWR5; non-proc_proc/RPBWR6]
+RepoDepletedUnProcBWReport.output = [non-proc_proc/RUPBWR1;non-proc_proc/RUPBWR2;non-proc_proc/RUPBWR3; non-proc_proc/RUPBWR4; non-proc_proc/RUPBWR5; non-proc_proc/RUPBWR6]
+RepoDepletedCloudStorageBWReport.output = [non-proc_proc/RCSBWR1; non-proc_proc/RCSBWR2; non-proc_proc/RCSBWR3; non-proc_proc/RCSBWR4; non-proc_proc/RCSBWR5; non-proc_proc/RCSBWR6]
+RepoDepletedStorageBWReport.output = [non-proc_proc/RSBWR1; non-proc_proc/RSBWR2; non-proc_proc/RSBWR3; non-proc_proc/RSBWR4; non-proc_proc/RSBWR5; non-proc_proc/RSBWR6]
 
 RepoSatisfactionReport.output = [non-proc_proc8/RSR1; non-proc_proc8/RSR2; non-proc_proc8/RSR3; non-proc_proc8/RSR4; non-proc_proc8/RSR5; non-proc_proc8/RSR6]
 RepoProcFreshnessReport.output = [non-proc_proc8/RPFR1; non-proc_proc8/RPFR2; non-proc_proc8/RPFR3; non-proc_proc8/RPFR4; non-proc_proc8/RPFR5; non-proc_proc8/RPFR6]

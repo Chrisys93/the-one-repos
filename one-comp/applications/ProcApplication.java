@@ -85,14 +85,11 @@ public class ProcApplication extends Application {
 		if (s.contains(PROC_PASSIVE)){
 			this.passive = s.getBoolean(PROC_PASSIVE);
 		}
-		if (s.contains(PROC_PASSIVE)){
-			if(s.getSetting(PROC_PASSIVE).equalsIgnoreCase("store"))
-				this.storMode = true;
-			else if (s.getSetting(PROC_PASSIVE).equalsIgnoreCase("compute"))
-				this.storMode = false;				
+		if (s.contains(STOR_MODE)){
+			this.storMode = s.getBoolean(STOR_MODE);
 		}
 		else {
-			this.storMode = false;
+			this.storMode = false;		
 		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
