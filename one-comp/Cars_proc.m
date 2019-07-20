@@ -351,7 +351,7 @@ for repo = 1:c3
     if (isnan(PF5(1, repo)/sum(PF5(:, repo))))
         fresh_perc5(repo, :) = 0;
     end
-    fresh_perc6(repo, :) = mean(PF6(:, repo));
+    fresh_perc6(repo, :) =  PF6(1, repo)/sum(PF6(:, repo));
     if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
         fresh_perc6(repo, :) = 0;
     end
@@ -373,15 +373,15 @@ end
 % ylabel('Time(s)','fontsize',12)
 % zlabel('Space used(B)','fontsize',12)
 
-figure
-plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 'LineWidth',1);
-% title('3D Stem plot of Repos Storage Usage','fontsize',16)
-ylabel('Number of stored messages','fontsize',12) 
-xlabel('Time(s)','fontsize',12)
-zlabel('Space used(B)','fontsize',12)
-lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
-lgd.FontSize = 9;
-% lgd.NumColumns = 3;
+% figure
+% plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 'LineWidth',1);
+% % title('3D Stem plot of Repos Storage Usage','fontsize',16)
+% ylabel('Number of stored messages','fontsize',12) 
+% xlabel('Time(s)','fontsize',12)
+% zlabel('Space used(B)','fontsize',12)
+% lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
+% lgd.FontSize = 9;
+% % lgd.NumColumns = 3;
 
 
 % Maybe just show one side (irrespective of repo), and how much cache is
@@ -587,7 +587,7 @@ yyaxis right
 plot(1:80, upspeeds1_total, 'r-+', 1:80, upspeeds2_total, 'm-o', 1:80, upspeeds3_total, '-*', 1:80, upspeeds4_total, 'b-x', 1:80, upspeeds5_total, 'k->', 'LineWidth', 1);
 lgd1 =legend('non-processing message upload for 2', 'cloud offloading upload for 2', 'message upload for 2', 'message upload for 4', 'message upload for 8', 'message upload for 10', 'message upload for 12', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-lgd1.NumColumns = 3;
+% lgd1.NumColumns = 3;
 ylabel('Bandwidth used (B/s)','fontsize',12)
 ylim([0 5*10^6]);
 xlim([17 48]);
@@ -656,30 +656,30 @@ xlabel('Repository number','fontsize',12)
 ylabel('No. of Overtime Messages/repo','fontsize',12)
 lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', 'Location', 'southoutside');
 lgd1.FontSize = 9;
-lgd1.NumColumns = 5;
+% lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
 % xlim([17 48]);
 
 
-figure
-
-yyaxis left
-bar_handle = bar(ST1(1,:));
-xlabel('Repository number','fontsize',12)
-ylabel('No. of Messages/repo','fontsize',12)
-% ylim([0 5*10^6]);
-% xlim([17 48]);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-% set(bar_handle(2),'FaceColor',[0,1,0])
-% set(bar_handle(3),'FaceColor',[0,1,0.5])
-
-yyaxis right
-hold on
-plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 1:80,  ST6(2,:), 'v', 'LineWidth', 1);
-plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 1:80,  ST6(3,:), '^', 'LineWidth', 1);
-
-lgd1 =legend('Number of messages counted for storage time extractuion', 'Average Storage Times', 'Maximum Storage Times');
-lgd1.FontSize = 9;
-% lgd1.NumColumns = 3;
-ylabel('Storage times (s)','fontsize',12)
+% figure
+% 
+% yyaxis left
+% bar_handle = bar(ST1(1,:));
+% xlabel('Repository number','fontsize',12)
+% ylabel('No. of Messages/repo','fontsize',12)
+% % ylim([0 5*10^6]);
+% % xlim([17 48]);
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% % set(bar_handle(2),'FaceColor',[0,1,0])
+% % set(bar_handle(3),'FaceColor',[0,1,0.5])
+% 
+% yyaxis right
+% hold on
+% plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 1:80,  ST6(2,:), 'v', 'LineWidth', 1);
+% plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 1:80,  ST6(3,:), '^', 'LineWidth', 1);
+% 
+% lgd1 =legend('Number of messages counted for storage time extractuion', 'Average Storage Times', 'Maximum Storage Times');
+% lgd1.FontSize = 9;
+% % lgd1.NumColumns = 3;
+% ylabel('Storage times (s)','fontsize',12)
 

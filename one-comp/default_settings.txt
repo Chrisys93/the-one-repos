@@ -101,7 +101,7 @@ Group1.movementModel = RepoStationaryMovement
 #Group1.speed = 0, 0
 Group1.storageCapability = true
 Group1.processingCapability = true
-Group1.storageSize = 10G
+Group1.storageSize = 5G
 Group1.compressionRate = 2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
@@ -312,22 +312,22 @@ Report.report13 = RepoProcFreshnessReport
 Report.report14 = RepoUnProcessedReport
 Report.report15 = RepoOvertimeReport
 
-RepoIncomingSpeedsReport.output = [reports/RISR1;reports/RISR2;reports/RISR3; reports/RISR4; reports/RISR5; reports/RISR6]
-RepoDeletedMessagesReport.output = [reports/RDMR1;reports/RDMR2;reports/RDMR3; reports/RDMR4; reports/RDMR5; reports/RDMR6]
-MobileDeletedMessagesReport.output = [reports/MDMR1;reports/MDMR2;reports/MDMR3; reports/MDMR4; reports/MDMR5; reports/MDMR6]
-RepoProcessingMessageLocationReport.output = [reports/RPrMR1;reports/RPrMR2;reports/RPrMR3; reports/RPrMR4; reports/RPrMR5; reports/RPrMR6]
-RepoStoredMessageLocationReport.output = [reports/RSMR1;reports/RSMR2;reports/RSMR3; reports/RSMR4; reports/RSMR5; reports/RSMR6]
-RepoProcessedMessageLocationReport.output = [reports/RPMR1;reports/RPMR2;reports/RPMR3; reports/RPMR4; reports/RPMR5; reports/RPMR6]
-RepoAllMessagesLocationReport.output = [reports/RAMR1;reports/RAMR2;reports/RAMR3; reports/RAMR4; reports/RAMR5; reports/RAMR6]
-RepoDepletedProcBWReport.output = [reports/RPBWR1;reports/RPBWR2;reports/RPBWR3; reports/RPBWR4; reports/RPBWR5; reports/RPBWR6]
-RepoDepletedUnProcBWReport.output = [reports/RUPBWR1;reports/RUPBWR2;reports/RUPBWR3; reports/RUPBWR4; reports/RUPBWR5; reports/RUPBWR6]
-RepoDepletedCloudStorageBWReport.output = [reports/RCSBWR1; reports/RCSBWR2; reports/RCSBWR3; reports/RCSBWR4; reports/RCSBWR5; reports/RCSBWR6]
-RepoDepletedStorageBWReport.output = [reports/RSBWR1; reports/RSBWR2; reports/RSBWR3; reports/RSBWR4; reports/RSBWR5; reports/RSBWR6]
-RepoSatisfactionReport.output = [reports/RSR1; reports/RSR2; reports/RSR3; reports/RSR4; reports/RSR5; reports/RSR6]
-RepoProcFreshnessReport.output = [reports/RPFR1; reports/RPFR2; reports/RPFR3; reports/RPFR4; reports/RPFR5; reports/RPFR6]
-RepoStorTimesReport.output = [reports/RSTR1; reports/RSTR2; reports/RSTR3; reports/RSTR4; reports/RSTR5; reports/RSTR6]
-RepoUnProcessedReport.output = [reports/RUR1; reports/RUR2; reports/RUR3; reports/RUR4; reports/RUR5; reports/RUR6]
-RepoOvertimeReport.output = [reports/ROR1; reports/ROR2; reports/ROR3; reports/ROR4; reports/ROR5; reports/ROR6]
+RepoIncomingSpeedsReport.output = [reports_stor/RISR1;reports_stor/RISR2;reports_stor/RISR3; reports_stor/RISR4; reports_stor/RISR5; reports_stor/RISR6]
+RepoDeletedMessagesReport.output = [reports_stor/RDMR1;reports_stor/RDMR2;reports_stor/RDMR3; reports/RDMR4; reports_stor/RDMR5; reports_stor/RDMR6]
+MobileDeletedMessagesReport.output = [reports_stor/MDMR1;reports_stor/MDMR2;reports_stor/MDMR3; reports_stor/MDMR4; reports_stor/MDMR5; reports_stor/MDMR6]
+RepoProcessingMessageLocationReport.output = [reports_stor/RPrMR1;reports_stor/RPrMR2;reports_stor/RPrMR3; reports_stor/RPrMR4; reports_stor/RPrMR5; reports_stor/RPrMR6]
+RepoStoredMessageLocationReport.output = [reports_stor/RSMR1;reports_stor/RSMR2;reports_stor/RSMR3; reports_stor/RSMR4; reports_stor/RSMR5; reports_stor/RSMR6]
+RepoProcessedMessageLocationReport.output = [reports_stor/RPMR1;reports_stor/RPMR2;reports_stor/RPMR3; reports_stor/RPMR4; reports_stor/RPMR5; reports_stor/RPMR6]
+RepoAllMessagesLocationReport.output = [reports_stor/RAMR1;reports_stor/RAMR2;reports_stor/RAMR3; reports_stor/RAMR4; reports_stor/RAMR5; reports_stor/RAMR6]
+RepoDepletedProcBWReport.output = [reports_stor/RPBWR1;reports_stor/RPBWR2;reports_stor/RPBWR3; reports_stor/RPBWR4; reports_stor/RPBWR5; reports_stor/RPBWR6]
+RepoDepletedUnProcBWReport.output = [reports_stor/RUPBWR1;reports_stor/RUPBWR2;reports_stor/RUPBWR3; reports_stor/RUPBWR4; reports_stor/RUPBWR5; reports_stor/RUPBWR6]
+RepoDepletedCloudStorageBWReport.output = [reports_stor/RCSBWR1; reports_stor/RCSBWR2; reports_stor/RCSBWR3; reports_stor/RCSBWR4; reports_stor/RCSBWR5; reports_stor/RCSBWR6]
+RepoDepletedStorageBWReport.output = [reports_stor/RSBWR1; reports_stor/RSBWR2; reports_stor/RSBWR3; reports_stor/RSBWR4; reports_stor/RSBWR5; reports_stor/RSBWR6]
+RepoSatisfactionReport.output = [reports_stor/RSR1; reports_stor/RSR2; reports_stor/RSR3; reports_stor/RSR4; reports_stor/RSR5; reports_stor/RSR6]
+RepoProcFreshnessReport.output = [reports_stor/RPFR1; reports_stor/RPFR2; reports_stor/RPFR3; reports_stor/RPFR4; reports_stor/RPFR5; reports_stor/RPFR6]
+RepoStorTimesReport.output = [reports_stor/RSTR1; reports_stor/RSTR2; reports_stor/RSTR3; reports_stor/RSTR4; reports_stor/RSTR5; reports_stor/RSTR6]
+RepoUnProcessedReport.output = [reports_stor/RUR1; reports_stor/RUR2; reports_stor/RUR3; reports_stor/RUR4; reports_stor/RUR5; reports_stor/RUR6]
+RepoOvertimeReport.output = [reports_stor/ROR1; reports_stor/ROR2; reports_stor/ROR3; reports_stor/ROR4; reports_stor/ROR5; reports_stor/ROR6]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -366,6 +366,7 @@ procApp.passive = false
 procApp.coreNo = 10
 procApp.maxStorage = 0.95
 procApp.minStorage = 0.001
+procApp.storageMode = store
 
 # Define new application
 procApp1.type = ProcGenApplication
@@ -385,12 +386,12 @@ procApp2.interval = 1
 procApp2.delay = 0.1
 procApp2.freshPer = 1
 procApp2.procShelf = 2
-procApp2.nonprocShelf = [50; 200; 500; 1000; 1500]
+procApp2.nonprocShelf = [50; 200; 500; 800; 1000]
 procApp2.destinationName = r
 procApp2.procSize = 500k
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp2.compressRate = 2,2
-procApp2.passiveRate = 1,2
+procApp2.passiveRate = 4,1
 procApp2.passive = false
 
 # Define new application

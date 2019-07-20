@@ -38,6 +38,8 @@ import core.SimClock;
 public class ProcApplication extends Application {
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
+	/** Run in storage mode - store non-proc messages for as long as possible before depletion */
+	public static final String STOR_MODE = "storageMode";
 	/** Percentage (below unity) of maximum storage occupied */
 	public static final String MAX_STOR = "maxStorage";
 	/** Percentage (below unity) of minimum storage occupied before any depletion */
@@ -55,11 +57,12 @@ public class ProcApplication extends Application {
 	// Private vars
 	private double	lastProc = 0;
 	private double 	lastDepl = 0;
-	private double 	procMin = 0;	
+	private double 	procMin = 0;
 
 	private boolean cloudEmptyLoop = true;
 	private boolean deplEmptyLoop = true;
 	private boolean passive = false;
+	private boolean storMode;
 	private double	max_stor;
 	private double	min_stor;
 	private long 	depl_rate;
@@ -79,6 +82,15 @@ public class ProcApplication extends Application {
 	public ProcApplication(Settings s) {
 		if (s.contains(PROC_PASSIVE)){
 			this.passive = s.getBoolean(PROC_PASSIVE);
+		}
+		if (s.contains(PROC_PASSIVE)){
+			if(s.getSetting(PROC_PASSIVE).equalsIgnoreCase("store"))
+				this.storMode = true;
+			else if (s.getSetting(PROC_PASSIVE).equalsIgnoreCase("compute"))
+				this.storMode = false;				
+		}
+		else {
+			this.storMode = false;
 		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
@@ -487,6 +499,7 @@ public class ProcApplication extends Application {
 				
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
 				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
+					if (!this.storMode)
 					oldestSatisfiedStaticDepletion(host);
 				}
 				/*else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
