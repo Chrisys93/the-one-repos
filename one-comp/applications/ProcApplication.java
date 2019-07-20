@@ -495,8 +495,7 @@ public class ProcApplication extends Application {
 				}
 				
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
-				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
-					if (!this.storMode)
+				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null && !this.storMode){
 					oldestSatisfiedStaticDepletion(host);
 				}
 				/*else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
