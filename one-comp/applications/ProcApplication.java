@@ -38,7 +38,9 @@ import core.SimClock;
 public class ProcApplication extends Application {
 	/** Run in passive mode - don't process messages, but store */
 	public static final String PROC_PASSIVE = "passive";
-	/** Run in storage mode - store non-proc messages for as long as possible before depletion */
+	/** Run in storage mode - store non-proc messages for as long 
+	 * as possible before depletion 
+	 * Possible settings: store or compute*/
 	public static final String STOR_MODE = "storageMode";
 	/** Percentage (below unity) of maximum storage occupied */
 	public static final String MAX_STOR = "maxStorage";
