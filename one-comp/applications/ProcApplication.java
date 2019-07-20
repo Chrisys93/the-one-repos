@@ -88,6 +88,9 @@ public class ProcApplication extends Application {
 		if (s.contains(STOR_MODE)){
 			this.storMode = s.getBoolean(STOR_MODE);
 		}
+		else {
+			this.storMode = false;		
+		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
 		}
