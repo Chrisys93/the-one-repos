@@ -324,7 +324,7 @@ Report.report5 = RepoOvertimeReport
 #RepoDepletedCloudStorageBWReport.output = [non-proc_proc/RCSBWR1; non-proc_proc/RCSBWR2; non-proc_proc/RCSBWR3; non-proc_proc/RCSBWR4; non-proc_proc/RCSBWR5; non-proc_proc/RCSBWR6]
 #RepoDepletedStorageBWReport.output = [non-proc_proc/RSBWR1; non-proc_proc/RSBWR2; non-proc_proc/RSBWR3; non-proc_proc/RSBWR4; non-proc_proc/RSBWR5; non-proc_proc/RSBWR6]
 
-RepoSatisfactionReport.output = [non-proc_proc88/RSR1; non-proc_proc8/RSR2; non-proc_proc8/RSR3; non-proc_proc8/RSR4; non-proc_proc8/RSR5; non-proc_proc8/RSR6]
+RepoSatisfactionReport.output = [non-proc_proc8/RSR1; non-proc_proc8/RSR2; non-proc_proc8/RSR3; non-proc_proc8/RSR4; non-proc_proc8/RSR5; non-proc_proc8/RSR6]
 RepoProcFreshnessReport.output = [non-proc_proc8/RPFR1; non-proc_proc8/RPFR2; non-proc_proc8/RPFR3; non-proc_proc8/RPFR4; non-proc_proc8/RPFR5; non-proc_proc8/RPFR6]
 RepoStorTimesReport.output = [non-proc_proc8/RSTR1; non-proc_proc8/RSTR2; non-proc_proc8/RSTR3; non-proc_proc8/RSTR4; non-proc_proc8/RSTR5; non-proc_proc8/RSTR6]
 RepoUnProcessedReport.output = [non-proc_proc8/RUR1; non-proc_proc8/RUR2; non-proc_proc8/RUR3; non-proc_proc8/RUR4; non-proc_proc8/RUR5; non-proc_proc8/RUR6]
