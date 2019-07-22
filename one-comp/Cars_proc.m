@@ -602,18 +602,18 @@ xlim([17 48]);
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
-figure
-
-% subplot(2,1,1);
-% yyaxis left
-bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
-% title('Processing threads','fontsize',16)
-xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
-ylim([0 1]);
-% xlim([17 48]);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-set(bar_handle(2),'FaceColor',[0,1,0])
+% figure
+% 
+% % subplot(2,1,1);
+% % yyaxis left
+% bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
+% % title('Processing threads','fontsize',16)
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
+% ylim([0 1]);
+% % xlim([17 48]);
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
 
 
 figure

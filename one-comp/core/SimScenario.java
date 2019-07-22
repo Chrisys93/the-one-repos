@@ -589,7 +589,7 @@ public class SimScenario implements Serializable {
 				if (mmProto.toString().contains("RepoStationaryMovement")){
 					this.worldSizeDivisionX = (int)Math.sqrt(nrofHosts);
 					this.worldSizeDivisionY = (int)Math.sqrt(nrofHosts);
-					SimScenario.simLocation[0] = 500 + (j % this.worldSizeDivisionX)*((this.worldSizeX-1250)/this.worldSizeDivisionX);
+					SimScenario.simLocation[0] = 600 + (j % this.worldSizeDivisionX)*((this.worldSizeX-1150)/this.worldSizeDivisionX);
 					SimScenario.simLocation[1] = 200 + (int)(j / worldSizeDivisionX)*((this.worldSizeY-1300)/this.worldSizeDivisionY);
 					// creates prototypes of MessageRouter and MovementModel
 					MovementModel mmPrototype = 

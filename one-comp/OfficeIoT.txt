@@ -20,11 +20,11 @@ Scenario.simulateStorage = true
 # transmitSpeed : transmit speed of the interface (bytes per second)
 # transmitRange : range of the interface (meters)
 
-# # "Bluetooth" interface for all nodes
-# btInterface.type = SimpleBroadcastInterface
-# # Transmit speed of 2 Mbps = 250kBps
-# btInterface.transmitSpeed = 1M
-# btInterface.transmitRange = 50
+# "Bluetooth" interface for all nodes
+etherInterface.type = SimpleBroadcastInterface
+# Transmit speed of 100 Mbps = 12.5MBps
+etherInterface.transmitSpeed = 12.5M
+etherInterface.transmitRange = 250
 
 # Add different speed and range interfaces for the different types of nodes,
 # and after "addInterface" (register the) into the ConnectivityGrid.
@@ -105,9 +105,9 @@ Group1.storageSize = 10G
 Group1.compressionRate = 2
 # The repositories have to have all 3 interfaces, to receive
 # information from all 3 types of traffic.
-Group1.nrofInterfaces = 1
+Group1.nrofInterfaces = 2
 Group1.interface1 = wlanCarInterface
-#Group1.interface2 = wlanCarInterface
+Group1.interface2 = etherInterface
 #Group1.interface3 = wlanBusInterface
 #Group1.interface4 = wlanRepInterface
 Group1.nrofHosts = 80
@@ -119,30 +119,31 @@ Group2.interface1 = wlanCarInterface
 # Group2.speed = 2.7, 13.9
 
 # group3 cars specific settings
-Group3.groupID = c
+Group3.groupID = i
 Group3.movementModel = OfficeIoTStationaryMovement
-Group3.officeLocationsFile = data/HelsinkiMedium/A_offices.wkt
+Group3.officeLocationsFile = data/HelsinkiMedium/A_offices_mod.wkt
 # Max distance from main office coordinate - needs tweaking.
-Group3.officeSize = 100
+Group3.officeSize = 150
 Group3.nrOfOffices = 30
 # Larger buffer size than pedestrians
-Group3.bufferSize = 300M
-Group3.interface1 = wlanCarInterface
+Group3.bufferSize =100M
 # More cars than anything else
 Group3.nrofHosts = 250
+Group3.interface1 = etherInterface
 
 # group3 cars specific settings
-Group4.groupID = c
+Group4.groupID = i
 Group4.movementModel = OfficeIoTStationaryMovement
-Group4.officeLocationsFile = data/HelsinkiMedium/F_offices.wkt
+Group4.officeLocationsFile = data/HelsinkiMedium/F_offices_mod.wkt
 # Max distance from main office coordinate - needs tweaking.
-Group4.officeSize = 100
+Group4.officeSize = 150
 Group4.nrOfOffices = 30
 # Larger buffer size than pedestrians
 Group4.bufferSize = 300M
 Group4.interface1 = wlanCarInterface
 # More cars than anything else
 Group4.nrofHosts = 250
+Group4.interface1 = etherInterface
 
 # The Bus groups
 Group5.groupID = b
@@ -326,22 +327,22 @@ Report.report13 = RepoProcFreshnessReport
 Report.report14 = RepoUnProcessedReport
 Report.report15 = RepoOvertimeReport
 
-RepoIncomingSpeedsReport.output = [reports_stor/RISR1;reports_stor/RISR2;reports_stor/RISR3; reports_stor/RISR4; reports_stor/RISR5; reports_stor/RISR6]
-RepoDeletedMessagesReport.output = [reports_stor/RDMR1;reports_stor/RDMR2;reports_stor/RDMR3; reports/RDMR4; reports_stor/RDMR5; reports_stor/RDMR6]
-MobileDeletedMessagesReport.output = [reports_stor/MDMR1;reports_stor/MDMR2;reports_stor/MDMR3; reports_stor/MDMR4; reports_stor/MDMR5; reports_stor/MDMR6]
-RepoProcessingMessageLocationReport.output = [reports_stor/RPrMR1;reports_stor/RPrMR2;reports_stor/RPrMR3; reports_stor/RPrMR4; reports_stor/RPrMR5; reports_stor/RPrMR6]
-RepoStoredMessageLocationReport.output = [reports_stor/RSMR1;reports_stor/RSMR2;reports_stor/RSMR3; reports_stor/RSMR4; reports_stor/RSMR5; reports_stor/RSMR6]
-RepoProcessedMessageLocationReport.output = [reports_stor/RPMR1;reports_stor/RPMR2;reports_stor/RPMR3; reports_stor/RPMR4; reports_stor/RPMR5; reports_stor/RPMR6]
-RepoAllMessagesLocationReport.output = [reports_stor/RAMR1;reports_stor/RAMR2;reports_stor/RAMR3; reports_stor/RAMR4; reports_stor/RAMR5; reports_stor/RAMR6]
-RepoDepletedProcBWReport.output = [reports_stor/RPBWR1;reports_stor/RPBWR2;reports_stor/RPBWR3; reports_stor/RPBWR4; reports_stor/RPBWR5; reports_stor/RPBWR6]
-RepoDepletedUnProcBWReport.output = [reports_stor/RUPBWR1;reports_stor/RUPBWR2;reports_stor/RUPBWR3; reports_stor/RUPBWR4; reports_stor/RUPBWR5; reports_stor/RUPBWR6]
-RepoDepletedCloudStorageBWReport.output = [reports_stor/RCSBWR1; reports_stor/RCSBWR2; reports_stor/RCSBWR3; reports_stor/RCSBWR4; reports_stor/RCSBWR5; reports_stor/RCSBWR6]
-RepoDepletedStorageBWReport.output = [reports_stor/RSBWR1; reports_stor/RSBWR2; reports_stor/RSBWR3; reports_stor/RSBWR4; reports_stor/RSBWR5; reports_stor/RSBWR6]
-RepoSatisfactionReport.output = [reports_stor/RSR1; reports_stor/RSR2; reports_stor/RSR3; reports_stor/RSR4; reports_stor/RSR5; reports_stor/RSR6]
-RepoProcFreshnessReport.output = [reports_stor/RPFR1; reports_stor/RPFR2; reports_stor/RPFR3; reports_stor/RPFR4; reports_stor/RPFR5; reports_stor/RPFR6]
-RepoStorTimesReport.output = [reports_stor/RSTR1; reports_stor/RSTR2; reports_stor/RSTR3; reports_stor/RSTR4; reports_stor/RSTR5; reports_stor/RSTR6]
-RepoUnProcessedReport.output = [reports_stor/RUR1; reports_stor/RUR2; reports_stor/RUR3; reports_stor/RUR4; reports_stor/RUR5; reports_stor/RUR6]
-RepoOvertimeReport.output = [reports_stor/ROR1; reports_stor/ROR2; reports_stor/ROR3; reports_stor/ROR4; reports_stor/ROR5; reports_stor/ROR6]
+RepoIncomingSpeedsReport.output = [officeIoT/RISR1;officeIoT/RISR2;officeIoT/RISR3; officeIoT/RISR4; officeIoT/RISR5; officeIoT/RISR6]
+RepoDeletedMessagesReport.output = [officeIoT/RDMR1;officeIoT/RDMR2;officeIoT/RDMR3; reports/RDMR4; officeIoT/RDMR5; officeIoT/RDMR6]
+MobileDeletedMessagesReport.output = [officeIoT/MDMR1;officeIoT/MDMR2;officeIoT/MDMR3; officeIoT/MDMR4; officeIoT/MDMR5; officeIoT/MDMR6]
+RepoProcessingMessageLocationReport.output = [officeIoT/RPrMR1;officeIoT/RPrMR2;officeIoT/RPrMR3; officeIoT/RPrMR4; officeIoT/RPrMR5; officeIoT/RPrMR6]
+RepoStoredMessageLocationReport.output = [officeIoT/RSMR1;officeIoT/RSMR2;officeIoT/RSMR3; officeIoT/RSMR4; officeIoT/RSMR5; officeIoT/RSMR6]
+RepoProcessedMessageLocationReport.output = [officeIoT/RPMR1;officeIoT/RPMR2;officeIoT/RPMR3; officeIoT/RPMR4; officeIoT/RPMR5; officeIoT/RPMR6]
+RepoAllMessagesLocationReport.output = [officeIoT/RAMR1;officeIoT/RAMR2;officeIoT/RAMR3; officeIoT/RAMR4; officeIoT/RAMR5; officeIoT/RAMR6]
+RepoDepletedProcBWReport.output = [officeIoT/RPBWR1;officeIoT/RPBWR2;officeIoT/RPBWR3; officeIoT/RPBWR4; officeIoT/RPBWR5; officeIoT/RPBWR6]
+RepoDepletedUnProcBWReport.output = [officeIoT/RUPBWR1;officeIoT/RUPBWR2;officeIoT/RUPBWR3; officeIoT/RUPBWR4; officeIoT/RUPBWR5; officeIoT/RUPBWR6]
+RepoDepletedCloudStorageBWReport.output = [officeIoT/RCSBWR1; officeIoT/RCSBWR2; officeIoT/RCSBWR3; officeIoT/RCSBWR4; officeIoT/RCSBWR5; officeIoT/RCSBWR6]
+RepoDepletedStorageBWReport.output = [officeIoT/RSBWR1; officeIoT/RSBWR2; officeIoT/RSBWR3; officeIoT/RSBWR4; officeIoT/RSBWR5; officeIoT/RSBWR6]
+RepoSatisfactionReport.output = [officeIoT/RSR1; officeIoT/RSR2; officeIoT/RSR3; officeIoT/RSR4; officeIoT/RSR5; officeIoT/RSR6]
+RepoProcFreshnessReport.output = [officeIoT/RPFR1; officeIoT/RPFR2; officeIoT/RPFR3; officeIoT/RPFR4; officeIoT/RPFR5; officeIoT/RPFR6]
+RepoStorTimesReport.output = [officeIoT/RSTR1; officeIoT/RSTR2; officeIoT/RSTR3; officeIoT/RSTR4; officeIoT/RSTR5; officeIoT/RSTR6]
+RepoUnProcessedReport.output = [officeIoT/RUR1; officeIoT/RUR2; officeIoT/RUR3; officeIoT/RUR4; officeIoT/RUR5; officeIoT/RUR6]
+RepoOvertimeReport.output = [officeIoT/ROR1; officeIoT/ROR2; officeIoT/ROR3; officeIoT/ROR4; officeIoT/ROR5; officeIoT/ROR6]
 
 ## Default settings for some routers settings
 ProphetRouter.secondsInTimeUnit = 30
@@ -402,15 +403,15 @@ procApp2.freshPer = 1
 procApp2.procShelf = 2
 procApp2.nonprocShelf = [50; 200; 500; 800; 1000]
 procApp2.destinationName = r
-procApp2.procSize = 500k
+procApp2.procSize = 50k
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
-procApp2.compressRate = 2,2
-procApp2.passiveRate = 4,1
+procApp2.compressRate = 1,3
+procApp2.passiveRate = [3,1; 5,2; 4,2; 2,2; 1,2]]
 procApp2.passive = false
 
 # Define new application
 procApp3.type = ProcGenApplication
-procApp3.interval = 0.7
+procApp3.interval = 1
 procApp3.delay = 0.3
 procApp3.freshPer = 1.5
 procApp3.procShelf = 2
@@ -429,11 +430,13 @@ Group3.nrofApplications = 1
 Group4.nrofApplications = 1
 Group5.nrofApplications = 1
 Group6.nrofApplications = 1
+Group7.nrofApplications = 1
 Group1.application1 = procApp
 Group2.application1 = procApp1
 Group3.application1 = procApp2
-Group4.application1 = procApp3
+Group4.application1 = procApp2
 Group5.application1 = procApp3
 Group6.application1 = procApp3
+Group7.application1 = procApp3
 
 

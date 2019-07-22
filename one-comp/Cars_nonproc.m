@@ -624,7 +624,7 @@ bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5, 1:80,  O6);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12)
 ylabel('No. of Overtime Messages/repo','fontsize',12)
-lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', 'Location', 'southoutside');
+lgd1 =legend('50s', '200s', '500s', '800s', '1000s', 'Location', 'southoutside');
 lgd1.FontSize = 9;
 lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
