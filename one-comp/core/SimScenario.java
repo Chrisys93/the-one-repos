@@ -42,6 +42,11 @@ public class SimScenario implements Serializable {
 	public static final String UP_INT_S = "updateInterval";
 	/** simulate connections -setting id ({@value})*/
 	public static final String SIM_CON_S = "simulateConnections";
+	
+	/** offset of repos to the right -setting id ({@value})*/
+	public static final String REPO_XOFFSET = "repoXOffset";
+	/** offset of repos to the top -setting id ({@value})*/
+	public static final String REPO_YOFFSET = "repoYOffset";
 
 	/** namespace for interface type settings ({@value}) */
 	public static final String INTTYPE_NS = "Interface";
@@ -134,6 +139,13 @@ public class SimScenario implements Serializable {
 	private int worldSizeDivisionX;
 	/** Height division of the world for repo coord allocation */
 	private int worldSizeDivisionY;
+	
+	/** Width division of the world  for repo coord allocation */
+	private double repo_xoffset;
+	/** Height division of the world for repo coord allocation */
+	private double repo_yoffset;
+	
+	
 
 	/** Location for each repo when using RepoStationaryMovement */
 	public static double[] simLocation = {0,0};
@@ -197,6 +209,18 @@ public class SimScenario implements Serializable {
 			this.simulateFiles = s.getBoolean(SIM_FILES_S);
 		} else {
 			this.simulateFiles = false;
+		}
+		
+		if (s.contains(REPO_XOFFSET)) {
+			this.repo_xoffset = s.getDouble(REPO_XOFFSET);
+		} else {
+			this.repo_xoffset = 500;
+		}
+		
+		if (s.contains(REPO_YOFFSET)) {
+			this.repo_yoffset = s.getDouble(REPO_YOFFSET);
+		} else {
+			this.repo_yoffset = 200;
 		}
 
 		if (s.contains(SIM_STORE_S)) {
@@ -589,8 +613,8 @@ public class SimScenario implements Serializable {
 				if (mmProto.toString().contains("RepoStationaryMovement")){
 					this.worldSizeDivisionX = (int)Math.sqrt(nrofHosts);
 					this.worldSizeDivisionY = (int)Math.sqrt(nrofHosts);
-					SimScenario.simLocation[0] = 600 + (j % this.worldSizeDivisionX)*((this.worldSizeX-1150)/this.worldSizeDivisionX);
-					SimScenario.simLocation[1] = 200 + (int)(j / worldSizeDivisionX)*((this.worldSizeY-1300)/this.worldSizeDivisionY);
+					SimScenario.simLocation[0] = repo_xoffset + (j % this.worldSizeDivisionX)*((this.worldSizeX-1150)/this.worldSizeDivisionX);
+					SimScenario.simLocation[1] = repo_yoffset + (int)(j / worldSizeDivisionX)*((this.worldSizeY-1300)/this.worldSizeDivisionY);
 					// creates prototypes of MessageRouter and MovementModel
 					MovementModel mmPrototype = 
 						(MovementModel)s.createIntializedObject(MM_PACKAGE + 

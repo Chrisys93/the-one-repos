@@ -375,6 +375,7 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
@@ -384,6 +385,7 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
@@ -416,6 +418,7 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
@@ -426,6 +429,7 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
+			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
