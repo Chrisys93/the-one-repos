@@ -1,108 +1,114 @@
-% Make a function out of this, that takes the non-proc_proc8 folder address and
+% Make a function out of this, that takes the non-proc_proc folder address and
 % the number of runs as variables;
 
 clear
 
-M1 = dlmread('non-proc_proc8/MDMR1', ' ', 0, 2);
-S1 = dlmread('non-proc_proc8/RAMR1', ' ', 0, 2);
-RP1 = dlmread('non-proc_proc8/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('non-proc_proc8/RSMR1', ' ', 0, 2);
-PB1 = dlmread('non-proc_proc8/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('non-proc_proc8/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('non-proc_proc8/RSBWR1', ' ', 0, 2);
-CB1 = dlmread('non-proc_proc8/RCSBWR1', ' ', 0, 2);
-RI1 = dlmread('non-proc_proc8/RISR1', ' ', 0, 2);
-P1 = dlmread('non-proc_proc8/RPMR1', ' ', 0, 2);
-ST1 = dlmread('non-proc_proc8/RSTR1', ' ', 0, 1);
-PF1 = dlmread('non-proc_proc8/RPFR1', ' ', 0, 1);
-PS1 = dlmread('non-proc_proc8/RSR1', ' ', 0, 1);
-U1 = dlmread('non-proc_proc8/RUR1', ' ', 0, 1);
-O1 = dlmread('non-proc_proc8/ROR1', ' ', 0, 1);
+M1 = dlmread('non-proc_proc/MDMR1', ' ', 0, 2);
+S1 = dlmread('non-proc_proc/RAMR1', ' ', 0, 2);
+RP1 = dlmread('non-proc_proc/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 2);
+PB1 = dlmread('non-proc_proc/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('non-proc_proc/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('non-proc_proc/RSBWR1', ' ', 0, 2);
+CB1 = dlmread('non-proc_proc/RCSBWR1', ' ', 0, 2);
+RI1 = dlmread('non-proc_proc/RISR1', ' ', 0, 2);
+P1 = dlmread('non-proc_proc/RPMR1', ' ', 0, 2);
+ST1 = dlmread('non-proc_proc/RSTR1', ' ', 0, 1);
+PF1 = dlmread('non-proc_proc/RPFR1', ' ', 0, 1);
+PS1 = dlmread('non-proc_proc/RSR1', ' ', 0, 1);
+U1 = dlmread('non-proc_proc/RUR1', ' ', 0, 1);
+O1 = dlmread('non-proc_proc/ROR1', ' ', 0, 1);
+PF81 = dlmread('non-proc_proc8/RPFR1', ' ', 0, 1);
 
 
-M2 = dlmread('non-proc_proc8/MDMR2', ' ', 0, 2);
-S2 = dlmread('non-proc_proc8/RAMR2', ' ', 0, 2);
-RP2 = dlmread('non-proc_proc8/RPrMR2', ' ', 0, 2);
-RS2 = dlmread('non-proc_proc8/RSMR2', ' ', 0, 2);
-UB2 = dlmread('non-proc_proc8/RUPBWR2', ' ', 0, 2);
-PB2 = dlmread('non-proc_proc8/RPBWR2', ' ', 0, 2);
-SB2 = dlmread('non-proc_proc8/RSBWR2', ' ', 0, 2);
-CB2 = dlmread('non-proc_proc8/RCSBWR3', ' ', 0, 2);
-RI2 = dlmread('non-proc_proc8/RISR2', ' ', 0, 2);
-P2 = dlmread('non-proc_proc8/RPMR2', ' ', 0, 2);
-ST2 = dlmread('non-proc_proc8/RSTR2', ' ', 0, 1);
-PF2 = dlmread('non-proc_proc8/RPFR2', ' ', 0, 1);
-PS2 = dlmread('non-proc_proc8/RSR2', ' ', 0, 1);
-U2 = dlmread('non-proc_proc8/RUR2', ' ', 0, 1);
-O2 = dlmread('non-proc_proc8/ROR2', ' ', 0, 1);
+M2 = dlmread('non-proc_proc/MDMR2', ' ', 0, 2);
+S2 = dlmread('non-proc_proc/RAMR2', ' ', 0, 2);
+RP2 = dlmread('non-proc_proc/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 2);
+UB2 = dlmread('non-proc_proc/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('non-proc_proc/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('non-proc_proc/RSBWR2', ' ', 0, 2);
+CB2 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
+RI2 = dlmread('non-proc_proc/RISR2', ' ', 0, 2);
+P2 = dlmread('non-proc_proc/RPMR2', ' ', 0, 2);
+ST2 = dlmread('non-proc_proc/RSTR2', ' ', 0, 1);
+PF2 = dlmread('non-proc_proc/RPFR2', ' ', 0, 1);
+PS2 = dlmread('non-proc_proc/RSR2', ' ', 0, 1);
+U2 = dlmread('non-proc_proc/RUR2', ' ', 0, 1);
+O2 = dlmread('non-proc_proc/ROR2', ' ', 0, 1);
+PF82 = dlmread('non-proc_proc8/RPFR2', ' ', 0, 1);
 
 
-M3 = dlmread('non-proc_proc8/MDMR3', ' ', 0, 2);
-S3 = dlmread('non-proc_proc8/RAMR3', ' ', 0, 2);
-PB3 = dlmread('non-proc_proc8/RPBWR3', ' ', 0, 2);
-UB3 = dlmread('non-proc_proc8/RUPBWR3', ' ', 0, 2);
-SB3 = dlmread('non-proc_proc8/RSBWR3', ' ', 0, 2);
-CB3 = dlmread('non-proc_proc8/RCSBWR3', ' ', 0, 2);
-RI3 = dlmread('non-proc_proc8/RISR3', ' ', 0, 2);
-RP3 = dlmread('non-proc_proc8/RPrMR3', ' ', 0, 2);
-RS3 = dlmread('non-proc_proc8/RSMR3', ' ', 0, 2);
-P3 = dlmread('non-proc_proc8/RPMR3', ' ', 0, 2);
-ST3 = dlmread('non-proc_proc8/RSTR3', ' ', 0, 1);
-PF3 = dlmread('non-proc_proc8/RPFR3', ' ', 0, 1);
-PS3 = dlmread('non-proc_proc8/RSR3', ' ', 0, 1);
-U3 = dlmread('non-proc_proc8/RUR3', ' ', 0, 1);
-O3 = dlmread('non-proc_proc8/ROR3', ' ', 0, 1);
+M3 = dlmread('non-proc_proc/MDMR3', ' ', 0, 2);
+S3 = dlmread('non-proc_proc/RAMR3', ' ', 0, 2);
+PB3 = dlmread('non-proc_proc/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('non-proc_proc/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('non-proc_proc/RSBWR3', ' ', 0, 2);
+CB3 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
+RI3 = dlmread('non-proc_proc/RISR3', ' ', 0, 2);
+RP3 = dlmread('non-proc_proc/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 2);
+P3 = dlmread('non-proc_proc/RPMR3', ' ', 0, 2);
+ST3 = dlmread('non-proc_proc/RSTR3', ' ', 0, 1);
+PF3 = dlmread('non-proc_proc/RPFR3', ' ', 0, 1);
+PS3 = dlmread('non-proc_proc/RSR3', ' ', 0, 1);
+U3 = dlmread('non-proc_proc/RUR3', ' ', 0, 1);
+O3 = dlmread('non-proc_proc/ROR3', ' ', 0, 1);
+PF83 = dlmread('non-proc_proc8/RPFR3', ' ', 0, 1);
 
 
-M4 = dlmread('non-proc_proc8/MDMR4', ' ', 0, 2);
-S4 = dlmread('non-proc_proc8/RAMR4', ' ', 0, 2);
-PB4 = dlmread('non-proc_proc8/RPBWR4', ' ', 0, 2);
-UB4 = dlmread('non-proc_proc8/RUPBWR4', ' ', 0, 2);
-SB4 = dlmread('non-proc_proc8/RSBWR4', ' ', 0, 2);
-CB4 = dlmread('non-proc_proc8/RCSBWR4', ' ', 0, 2);
-RI4 = dlmread('non-proc_proc8/RISR4', ' ', 0, 2);
-RP4 = dlmread('non-proc_proc8/RPrMR4', ' ', 0, 2);
-RS4 = dlmread('non-proc_proc8/RSMR4', ' ', 0, 2);
-P4 = dlmread('non-proc_proc8/RPMR4', ' ', 0, 2);
-ST4 = dlmread('non-proc_proc8/RSTR4', ' ', 0, 1);
-PF4 = dlmread('non-proc_proc8/RPFR4', ' ', 0, 1);
-PS4 = dlmread('non-proc_proc8/RSR4', ' ', 0, 1);
-U4 = dlmread('non-proc_proc8/RUR4', ' ', 0, 1);
-O4 = dlmread('non-proc_proc8/ROR4', ' ', 0, 1);
+M4 = dlmread('non-proc_proc/MDMR4', ' ', 0, 2);
+S4 = dlmread('non-proc_proc/RAMR4', ' ', 0, 2);
+PB4 = dlmread('non-proc_proc/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('non-proc_proc/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('non-proc_proc/RSBWR4', ' ', 0, 2);
+CB4 = dlmread('non-proc_proc/RCSBWR4', ' ', 0, 2);
+RI4 = dlmread('non-proc_proc/RISR4', ' ', 0, 2);
+RP4 = dlmread('non-proc_proc/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 2);
+P4 = dlmread('non-proc_proc/RPMR4', ' ', 0, 2);
+ST4 = dlmread('non-proc_proc/RSTR4', ' ', 0, 1);
+PF4 = dlmread('non-proc_proc/RPFR4', ' ', 0, 1);
+PS4 = dlmread('non-proc_proc/RSR4', ' ', 0, 1);
+U4 = dlmread('non-proc_proc/RUR4', ' ', 0, 1);
+O4 = dlmread('non-proc_proc/ROR4', ' ', 0, 1);
+PF84 = dlmread('non-proc_proc8/RPFR4', ' ', 0, 1);
 
 
-M5 = dlmread('non-proc_proc8/MDMR5', ' ', 0, 2);
-S5 = dlmread('non-proc_proc8/RAMR5', ' ', 0, 2);
-PB5 = dlmread('non-proc_proc8/RPBWR5', ' ', 0, 2);
-UB5 = dlmread('non-proc_proc8/RUPBWR5', ' ', 0, 2);
-SB5 = dlmread('non-proc_proc8/RSBWR5', ' ', 0, 2);
-CB5 = dlmread('non-proc_proc8/RCSBWR5', ' ', 0, 2);
-RI5 = dlmread('non-proc_proc8/RISR5', ' ', 0, 2);
-RP5 = dlmread('non-proc_proc8/RPrMR5', ' ', 0, 2);
-RS5 = dlmread('non-proc_proc8/RSMR5', ' ', 0, 2);
-P5 = dlmread('non-proc_proc8/RPMR5', ' ', 0, 2);
-ST5 = dlmread('non-proc_proc8/RSTR5', ' ', 0, 1);
-PF5 = dlmread('non-proc_proc8/RPFR5', ' ', 0, 1);
-PS5 = dlmread('non-proc_proc8/RSR5', ' ', 0, 1);
-U5 = dlmread('non-proc_proc8/RUR5', ' ', 0, 1);
-O5 = dlmread('non-proc_proc8/ROR5', ' ', 0, 1);
+M5 = dlmread('non-proc_proc/MDMR5', ' ', 0, 2);
+S5 = dlmread('non-proc_proc/RAMR5', ' ', 0, 2);
+PB5 = dlmread('non-proc_proc/RPBWR5', ' ', 0, 2);
+UB5 = dlmread('non-proc_proc/RUPBWR5', ' ', 0, 2);
+SB5 = dlmread('non-proc_proc/RSBWR5', ' ', 0, 2);
+CB5 = dlmread('non-proc_proc/RCSBWR5', ' ', 0, 2);
+RI5 = dlmread('non-proc_proc/RISR5', ' ', 0, 2);
+RP5 = dlmread('non-proc_proc/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 2);
+P5 = dlmread('non-proc_proc/RPMR5', ' ', 0, 2);
+ST5 = dlmread('non-proc_proc/RSTR5', ' ', 0, 1);
+PF5 = dlmread('non-proc_proc/RPFR5', ' ', 0, 1);
+PS5 = dlmread('non-proc_proc/RSR5', ' ', 0, 1);
+U5 = dlmread('non-proc_proc/RUR5', ' ', 0, 1);
+O5 = dlmread('non-proc_proc/ROR5', ' ', 0, 1);
+PF85 = dlmread('non-proc_proc8/RPFR5', ' ', 0, 1);
 
 
-M6 = dlmread('non-proc_proc8/MDMR6', ' ', 0, 2);
-S6 = dlmread('non-proc_proc8/RAMR6', ' ', 0, 2);
-UB6 = dlmread('non-proc_proc8/RUPBWR6', ' ', 0, 2);
-PB6 = dlmread('non-proc_proc8/RPBWR6', ' ', 0, 2);
-SB6 = dlmread('non-proc_proc8/RSBWR6', ' ', 0, 2);
-CB6 = dlmread('non-proc_proc8/RCSBWR6', ' ', 0, 2);
-RI6 = dlmread('non-proc_proc8/RISR6', ' ', 0, 2);
-RP6 = dlmread('non-proc_proc8/RPrMR6', ' ', 0, 2);
-RS6 = dlmread('non-proc_proc8/RSMR6', ' ', 0, 2);
-P6 = dlmread('non-proc_proc8/RPMR6', ' ', 0, 2);
-ST6 = dlmread('non-proc_proc8/RSTR6', ' ', 0, 1);
-PF6 = dlmread('non-proc_proc8/RPFR6', ' ', 0, 1);
-PS6 = dlmread('non-proc_proc8/RSR6', ' ', 0, 1);
-U6 = dlmread('non-proc_proc8/RUR6', ' ', 0, 1);
-O6 = dlmread('non-proc_proc8/ROR6', ' ', 0, 1);
+M6 = dlmread('non-proc_proc/MDMR6', ' ', 0, 2);
+S6 = dlmread('non-proc_proc/RAMR6', ' ', 0, 2);
+UB6 = dlmread('non-proc_proc/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('non-proc_proc/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('non-proc_proc/RSBWR6', ' ', 0, 2);
+CB6 = dlmread('non-proc_proc/RCSBWR6', ' ', 0, 2);
+RI6 = dlmread('non-proc_proc/RISR6', ' ', 0, 2);
+RP6 = dlmread('non-proc_proc/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 2);
+P6 = dlmread('non-proc_proc/RPMR6', ' ', 0, 2);
+ST6 = dlmread('non-proc_proc/RSTR6', ' ', 0, 1);
+PF6 = dlmread('non-proc_proc/RPFR6', ' ', 0, 1);
+PS6 = dlmread('non-proc_proc/RSR6', ' ', 0, 1);
+U6 = dlmread('non-proc_proc/RUR6', ' ', 0, 1);
+O6 = dlmread('non-proc_proc/ROR6', ' ', 0, 1);
+PF86 = dlmread('non-proc_proc8/RPFR6', ' ', 0, 1);
 
 
 [r2, c2] = size(M1);
@@ -355,6 +361,30 @@ for repo = 1:c3
     if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
         fresh_perc6(repo, :) = 0;
     end
+    fresh_perc81(repo, :) = PF81(1, repo)/sum(PF81(:, repo));
+    if (isnan(PF81(1, repo)/sum(PF81(:, repo))))
+        fresh_perc81(repo, :) = 0;
+    end
+    fresh_perc82(repo, :) = PF82(1, repo)/sum(PF82(:, repo));
+    if (isnan(PF82(1, repo)/sum(PF82(:, repo))))
+        fresh_perc82(repo, :) = 0;
+    end
+    fresh_perc83(repo, :) = PF83(1, repo)/sum(PF83(:, repo));
+    if (isnan(PF83(1, repo)/sum(PF83(:, repo))))
+        fresh_perc83(repo, :) = 0;
+    end
+    fresh_perc84(repo, :) = PF84(1, repo)/sum(PF84(:, repo));
+    if (isnan(PF84(1, repo)/sum(PF84(:, repo))))
+        fresh_perc84(repo, :) = 0;
+    end
+    fresh_perc85(repo, :) = PF85(1, repo)/sum(PF85(:, repo));
+    if (isnan(PF85(1, repo)/sum(PF85(:, repo))))
+        fresh_perc85(repo, :) = 0;
+    end
+    fresh_perc86(repo, :) =  PF86(1, repo)/sum(PF86(:, repo));
+    if (isnan(PF86(1, repo)/sum(PF86(:, repo))))
+        fresh_perc86(repo, :) = 0;
+    end
 end
 
 % For this, maybe take a few repositories, concentrate their storage
@@ -387,12 +417,12 @@ end
 % Maybe just show one side (irrespective of repo), and how much cache is
 % used...either for all scenarios or the worst case - it simply shows that
 % the cache is not used too much.
-figure
-stem3(P5, ':.');
+% figure
+% stem3(P5, ':.');
 % title('Stem plot of Repos Cache Usage','fontsize',16)
-xlabel('Repo Number','fontsize',12) 
-ylabel('Time(s)','fontsize',12)
-zlabel('Number of cached messages','fontsize',12)
+% xlabel('Repo Number','fontsize',12) 
+% ylabel('Time(s)','fontsize',12)
+% zlabel('Number of cached messages','fontsize',12)
 
 storage_30 = [S1(:, 30), S2(:, 30), S3(:, 30), S4(:, 30), S5(:, 30)];
 
@@ -472,17 +502,21 @@ storages_21 = [mean(RS1(:, 21)), mean(RP1(:, 21));
 
 % subplot(1,2,1);
 yyaxis left
-plot([2, 4, 8, 10, 12, 16], upspeeds1_21, 'LineWidth', 1);
+plot(upspeeds1_21, 'LineWidth', 1);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
 % set(bar_handle(3),'FaceColor',[0,1,0.5])
-xlabel('No. of threads per repository','fontsize',12) 
+set(gca,'XTick', [1, 2, 3, 4, 5, 6])
+set(gca,'XTickLabel',str2mat('4:1', '3:1', '5:2', '4:2', '2:2', '2:1'))
+% xticks([1, 2, 3, 4, 5, 6]);
+% xticklabels({'4:1', '3:1', '5:2', '4:2', '2:2', '2:1'});
+xlabel('Processing message generation rate (Non-Proc:Proc)','fontsize',12) 
 ylabel('Bandwidth used (B)','fontsize',12)
 
 yyaxis right
-semilogy([2, 4, 8, 10, 12, 16], storages_21, 'LineWidth', 1);
+semilogy(storages_21, 'LineWidth', 1);
 ylabel('Total storage used (B)','fontsize',12)
-lgd = legend('non-processing message upload', 'cloud offloading upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
+lgd = legend('non-processing message upload', 'unprocessed message upload', 'processed message upload', 'non-processing message storage', 'processing message storage');
 lgd.FontSize = 9;
 
 % inspeeds1_30 = [mean(RI1(:, 30)), mean(RI2(:, 30)), mean(RI3(:, 30)), mean(RI4(:, 30)), mean(RI5(:, 30)), mean(RI6(:, 30))];
@@ -602,18 +636,18 @@ xlim([17 48]);
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
-figure
-
-% subplot(2,1,1);
-% yyaxis left
-bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
-% title('Processing threads','fontsize',16)
-xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
-ylim([0 1]);
-% xlim([17 48]);
-set(bar_handle(1),'FaceColor',[0,0.5,1])
-set(bar_handle(2),'FaceColor',[0,1,0])
+% figure
+% 
+% % subplot(2,1,1);
+% % yyaxis left
+% bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
+% % title('Processing threads','fontsize',16)
+% xlabel('Repository number','fontsize',12) 
+% ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
+% ylim([0 1]);
+% % xlim([17 48]);
+% set(bar_handle(1),'FaceColor',[0,0.5,1])
+% set(bar_handle(2),'FaceColor',[0,1,0])
 
 
 figure
@@ -636,11 +670,14 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = bar([mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6)]);
+bar([10, 8], [mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6);
+                  mean(fresh_perc81), mean(fresh_perc82), mean(fresh_perc83), mean(fresh_perc84), mean(fresh_perc85), mean(fresh_perc86)]);
 % title('Processing threads','fontsize',16)
-xlabel('Repository number','fontsize',12) 
+xlabel('Number of threads per repository','fontsize',12) 
 ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
 ylim([0 1]);
+lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', '2:1');
+title(lgd1, 'Non-Proc:Proc');
 % xlim([17 48]);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
@@ -654,7 +691,8 @@ bar_handle = plot(1:80, O1, 1:80, O2, 1:80, O3, 1:80, O4, 1:80,  O5, 1:80,  O6);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12)
 ylabel('No. of Overtime Messages/repo','fontsize',12)
-lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', 'Location', 'southoutside');
+lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', '2:1');
+title(lgd1, 'Non-Proc:Proc');
 lgd1.FontSize = 9;
 % lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
