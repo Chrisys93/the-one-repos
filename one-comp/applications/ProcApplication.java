@@ -414,7 +414,8 @@ public class ProcApplication extends Application {
 		double delayed = (double)procMessage.getProperty("delay");
 		double procMessageFresh = (double)procMessage.getProperty("freshPer");
 		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
-		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
+		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime()) && 
+				procMessage.getProperty("Fresh") == null) {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
