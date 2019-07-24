@@ -1,114 +1,109 @@
-% Make a function out of this, that takes the non-proc_proc folder address and
+% Make a function out of this, that takes the homeIoT folder address and
 % the number of runs as variables;
 
 clear
 
-M1 = dlmread('non-proc_proc/MDMR1', ' ', 0, 2);
-S1 = dlmread('non-proc_proc/RAMR1', ' ', 0, 2);
-RP1 = dlmread('non-proc_proc/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 2);
-PB1 = dlmread('non-proc_proc/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('non-proc_proc/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('non-proc_proc/RSBWR1', ' ', 0, 2);
-CB1 = dlmread('non-proc_proc/RCSBWR1', ' ', 0, 2);
-RI1 = dlmread('non-proc_proc/RISR1', ' ', 0, 2);
-P1 = dlmread('non-proc_proc/RPMR1', ' ', 0, 2);
-ST1 = dlmread('non-proc_proc/RSTR1', ' ', 0, 1);
-PF1 = dlmread('non-proc_proc/RPFR1', ' ', 0, 1);
-PS1 = dlmread('non-proc_proc/RSR1', ' ', 0, 1);
-U1 = dlmread('non-proc_proc/RUR1', ' ', 0, 1);
-O1 = dlmread('non-proc_proc/ROR1', ' ', 0, 1);
-PF81 = dlmread('non-proc_proc8/RPFR1', ' ', 0, 1);
+M1 = dlmread('homeIoT/MDMR1', ' ', 0, 2);
+S1 = dlmread('homeIoT/RAMR1', ' ', 0, 2);
+RP1 = dlmread('homeIoT/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('homeIoT/RSMR1', ' ', 0, 2);
+PB1 = dlmread('homeIoT/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('homeIoT/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('homeIoT/RSBWR1', ' ', 0, 2);
+CB1 = dlmread('homeIoT/RCSBWR1', ' ', 0, 2);
+RI1 = dlmread('homeIoT/RISR1', ' ', 0, 2);
+P1 = dlmread('homeIoT/RPMR1', ' ', 0, 2);
+ST1 = dlmread('homeIoT/RSTR1', ' ', 0, 1);
+PF1 = dlmread('homeIoT/RPFR1', ' ', 0, 1);
+PS1 = dlmread('homeIoT/RSR1', ' ', 0, 1);
+U1 = dlmread('homeIoT/RUR1', ' ', 0, 1);
+O1 = dlmread('homeIoT/ROR1', ' ', 0, 1);
+PF81 = dlmread('homeIoT8/RPFR1', ' ', 0, 1);
 
 
-M2 = dlmread('non-proc_proc/MDMR2', ' ', 0, 2);
-S2 = dlmread('non-proc_proc/RAMR2', ' ', 0, 2);
-RP2 = dlmread('non-proc_proc/RPrMR2', ' ', 0, 2);
-RS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 2);
-UB2 = dlmread('non-proc_proc/RUPBWR2', ' ', 0, 2);
-PB2 = dlmread('non-proc_proc/RPBWR2', ' ', 0, 2);
-SB2 = dlmread('non-proc_proc/RSBWR2', ' ', 0, 2);
-CB2 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
-RI2 = dlmread('non-proc_proc/RISR2', ' ', 0, 2);
-P2 = dlmread('non-proc_proc/RPMR2', ' ', 0, 2);
-ST2 = dlmread('non-proc_proc/RSTR2', ' ', 0, 1);
-PF2 = dlmread('non-proc_proc/RPFR2', ' ', 0, 1);
-PS2 = dlmread('non-proc_proc/RSR2', ' ', 0, 1);
-U2 = dlmread('non-proc_proc/RUR2', ' ', 0, 1);
-O2 = dlmread('non-proc_proc/ROR2', ' ', 0, 1);
-PF82 = dlmread('non-proc_proc8/RPFR2', ' ', 0, 1);
+M2 = dlmread('homeIoT/MDMR2', ' ', 0, 2);
+S2 = dlmread('homeIoT/RAMR2', ' ', 0, 2);
+RP2 = dlmread('homeIoT/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('homeIoT/RSMR2', ' ', 0, 2);
+UB2 = dlmread('homeIoT/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('homeIoT/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('homeIoT/RSBWR2', ' ', 0, 2);
+CB2 = dlmread('homeIoT/RCSBWR3', ' ', 0, 2);
+RI2 = dlmread('homeIoT/RISR2', ' ', 0, 2);
+P2 = dlmread('homeIoT/RPMR2', ' ', 0, 2);
+ST2 = dlmread('homeIoT/RSTR2', ' ', 0, 1);
+PF2 = dlmread('homeIoT/RPFR2', ' ', 0, 1);
+PS2 = dlmread('homeIoT/RSR2', ' ', 0, 1);
+U2 = dlmread('homeIoT/RUR2', ' ', 0, 1);
+O2 = dlmread('homeIoT/ROR2', ' ', 0, 1);
 
 
-M3 = dlmread('non-proc_proc/MDMR3', ' ', 0, 2);
-S3 = dlmread('non-proc_proc/RAMR3', ' ', 0, 2);
-PB3 = dlmread('non-proc_proc/RPBWR3', ' ', 0, 2);
-UB3 = dlmread('non-proc_proc/RUPBWR3', ' ', 0, 2);
-SB3 = dlmread('non-proc_proc/RSBWR3', ' ', 0, 2);
-CB3 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
-RI3 = dlmread('non-proc_proc/RISR3', ' ', 0, 2);
-RP3 = dlmread('non-proc_proc/RPrMR3', ' ', 0, 2);
-RS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 2);
-P3 = dlmread('non-proc_proc/RPMR3', ' ', 0, 2);
-ST3 = dlmread('non-proc_proc/RSTR3', ' ', 0, 1);
-PF3 = dlmread('non-proc_proc/RPFR3', ' ', 0, 1);
-PS3 = dlmread('non-proc_proc/RSR3', ' ', 0, 1);
-U3 = dlmread('non-proc_proc/RUR3', ' ', 0, 1);
-O3 = dlmread('non-proc_proc/ROR3', ' ', 0, 1);
-PF83 = dlmread('non-proc_proc8/RPFR3', ' ', 0, 1);
+M3 = dlmread('homeIoT/MDMR3', ' ', 0, 2);
+S3 = dlmread('homeIoT/RAMR3', ' ', 0, 2);
+PB3 = dlmread('homeIoT/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('homeIoT/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('homeIoT/RSBWR3', ' ', 0, 2);
+CB3 = dlmread('homeIoT/RCSBWR3', ' ', 0, 2);
+RI3 = dlmread('homeIoT/RISR3', ' ', 0, 2);
+RP3 = dlmread('homeIoT/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('homeIoT/RSMR3', ' ', 0, 2);
+P3 = dlmread('homeIoT/RPMR3', ' ', 0, 2);
+ST3 = dlmread('homeIoT/RSTR3', ' ', 0, 1);
+PF3 = dlmread('homeIoT/RPFR3', ' ', 0, 1);
+PS3 = dlmread('homeIoT/RSR3', ' ', 0, 1);
+U3 = dlmread('homeIoT/RUR3', ' ', 0, 1);
+O3 = dlmread('homeIoT/ROR3', ' ', 0, 1);
 
 
-M4 = dlmread('non-proc_proc/MDMR4', ' ', 0, 2);
-S4 = dlmread('non-proc_proc/RAMR4', ' ', 0, 2);
-PB4 = dlmread('non-proc_proc/RPBWR4', ' ', 0, 2);
-UB4 = dlmread('non-proc_proc/RUPBWR4', ' ', 0, 2);
-SB4 = dlmread('non-proc_proc/RSBWR4', ' ', 0, 2);
-CB4 = dlmread('non-proc_proc/RCSBWR4', ' ', 0, 2);
-RI4 = dlmread('non-proc_proc/RISR4', ' ', 0, 2);
-RP4 = dlmread('non-proc_proc/RPrMR4', ' ', 0, 2);
-RS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 2);
-P4 = dlmread('non-proc_proc/RPMR4', ' ', 0, 2);
-ST4 = dlmread('non-proc_proc/RSTR4', ' ', 0, 1);
-PF4 = dlmread('non-proc_proc/RPFR4', ' ', 0, 1);
-PS4 = dlmread('non-proc_proc/RSR4', ' ', 0, 1);
-U4 = dlmread('non-proc_proc/RUR4', ' ', 0, 1);
-O4 = dlmread('non-proc_proc/ROR4', ' ', 0, 1);
-PF84 = dlmread('non-proc_proc8/RPFR4', ' ', 0, 1);
+M4 = dlmread('homeIoT/MDMR4', ' ', 0, 2);
+S4 = dlmread('homeIoT/RAMR4', ' ', 0, 2);
+PB4 = dlmread('homeIoT/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('homeIoT/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('homeIoT/RSBWR4', ' ', 0, 2);
+CB4 = dlmread('homeIoT/RCSBWR4', ' ', 0, 2);
+RI4 = dlmread('homeIoT/RISR4', ' ', 0, 2);
+RP4 = dlmread('homeIoT/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('homeIoT/RSMR4', ' ', 0, 2);
+P4 = dlmread('homeIoT/RPMR4', ' ', 0, 2);
+ST4 = dlmread('homeIoT/RSTR4', ' ', 0, 1);
+PF4 = dlmread('homeIoT/RPFR4', ' ', 0, 1);
+PS4 = dlmread('homeIoT/RSR4', ' ', 0, 1);
+U4 = dlmread('homeIoT/RUR4', ' ', 0, 1);
+O4 = dlmread('homeIoT/ROR4', ' ', 0, 1);
 
 
-M5 = dlmread('non-proc_proc/MDMR5', ' ', 0, 2);
-S5 = dlmread('non-proc_proc/RAMR5', ' ', 0, 2);
-PB5 = dlmread('non-proc_proc/RPBWR5', ' ', 0, 2);
-UB5 = dlmread('non-proc_proc/RUPBWR5', ' ', 0, 2);
-SB5 = dlmread('non-proc_proc/RSBWR5', ' ', 0, 2);
-CB5 = dlmread('non-proc_proc/RCSBWR5', ' ', 0, 2);
-RI5 = dlmread('non-proc_proc/RISR5', ' ', 0, 2);
-RP5 = dlmread('non-proc_proc/RPrMR5', ' ', 0, 2);
-RS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 2);
-P5 = dlmread('non-proc_proc/RPMR5', ' ', 0, 2);
-ST5 = dlmread('non-proc_proc/RSTR5', ' ', 0, 1);
-PF5 = dlmread('non-proc_proc/RPFR5', ' ', 0, 1);
-PS5 = dlmread('non-proc_proc/RSR5', ' ', 0, 1);
-U5 = dlmread('non-proc_proc/RUR5', ' ', 0, 1);
-O5 = dlmread('non-proc_proc/ROR5', ' ', 0, 1);
-PF85 = dlmread('non-proc_proc8/RPFR5', ' ', 0, 1);
+M5 = dlmread('homeIoT/MDMR5', ' ', 0, 2);
+S5 = dlmread('homeIoT/RAMR5', ' ', 0, 2);
+PB5 = dlmread('homeIoT/RPBWR5', ' ', 0, 2);
+UB5 = dlmread('homeIoT/RUPBWR5', ' ', 0, 2);
+SB5 = dlmread('homeIoT/RSBWR5', ' ', 0, 2);
+CB5 = dlmread('homeIoT/RCSBWR5', ' ', 0, 2);
+RI5 = dlmread('homeIoT/RISR5', ' ', 0, 2);
+RP5 = dlmread('homeIoT/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('homeIoT/RSMR5', ' ', 0, 2);
+P5 = dlmread('homeIoT/RPMR5', ' ', 0, 2);
+ST5 = dlmread('homeIoT/RSTR5', ' ', 0, 1);
+PF5 = dlmread('homeIoT/RPFR5', ' ', 0, 1);
+PS5 = dlmread('homeIoT/RSR5', ' ', 0, 1);
+U5 = dlmread('homeIoT/RUR5', ' ', 0, 1);
+O5 = dlmread('homeIoT/ROR5', ' ', 0, 1);
 
 
-M6 = dlmread('non-proc_proc/MDMR6', ' ', 0, 2);
-S6 = dlmread('non-proc_proc/RAMR6', ' ', 0, 2);
-UB6 = dlmread('non-proc_proc/RUPBWR6', ' ', 0, 2);
-PB6 = dlmread('non-proc_proc/RPBWR6', ' ', 0, 2);
-SB6 = dlmread('non-proc_proc/RSBWR6', ' ', 0, 2);
-CB6 = dlmread('non-proc_proc/RCSBWR6', ' ', 0, 2);
-RI6 = dlmread('non-proc_proc/RISR6', ' ', 0, 2);
-RP6 = dlmread('non-proc_proc/RPrMR6', ' ', 0, 2);
-RS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 2);
-P6 = dlmread('non-proc_proc/RPMR6', ' ', 0, 2);
-ST6 = dlmread('non-proc_proc/RSTR6', ' ', 0, 1);
-PF6 = dlmread('non-proc_proc/RPFR6', ' ', 0, 1);
-PS6 = dlmread('non-proc_proc/RSR6', ' ', 0, 1);
-U6 = dlmread('non-proc_proc/RUR6', ' ', 0, 1);
-O6 = dlmread('non-proc_proc/ROR6', ' ', 0, 1);
-PF86 = dlmread('non-proc_proc8/RPFR6', ' ', 0, 1);
+M6 = dlmread('homeIoT/MDMR6', ' ', 0, 2);
+S6 = dlmread('homeIoT/RAMR6', ' ', 0, 2);
+UB6 = dlmread('homeIoT/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('homeIoT/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('homeIoT/RSBWR6', ' ', 0, 2);
+CB6 = dlmread('homeIoT/RCSBWR6', ' ', 0, 2);
+RI6 = dlmread('homeIoT/RISR6', ' ', 0, 2);
+RP6 = dlmread('homeIoT/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('homeIoT/RSMR6', ' ', 0, 2);
+P6 = dlmread('homeIoT/RPMR6', ' ', 0, 2);
+ST6 = dlmread('homeIoT/RSTR6', ' ', 0, 1);
+PF6 = dlmread('homeIoT/RPFR6', ' ', 0, 1);
+PS6 = dlmread('homeIoT/RSR6', ' ', 0, 1);
+U6 = dlmread('homeIoT/RUR6', ' ', 0, 1);
+O6 = dlmread('homeIoT/ROR6', ' ', 0, 1);
 
 
 [r2, c2] = size(M1);
@@ -752,4 +747,12 @@ lgd1.FontSize = 9;
 % lgd1.FontSize = 9;
 % % lgd1.NumColumns = 3;
 % ylabel('Storage times (s)','fontsize',12)
+
+
+
+% TODO:
+% Include an analysis of unprocessed messages being sent to the cloud. This
+% should be an analysis of useful cloud upload BW vs. useless.
+
+
 

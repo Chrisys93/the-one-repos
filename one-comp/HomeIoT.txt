@@ -399,14 +399,14 @@ procApp1.passive = false
 procApp2.type = ProcGenApplication
 procApp2.interval = 1
 procApp2.delay = 0.1
-procApp2.freshPer = 2
-procApp2.procShelf = 2.5
+procApp2.freshPer = [1; 1; 1.5; 2; 3]
+procApp2.procShelf = [1.1; 1.3; 1.6; 2.2; 3.3]
 procApp2.nonprocShelf = [50; 200; 500; 800; 1000]
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp2.compressRate = 1,2
-procApp2.passiveRate = [3,1; 5,2; 4,2; 2,2; 1,2]
+procApp2.passiveRate = 3,1
 procApp2.passive = false
 
 # Define new application
