@@ -42,6 +42,9 @@ public class ProcApplication extends Application {
 	 * as possible before depletion 
 	 * Possible settings: store or compute*/
 	public static final String STOR_MODE = "storageMode";
+	/** If running in storage mode - store non-proc messages not longer 
+	 * than the maximum storage time.*/
+	public static final String MAX_STOR_TIME = "maxStorTime";
 	/** Percentage (below unity) of maximum storage occupied */
 	public static final String MAX_STOR = "maxStorage";
 	/** Percentage (below unity) of minimum storage occupied before any depletion */
@@ -65,6 +68,8 @@ public class ProcApplication extends Application {
 	private boolean deplEmptyLoop = true;
 	private boolean passive = false;
 	private boolean storMode;
+	private double	lastCloudStaticUpload = 0;
+	private double	maxStorTime;
 	private double	max_stor;
 	private double	min_stor;
 	private long 	depl_rate;
@@ -90,6 +95,12 @@ public class ProcApplication extends Application {
 		}
 		else {
 			this.storMode = false;		
+		}
+		if (s.contains(MAX_STOR_TIME)){
+			this.maxStorTime = s.getDouble(MAX_STOR_TIME);
+		}
+		else {
+			this.maxStorTime = 5000;		
 		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
@@ -130,6 +141,11 @@ public class ProcApplication extends Application {
 		this.lastDepl 	= a.getLastDepl();
 		this.passive 	= a.isPassive();
 		this.storMode 	= a.inStorMode();
+		if (this.storMode)
+			this.maxStorTime= a.getMaxStorTime();
+		else {
+			this.maxStorTime = 0;		
+		}
 		this.depl_rate 	= a.getDeplRate();
 		this.cloud_lim 	= a.getCloudLim();
 		//this.proc_rate 	= a.getProcRate();
@@ -164,7 +180,6 @@ public class ProcApplication extends Application {
 			//System.out.println("handle is accessed on host: " + host);
 
 			host.getStorageSystem().addToStoredMessages(msg);
-			this.getProcMin();
 			
 			/**
 			 * TODO:
@@ -295,11 +310,11 @@ public class ProcApplication extends Application {
 		boolean ans = false;
 		if (host.getStorageSystem().getOldestValidProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
 			double curTime = SimClock.getTime();
-			this.getProcMin();
 			
 			Message tempp = host.getStorageSystem().getOldestValidProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
 			double temppShelf = (double)tempp.getProperty("shelfLife");
+			getProcMin();
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
 				if (!host.getStorageSystem().isProcessedFull()) {
@@ -337,11 +352,11 @@ public class ProcApplication extends Application {
 		boolean ans = false;
 		if (host.getStorageSystem().getNewestProcessMessage() != null && !host.getStorageSystem().isProcessedFull()) {
 			double curTime = SimClock.getTime();
-			this.getProcMin();
 			
 			Message tempp = host.getStorageSystem().getNewestProcessMessage();
 			double delayed = (double)tempp.getProperty("delay");
 			double temppShelf = (double)tempp.getProperty("shelfLife");
+			getProcMin();
 			
 			if(this.procMin-curTime+delayed <= temppShelf) {
 				if (!host.getStorageSystem().isProcessedFull()) {
@@ -375,7 +390,6 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
@@ -385,7 +399,6 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
@@ -419,7 +432,6 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
@@ -430,7 +442,6 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", false);
 			this.procEndTimes.set(this.procMinI, this.procMin + delayed);
-			getProcMin();
 			procMessage.addProperty("procTime", this.procMin + delayed);
 			host.getStorageSystem().addToStoredMessages(procMessage);
 			ans = true;
@@ -509,11 +520,17 @@ public class ProcApplication extends Application {
 				}
 				
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
-				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null && !this.storMode) {
+				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					oldestUnProcDepletion(host);
 				}
-				else if (host.getStorageSystem().getOldestStaleStaticMessage() != null && !this.storMode){
+				else if (!this.storMode && host.getStorageSystem().getOldestStaleStaticMessage() != null){
 					oldestSatisfiedStaticDepletion(host);
+				}	
+				else if (this.storMode && host.getStorageSystem().getDepletedCloudStaticMessagesBW(false) > 0) {
+					this.lastCloudStaticUpload = curTime;
+				}
+				else if (this.storMode && curTime - this.lastCloudStaticUpload >= this.maxStorTime) {
+					this.storMode = false;
 				}
 				else {
 					this.cloudEmptyLoop = false;
@@ -521,6 +538,8 @@ public class ProcApplication extends Application {
 				}
 				//Revise:
 				this.updateCloudBW(host);
+				
+				
 				//System.out.println("Depletion is at: "+ deplBW);
 				this.lastDepl = curTime;
 				/*System.out.println("this.cloudBW is at " + 
@@ -685,15 +704,6 @@ public class ProcApplication extends Application {
 				 * Make sure here that the added message to the cloud depletion
 				 * tracking is also tracked by whether it's Fresh or Stale.
 				 */
-				/*double storTime = curTime - temp.getReceiveTime();
-				temp.addProperty("storTime", storTime);
-				//temp.addProperty("satisfied", true);
-				if (storTime == (double)temp.getProperty("shelfLife")) {
-					temp.addProperty("overtime", false);
-				}
-				else if (storTime > (double)temp.getProperty("shelfLife")) {
-					temp.addProperty("overtime", true);
-				}*/
 				report = true;
 				host.getStorageSystem().addToStoredMessages(temp);
 				host.getStorageSystem().deleteProcessedMessage(temp.getId(), report);
@@ -771,7 +781,6 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().deleteMessage(ctemp.getId());
 				double storTime = curTime - ctemp.getReceiveTime();
 				ctemp.addProperty("storTime", storTime);
-				ctemp.addProperty("satisfied", false);
 				if (storTime <= (double)ctemp.getProperty("shelfLife")) {
 					ctemp.addProperty("overtime", false);
 				}
@@ -800,15 +809,6 @@ public class ProcApplication extends Application {
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
 		host.getStorageSystem().deleteMessage(temp.getId());
-		double storTime = curTime - temp.getReceiveTime();
-		temp.addProperty("storTime", storTime);
-		temp.addProperty("satisfied", true);
-		if (storTime <= (double)temp.getProperty("shelfLife")) {
-			temp.addProperty("overtime", false);
-		}
-		else if (storTime > (double)temp.getProperty("shelfLife")) {
-			temp.addProperty("overtime", true);
-		}
 		host.getStorageSystem().addToDepletedUnProcMessages(temp);
 	}
 
@@ -831,6 +831,13 @@ public class ProcApplication extends Application {
 	 */
 	public double getLastDepl() {
 		return lastDepl;
+	}
+	
+	/**
+	 * @return the lastProc
+	 */
+	public double getMaxStorTime() {
+		return maxStorTime;
 	}
 	
 	/**

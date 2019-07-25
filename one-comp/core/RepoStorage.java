@@ -344,28 +344,8 @@ public class RepoStorage {
 		if (sm != null) {
 			this.depletedUnProcMessages++;
 			this.depletedUnProcMessagesSize += sm.getSize();
-			if ((Boolean)sm.getProperty("overtime"))
-				this.mOvertime ++;
 			if ((String)sm.getProperty("type") == "unprocessed")
 				this.mUnProcessed ++;
-			if ((Boolean)sm.getProperty("satisfied"))
-				this.mSatisfied ++;
-			else
-				this.mUnSatisfied ++;
-			if(sm.getProperty("storTime") != null) {
-				this.mStorTimeNo ++;
-				this.mStorTime += (double)sm.getProperty("storTime");
-				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
-					this.mStorTimeMax = (double)sm.getProperty("storTime");
-			}
-			else {
-				double curTime = SimClock.getTime();
-				sm.addProperty("storTime", curTime - sm.getReceiveTime());
-				this.mStorTimeNo ++;
-				this.mStorTime += (double)sm.getProperty("storTime");
-				if (this.mStorTimeMax < (double)sm.getProperty("storTime"))
-					this.mStorTimeMax = (double)sm.getProperty("storTime");
-			}
 		}
 	}
 	
