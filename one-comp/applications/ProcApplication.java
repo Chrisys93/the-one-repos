@@ -100,7 +100,7 @@ public class ProcApplication extends Application {
 			this.maxStorTime = s.getDouble(MAX_STOR_TIME);
 		}
 		else {
-			this.maxStorTime = 5000;		
+			this.maxStorTime = 2000;		
 		}
 		if (s.contains(DEPL_RATE)){
 			this.depl_rate = s.getLong(DEPL_RATE);
