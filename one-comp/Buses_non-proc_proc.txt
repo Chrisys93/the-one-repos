@@ -379,8 +379,8 @@ procApp.passive = false
 procApp.coreNo = 10
 procApp.maxStorage = 0.95
 procApp.minStorage = 0.001
-#procApp.storageMode = true
-#procApp.maxStorTime = 2000
+procApp.storageMode = [true; true; false; false; false; false]
+procApp.maxStorTime = [3000; 3000]
 
 # Define new application
 procApp1.type = ProcGenApplication
@@ -411,10 +411,10 @@ procApp2.passive = false
 # Define new application
 procApp3.type = ProcGenApplication
 procApp3.interval = 0.7
-procApp3.delay = [0.3; 0.3; 0.3; 0.1; 0.1; 0.1]
-procApp3.freshPer = [3; 2; 1.5]
-procApp3.procShelf = [4; 2.2; 1.6]
-procApp3.nonprocShelf = [100; 100; 100; 500; 800; 1800]
+procApp3.delay = [0.3; 0.3; 0.3; 0.3; 0.1; 0.1]
+procApp3.freshPer = [3; 2; 2]
+procApp3.procShelf = [4; 2.2; 3]
+procApp3.nonprocShelf = [100; 100; 100; 200; 300; 600]
 procApp3.destinationName = r
 procApp3.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

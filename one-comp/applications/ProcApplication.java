@@ -252,7 +252,6 @@ public class ProcApplication extends Application {
 		 * 
 		 * Need to add compression delays
 		 * 
-!!!!!!!!!!!MAKE SURE "PROCESS" MESSAGES ARE DELETED EITHER AFTER USE OR IN DUE TIME!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * 
 		 */
 		this.updateCloudBW(host);
@@ -509,6 +508,25 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().getStaleStaticMessagesSize() > 
 				(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)){
 			this.cloudEmptyLoop = true;
+			
+			/*
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			 * This for loop stops processed messages from being deleted within later time frames,
+			 * if there are satisfied non-processing messages to be uploaded.
+			 * 
+			 * OK, so main problem
+			 * TODO:
+			 * How do I make sure that my BW is fulfilled, while keeping track of all, processed, unprocessed
+			 * and non-processing messages, still giving them a certain priority and taking care of how far
+			 * the next BW reset will be and the potential to delete specific messages before that?
+			 * 
+			 * At the moment, the mechanism is fine, but because of it, the perceived "processing performance"
+			 * is degraded, due to the fact that some messages processed in time may not be shown in the
+			 * "fresh" OR "stale" message counts.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			 * Well...it actually doesn't influence it that much, so it would mostly be just for correctness, really...
+			 */
+			
 			for (int i = 0; this.cloudBW<this.cloud_lim && this.cloudEmptyLoop && i<50; i++) {
 				/* 
 				 * Oldest processed message is depleted (as a FIFO type of storage,

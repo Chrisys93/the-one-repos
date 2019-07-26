@@ -754,5 +754,9 @@ lgd1.FontSize = 9;
 % Include an analysis of unprocessed messages being sent to the cloud. This
 % should be an analysis of useful cloud upload BW vs. useless.
 
+% TODO:
+% Maybe record what the actual storage was at the moment of change between
+% storage mode on and off?
+
 
 
