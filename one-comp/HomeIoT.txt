@@ -127,7 +127,7 @@ Group3.officeLocationsFile = data/HelsinkiMedium/A_homes_mod.wkt
 Group3.officeSize = 100
 Group3.nrOfOffices = 30
 # Larger buffer size than pedestrians
-Group3.bufferSize = 200M
+Group3.bufferSize = 300M
 Group3.interface1 = ethInterface
 # More cars than anything else
 Group3.nrofHosts = 250
@@ -140,7 +140,7 @@ Group4.officeLocationsFile = data/HelsinkiMedium/G_homes_mod.wkt
 Group4.officeSize = 100
 Group4.nrOfOffices = 30
 # Larger buffer size than pedestrians
-Group4.bufferSize = 200M
+Group4.bufferSize = 300M
 Group4.interface1 = ethInterface
 # More cars than anything else
 Group4.nrofHosts = 250
