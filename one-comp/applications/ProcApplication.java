@@ -543,9 +543,6 @@ public class ProcApplication extends Application {
 				}
 				else if (!this.storMode && host.getStorageSystem().getOldestStaleStaticMessage() != null){
 					oldestSatisfiedStaticDepletion(host);
-				}	
-				else if (this.storMode && host.getStorageSystem().getDepletedCloudStaticMessagesBW(false) > 0) {
-					this.lastCloudStaticUpload = curTime;
 				}
 				else if (this.storMode && curTime - this.lastCloudStaticUpload >= this.maxStorTime) {
 					this.storMode = false;
@@ -687,7 +684,7 @@ public class ProcApplication extends Application {
 						if (storTime == (double)temp.getProperty("shelfLife")) {
 							temp.addProperty("overtime", false);
 						}
-						else if (storTime > (double)temp.getProperty("shelfLife")) {
+						else if (storTime > (double)temp.getProperty("shelfLife") + 1) {
 							temp.addProperty("overtime", true);
 						}
 						
@@ -769,7 +766,7 @@ public class ProcApplication extends Application {
 				if (storTime == (double)ctemp.getProperty("shelfLife")) {
 					ctemp.addProperty("overtime", false);
 				}
-				else if (storTime > (double)ctemp.getProperty("shelfLife")) {
+				else if (storTime > (double)ctemp.getProperty("shelfLife") + 1) {
 					ctemp.addProperty("overtime", true);
 				}
 				host.getStorageSystem().addToCloudDeplStaticMessages(ctemp);
@@ -782,11 +779,12 @@ public class ProcApplication extends Application {
 			if (storTime == (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", false);
 			}
-			else if (storTime > (double)temp.getProperty("shelfLife")) {
+			else if (storTime > (double)temp.getProperty("shelfLife") + 1) {
 				temp.addProperty("overtime", true);
 			}
 			host.getStorageSystem().addToCloudDeplStaticMessages(temp);
 		}
+		this.lastCloudStaticUpload = curTime;
 	}
 	
 	public void oldestInvalidProcDepletion(DTNHost host){
@@ -802,7 +800,7 @@ public class ProcApplication extends Application {
 				if (storTime <= (double)ctemp.getProperty("shelfLife")) {
 					ctemp.addProperty("overtime", false);
 				}
-				else if (storTime > (double)ctemp.getProperty("shelfLife")) {
+				else if (storTime > (double)ctemp.getProperty("shelfLife") + 1) {
 					ctemp.addProperty("overtime", true);
 				}
 				host.getStorageSystem().addToDeplProcMessages(ctemp);
@@ -815,7 +813,7 @@ public class ProcApplication extends Application {
 			if (storTime <= (double)temp.getProperty("shelfLife")) {
 				temp.addProperty("overtime", false);
 			}
-			else if (storTime > (double)temp.getProperty("shelfLife")) {
+			else if (storTime > (double)temp.getProperty("shelfLife") + 1) {
 				temp.addProperty("overtime", true);
 			}
 			host.getStorageSystem().addToDeplProcMessages(temp);

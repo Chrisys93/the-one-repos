@@ -18,7 +18,6 @@ PF1 = dlmread('homeIoT/RPFR1', ' ', 0, 1);
 PS1 = dlmread('homeIoT/RSR1', ' ', 0, 1);
 U1 = dlmread('homeIoT/RUR1', ' ', 0, 1);
 O1 = dlmread('homeIoT/ROR1', ' ', 0, 1);
-PF81 = dlmread('homeIoT8/RPFR1', ' ', 0, 1);
 
 
 M2 = dlmread('homeIoT/MDMR2', ' ', 0, 2);
@@ -356,30 +355,6 @@ for repo = 1:c3
     if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
         fresh_perc6(repo, :) = 0;
     end
-    fresh_perc81(repo, :) = PF81(1, repo)/sum(PF81(:, repo));
-    if (isnan(PF81(1, repo)/sum(PF81(:, repo))))
-        fresh_perc81(repo, :) = 0;
-    end
-    fresh_perc82(repo, :) = PF82(1, repo)/sum(PF82(:, repo));
-    if (isnan(PF82(1, repo)/sum(PF82(:, repo))))
-        fresh_perc82(repo, :) = 0;
-    end
-    fresh_perc83(repo, :) = PF83(1, repo)/sum(PF83(:, repo));
-    if (isnan(PF83(1, repo)/sum(PF83(:, repo))))
-        fresh_perc83(repo, :) = 0;
-    end
-    fresh_perc84(repo, :) = PF84(1, repo)/sum(PF84(:, repo));
-    if (isnan(PF84(1, repo)/sum(PF84(:, repo))))
-        fresh_perc84(repo, :) = 0;
-    end
-    fresh_perc85(repo, :) = PF85(1, repo)/sum(PF85(:, repo));
-    if (isnan(PF85(1, repo)/sum(PF85(:, repo))))
-        fresh_perc85(repo, :) = 0;
-    end
-    fresh_perc86(repo, :) =  PF86(1, repo)/sum(PF86(:, repo));
-    if (isnan(PF86(1, repo)/sum(PF86(:, repo))))
-        fresh_perc86(repo, :) = 0;
-    end
 end
 
 % For this, maybe take a few repositories, concentrate their storage
@@ -391,22 +366,22 @@ end
 %Repos:
 %19, 20, 21, 41, 42, 43
 %change mostly.
-% figure
-% stem3(S6, ':.');
-% title('3D Stem plot of Repos Storage Usage','fontsize',16)
-% xlabel('Repo Number','fontsize',12) 
-% ylabel('Time(s)','fontsize',12)
-% zlabel('Space used(B)','fontsize',12)
+figure
+stem3(S4, ':.');
+title('3D Stem plot of Repos Storage Usage','fontsize',16)
+xlabel('Repo Number','fontsize',12) 
+ylabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
 
-% figure
-% plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 'LineWidth',1);
-% % title('3D Stem plot of Repos Storage Usage','fontsize',16)
-% ylabel('Number of stored messages','fontsize',12) 
-% xlabel('Time(s)','fontsize',12)
-% zlabel('Space used(B)','fontsize',12)
-% lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
-% lgd.FontSize = 9;
-% % lgd.NumColumns = 3;
+figure
+plot(1:10800, S1(:,32), '-', 1:10800, S3(:,32), '-', 1:10800, S6(:,32), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S6(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S6(:,43), ':', 'LineWidth',1);
+% title('3D Stem plot of Repos Storage Usage','fontsize',16)
+ylabel('Number of stored messages','fontsize',12) 
+xlabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
+lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
+lgd.FontSize = 9;
+% lgd.NumColumns = 3;
 
 
 % Maybe just show one side (irrespective of repo), and how much cache is
@@ -631,18 +606,18 @@ xlim([17 48]);
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
-% figure
-% 
-% % subplot(2,1,1);
-% % yyaxis left
-% bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
-% % title('Processing threads','fontsize',16)
-% xlabel('Repository number','fontsize',12) 
-% ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
-% ylim([0 1]);
-% % xlim([17 48]);
-% set(bar_handle(1),'FaceColor',[0,0.5,1])
-% set(bar_handle(2),'FaceColor',[0,1,0])
+figure
+
+% subplot(2,1,1);
+% yyaxis left
+bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
+% title('Processing threads','fontsize',16)
+xlabel('Repository number','fontsize',12) 
+ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
+ylim([0 1]);
+% xlim([17 48]);
+set(bar_handle(1),'FaceColor',[0,0.5,1])
+set(bar_handle(2),'FaceColor',[0,1,0])
 
 
 figure
@@ -665,8 +640,7 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([10, 8], [mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6);
-                  mean(fresh_perc81), mean(fresh_perc82), mean(fresh_perc83), mean(fresh_perc84), mean(fresh_perc85), mean(fresh_perc86)]);
+bar([mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Number of threads per repository','fontsize',12) 
 ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
@@ -726,8 +700,8 @@ lgd1.FontSize = 9;
 % xlim([17 48]);
 
 
-% figure
-% 
+figure
+
 % yyaxis left
 % bar_handle = bar(ST1(1,:));
 % xlabel('Repository number','fontsize',12)
@@ -739,14 +713,14 @@ lgd1.FontSize = 9;
 % % set(bar_handle(3),'FaceColor',[0,1,0.5])
 % 
 % yyaxis right
-% hold on
-% plot(1:80, ST1(2,:), '-o', 1:80, ST2(2,:), ':o', 1:80, ST3(2,:), '-.o', 1:80, ST4(2,:), '--o', 1:80,  ST5(2,:), 'o', 1:80,  ST6(2,:), 'v', 'LineWidth', 1);
-% plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 1:80,  ST6(3,:), '^', 'LineWidth', 1);
-% 
-% lgd1 =legend('Number of messages counted for storage time extractuion', 'Average Storage Times', 'Maximum Storage Times');
-% lgd1.FontSize = 9;
-% % lgd1.NumColumns = 3;
-% ylabel('Storage times (s)','fontsize',12)
+hold on
+bar(1:80, [ST1(2,:)', ST2(2,:)', ST3(2,:)', ST4(2,:)', ST5(2,:)',  ST6(2,:)']);
+plot(1:80, ST1(3,:), '-x', 1:80, ST2(3,:), ':x', 1:80, ST3(3,:), '-.x', 1:80, ST4(3,:), '--x', 1:80,  ST5(3,:), 'x', 1:80,  ST6(3,:), '^', 'LineWidth', 1);
+
+lgd1 =legend('Average Storage Times', 'Maximum Storage Times');
+lgd1.FontSize = 9;
+% lgd1.NumColumns = 3;
+ylabel('Storage times (s)','fontsize',12)
 
 
 

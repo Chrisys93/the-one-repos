@@ -18,7 +18,6 @@ PF1 = dlmread('officeIoT/RPFR1', ' ', 0, 1);
 PS1 = dlmread('officeIoT/RSR1', ' ', 0, 1);
 U1 = dlmread('officeIoT/RUR1', ' ', 0, 1);
 O1 = dlmread('officeIoT/ROR1', ' ', 0, 1);
-PF81 = dlmread('officeIoT8/RPFR1', ' ', 0, 1);
 
 
 M2 = dlmread('officeIoT/MDMR2', ' ', 0, 2);
@@ -356,30 +355,6 @@ for repo = 1:c3
     if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
         fresh_perc6(repo, :) = 0;
     end
-    fresh_perc81(repo, :) = PF81(1, repo)/sum(PF81(:, repo));
-    if (isnan(PF81(1, repo)/sum(PF81(:, repo))))
-        fresh_perc81(repo, :) = 0;
-    end
-    fresh_perc82(repo, :) = PF82(1, repo)/sum(PF82(:, repo));
-    if (isnan(PF82(1, repo)/sum(PF82(:, repo))))
-        fresh_perc82(repo, :) = 0;
-    end
-    fresh_perc83(repo, :) = PF83(1, repo)/sum(PF83(:, repo));
-    if (isnan(PF83(1, repo)/sum(PF83(:, repo))))
-        fresh_perc83(repo, :) = 0;
-    end
-    fresh_perc84(repo, :) = PF84(1, repo)/sum(PF84(:, repo));
-    if (isnan(PF84(1, repo)/sum(PF84(:, repo))))
-        fresh_perc84(repo, :) = 0;
-    end
-    fresh_perc85(repo, :) = PF85(1, repo)/sum(PF85(:, repo));
-    if (isnan(PF85(1, repo)/sum(PF85(:, repo))))
-        fresh_perc85(repo, :) = 0;
-    end
-    fresh_perc86(repo, :) =  PF86(1, repo)/sum(PF86(:, repo));
-    if (isnan(PF86(1, repo)/sum(PF86(:, repo))))
-        fresh_perc86(repo, :) = 0;
-    end
 end
 
 % For this, maybe take a few repositories, concentrate their storage
@@ -631,18 +606,18 @@ xlim([17 48]);
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
 
-% figure
-% 
-% % subplot(2,1,1);
-% % yyaxis left
-% bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
-% % title('Processing threads','fontsize',16)
-% xlabel('Repository number','fontsize',12) 
-% ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
-% ylim([0 1]);
-% % xlim([17 48]);
-% set(bar_handle(1),'FaceColor',[0,0.5,1])
-% set(bar_handle(2),'FaceColor',[0,1,0])
+figure
+
+% subplot(2,1,1);
+% yyaxis left
+bar_handle = bar([sat_perc1, sat_perc2, sat_perc4, sat_perc5, sat_perc6]);
+% title('Processing threads','fontsize',16)
+xlabel('Repository number','fontsize',12) 
+ylabel('Percentage (*100%) of storage messages satisfied','fontsize',12)
+ylim([0 1]);
+% xlim([17 48]);
+set(bar_handle(1),'FaceColor',[0,0.5,1])
+set(bar_handle(2),'FaceColor',[0,1,0])
 
 
 figure
@@ -665,8 +640,7 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([10, 8], [mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6);
-                  mean(fresh_perc81), mean(fresh_perc82), mean(fresh_perc83), mean(fresh_perc84), mean(fresh_perc85), mean(fresh_perc86)]);
+bar([mean(fresh_perc1), mean(fresh_perc2), mean(fresh_perc3), mean(fresh_perc4), mean(fresh_perc5), mean(fresh_perc6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Number of threads per repository','fontsize',12) 
 ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
