@@ -602,7 +602,7 @@ xlim([17 48]);
 % title('Input Bandwidths','fontsize',16)
 % lgd = legend('2 threads', '16 threads');
 % lgd.FontSize = 9;
-% xlabel('Repository number','fontsize',12) 
+% xlabel('Repository number','fontsize',12)
 % ylabel('Bandwidth used (B/s)','fontsize',12)
 
 

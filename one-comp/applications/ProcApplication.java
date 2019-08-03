@@ -575,7 +575,8 @@ public class ProcApplication extends Application {
 				
 				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
 
-				if (host.getStorageSystem().getOldestStaleStaticMessage() != null){
+				if (host.getStorageSystem().getOldestStaleStaticMessage() != null && 
+						this.cloudBW<this.cloud_lim){
 					oldestSatisfiedStaticDepletion(host);
 				}
 				
@@ -624,7 +625,7 @@ public class ProcApplication extends Application {
 				host.getStorageSystem().getTotalStorageSpace()*this.max_stor) {
 			this.deplEmptyLoop = true;
 			for (int i = 0; this.deplBW<this.depl_rate && 
-				this.deplEmptyLoop && i<50 || this.cloudBW<this.cloud_lim; i++) {
+				this.deplEmptyLoop && i<50; i++) {
 				
 				if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
 					oldestUnProcDepletion(host);
