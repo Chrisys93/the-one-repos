@@ -148,7 +148,7 @@ figure
 bar_handle = bar([osat_perc(:,1), osat_perc(:,2), osat_perc(:,3), osat_perc(:,4), osat_perc(:,5), osat_perc(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of messages stored longer than shelf life','fontsize',12)
+ylabel('Percentage (*100%) of non-processing messages satisfied','fontsize',12)
 ylim([0 1]);
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
@@ -161,13 +161,13 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(osat_perc(:,1)), mean(osat_perc(:,2)), mean(osat_perc(:,3)), mean(osat_perc(:,4)), mean(osat_perc(:,5)), mean(osat_perc(:,6));
-    mean(hsat_perc(:,1)), mean(hsat_perc(:,2)), mean(hsat_perc(:,3)), mean(hsat_perc(:,4)), mean(hsat_perc(:,5)), mean(hsat_perc(:,6));
-    mean(bsat_perc(:,1)), mean(bsat_perc(:,2)), mean(bsat_perc(:,3)), mean(bsat_perc(:,4)), mean(bsat_perc(:,5)), mean(bsat_perc(:,6));
-    mean(psat_perc(:,1)), mean(psat_perc(:,2)), mean(psat_perc(:,3)), mean(psat_perc(:,4)), mean(psat_perc(:,5)), mean(psat_perc(:,6))]);
+bar([mean(nonzeros(osat_perc(:,1))), mean(nonzeros(osat_perc(:,2))), mean(nonzeros(osat_perc(:,3))), mean(nonzeros(osat_perc(:,4))), mean(nonzeros(osat_perc(:,5))), mean(nonzeros(osat_perc(:,6)));
+    mean(nonzeros(hsat_perc(:,1))), mean(nonzeros(hsat_perc(:,2))), mean(nonzeros(hsat_perc(:,3))), mean(nonzeros(hsat_perc(:,4))), mean(nonzeros(hsat_perc(:,5))), mean(nonzeros(hsat_perc(:,6)));
+    mean(nonzeros(bsat_perc(:,1))), mean(nonzeros(bsat_perc(:,2))), mean(nonzeros(bsat_perc(:,3))), mean(nonzeros(bsat_perc(:,4))), mean(nonzeros(bsat_perc(:,5))), mean(nonzeros(bsat_perc(:,6)));
+    mean(nonzeros(psat_perc(:,1))), mean(nonzeros(psat_perc(:,2))), mean(nonzeros(psat_perc(:,3))), mean(nonzeros(psat_perc(:,4))), mean(nonzeros(psat_perc(:,5))), mean(nonzeros(psat_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Percentage (*100%) of messages  stored longer than shelf life','fontsize',12)
+ylabel('Percentage (*100%) of non-processing messages satisfied','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:

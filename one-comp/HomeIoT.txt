@@ -401,7 +401,7 @@ procApp2.interval = 1
 procApp2.delay = [0.2; 0.2; 0.2; 0.1; 0.1; 0.1]
 procApp2.freshPer = [3; 3; 3; 2; 2; 2]
 procApp2.procShelf = [3; 3.2; 50]
-procApp2.nonprocShelf = [100; 100; 100; 600; 900; 1000]
+procApp2.nonprocShelf = [100; 100; 100; 600; 800; 1000]
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

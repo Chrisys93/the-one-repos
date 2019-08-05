@@ -3,40 +3,40 @@
 
 clear
 
-OS1 = dlmread('officeIoT/RAMR1', ' ', 0, 1);
-HS1 = dlmread('homeIoT/RAMR1', ' ', 0, 1);
-BS1 = dlmread('buses/RAMR1', ' ', 0, 1);
-PS1 = dlmread('non-proc_proc/RAMR1', ' ', 0, 1);
+OS1 = dlmread('officeIoT/RSMR1', ' ', 0, 1);
+HS1 = dlmread('homeIoT/RSMR1', ' ', 0, 1);
+BS1 = dlmread('buses/RSMR1', ' ', 0, 1);
+PS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 1);
 
 
-OS2 = dlmread('officeIoT/RAMR2', ' ', 0, 1);
-HS2 = dlmread('homeIoT/RAMR2', ' ', 0, 1);
-BS2 = dlmread('buses/RAMR2', ' ', 0, 1);
-PS2 = dlmread('non-proc_proc/RAMR2', ' ', 0, 1);
+OS2 = dlmread('officeIoT/RSMR2', ' ', 0, 1);
+HS2 = dlmread('homeIoT/RSMR2', ' ', 0, 1);
+BS2 = dlmread('buses/RSMR2', ' ', 0, 1);
+PS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 1);
 
 
-OS3 = dlmread('officeIoT/RAMR3', ' ', 0, 1);
-HS3 = dlmread('homeIoT/RAMR3', ' ', 0, 1);
-BS3 = dlmread('buses/RAMR3', ' ', 0, 1);
-PS3 = dlmread('non-proc_proc/RAMR3', ' ', 0, 1);
+OS3 = dlmread('officeIoT/RSMR3', ' ', 0, 1);
+HS3 = dlmread('homeIoT/RSMR3', ' ', 0, 1);
+BS3 = dlmread('buses/RSMR3', ' ', 0, 1);
+PS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 1);
 
 
-OS4 = dlmread('officeIoT/RAMR4', ' ', 0, 1);
-HS4 = dlmread('homeIoT/RAMR4', ' ', 0, 1);
-BS4 = dlmread('buses/RAMR4', ' ', 0, 1);
-PS4 = dlmread('non-proc_proc/RAMR4', ' ', 0, 1);
+OS4 = dlmread('officeIoT/RSMR4', ' ', 0, 1);
+HS4 = dlmread('homeIoT/RSMR4', ' ', 0, 1);
+BS4 = dlmread('buses/RSMR4', ' ', 0, 1);
+PS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 1);
 
 
-OS5 = dlmread('officeIoT/RAMR5', ' ', 0, 1);
-HS5 = dlmread('homeIoT/RAMR5', ' ', 0, 1);
-BS5 = dlmread('buses/RAMR5', ' ', 0, 1);
-PS5 = dlmread('non-proc_proc/RAMR5', ' ', 0, 1);
+OS5 = dlmread('officeIoT/RSMR5', ' ', 0, 1);
+HS5 = dlmread('homeIoT/RSMR5', ' ', 0, 1);
+BS5 = dlmread('buses/RSMR5', ' ', 0, 1);
+PS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 1);
 
 
-OS6 = dlmread('officeIoT/RAMR6', ' ', 0, 1);
-HS6 = dlmread('homeIoT/RAMR6', ' ', 0, 1);
-BS6 = dlmread('buses/RAMR6', ' ', 0, 1);
-PS6 = dlmread('non-proc_proc/RAMR6', ' ', 0, 1);
+OS6 = dlmread('officeIoT/RSMR6', ' ', 0, 1);
+HS6 = dlmread('homeIoT/RSMR6', ' ', 0, 1);
+BS6 = dlmread('buses/RSMR6', ' ', 0, 1);
+PS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 1);
 
 
 [r3, c3] = size(OS1);
@@ -148,7 +148,7 @@ figure
 bar_handle = bar([ostor_fill(:,1), ostor_fill(:,2), ostor_fill(:,3), ostor_fill(:,4), ostor_fill(:,5), ostor_fill(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
+ylabel('Storage used (B)','fontsize',12)
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
 set(bar_handle(2),'FaceColor',[0,1,0])
@@ -160,17 +160,22 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(ostor_fill(:,1)), mean(ostor_fill(:,2)), mean(ostor_fill(:,3)), mean(ostor_fill(:,4)), mean(ostor_fill(:,5)), mean(ostor_fill(:,6));
-    mean(hstor_fill(:,1)), mean(hstor_fill(:,2)), mean(hstor_fill(:,3)), mean(hstor_fill(:,4)), mean(hstor_fill(:,5)), mean(hstor_fill(:,6));
-    mean(bstor_fill(:,1)), mean(bstor_fill(:,2)), mean(bstor_fill(:,3)), mean(bstor_fill(:,4)), mean(bstor_fill(:,5)), mean(bstor_fill(:,6));
-    mean(pstor_fill(:,1)), mean(pstor_fill(:,2)), mean(pstor_fill(:,3)), mean(pstor_fill(:,4)), mean(pstor_fill(:,5)), mean(pstor_fill(:,6))]);
+bar([mean(nonzeros(ostor_fill(:,1))), mean(nonzeros(ostor_fill(:,2))), mean(nonzeros(ostor_fill(:,3))), mean(nonzeros(ostor_fill(:,4))), mean(nonzeros(ostor_fill(:,5))), mean(nonzeros(ostor_fill(:,6)));
+    mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
+    mean(nonzeros(bstor_fill(:,1))), mean(nonzeros(bstor_fill(:,2))), mean(nonzeros(bstor_fill(:,3))), mean(nonzeros(bstor_fill(:,4))), mean(nonzeros(bstor_fill(:,5))), mean(nonzeros(bstor_fill(:,6)));
+    mean(nonzeros(pstor_fill(:,1))), mean(nonzeros(pstor_fill(:,2))), mean(nonzeros(pstor_fill(:,3))), mean(nonzeros(pstor_fill(:,4))), mean(nonzeros(pstor_fill(:,5))), mean(nonzeros(pstor_fill(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
+ylabel('Storage used (B)','fontsize',12)
 %TODO:
 % Modify this:
-lgd1 =legend('1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4.1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 3:1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 5:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:1', 'Location', 'southoutside');
-title(lgd1, 'Non-Proc:Proc');
+lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...
+            '1: f; 1.3; 100; 3:1 \newline2: f; 3.2; 100; 4:1; \newline3: t; 2.2; 500; 4:1;  \newline4: t; 2; 500; 2:2', ...
+            '1: f; 2; 100; 3:1 \newline2: f; 50; 100; 4:1; \newline3: f; 3; 100 4:1; \newline4: f; 2; 100; 4:2', ...
+            '1: f; 1.6; 300; 3:1 \newline2: f; 3; 200; 4:1; \newline3: f; 4; 300 4:1; \newline4: f; 2; 300; 5:2', ...
+            '1: f; 2.2; 600; 3:1 \newline2: f; 3.2; 300; 4:1; \newline3: f; 2.2; 600 4:1; \newline4: f; 2; 600; 3:1', ...
+            '1: f; 2; 900; 4:1 \newline2: f; 50; 600; 4:1; \newline3: f; 3; 900 4:1; \newline4: f; 2; 900; 4:1', 'Location', 'southoutside');
+title(lgd1, 'Scenario Number: Storage Mode; Processing Delay; proc Freshness Period; proc Shelf-Life; non-proc Shelf-Life; Compress:Delete Ratio; Non-Proc:Proc Ratio');
 lgd1.NumColumns = 6;
 % xlim([17 48]);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])

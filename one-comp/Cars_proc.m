@@ -694,7 +694,7 @@ ylabel('No. of Overtime Messages/repo','fontsize',12)
 lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', '2:1');
 title(lgd1, 'Non-Proc:Proc');
 lgd1.FontSize = 9;
-% lgd1.NumColumns = 5;
+lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
 % xlim([17 48]);
 
@@ -710,7 +710,7 @@ ylabel('No. of Unprocessed Messages/repo','fontsize',12)
 lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', '2:1');
 title(lgd1, 'Non-Proc:Proc');
 lgd1.FontSize = 9;
-% lgd1.NumColumns = 5;
+lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
 % xlim([17 48]);
 
@@ -726,7 +726,7 @@ ylabel('No. of Unprocessed Messages/repo','fontsize',12)
 lgd1 =legend('4:1', '3:1', '5:2', '4:2', '2:2', '2:1');
 title(lgd1, 'Non-Proc:Proc');
 lgd1.FontSize = 9;
-% lgd1.NumColumns = 5;
+lgd1.NumColumns = 5;
 % ylim([0 5*10^6]);
 % xlim([17 48]);
 

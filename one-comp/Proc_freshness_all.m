@@ -148,7 +148,7 @@ figure
 bar_handle = bar([ofresh_perc(:,1), ofresh_perc(:,2), ofresh_perc(:,3), ofresh_perc(:,4), ofresh_perc(:,5), ofresh_perc(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
+ylabel('Percentage (*100%) of fresh/shelf messages','fontsize',12)
 ylim([0 1]);
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
@@ -161,13 +161,13 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(ofresh_perc(:,1)), mean(ofresh_perc(:,2)), mean(ofresh_perc(:,3)), mean(ofresh_perc(:,4)), mean(ofresh_perc(:,5)), mean(ofresh_perc(:,6));
-    mean(hfresh_perc(:,1)), mean(hfresh_perc(:,2)), mean(hfresh_perc(:,3)), mean(hfresh_perc(:,4)), mean(hfresh_perc(:,5)), mean(hfresh_perc(:,6));
-    mean(bfresh_perc(:,1)), mean(bfresh_perc(:,2)), mean(bfresh_perc(:,3)), mean(bfresh_perc(:,4)), mean(bfresh_perc(:,5)), mean(bfresh_perc(:,6));
-    mean(pfresh_perc(:,1)), mean(pfresh_perc(:,2)), mean(pfresh_perc(:,3)), mean(pfresh_perc(:,4)), mean(pfresh_perc(:,5)), mean(pfresh_perc(:,6))]);
+bar([mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(nonzeros(ofresh_perc(:,3))), mean(nonzeros(ofresh_perc(:,4))), mean(nonzeros(ofresh_perc(:,5))), mean(nonzeros(ofresh_perc(:,6)));
+    mean(nonzeros(hfresh_perc(:,1))), mean(nonzeros(hfresh_perc(:,2))), mean(nonzeros(hfresh_perc(:,3))), mean(nonzeros(hfresh_perc(:,4))), mean(nonzeros(hfresh_perc(:,5))), mean(nonzeros(hfresh_perc(:,6)));
+    mean(nonzeros(bfresh_perc(:,1))), mean(nonzeros(bfresh_perc(:,2))), mean(nonzeros(bfresh_perc(:,3))), mean(nonzeros(bfresh_perc(:,4))), mean(nonzeros(bfresh_perc(:,5))), mean(nonzeros(bfresh_perc(:,6)));
+    mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Percentage (*100%) of messages processed within freshness period','fontsize',12)
+ylabel('Percentage (*100%) of fresh/shelf messages','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:

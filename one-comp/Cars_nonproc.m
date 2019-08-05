@@ -1,108 +1,108 @@
-% Make a function out of this, that takes the buses folder address and
+% Make a function out of this, that takes the non-proc_proc folder address and
 % the number of runs as variables;
 
 clear
 
-M1 = dlmread('buses/MDMR1', ' ', 0, 2);
-S1 = dlmread('buses/RAMR1', ' ', 0, 2);
-RP1 = dlmread('buses/RPrMR1', ' ', 0, 2);
-RS1 = dlmread('buses/RSMR1', ' ', 0, 2);
-PB1 = dlmread('buses/RPBWR1', ' ', 0, 2);
-UB1 = dlmread('buses/RUPBWR1', ' ', 0, 2);
-SB1 = dlmread('buses/RSBWR1', ' ', 0, 2);
-CB1 = dlmread('buses/RCSBWR1', ' ', 0, 2);
-RI1 = dlmread('buses/RISR1', ' ', 0, 2);
-P1 = dlmread('buses/RPMR1', ' ', 0, 2);
-ST1 = dlmread('buses/RSTR1', ' ', 0, 1);
-PF1 = dlmread('buses/RPFR1', ' ', 0, 1);
-PS1 = dlmread('buses/RSR1', ' ', 0, 1);
-U1 = dlmread('buses/RUR1', ' ', 0, 1);
-O1 = dlmread('buses/ROR1', ' ', 0, 1);
+M1 = dlmread('non-proc_proc/MDMR1', ' ', 0, 2);
+S1 = dlmread('non-proc_proc/RAMR1', ' ', 0, 2);
+RP1 = dlmread('non-proc_proc/RPrMR1', ' ', 0, 2);
+RS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 2);
+PB1 = dlmread('non-proc_proc/RPBWR1', ' ', 0, 2);
+UB1 = dlmread('non-proc_proc/RUPBWR1', ' ', 0, 2);
+SB1 = dlmread('non-proc_proc/RSBWR1', ' ', 0, 2);
+CB1 = dlmread('non-proc_proc/RCSBWR1', ' ', 0, 2);
+RI1 = dlmread('non-proc_proc/RISR1', ' ', 0, 2);
+P1 = dlmread('non-proc_proc/RPMR1', ' ', 0, 2);
+ST1 = dlmread('non-proc_proc/RSTR1', ' ', 0, 1);
+PF1 = dlmread('non-proc_proc/RPFR1', ' ', 0, 1);
+PS1 = dlmread('non-proc_proc/RSR1', ' ', 0, 1);
+U1 = dlmread('non-proc_proc/RUR1', ' ', 0, 1);
+O1 = dlmread('non-proc_proc/ROR1', ' ', 0, 1);
 
 
-M2 = dlmread('buses/MDMR2', ' ', 0, 2);
-S2 = dlmread('buses/RAMR2', ' ', 0, 2);
-RP2 = dlmread('buses/RPrMR2', ' ', 0, 2);
-RS2 = dlmread('buses/RSMR2', ' ', 0, 2);
-UB2 = dlmread('buses/RUPBWR2', ' ', 0, 2);
-PB2 = dlmread('buses/RPBWR2', ' ', 0, 2);
-SB2 = dlmread('buses/RSBWR2', ' ', 0, 2);
-CB2 = dlmread('buses/RCSBWR3', ' ', 0, 2);
-RI2 = dlmread('buses/RISR2', ' ', 0, 2);
-P2 = dlmread('buses/RPMR2', ' ', 0, 2);
-ST2 = dlmread('buses/RSTR2', ' ', 0, 1);
-PF2 = dlmread('buses/RPFR2', ' ', 0, 1);
-PS2 = dlmread('buses/RSR2', ' ', 0, 1);
-U2 = dlmread('buses/RUR2', ' ', 0, 1);
-O2 = dlmread('buses/ROR2', ' ', 0, 1);
+M2 = dlmread('non-proc_proc/MDMR2', ' ', 0, 2);
+S2 = dlmread('non-proc_proc/RAMR2', ' ', 0, 2);
+RP2 = dlmread('non-proc_proc/RPrMR2', ' ', 0, 2);
+RS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 2);
+UB2 = dlmread('non-proc_proc/RUPBWR2', ' ', 0, 2);
+PB2 = dlmread('non-proc_proc/RPBWR2', ' ', 0, 2);
+SB2 = dlmread('non-proc_proc/RSBWR2', ' ', 0, 2);
+CB2 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
+RI2 = dlmread('non-proc_proc/RISR2', ' ', 0, 2);
+P2 = dlmread('non-proc_proc/RPMR2', ' ', 0, 2);
+ST2 = dlmread('non-proc_proc/RSTR2', ' ', 0, 1);
+PF2 = dlmread('non-proc_proc/RPFR2', ' ', 0, 1);
+PS2 = dlmread('non-proc_proc/RSR2', ' ', 0, 1);
+U2 = dlmread('non-proc_proc/RUR2', ' ', 0, 1);
+O2 = dlmread('non-proc_proc/ROR2', ' ', 0, 1);
 
 
-M3 = dlmread('buses/MDMR3', ' ', 0, 2);
-S3 = dlmread('buses/RAMR3', ' ', 0, 2);
-PB3 = dlmread('buses/RPBWR3', ' ', 0, 2);
-UB3 = dlmread('buses/RUPBWR3', ' ', 0, 2);
-SB3 = dlmread('buses/RSBWR3', ' ', 0, 2);
-CB3 = dlmread('buses/RCSBWR3', ' ', 0, 2);
-RI3 = dlmread('buses/RISR3', ' ', 0, 2);
-RP3 = dlmread('buses/RPrMR3', ' ', 0, 2);
-RS3 = dlmread('buses/RSMR3', ' ', 0, 2);
-P3 = dlmread('buses/RPMR3', ' ', 0, 2);
-ST3 = dlmread('buses/RSTR3', ' ', 0, 1);
-PF3 = dlmread('buses/RPFR3', ' ', 0, 1);
-PS3 = dlmread('buses/RSR3', ' ', 0, 1);
-U3 = dlmread('buses/RUR3', ' ', 0, 1);
-O3 = dlmread('buses/ROR3', ' ', 0, 1);
+M3 = dlmread('non-proc_proc/MDMR3', ' ', 0, 2);
+S3 = dlmread('non-proc_proc/RAMR3', ' ', 0, 2);
+PB3 = dlmread('non-proc_proc/RPBWR3', ' ', 0, 2);
+UB3 = dlmread('non-proc_proc/RUPBWR3', ' ', 0, 2);
+SB3 = dlmread('non-proc_proc/RSBWR3', ' ', 0, 2);
+CB3 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 2);
+RI3 = dlmread('non-proc_proc/RISR3', ' ', 0, 2);
+RP3 = dlmread('non-proc_proc/RPrMR3', ' ', 0, 2);
+RS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 2);
+P3 = dlmread('non-proc_proc/RPMR3', ' ', 0, 2);
+ST3 = dlmread('non-proc_proc/RSTR3', ' ', 0, 1);
+PF3 = dlmread('non-proc_proc/RPFR3', ' ', 0, 1);
+PS3 = dlmread('non-proc_proc/RSR3', ' ', 0, 1);
+U3 = dlmread('non-proc_proc/RUR3', ' ', 0, 1);
+O3 = dlmread('non-proc_proc/ROR3', ' ', 0, 1);
 
 
-M4 = dlmread('buses/MDMR4', ' ', 0, 2);
-S4 = dlmread('buses/RAMR4', ' ', 0, 2);
-PB4 = dlmread('buses/RPBWR4', ' ', 0, 2);
-UB4 = dlmread('buses/RUPBWR4', ' ', 0, 2);
-SB4 = dlmread('buses/RSBWR4', ' ', 0, 2);
-CB4 = dlmread('buses/RCSBWR4', ' ', 0, 2);
-RI4 = dlmread('buses/RISR4', ' ', 0, 2);
-RP4 = dlmread('buses/RPrMR4', ' ', 0, 2);
-RS4 = dlmread('buses/RSMR4', ' ', 0, 2);
-P4 = dlmread('buses/RPMR4', ' ', 0, 2);
-ST4 = dlmread('buses/RSTR4', ' ', 0, 1);
-PF4 = dlmread('buses/RPFR4', ' ', 0, 1);
-PS4 = dlmread('buses/RSR4', ' ', 0, 1);
-U4 = dlmread('buses/RUR4', ' ', 0, 1);
-O4 = dlmread('buses/ROR4', ' ', 0, 1);
+M4 = dlmread('non-proc_proc/MDMR4', ' ', 0, 2);
+S4 = dlmread('non-proc_proc/RAMR4', ' ', 0, 2);
+PB4 = dlmread('non-proc_proc/RPBWR4', ' ', 0, 2);
+UB4 = dlmread('non-proc_proc/RUPBWR4', ' ', 0, 2);
+SB4 = dlmread('non-proc_proc/RSBWR4', ' ', 0, 2);
+CB4 = dlmread('non-proc_proc/RCSBWR4', ' ', 0, 2);
+RI4 = dlmread('non-proc_proc/RISR4', ' ', 0, 2);
+RP4 = dlmread('non-proc_proc/RPrMR4', ' ', 0, 2);
+RS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 2);
+P4 = dlmread('non-proc_proc/RPMR4', ' ', 0, 2);
+ST4 = dlmread('non-proc_proc/RSTR4', ' ', 0, 1);
+PF4 = dlmread('non-proc_proc/RPFR4', ' ', 0, 1);
+PS4 = dlmread('non-proc_proc/RSR4', ' ', 0, 1);
+U4 = dlmread('non-proc_proc/RUR4', ' ', 0, 1);
+O4 = dlmread('non-proc_proc/ROR4', ' ', 0, 1);
 
 
-M5 = dlmread('buses/MDMR5', ' ', 0, 2);
-S5 = dlmread('buses/RAMR5', ' ', 0, 2);
-PB5 = dlmread('buses/RPBWR5', ' ', 0, 2);
-UB5 = dlmread('buses/RUPBWR5', ' ', 0, 2);
-SB5 = dlmread('buses/RSBWR5', ' ', 0, 2);
-CB5 = dlmread('buses/RCSBWR5', ' ', 0, 2);
-RI5 = dlmread('buses/RISR5', ' ', 0, 2);
-RP5 = dlmread('buses/RPrMR5', ' ', 0, 2);
-RS5 = dlmread('buses/RSMR5', ' ', 0, 2);
-P5 = dlmread('buses/RPMR5', ' ', 0, 2);
-ST5 = dlmread('buses/RSTR5', ' ', 0, 1);
-PF5 = dlmread('buses/RPFR5', ' ', 0, 1);
-PS5 = dlmread('buses/RSR5', ' ', 0, 1);
-U5 = dlmread('buses/RUR5', ' ', 0, 1);
-O5 = dlmread('buses/ROR5', ' ', 0, 1);
+M5 = dlmread('non-proc_proc/MDMR5', ' ', 0, 2);
+S5 = dlmread('non-proc_proc/RAMR5', ' ', 0, 2);
+PB5 = dlmread('non-proc_proc/RPBWR5', ' ', 0, 2);
+UB5 = dlmread('non-proc_proc/RUPBWR5', ' ', 0, 2);
+SB5 = dlmread('non-proc_proc/RSBWR5', ' ', 0, 2);
+CB5 = dlmread('non-proc_proc/RCSBWR5', ' ', 0, 2);
+RI5 = dlmread('non-proc_proc/RISR5', ' ', 0, 2);
+RP5 = dlmread('non-proc_proc/RPrMR5', ' ', 0, 2);
+RS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 2);
+P5 = dlmread('non-proc_proc/RPMR5', ' ', 0, 2);
+ST5 = dlmread('non-proc_proc/RSTR5', ' ', 0, 1);
+PF5 = dlmread('non-proc_proc/RPFR5', ' ', 0, 1);
+PS5 = dlmread('non-proc_proc/RSR5', ' ', 0, 1);
+U5 = dlmread('non-proc_proc/RUR5', ' ', 0, 1);
+O5 = dlmread('non-proc_proc/ROR5', ' ', 0, 1);
 
 
-% M6 = dlmread('buses/MDMR6', ' ', 0, 2);
-% S6 = dlmread('buses/RAMR6', ' ', 0, 2);
-% UB6 = dlmread('buses/RUPBWR6', ' ', 0, 2);
-% PB6 = dlmread('buses/RPBWR6', ' ', 0, 2);
-% SB6 = dlmread('buses/RSBWR6', ' ', 0, 2);
-% CB6 = dlmread('buses/RCSBWR6', ' ', 0, 2);
-% RI6 = dlmread('buses/RISR6', ' ', 0, 2);
-% RP6 = dlmread('buses/RPrMR6', ' ', 0, 2);
-% RS6 = dlmread('buses/RSMR6', ' ', 0, 2);
-% P6 = dlmread('buses/RPMR6', ' ', 0, 2);
-% ST6 = dlmread('buses/RSTR6', ' ', 0, 1);
-% PF6 = dlmread('buses/RPFR6', ' ', 0, 1);
-% PS6 = dlmread('buses/RSR6', ' ', 0, 1);
-% U6 = dlmread('buses/RUR6', ' ', 0, 1);
-% O6 = dlmread('buses/ROR6', ' ', 0, 1);
+M6 = dlmread('non-proc_proc/MDMR6', ' ', 0, 2);
+S6 = dlmread('non-proc_proc/RAMR6', ' ', 0, 2);
+UB6 = dlmread('non-proc_proc/RUPBWR6', ' ', 0, 2);
+PB6 = dlmread('non-proc_proc/RPBWR6', ' ', 0, 2);
+SB6 = dlmread('non-proc_proc/RSBWR6', ' ', 0, 2);
+CB6 = dlmread('non-proc_proc/RCSBWR6', ' ', 0, 2);
+RI6 = dlmread('non-proc_proc/RISR6', ' ', 0, 2);
+RP6 = dlmread('non-proc_proc/RPrMR6', ' ', 0, 2);
+RS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 2);
+P6 = dlmread('non-proc_proc/RPMR6', ' ', 0, 2);
+ST6 = dlmread('non-proc_proc/RSTR6', ' ', 0, 1);
+PF6 = dlmread('non-proc_proc/RPFR6', ' ', 0, 1);
+PS6 = dlmread('non-proc_proc/RSR6', ' ', 0, 1);
+U6 = dlmread('non-proc_proc/RUR6', ' ', 0, 1);
+O6 = dlmread('non-proc_proc/ROR6', ' ', 0, 1);
 
 
 [r2, c2] = size(M1);
@@ -131,9 +131,9 @@ for inc = 5
         S = S5;
     end
   
-%     if inc == 6
-%         S = S6;
-%     end
+    if inc == 6
+        S = S6;
+    end
     
     s = 10000;
     col = 1;
@@ -252,15 +252,15 @@ for inc = 5
 %         fillerrbarS3 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
     end
     
-%     if inc == 6
-%         maxstorS6 = maxstor;
-%         fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
-%         for repo = 1:c3
-%             reposfillS6(repo) = mean(S(:, repo));
-%             reposfill(repo, inc) = reposfillS6(repo);           
-%         end
-% %         fillerrbarS4 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
-%     end
+    if inc == 6
+        maxstorS6 = maxstor;
+        fillpercS6 = [fillperc25(:); fillperc50(:); fillperc100(:)];
+        for repo = 1:c3
+            reposfillS6(repo) = mean(S(:, repo));
+            reposfill(repo, inc) = reposfillS6(repo);           
+        end
+%         fillerrbarS4 = [sum(filled100(:)), sum(filled50(:)), sum(filled25(:))];
+    end
     
     fillerrbar(:, inc) = [sum(filled100(r3, :)), sum(filled50(r3, :)), sum(filled25(r3, :))];
 
@@ -300,13 +300,13 @@ for repo = 1:c3
     upspeeds3(repo, :) = [mean(CB3(:, repo)), mean(UB3(:, repo)), mean(PB3(:, repo))];
     upspeeds4(repo, :) = [mean(CB4(:, repo)), mean(UB4(:, repo)), mean(PB4(:, repo))];
     upspeeds5(repo, :) = [mean(CB5(:, repo)), mean(UB5(:, repo)), mean(PB5(:, repo))];
-%     upspeeds6(repo, :) = [mean(CB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
+    upspeeds6(repo, :) = [mean(CB6(:, repo)), mean(UB6(:, repo)), mean(PB6(:, repo))];
     inspeeds1(repo, :) = mean(RI1(:, repo));
     inspeeds2(repo, :) = mean(RI2(:, repo));
     inspeeds3(repo, :) = mean(RI3(:, repo));
     inspeeds4(repo, :) = mean(RI4(:, repo));
     inspeeds5(repo, :) = mean(RI5(:, repo));
-%     inspeeds6(repo, :) = mean(RI6(:, repo));
+    inspeeds6(repo, :) = mean(RI6(:, repo));
     sat_perc1(repo, :) = PS1(1, repo)/sum(PS1(:, repo));
     if (isnan(PS1(1, repo)/sum(PS1(:, repo))))
         sat_perc1(repo, :) = 0;
@@ -327,10 +327,10 @@ for repo = 1:c3
     if (isnan(PS5(1, repo)/sum(PS5(:, repo))))
         sat_perc5(repo, :) = 0;
     end
-%     sat_perc6(repo, :) = mean(PS6(:, repo));
-%     if (isnan(PS6(1, repo)/sum(PS6(:, repo))))
-%         sat_perc6(repo, :) = 0;
-%     end
+    sat_perc6(repo, :) = PS6(1, repo)/sum(PS6(:, repo));
+    if (isnan(PS6(1, repo)/sum(PS6(:, repo))))
+        sat_perc6(repo, :) = 0;
+    end
     fresh_perc1(repo, :) = PF1(1, repo)/sum(PF1(:, repo));
     if (isnan(PF1(1, repo)/sum(PF1(:, repo))))
         fresh_perc1(repo, :) = 0;
@@ -351,10 +351,10 @@ for repo = 1:c3
     if (isnan(PF5(1, repo)/sum(PF5(:, repo))))
         fresh_perc5(repo, :) = 0;
     end
-%     fresh_perc6(repo, :) = mean(PF6(:, repo));
-%     if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
-%         fresh_perc6(repo, :) = 0;
-%     end
+    fresh_perc6(repo, :) = PF6(1, repo)/sum(PF6(:, repo));
+    if (isnan(PF6(1, repo)/sum(PF6(:, repo))))
+        fresh_perc6(repo, :) = 0;
+    end
 end
 
 % For this, maybe take a few repositories, concentrate their storage
@@ -366,20 +366,20 @@ end
 %Repos:
 %19, 20, 21, 41, 42, 43
 %change mostly.
-% figure
-% stem3(S6, ':.');
-% title('3D Stem plot of Repos Storage Usage','fontsize',16)
-% xlabel('Repo Number','fontsize',12) 
-% ylabel('Time(s)','fontsize',12)
-% zlabel('Space used(B)','fontsize',12)
+figure
+stem3(S6, ':.');
+title('3D Stem plot of Repos Storage Usage','fontsize',16)
+xlabel('Repo Number','fontsize',12) 
+ylabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
 
 figure
-plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 'LineWidth',1);
+plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S6(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S6(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S6(:,43), ':', 'LineWidth',1);
 % title('3D Stem plot of Repos Storage Usage','fontsize',16)
 ylabel('Number of stored messages','fontsize',12) 
 xlabel('Time(s)','fontsize',12)
 zlabel('Space used(B)','fontsize',12)
-lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads' , 'R19 16 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads' , 'R21 16 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads' , 'R43 16 threads');
+lgd = legend('R19 2 threads', 'R19 8 threads', 'R19 12 threads', 'R21 2 threads', 'R21 8 threads', 'R21 12 threads', 'R43 2 threads', 'R43 8 threads', 'R43 12 threads');
 lgd.FontSize = 9;
 % lgd.NumColumns = 3;
 
