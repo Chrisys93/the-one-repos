@@ -3,67 +3,67 @@
 
 clear
 
-OS1 = dlmread('officeIoT/RSMR1', ' ', 0, 1);
+SS1 = dlmread('officeIoT/RSMR1', ' ', 0, 1);
 HS1 = dlmread('homeIoT/RSMR1', ' ', 0, 1);
 BS1 = dlmread('buses/RSMR1', ' ', 0, 1);
 PS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 1);
 
 
-OS2 = dlmread('officeIoT/RSMR2', ' ', 0, 1);
+SS2 = dlmread('officeIoT/RSMR2', ' ', 0, 1);
 HS2 = dlmread('homeIoT/RSMR2', ' ', 0, 1);
 BS2 = dlmread('buses/RSMR2', ' ', 0, 1);
 PS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 1);
 
 
-OS3 = dlmread('officeIoT/RSMR3', ' ', 0, 1);
+SS3 = dlmread('officeIoT/RSMR3', ' ', 0, 1);
 HS3 = dlmread('homeIoT/RSMR3', ' ', 0, 1);
 BS3 = dlmread('buses/RSMR3', ' ', 0, 1);
 PS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 1);
 
 
-OS4 = dlmread('officeIoT/RSMR4', ' ', 0, 1);
+SS4 = dlmread('officeIoT/RSMR4', ' ', 0, 1);
 HS4 = dlmread('homeIoT/RSMR4', ' ', 0, 1);
 BS4 = dlmread('buses/RSMR4', ' ', 0, 1);
 PS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 1);
 
 
-OS5 = dlmread('officeIoT/RSMR5', ' ', 0, 1);
+SS5 = dlmread('officeIoT/RSMR5', ' ', 0, 1);
 HS5 = dlmread('homeIoT/RSMR5', ' ', 0, 1);
 BS5 = dlmread('buses/RSMR5', ' ', 0, 1);
 PS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 1);
 
 
-OS6 = dlmread('officeIoT/RSMR6', ' ', 0, 1);
+SS6 = dlmread('officeIoT/RSMR6', ' ', 0, 1);
 HS6 = dlmread('homeIoT/RSMR6', ' ', 0, 1);
 BS6 = dlmread('buses/RSMR6', ' ', 0, 1);
 PS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 1);
 
 
-[r3, c3] = size(OS1);
+[r3, c3] = size(SS1);
 
 for repo = 1:c3
-    ostor_fill(repo, 1) = mean(OS1(:, repo));
-    if (isnan(mean(OS1(:, repo))))
+    ostor_fill(repo, 1) = mean(SS1(:, repo));
+    if (isnan(mean(SS1(:, repo))))
         ostor_fill(repo, 1) = 0;
     end
-    ostor_fill(repo, 2) = mean(OS2(:, repo));
-    if (isnan(mean(OS2(:, repo))))
+    ostor_fill(repo, 2) = mean(SS2(:, repo));
+    if (isnan(mean(SS2(:, repo))))
         ostor_fill(repo, 2) = 0;
     end
-    ostor_fill(repo, 3) = mean(OS3(:, repo));
-    if (isnan(mean(OS3(:, repo))))
+    ostor_fill(repo, 3) = mean(SS3(:, repo));
+    if (isnan(mean(SS3(:, repo))))
         ostor_fill(repo, 3) = 0;
     end
-    ostor_fill(repo, 4) = mean(OS4(:, repo));
-    if (isnan(mean(OS4(:, repo))))
+    ostor_fill(repo, 4) = mean(SS4(:, repo));
+    if (isnan(mean(SS4(:, repo))))
         ostor_fill(repo, 4) = 0;
     end
-    ostor_fill(repo, 5) = mean(OS5(:, repo));
-    if (isnan(mean(OS5(:, repo))))
+    ostor_fill(repo, 5) = mean(SS5(:, repo));
+    if (isnan(mean(SS5(:, repo))))
         ostor_fill(repo, 5) = 0;
     end
-    ostor_fill(repo, 6) =  mean(OS6(:, repo));
-    if (isnan(mean(OS6(:, repo))))
+    ostor_fill(repo, 6) =  mean(SS6(:, repo));
+    if (isnan(mean(SS6(:, repo))))
         ostor_fill(repo, 6) = 0;
     end
     hstor_fill(repo, 1) = mean(HS1(:, repo));
@@ -167,7 +167,7 @@ bar([mean(nonzeros(ostor_fill(:,1))), mean(nonzeros(ostor_fill(:,2))), mean(nonz
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Storage used (B)','fontsize',12)
-%TODO:
+%TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...
             '1: f; 1.3; 100; 3:1 \newline2: f; 3.2; 100; 4:1; \newline3: t; 2.2; 500; 4:1;  \newline4: t; 2; 500; 2:2', ...
