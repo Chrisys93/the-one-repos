@@ -77,104 +77,6 @@ PSB6 = dlmread('non-proc_proc/RSBWR6', ' ', 0, 1);
 [r3, c3] = size(OCB1);
 
 for repo = 1:c3
-    osat_up(repo, 1) = mean(OCB1(:, repo))/(mean(OSB1(:, repo))+mean(OCB1(:, repo)));
-    if (isnan(mean(OCB1(:, repo))/(mean(OSB1(:, repo))+mean(OCB1(:, repo)))))
-        osat_up(repo, 1) = 0;
-    end
-    osat_up(repo, 2) = mean(OCB2(:, repo))/(mean(OSB2(:, repo))+mean(OCB2(:, repo)));
-    if (isnan(mean(OCB2(:, repo))/(mean(OSB2(:, repo))+mean(OCB2(:, repo)))))
-        osat_up(repo, 2) = 0;
-    end
-    osat_up(repo, 3) = mean(OCB3(:, repo))/(mean(OSB3(:, repo))+mean(OCB3(:, repo)));
-    if (isnan(mean(OCB3(:, repo))/(mean(OSB3(:, repo))+mean(OCB3(:, repo)))))
-        osat_up(repo, 3) = 0;
-    end
-    osat_up(repo, 4) = mean(OCB4(:, repo))/(mean(OSB4(:, repo))+mean(OCB4(:, repo)));
-    if (isnan(mean(OCB4(:, repo))/(mean(OSB4(:, repo))+mean(OCB4(:, repo)))))
-        osat_up(repo, 4) = 0;
-    end
-    osat_up(repo, 5) = mean(OCB5(:, repo))/(mean(OSB5(:, repo))+mean(OCB5(:, repo)));
-    if (isnan(mean(OCB5(:, repo))/(mean(OSB5(:, repo))+mean(OCB5(:, repo)))))
-        osat_up(repo, 5) = 0;
-    end
-    osat_up(repo, 6) =  mean(OCB6(:, repo))/(mean(OSB6(:, repo))+mean(OCB6(:, repo)));
-    if (isnan(mean(OCB6(:, repo))/(mean(OSB6(:, repo))+mean(OCB6(:, repo)))))
-        osat_up(repo, 6) = 0;
-    end
-    hsat_up(repo, 1) = mean(HCB1(:, repo))/(mean(HSB1(:, repo))+mean(HCB1(:, repo)));
-    if (isnan(mean(HCB1(:, repo))/(mean(HSB1(:, repo))+mean(HCB1(:, repo)))))
-        hsat_up(repo, 1) = 0;
-    end
-    hsat_up(repo, 2) = mean(HCB2(:, repo))/(mean(HSB2(:, repo))+mean(HCB2(:, repo)));
-    if (isnan(mean(HCB2(:, repo))/(mean(HSB2(:, repo))+mean(HCB2(:, repo)))))
-        hsat_up(repo, 2) = 0;
-    end
-    hsat_up(repo, 3) = mean(HCB3(:, repo))/(mean(HSB3(:, repo))+mean(HCB3(:, repo)));
-    if (isnan(mean(HCB3(:, repo))/(mean(HSB3(:, repo))+mean(HCB3(:, repo)))))
-        hsat_up(repo, 3) = 0;
-    end
-    hsat_up(repo, 4) = mean(HCB4(:, repo))/(mean(HSB4(:, repo))+mean(HCB4(:, repo)));
-    if (isnan(mean(HCB4(:, repo))/(mean(HSB4(:, repo))+mean(HCB4(:, repo)))))
-        hsat_up(repo, 4) = 0;
-    end
-    hsat_up(repo, 5) = mean(HCB6(:, repo))/(mean(HSB5(:, repo))+mean(HCB5(:, repo)));
-    if (isnan(mean(HCB6(:, repo))/(mean(HSB5(:, repo))+mean(HCB5(:, repo)))))
-        hsat_up(repo, 5) = 0;
-    end
-    hsat_up(repo, 6) = mean(HCB6(:, repo))/(mean(HSB6(:, repo))+mean(HCB6(:, repo)));
-    if (isnan(mean(HCB6(:, repo))/(mean(HSB6(:, repo))+mean(HCB6(:, repo)))))
-        hsat_up(repo, 6) = 0;
-    end
-    bsat_up(repo, 1) = mean(BCB1(:, repo))/(mean(BSB1(:, repo))+mean(BCB1(:, repo)));
-    if (isnan(mean(BCB1(:, repo))/(mean(BSB1(:, repo))+mean(BCB1(:, repo)))))
-        bsat_up(repo, 1) = 0;
-    end
-    bsat_up(repo, 2) = mean(BCB2(:, repo))/(mean(BSB2(:, repo))+mean(BCB2(:, repo)));
-    if (isnan(mean(BCB2(:, repo))/(mean(BSB2(:, repo))+mean(BCB2(:, repo)))))
-        bsat_up(repo, 2) = 0;
-    end
-    bsat_up(repo, 3) = mean(BCB3(:, repo))/(mean(BSB3(:, repo))+mean(BCB3(:, repo)));
-    if (isnan(mean(BCB3(:, repo))/(mean(BSB3(:, repo))+mean(BCB3(:, repo)))))
-        bsat_up(repo, 3) = 0;
-    end
-    bsat_up(repo, 4) = mean(BCB4(:, repo))/(mean(BSB4(:, repo))+mean(BCB4(:, repo)));
-    if (isnan(mean(BCB4(:, repo))/(mean(BSB4(:, repo))+mean(BCB4(:, repo)))))
-        bsat_up(repo, 4) = 0;
-    end
-    bsat_up(repo, 5) = mean(BCB5(:, repo))/(mean(BSB5(:, repo))+mean(BCB5(:, repo)));
-    if (isnan(mean(BCB5(:, repo))/(mean(BSB5(:, repo))+mean(BCB5(:, repo)))))
-        bsat_up(repo, 5) = 0;
-    end
-    bsat_up(repo, 6) =  mean(BCB6(:, repo))/(mean(BSB6(:, repo))+mean(BCB6(:, repo)));
-    if (isnan(mean(BCB6(:, repo))/(mean(BSB6(:, repo))+mean(BCB6(:, repo)))))
-        bsat_up(repo, 6) = 0;
-    end
-    psat_up(repo, 1) = mean(PCB1(:, repo))/(mean(PSB1(:, repo))+mean(PCB1(:, repo)));
-    if (isnan(mean(PCB1(:, repo))/(mean(PSB1(:, repo))+mean(PCB1(:, repo)))))
-        psat_up(repo, 1) = 0;
-    end
-    psat_up(repo, 2) = mean(PCB2(:, repo))/(mean(PSB2(:, repo))+mean(PCB2(:, repo)));
-    if (isnan(mean(PCB2(:, repo))/(mean(PSB2(:, repo))+mean(PCB2(:, repo)))))
-        psat_up(repo, 2) = 0;
-    end
-    psat_up(repo, 3) = mean(PCB3(:, repo))/(mean(PSB3(:, repo))+mean(PCB3(:, repo)));
-    if (isnan(mean(PCB3(:, repo))/(mean(PSB3(:, repo))+mean(PCB3(:, repo)))))
-        psat_up(repo, 3) = 0;
-    end
-    psat_up(repo, 4) = mean(PCB4(:, repo))/(mean(PSB4(:, repo))+mean(PCB4(:, repo)));
-    if (isnan(mean(PCB4(:, repo))/(mean(PSB4(:, repo))+mean(PCB4(:, repo)))))
-        psat_up(repo, 4) = 0;
-    end
-    psat_up(repo, 5) = mean(PCB5(:, repo))/(mean(PSB5(:, repo))+mean(PCB5(:, repo)));
-    if (isnan(mean(PCB5(:, repo))/(mean(PSB5(:, repo))+mean(PCB5(:, repo)))))
-        psat_up(repo, 5) = 0;
-    end
-    psat_up(repo, 6) =  mean(PCB6(:, repo))/(mean(PSB6(:, repo))+mean(PCB6(:, repo)));
-    if (isnan(mean(PCB6(:, repo))/(mean(PSB6(:, repo))+mean(PCB6(:, repo)))))
-        psat_up(repo, 6) = 0;
-    end
-    
-    
     
     osat(repo, 1) = mean(OCB1(:, repo));
     if (isnan(mean(OCB1(:, repo))))
@@ -368,6 +270,106 @@ for repo = 1:c3
     if (isnan(mean(PSB6(:, repo))))
         pusat(repo, 6) = 0;
     end
+    
+    
+    
+    osat_up(repo, 1) = mean(osat(repo, 1))/(mean(ousat(repo, 1))+mean(osat(repo, 1)));
+    if (isnan(mean(osat(repo, 1))/(mean(ousat(repo, 1))+mean(osat(repo, 1)))))
+        osat_up(repo, 1) = 0;
+    end
+    osat_up(repo, 2) = mean(osat(repo, 2))/(mean(ousat(repo, 2))+mean(osat(repo, 2)));
+    if (isnan(mean(osat(repo, 2))/(mean(ousat(repo, 2))+mean(osat(repo, 2)))))
+        osat_up(repo, 2) = 0;
+    end
+    osat_up(repo, 3) = mean(osat(repo, 3))/(mean(ousat(repo, 3))+mean(osat(repo, 3)));
+    if (isnan(mean(osat(repo, 3))/(mean(ousat(repo, 3))+mean(osat(repo, 3)))))
+        osat_up(repo, 3) = 0;
+    end
+    osat_up(repo, 4) = mean(osat(repo, 4))/(mean(ousat(repo, 4))+mean(osat(repo, 4)));
+    if (isnan(mean(osat(repo, 4))/(mean(ousat(repo, 4))+mean(osat(repo, 4)))))
+        osat_up(repo, 4) = 0;
+    end
+    osat_up(repo, 5) = mean(osat(repo, 5))/(mean(ousat(repo, 5))+mean(osat(repo, 5)));
+    if (isnan(mean(osat(repo, 5))/(mean(ousat(repo, 5))+mean(osat(repo, 5)))))
+        osat_up(repo, 5) = 0;
+    end
+    osat_up(repo, 6) =  mean(osat(repo, 6))/(mean(ousat(repo, 6))+mean(osat(repo, 6)));
+    if (isnan(mean(osat(repo, 6))/(mean(ousat(repo, 6))+mean(osat(repo, 6)))))
+        osat_up(repo, 6) = 0;
+    end
+    hsat_up(repo, 1) = mean(hsat(repo, 1))/(mean(husat(repo, 1))+mean(hsat(repo, 1)));
+    if (isnan(mean(hsat(repo, 1))/(mean(husat(repo, 1))+mean(hsat(repo, 1)))))
+        hsat_up(repo, 1) = 0;
+    end
+    hsat_up(repo, 2) = mean(hsat(repo, 2))/(mean(husat(repo, 2))+mean(hsat(repo, 2)));
+    if (isnan(mean(hsat(repo, 2))/(mean(husat(repo, 2))+mean(hsat(repo, 2)))))
+        hsat_up(repo, 2) = 0;
+    end
+    hsat_up(repo, 3) = mean(hsat(repo, 3))/(mean(husat(repo, 3))+mean(hsat(repo, 3)));
+    if (isnan(mean(hsat(repo, 3))/(mean(husat(repo, 3))+mean(hsat(repo, 3)))))
+        hsat_up(repo, 3) = 0;
+    end
+    hsat_up(repo, 4) = mean(hsat(repo, 4))/(mean(husat(repo, 4))+mean(hsat(repo, 4)));
+    if (isnan(mean(hsat(repo, 4))/(mean(husat(repo, 4))+mean(hsat(repo, 4)))))
+        hsat_up(repo, 4) = 0;
+    end
+    hsat_up(repo, 5) = mean(hsat(repo, 5))/(mean(husat(repo, 5))+mean(hsat(repo, 5)));
+    if (isnan(mean(hsat(repo, 6))/(mean(husat(repo, 5))+mean(hsat(repo, 5)))))
+        hsat_up(repo, 5) = 0;
+    end
+    hsat_up(repo, 6) = mean(hsat(repo, 6))/(mean(husat(repo, 6))+mean(hsat(repo, 6)));
+    if (isnan(mean(hsat(repo, 6))/(mean(husat(repo, 6))+mean(hsat(repo, 6)))))
+        hsat_up(repo, 6) = 0;
+    end
+    bsat_up(repo, 1) = mean(bsat(repo, 1))/(mean(busat(repo, 1))+mean(bsat(repo, 1)));
+    if (isnan(mean(bsat(repo, 1))/(mean(busat(repo, 1))+mean(bsat(repo, 1)))))
+        bsat_up(repo, 1) = 0;
+    end
+    bsat_up(repo, 2) = mean(bsat(repo, 2))/(mean(busat(repo, 2))+mean(bsat(repo, 2)));
+    if (isnan(mean(bsat(repo, 2))/(mean(busat(repo, 2))+mean(bsat(repo, 2)))))
+        bsat_up(repo, 2) = 0;
+    end
+    bsat_up(repo, 3) = mean(bsat(repo, 3))/(mean(busat(repo, 3))+mean(bsat(repo, 3)));
+    if (isnan(mean(bsat(repo, 3))/(mean(busat(repo, 3))+mean(bsat(repo, 3)))))
+        bsat_up(repo, 3) = 0;
+    end
+    bsat_up(repo, 4) = mean(bsat(repo, 4))/(mean(busat(repo, 4))+mean(bsat(repo, 4)));
+    if (isnan(mean(bsat(repo, 4))/(mean(busat(repo, 4))+mean(bsat(repo, 4)))))
+        bsat_up(repo, 4) = 0;
+    end
+    bsat_up(repo, 5) = mean(bsat(repo, 5))/(mean(busat(repo, 5))+mean(bsat(repo, 5)));
+    if (isnan(mean(bsat(repo, 5))/(mean(busat(repo, 5))+mean(bsat(repo, 5)))))
+        bsat_up(repo, 5) = 0;
+    end
+    bsat_up(repo, 6) =  mean(bsat(repo, 6))/(mean(busat(repo, 6))+mean(bsat(repo, 6)));
+    if (isnan(mean(bsat(repo, 6))/(mean(busat(repo, 6))+mean(bsat(repo, 6)))))
+        bsat_up(repo, 6) = 0;
+    end
+    psat_up(repo, 1) = mean(psat(repo, 1))/(mean(pusat(repo, 1))+mean(psat(repo, 1)));
+    if (isnan(mean(psat(repo, 1))/(mean(pusat(repo, 1))+mean(psat(repo, 1)))))
+        psat_up(repo, 1) = 0;
+    end
+    psat_up(repo, 2) = mean(psat(repo, 2))/(mean(pusat(repo, 2))+mean(psat(repo, 2)));
+    if (isnan(mean(psat(repo, 2))/(mean(pusat(repo, 2))+mean(psat(repo, 2)))))
+        psat_up(repo, 2) = 0;
+    end
+    psat_up(repo, 3) = mean(psat(repo, 3))/(mean(pusat(repo, 3))+mean(psat(repo, 3)));
+    if (isnan(mean(psat(repo, 3))/(mean(pusat(repo, 3))+mean(psat(repo, 3)))))
+        psat_up(repo, 3) = 0;
+    end
+    psat_up(repo, 4) = mean(psat(repo, 4))/(mean(pusat(repo, 4))+mean(psat(repo, 4)));
+    if (isnan(mean(psat(repo, 4))/(mean(pusat(repo, 4))+mean(psat(repo, 4)))))
+        psat_up(repo, 4) = 0;
+    end
+    psat_up(repo, 5) = mean(psat(repo, 5))/(mean(pusat(repo, 5))+mean(psat(repo, 5)));
+    if (isnan(mean(psat(repo, 5))/(mean(pusat(repo, 5))+mean(psat(repo, 5)))))
+        psat_up(repo, 5) = 0;
+    end
+    psat_up(repo, 6) =  mean(psat(repo, 6))/(mean(pusat(repo, 6))+mean(psat(repo, 6)));
+    if (isnan(mean(psat(repo, 6))/(mean(pusat(repo, 6))+mean(psat(repo, 6)))))
+        psat_up(repo, 6) = 0;
+    end
+    
 end
 
 
@@ -390,10 +392,10 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(nonzeros(osat_up(:,1))), mean(nonzeros(osat_up(:,2))), mean(nonzeros(osat_up(:,3))), mean(nonzeros(osat_up(:,4))), mean(nonzeros(osat_up(:,5))), mean(nonzeros(osat_up(:,6)));
-    mean(nonzeros(hsat_up(:,1))), mean(nonzeros(hsat_up(:,2))), mean(nonzeros(hsat_up(:,3))), mean(nonzeros(hsat_up(:,4))), mean(nonzeros(hsat_up(:,5))), mean(nonzeros(hsat_up(:,6)));
-    mean(nonzeros(bsat_up(:,1))), mean(nonzeros(bsat_up(:,2))), mean(nonzeros(bsat_up(:,3))), mean(nonzeros(bsat_up(:,4))), mean(nonzeros(bsat_up(:,5))), mean(nonzeros(bsat_up(:,6)));
-    mean(nonzeros(psat_up(:,1))), mean(nonzeros(psat_up(:,2))), mean(nonzeros(psat_up(:,3))), mean(nonzeros(psat_up(:,4))), mean(nonzeros(psat_up(:,5))), mean(nonzeros(psat_up(:,6)))]);
+bar([mean(osat_up(:,1)), mean(osat_up(:,2)), mean(osat_up(:,3)), mean(osat_up(:,4)), mean(osat_up(:,5)), mean(osat_up(:,6));
+    mean(hsat_up(:,1)), mean(hsat_up(:,2)), mean(hsat_up(:,3)), mean(hsat_up(:,4)), mean(hsat_up(:,5)), mean(hsat_up(:,6));
+    mean(bsat_up(:,1)), mean(bsat_up(:,2)), mean(bsat_up(:,3)), mean(bsat_up(:,4)), mean(bsat_up(:,5)), mean(bsat_up(:,6));
+    mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Storage used (B)','fontsize',12)
@@ -412,10 +414,10 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(nonzeros(osat(:,1))), mean(nonzeros(ousat(:,1))), mean(nonzeros(osat(:,2))), mean(nonzeros(ousat(:,2))), mean(nonzeros(osat(:,3))), mean(nonzeros(ousat(:,3))), mean(nonzeros(osat(:,4))), mean(nonzeros(ousat(:,4))), mean(nonzeros(osat(:,5))), mean(nonzeros(ousat(:,5))), mean(nonzeros(osat(:,6))), mean(nonzeros(ousat(:,6)));
-    mean(nonzeros(hsat(:,1))), mean(nonzeros(husat(:,1))), mean(nonzeros(hsat(:,2))), mean(nonzeros(husat(:,2))), mean(nonzeros(hsat(:,3))), mean(nonzeros(husat(:,3))), mean(nonzeros(hsat(:,4))), mean(nonzeros(husat(:,4))), mean(nonzeros(hsat(:,5))), mean(nonzeros(husat(:,5))), mean(nonzeros(hsat(:,6))), mean(nonzeros(husat(:,6)));
-    mean(nonzeros(bsat(:,1))), mean(nonzeros(busat(:,1))), mean(nonzeros(bsat(:,2))), mean(nonzeros(busat(:,2))), mean(nonzeros(bsat(:,3))), mean(nonzeros(busat(:,3))), mean(nonzeros(bsat(:,4))), mean(nonzeros(busat(:,4))), mean(nonzeros(bsat(:,5))), mean(nonzeros(busat(:,5))), mean(nonzeros(bsat(:,6))), mean(nonzeros(busat(:,6)));
-    mean(nonzeros(psat(:,1))), mean(nonzeros(pusat(:,1))), mean(nonzeros(psat(:,2))), mean(nonzeros(pusat(:,2))), mean(nonzeros(psat(:,3))), mean(nonzeros(pusat(:,3))), mean(nonzeros(psat(:,4))), mean(nonzeros(pusat(:,4))), mean(nonzeros(psat(:,5))), mean(nonzeros(pusat(:,5))), mean(nonzeros(psat(:,6))), mean(nonzeros(pusat(:,6)))]);
+bar([mean(osat(:,1)), mean(ousat(:,1)), mean(osat(:,2)), mean(ousat(:,2)), mean(osat(:,3)), mean(ousat(:,3)), mean(osat(:,4)), mean(ousat(:,4)), mean(osat(:,5)), mean(ousat(:,5)), mean(osat(:,6)), mean(ousat(:,6));
+    mean(hsat(:,1)), mean(husat(:,1)), mean(hsat(:,2)), mean(husat(:,2)), mean(hsat(:,3)), mean(husat(:,3)), mean(hsat(:,4)), mean(husat(:,4)), mean(hsat(:,5)), mean(husat(:,5)), mean(hsat(:,6)), mean(husat(:,6));
+    mean(bsat(:,1)), mean(busat(:,1)), mean(bsat(:,2)), mean(busat(:,2)), mean(bsat(:,3)), mean(busat(:,3)), mean(bsat(:,4)), mean(busat(:,4)), mean(bsat(:,5)), mean(busat(:,5)), mean(bsat(:,6)), mean(busat(:,6));
+    mean(psat(:,1)), mean(pusat(:,1)), mean(psat(:,2)), mean(pusat(:,2)), mean(psat(:,3)), mean(pusat(:,3)), mean(psat(:,4)), mean(pusat(:,4)), mean(psat(:,5)), mean(pusat(:,5)), mean(psat(:,6)), mean(pusat(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)

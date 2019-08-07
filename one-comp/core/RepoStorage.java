@@ -341,6 +341,20 @@ public class RepoStorage {
 		host.getStorageSystem().addToStoredMessages(sm);
 	}
 	
+	/**
+	 * Adds a message to the depleted stored messages
+	 * @param sm The message to add
+	 * @return true if the message is added correctly
+	 */			
+	public void addToDepletedUnProcMessages(Message sm) {
+		if (sm != null) {
+			this.depletedUnProcMessages++;
+			this.depletedUnProcMessagesSize += sm.getSize();
+			if ((String)sm.getProperty("type") == "unprocessed")
+				this.mUnProcessed ++;
+		}
+	}
+	
 	
 	/**
 	 * Returns a stored message by ID.

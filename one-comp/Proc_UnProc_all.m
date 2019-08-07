@@ -389,10 +389,10 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(nonzeros(oproc_up(:,1))), mean(nonzeros(oproc_up(:,2))), mean(nonzeros(oproc_up(:,3))), mean(nonzeros(oproc_up(:,4))), mean(nonzeros(oproc_up(:,5))), mean(nonzeros(oproc_up(:,6)));
-    mean(nonzeros(hproc_up(:,1))), mean(nonzeros(hproc_up(:,2))), mean(nonzeros(hproc_up(:,3))), mean(nonzeros(hproc_up(:,4))), mean(nonzeros(hproc_up(:,5))), mean(nonzeros(hproc_up(:,6)));
-    mean(nonzeros(bproc_up(:,1))), mean(nonzeros(bproc_up(:,2))), mean(nonzeros(bproc_up(:,3))), mean(nonzeros(bproc_up(:,4))), mean(nonzeros(bproc_up(:,5))), mean(nonzeros(bproc_up(:,6)));
-    mean(nonzeros(pproc_up(:,1))), mean(nonzeros(pproc_up(:,2))), mean(nonzeros(pproc_up(:,3))), mean(nonzeros(pproc_up(:,4))), mean(nonzeros(pproc_up(:,5))), mean(nonzeros(pproc_up(:,6)))]);
+bar([mean(oproc_up(:,1)), mean(oproc_up(:,2)), mean(oproc_up(:,3)), mean(oproc_up(:,4)), mean(oproc_up(:,5)), mean(oproc_up(:,6));
+    mean(hproc_up(:,1)), mean(hproc_up(:,2)), mean(hproc_up(:,3)), mean(hproc_up(:,4)), mean(hproc_up(:,5)), mean(hproc_up(:,6));
+    mean(bproc_up(:,1)), mean(bproc_up(:,2)), mean(bproc_up(:,3)), mean(bproc_up(:,4)), mean(bproc_up(:,5)), mean(bproc_up(:,6));
+    mean(pproc_up(:,1)), mean(pproc_up(:,2)), mean(pproc_up(:,3)), mean(pproc_up(:,4)), mean(pproc_up(:,5)), mean(pproc_up(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Storage used (B)','fontsize',12)
@@ -414,10 +414,10 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar([mean(nonzeros(oproc(:,1))), mean(nonzeros(ouproc(:,1))), mean(nonzeros(oproc(:,2))), mean(nonzeros(ouproc(:,2))), mean(nonzeros(oproc(:,3))), mean(nonzeros(ouproc(:,3))), mean(nonzeros(oproc(:,4))), mean(nonzeros(ouproc(:,4))), mean(nonzeros(oproc(:,5))), mean(nonzeros(ouproc(:,5))), mean(nonzeros(oproc(:,6))), mean(nonzeros(ouproc(:,6)));
-    mean(nonzeros(hproc(:,1))), mean(nonzeros(huproc(:,1))), mean(nonzeros(hproc(:,2))), mean(nonzeros(huproc(:,2))), mean(nonzeros(hproc(:,3))), mean(nonzeros(huproc(:,3))), mean(nonzeros(hproc(:,4))), mean(nonzeros(huproc(:,4))), mean(nonzeros(hproc(:,5))), mean(nonzeros(huproc(:,5))), mean(nonzeros(hproc(:,6))), mean(nonzeros(huproc(:,6)));
-    mean(nonzeros(bproc(:,1))), mean(nonzeros(buproc(:,1))), mean(nonzeros(bproc(:,2))), mean(nonzeros(buproc(:,2))), mean(nonzeros(bproc(:,3))), mean(nonzeros(buproc(:,3))), mean(nonzeros(bproc(:,4))), mean(nonzeros(buproc(:,4))), mean(nonzeros(bproc(:,5))), mean(nonzeros(buproc(:,5))), mean(nonzeros(bproc(:,6))), mean(nonzeros(buproc(:,6)));
-    mean(nonzeros(pproc(:,1))), mean(nonzeros(puproc(:,1))), mean(nonzeros(pproc(:,2))), mean(nonzeros(puproc(:,2))), mean(nonzeros(pproc(:,3))), mean(nonzeros(puproc(:,3))), mean(nonzeros(pproc(:,4))), mean(nonzeros(puproc(:,4))), mean(nonzeros(pproc(:,5))), mean(nonzeros(puproc(:,5))), mean(nonzeros(pproc(:,6))), mean(nonzeros(puproc(:,6)))]);
+bar([mean(oproc(:,1)), mean(ouproc(:,1)), mean(oproc(:,2)), mean(ouproc(:,2)), mean(oproc(:,3)), mean(ouproc(:,3)), mean(oproc(:,4)), mean(ouproc(:,4)), mean(oproc(:,5)), mean(ouproc(:,5)), mean(oproc(:,6)), mean(ouproc(:,6));
+    mean(hproc(:,1)), mean(huproc(:,1)), mean(hproc(:,2)), mean(huproc(:,2)), mean(hproc(:,3)), mean(huproc(:,3)), mean(hproc(:,4)), mean(huproc(:,4)), mean(hproc(:,5)), mean(huproc(:,5)), mean(hproc(:,6)), mean(huproc(:,6));
+    mean(bproc(:,1)), mean(buproc(:,1)), mean(bproc(:,2)), mean(buproc(:,2)), mean(bproc(:,3)), mean(buproc(:,3)), mean(bproc(:,4)), mean(buproc(:,4)), mean(bproc(:,5)), mean(buproc(:,5)), mean(bproc(:,6)), mean(buproc(:,6));
+    mean(pproc(:,1)), mean(puproc(:,1)), mean(pproc(:,2)), mean(puproc(:,2)), mean(pproc(:,3)), mean(puproc(:,3)), mean(pproc(:,4)), mean(puproc(:,4)), mean(pproc(:,5)), mean(puproc(:,5)), mean(pproc(:,6)), mean(puproc(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Processed/Total Processing Messages (100%)','fontsize',12)
