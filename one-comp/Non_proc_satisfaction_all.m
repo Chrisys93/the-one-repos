@@ -167,7 +167,7 @@ bar([mean(nonzeros(osat_perc(:,1))), mean(nonzeros(osat_perc(:,2))), mean(nonzer
     mean(nonzeros(psat_perc(:,1))), mean(nonzeros(psat_perc(:,2))), mean(nonzeros(psat_perc(:,3))), mean(nonzeros(psat_perc(:,4))), mean(nonzeros(psat_perc(:,5))), mean(nonzeros(psat_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Percentage (*100%) of non-processing messages satisfied','fontsize',12)
+ylabel('Non-processing Message Satisfaction (100%)','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:

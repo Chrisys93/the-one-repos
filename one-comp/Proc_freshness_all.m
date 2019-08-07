@@ -167,7 +167,7 @@ bar([mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(no
     mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Percentage (*100%) of fresh/shelf messages','fontsize',12)
+ylabel('PProcessing Message Freshness (100%)','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:

@@ -235,6 +235,8 @@ public class RepoStorage {
 				this.mOvertime ++;
 			if ((String)sm.getProperty("type") == "unprocessed")
 				this.mUnProcessed ++;
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
 			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
@@ -270,6 +272,8 @@ public class RepoStorage {
 			this.mUnSatisfied ++;
 			if ((String)sm.getProperty("type") == "unprocessed")
 				this.mUnProcessed ++;
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
 				this.mStorTime += (double)sm.getProperty("storTime");
@@ -300,6 +304,8 @@ public class RepoStorage {
 				this.mOvertime ++;
 			if ((String)sm.getProperty("type") == "unprocessed")
 				this.mUnProcessed ++;
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
 			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
@@ -333,20 +339,6 @@ public class RepoStorage {
 	public void addToDeplUnProcMessages(Message sm) {
 		sm.updateProperty("type", "unprocessed");
 		host.getStorageSystem().addToStoredMessages(sm);
-	}
-	
-	/**
-	 * Adds a message to the depleted stored messages
-	 * @param sm The message to add
-	 * @return true if the message is added correctly
-	 */			
-	public void addToDepletedUnProcMessages(Message sm) {
-		if (sm != null) {
-			this.depletedUnProcMessages++;
-			this.depletedUnProcMessagesSize += sm.getSize();
-			if ((String)sm.getProperty("type") == "unprocessed")
-				this.mUnProcessed ++;
-		}
 	}
 	
 	

@@ -658,11 +658,7 @@ public class ProcApplication extends Application {
 						temp.addProperty("storTime", storTime);
 						temp.addProperty("satisfied", false);
 						temp.addProperty("overtime", false);
-						
-						if (((String)temp.getProperty("type")).equalsIgnoreCase("unprocessed"))
-							host.getStorageSystem().addToDepletedUnProcMessages(temp);
-						else
-							host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().addToDeplStaticMessages(temp);
 					}
 				}
 				else if (host.getStorageSystem().getNewestProcessMessage() != null){
@@ -689,10 +685,7 @@ public class ProcApplication extends Application {
 							temp.addProperty("overtime", true);
 						}
 						
-						if (((String)temp.getProperty("type")).equalsIgnoreCase("unprocessed"))
-							host.getStorageSystem().addToDepletedUnProcMessages(temp);
-						else
-							host.getStorageSystem().addToDeplStaticMessages(temp);
+						host.getStorageSystem().addToDeplStaticMessages(temp);
 					}
 				}
 	
@@ -826,7 +819,7 @@ public class ProcApplication extends Application {
 		double curTime = SimClock.getTime();
 		Message temp = host.getStorageSystem().getOldestDeplUnProcMessage();
 		host.getStorageSystem().deleteMessage(temp.getId());
-		host.getStorageSystem().addToDepletedUnProcMessages(temp);
+		host.getStorageSystem().addToDeplStaticMessages(temp);
 	}
 
 	/**

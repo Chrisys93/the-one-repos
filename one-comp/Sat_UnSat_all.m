@@ -216,8 +216,8 @@ for repo = 1:c3
     if (isnan(mean(HCB4(:, repo))))
         hsat(repo, 4) = 0;
     end
-    hsat(repo, 5) = mean(HCB6(:, repo));
-    if (isnan(mean(HCB6(:, repo))))
+    hsat(repo, 5) = mean(HCB5(:, repo));
+    if (isnan(mean(HCB5(:, repo))))
         hsat(repo, 5) = 0;
     end
     hsat(repo, 6) = mean(HCB6(:, repo));
@@ -312,8 +312,8 @@ for repo = 1:c3
     if (isnan(mean(HSB4(:, repo))))
         husat(repo, 4) = 0;
     end
-    husat(repo, 5) = mean(HSB6(:, repo));
-    if (isnan(mean(HSB6(:, repo))))
+    husat(repo, 5) = mean(HSB5(:, repo));
+    if (isnan(mean(HSB5(:, repo))))
         husat(repo, 5) = 0;
     end
     husat(repo, 6) = mean(HSB6(:, repo));
@@ -418,7 +418,7 @@ bar([mean(nonzeros(osat(:,1))), mean(nonzeros(ousat(:,1))), mean(nonzeros(osat(:
     mean(nonzeros(psat(:,1))), mean(nonzeros(pusat(:,1))), mean(nonzeros(psat(:,2))), mean(nonzeros(pusat(:,2))), mean(nonzeros(psat(:,3))), mean(nonzeros(pusat(:,3))), mean(nonzeros(psat(:,4))), mean(nonzeros(pusat(:,4))), mean(nonzeros(psat(:,5))), mean(nonzeros(pusat(:,5))), mean(nonzeros(psat(:,6))), mean(nonzeros(pusat(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 %TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...
