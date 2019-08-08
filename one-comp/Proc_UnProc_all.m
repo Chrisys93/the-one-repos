@@ -377,7 +377,7 @@ figure
 bar_handle = bar([oproc_up(:,1), oproc_up(:,2), oproc_up(:,3), oproc_up(:,4), oproc_up(:,5), oproc_up(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('Processed/Total Processing Messages (100%)','fontsize',12)
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
 set(bar_handle(2),'FaceColor',[0,1,0])
@@ -395,7 +395,7 @@ bar([mean(oproc_up(:,1)), mean(oproc_up(:,2)), mean(oproc_up(:,3)), mean(oproc_u
     mean(pproc_up(:,1)), mean(pproc_up(:,2)), mean(pproc_up(:,3)), mean(pproc_up(:,4)), mean(pproc_up(:,5)), mean(pproc_up(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('Processed/Total Processing Messages (100%)','fontsize',12)
 %TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...

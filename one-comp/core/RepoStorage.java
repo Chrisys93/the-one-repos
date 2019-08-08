@@ -233,10 +233,11 @@ public class RepoStorage {
 			this.depletedStaticMessagesSize += sm.getSize();
 			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
-			if ((String)sm.getProperty("type") == "unprocessed")
+			if ((String)sm.getProperty("type") == "unprocessed") {
 				this.mUnProcessed ++;
 				this.depletedUnProcMessages++;
 				this.depletedUnProcMessagesSize += sm.getSize();
+			}
 			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
@@ -270,10 +271,11 @@ public class RepoStorage {
 			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
 			this.mUnSatisfied ++;
-			if ((String)sm.getProperty("type") == "unprocessed")
+			if ((String)sm.getProperty("type") == "unprocessed") {
 				this.mUnProcessed ++;
 				this.depletedUnProcMessages++;
 				this.depletedUnProcMessagesSize += sm.getSize();
+			}
 			if(sm.getProperty("storTime") != null) {
 				this.mStorTimeNo ++;
 				this.mStorTime += (double)sm.getProperty("storTime");
@@ -302,10 +304,11 @@ public class RepoStorage {
 			this.depletedCloudStaticMessagesSize += sm.getSize();
 			if ((Boolean)sm.getProperty("overtime"))
 				this.mOvertime ++;
-			if ((String)sm.getProperty("type") == "unprocessed")
+			if ((String)sm.getProperty("type") == "unprocessed") {
 				this.mUnProcessed ++;
 				this.depletedUnProcMessages++;
 				this.depletedUnProcMessagesSize += sm.getSize();
+			}
 			if ((Boolean)sm.getProperty("satisfied"))
 				this.mSatisfied ++;
 			else
@@ -348,10 +351,11 @@ public class RepoStorage {
 	 */			
 	public void addToDepletedUnProcMessages(Message sm) {
 		if (sm != null) {
-			this.depletedUnProcMessages++;
-			this.depletedUnProcMessagesSize += sm.getSize();
-			if ((String)sm.getProperty("type") == "unprocessed")
+			if ((String)sm.getProperty("type") == "unprocessed") {
+				this.depletedUnProcMessages++;
+				this.depletedUnProcMessagesSize += sm.getSize();
 				this.mUnProcessed ++;
+			}
 		}
 	}
 	
