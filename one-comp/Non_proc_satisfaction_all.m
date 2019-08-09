@@ -171,9 +171,9 @@ ylabel('Non-processing Message Satisfaction (100%)','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:
-lgd1 =legend('1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4.1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 3:1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 5:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:1', 'Location', 'southoutside');
-title(lgd1, 'Non-Proc:Proc');
-lgd1.NumColumns = 6;
+% lgd1 =legend('1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4.1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 3:1', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 5:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 4:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:2', '1: 1; 1.1; 100; 3,1 \newline2: 0.2; 3; 3; 100; \newline3: 0.3; 3; 4; 100 \newline4: 100; 2:1', 'Location', 'southoutside');
+% title(lgd1, 'Non-Proc:Proc');
+% lgd1.NumColumns = 6;
 % xlim([17 48]);
 % set(bar_handle(1),'FaceColor',[0,0.5,1])
 % set(bar_handle(2),'FaceColor',[0,1,0])
