@@ -420,7 +420,7 @@ bar([mean(oproc(:,1)), mean(ouproc(:,1)), mean(oproc(:,2)), mean(ouproc(:,2)), m
     mean(pproc(:,1)), mean(puproc(:,1)), mean(pproc(:,2)), mean(puproc(:,2)), mean(pproc(:,3)), mean(puproc(:,3)), mean(pproc(:,4)), mean(puproc(:,4)), mean(pproc(:,5)), mean(puproc(:,5)), mean(pproc(:,6)), mean(puproc(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Processed/Total Processing Messages (100%)','fontsize',12)
+ylabel('Processed/UnProcessed Messages BW (B/s)','fontsize',12)
 %TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...

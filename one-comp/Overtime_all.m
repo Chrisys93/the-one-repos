@@ -148,7 +148,7 @@ figure
 bar_handle = bar([oovertime(:,1), oovertime(:,2), oovertime(:,3), oovertime(:,4), oovertime(:,5), oovertime(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('No. of messages stored in overtime','fontsize',12)
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
 set(bar_handle(2),'FaceColor',[0,1,0])
@@ -166,7 +166,7 @@ bar([mean(nonzeros(oovertime(:,1))), mean(nonzeros(oovertime(:,2))), mean(nonzer
     mean(nonzeros(povertime(:,1))), mean(nonzeros(povertime(:,2))), mean(nonzeros(povertime(:,3))), mean(nonzeros(povertime(:,4))), mean(nonzeros(povertime(:,5))), mean(nonzeros(povertime(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('No. of messages stored in overtime','fontsize',12)
 %TODO:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...

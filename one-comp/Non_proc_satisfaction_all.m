@@ -148,7 +148,7 @@ figure
 bar_handle = bar([osat_perc(:,1), osat_perc(:,2), osat_perc(:,3), osat_perc(:,4), osat_perc(:,5), osat_perc(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of non-processing messages satisfied','fontsize',12)
+ylabel('Non-processing Message Satisfaction (100%)','fontsize',12)
 ylim([0 1]);
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])

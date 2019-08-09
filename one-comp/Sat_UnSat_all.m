@@ -398,7 +398,7 @@ bar([mean(osat_up(:,1)), mean(osat_up(:,2)), mean(osat_up(:,3)), mean(osat_up(:,
     mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Storage used (B)','fontsize',12)
+ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 %TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...
@@ -420,7 +420,7 @@ bar([mean(osat(:,1)), mean(ousat(:,1)), mean(osat(:,2)), mean(ousat(:,2)), mean(
     mean(psat(:,1)), mean(pusat(:,1)), mean(psat(:,2)), mean(pusat(:,2)), mean(psat(:,3)), mean(pusat(:,3)), mean(psat(:,4)), mean(pusat(:,4)), mean(psat(:,5)), mean(pusat(:,5)), mean(psat(:,6)), mean(pusat(:,6))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
+ylabel('Non-processing Message Satisfied and UnSatisfied Upload BW (B/s)','fontsize',12)
 %TSDS:
 % Modify this:
 lgd1 =legend('1: f; 1.1; 100; 3:1 \newline2: f; 3; 100; 4:1; \newline3: t; 4; 100; 4:1; \newline4: t; 2; 100; 1:2', ...

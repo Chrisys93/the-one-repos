@@ -148,7 +148,7 @@ figure
 bar_handle = bar([ofresh_perc(:,1), ofresh_perc(:,2), ofresh_perc(:,3), ofresh_perc(:,4), ofresh_perc(:,5), ofresh_perc(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
-ylabel('Percentage (*100%) of fresh/shelf messages','fontsize',12)
+ylabel('Processing Message Freshness (100%)','fontsize',12)
 ylim([0 1]);
 % xlim([17 48]);
 set(bar_handle(1),'FaceColor',[0,0.5,1])
@@ -167,7 +167,7 @@ bar([mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(no
     mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
-ylabel('PProcessing Message Freshness (100%)','fontsize',12)
+ylabel('Processing Message Freshness (100%)','fontsize',12)
 ylim([0 1]);
 %TODO:
 % Modify this:
