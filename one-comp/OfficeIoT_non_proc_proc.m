@@ -363,15 +363,15 @@ end
 %(check which repos should be monitored mainly by doing different stem
 %plots for the different simulation scenarios)
 
-%Repos:
-%19, 20, 21, 41, 42, 43
-%change mostly.
-% figure
-% stem3(S6, ':.');
-% title('3D Stem plot of Repos Storage Usage','fontsize',16)
-% xlabel('Repo Number','fontsize',12) 
-% ylabel('Time(s)','fontsize',12)
-% zlabel('Space used(B)','fontsize',12)
+% Repos:
+% 19, 20, 21, 41, 42, 43
+% change mostly.
+figure
+stem3(S6, ':.');
+title('3D Stem plot of Repos Storage Usage','fontsize',16)
+xlabel('Repo Number','fontsize',12) 
+ylabel('Time(s)','fontsize',12)
+zlabel('Space used(B)','fontsize',12)
 
 % figure
 % plot(1:10800, S1(:,19), '-', 1:10800, S3(:,19), '-', 1:10800, S5(:,19), '-', 1:10800, S1(:,21), '--', 1:10800, S3(:,21), '--', 1:10800, S5(:,21), '--', 1:10800, S1(:,43), ':', 1:10800, S3(:,43), ':', 1:10800, S5(:,43), ':', 'LineWidth',1);

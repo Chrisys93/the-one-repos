@@ -375,8 +375,8 @@ GUI.EventLogPanel.nrofEvents = 100
 # Define new application
 procApp.type = ProcApplication
 # Messages to be depleted (processing first and, if any left, nonprocessing, after)
-procApp.depletionRate = 20M
-procApp.cloudRate = 10M
+procApp.depletionRate = [20M; 30M; 20M; 20M; 20M; 20M]
+procApp.cloudRate = [20M; 20M; 10M; 10M; 10M; 10M]
 procApp.passive = false
 procApp.coreNo = 10
 procApp.maxStorage = 0.95
@@ -402,7 +402,7 @@ procApp2.interval = 1
 procApp2.delay = [0.2; 0.2; 0.2; 0.1; 0.1; 0.1]
 procApp2.freshPer = [3; 3; 3; 2; 2; 2]
 procApp2.procShelf = [3; 3.2; 50]
-procApp2.nonprocShelf = [300; 600; 500; 600; 800; 1000]
+procApp2.nonprocShelf = [100; 300; 500; 600; 800; 1000]
 procApp2.destinationName = r
 procApp2.procSize = 1M
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)

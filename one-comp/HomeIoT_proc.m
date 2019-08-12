@@ -367,7 +367,7 @@ end
 %19, 20, 21, 41, 42, 43
 %change mostly.
 figure
-stem3(S4, ':.');
+stem3(RS2, ':.');
 title('3D Stem plot of Repos Storage Usage','fontsize',16)
 xlabel('Repo Number','fontsize',12) 
 ylabel('Time(s)','fontsize',12)

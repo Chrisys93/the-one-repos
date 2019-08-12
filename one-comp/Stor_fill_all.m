@@ -145,7 +145,7 @@ figure
 
 % subplot(2,1,1);
 % yyaxis left
-bar_handle = bar([ostor_fill(:,1), ostor_fill(:,2), ostor_fill(:,3), ostor_fill(:,4), ostor_fill(:,5), ostor_fill(:,6)]);
+bar_handle = bar([hstor_fill(:,1), hstor_fill(:,2), hstor_fill(:,3), hstor_fill(:,4), hstor_fill(:,5), hstor_fill(:,6)]);
 % title('Processing threads','fontsize',16)
 xlabel('Repository number','fontsize',12) 
 ylabel('Storage used (B)','fontsize',12)
