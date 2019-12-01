@@ -391,7 +391,7 @@ procApp2.destinationName = r
 procApp2.procSize = 500k
 # Stored message ratio to processing message (no. of messages to be stored vs. no. of messages to be processed)
 procApp2.compressRate = 2,2
-procApp2.passiveRate = 4,1
+procApp2.passiveRate = [1,2; 2,2; 4,2; 5,2; 3,1; 4,1]
 procApp2.passive = false
 
 # Define new application
