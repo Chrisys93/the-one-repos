@@ -421,40 +421,40 @@ bar([mean(oproc(:,1)), mean(ouproc(:,1)), mean(oproc(:,2)), mean(ouproc(:,2)), m
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Processed/UnProcessed Messages BW (B/s)','fontsize',12)
-OPF1 = dlmread('officeIoT/RPFR1', ' ', 0, 1);
-HPF1 = dlmread('homeIoT/RPFR1', ' ', 0, 1);
-BPF1 = dlmread('buses/RPFR1', ' ', 0, 1);
-PPF1 = dlmread('non-proc_proc/RPFR1', ' ', 0, 1);
+OPF1 = dlmread('one-comp/officeIoT/RPFR1', ' ', 0, 1);
+HPF1 = dlmread('one-comp/homeIoT/RPFR1', ' ', 0, 1);
+BPF1 = dlmread('one-comp/buses/RPFR1', ' ', 0, 1);
+PPF1 = dlmread('one-comp/non-proc_proc/RPFR1', ' ', 0, 1);
 
 
-OPF2 = dlmread('officeIoT/RPFR2', ' ', 0, 1);
-HPF2 = dlmread('homeIoT/RPFR2', ' ', 0, 1);
-BPF2 = dlmread('buses/RPFR2', ' ', 0, 1);
-PPF2 = dlmread('non-proc_proc/RPFR2', ' ', 0, 1);
+OPF2 = dlmread('one-comp/officeIoT/RPFR2', ' ', 0, 1);
+HPF2 = dlmread('one-comp/homeIoT/RPFR2', ' ', 0, 1);
+BPF2 = dlmread('one-comp/buses/RPFR2', ' ', 0, 1);
+PPF2 = dlmread('one-comp/non-proc_proc/RPFR2', ' ', 0, 1);
 
 
-OPF3 = dlmread('officeIoT/RPFR3', ' ', 0, 1);
-HPF3 = dlmread('homeIoT/RPFR3', ' ', 0, 1);
-BPF3 = dlmread('buses/RPFR3', ' ', 0, 1);
-PPF3 = dlmread('non-proc_proc/RPFR3', ' ', 0, 1);
+OPF3 = dlmread('one-comp/officeIoT/RPFR3', ' ', 0, 1);
+HPF3 = dlmread('one-comp/homeIoT/RPFR3', ' ', 0, 1);
+BPF3 = dlmread('one-comp/buses/RPFR3', ' ', 0, 1);
+PPF3 = dlmread('one-comp/non-proc_proc/RPFR3', ' ', 0, 1);
 
 
-OPF4 = dlmread('officeIoT/RPFR4', ' ', 0, 1);
-HPF4 = dlmread('homeIoT/RPFR4', ' ', 0, 1);
-BPF4 = dlmread('buses/RPFR4', ' ', 0, 1);
-PPF4 = dlmread('non-proc_proc/RPFR4', ' ', 0, 1);
+OPF4 = dlmread('one-comp/officeIoT/RPFR4', ' ', 0, 1);
+HPF4 = dlmread('one-comp/homeIoT/RPFR4', ' ', 0, 1);
+BPF4 = dlmread('one-comp/buses/RPFR4', ' ', 0, 1);
+PPF4 = dlmread('one-comp/non-proc_proc/RPFR4', ' ', 0, 1);
 
 
-OPF5 = dlmread('officeIoT/RPFR5', ' ', 0, 1);
-HPF5 = dlmread('homeIoT/RPFR5', ' ', 0, 1);
-BPF5 = dlmread('buses/RPFR5', ' ', 0, 1);
-PPF5 = dlmread('non-proc_proc/RPFR5', ' ', 0, 1);
+OPF5 = dlmread('one-comp/officeIoT/RPFR5', ' ', 0, 1);
+HPF5 = dlmread('one-comp/homeIoT/RPFR5', ' ', 0, 1);
+BPF5 = dlmread('one-comp/buses/RPFR5', ' ', 0, 1);
+PPF5 = dlmread('one-comp/non-proc_proc/RPFR5', ' ', 0, 1);
 
 
-OPF6 = dlmread('officeIoT/RPFR6', ' ', 0, 1);
-HPF6 = dlmread('homeIoT/RPFR6', ' ', 0, 1);
-BPF6 = dlmread('buses/RPFR6', ' ', 0, 1);
-PPF6 = dlmread('non-proc_proc/RPFR6', ' ', 0, 1);
+OPF6 = dlmread('one-comp/officeIoT/RPFR6', ' ', 0, 1);
+HPF6 = dlmread('one-comp/homeIoT/RPFR6', ' ', 0, 1);
+BPF6 = dlmread('one-comp/buses/RPFR6', ' ', 0, 1);
+PPF6 = dlmread('one-comp/non-proc_proc/RPFR6', ' ', 0, 1);
 
 
 [r3, c3] = size(OPF1);
