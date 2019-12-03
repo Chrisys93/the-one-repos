@@ -191,6 +191,24 @@ public class ProcApplication extends Application {
 				((String)msg.getProperty("type")).equalsIgnoreCase("proc")) {
 			processIncomingMessage(host, msg);
 		}
+		else if (!host.hasStorageCapability() && 
+				host.hasProcessingCapability() && 
+				((String)msg.getProperty("type")).equalsIgnoreCase("nonproc")) {
+			double curTime = SimClock.getTime();
+			host.getStorageSystem().deleteMessage(msg.getId());
+			double storTime = curTime - msg.getReceiveTime();
+			msg.addProperty("storTime", storTime);
+			if ((double)msg.getProperty("storTime") < (double)msg.getProperty("shelfLife")) {
+				msg.addProperty("satisfied", false);
+				msg.addProperty("overtime", false);
+				host.getStorageSystem().addToDeplStaticMessages(msg);
+			}
+			else {
+				msg.addProperty("satisfied", true);
+				msg.addProperty("overtime", false);
+				host.getStorageSystem().addToDeplStaticMessages(msg);
+			}
+		}
 		return msg;
 	}
 
