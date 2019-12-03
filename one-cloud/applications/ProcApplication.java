@@ -295,6 +295,13 @@ public class ProcApplication extends Application {
 		else if (!host.hasStorageCapability() && host.hasProcessingCapability()) {
 			this.updateUpBW(host);
 			this.deplUp(host);
+			
+			if(host.getStorageSystem().getOldestQueueFreshMessage() != null) {
+				this.processMessage(host, host.getStorageSystem().getOldestQueueFreshMessage());
+			}
+			else if(host.getStorageSystem().getOldestQueueShelfMessage() != null) {
+				this.processMessage(host, host.getStorageSystem().getOldestQueueShelfMessage());			
+			}
 		}
 
 	}
@@ -470,9 +477,11 @@ public class ProcApplication extends Application {
 			host.getStorageSystem().addToStoredMessages(procMessage);
 		}
 		
-		if ((double)procMessage.getProperty("procTime") <= curTime) {
-			this.processMessage(host, procMessage);
-			ans = true;
+		if(host.getStorageSystem().getOldestQueueFreshMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getOldestQueueFreshMessage());
+		}
+		else if(host.getStorageSystem().getOldestQueueShelfMessage() != null) {
+			this.processMessage(host, host.getStorageSystem().getOldestQueueShelfMessage());			
 		}
 		else {
 			procMessage.updateProperty("type", "unprocessed");
@@ -562,7 +571,8 @@ public class ProcApplication extends Application {
 	
 	public void updateUpBW(DTNHost host) {
 		this.cloudBW = host.getStorageSystem().getDepletedCloudProcMessagesBW(false) + 
-				host.getStorageSystem().getDepletedUnProcMessagesBW(false);
+				host.getStorageSystem().getDepletedUnProcMessagesBW(false) +
+				host.getStorageSystem().getDepletedStaticMessagesBW(false);
 	}
 	
 	public void updateDeplBW(DTNHost host) {
@@ -719,53 +729,6 @@ public class ProcApplication extends Application {
 				this.updateUpBW(host);
 				
 				
-				//System.out.println("Depletion is at: "+ deplBW);
-				this.lastDepl = curTime;
-				/*System.out.println("this.cloudBW is at " + 
-						this.cloudBW +
-						" this.cloud_lim is at " + 
-						this.cloud_lim +
-						" host.getStorageSystem().getTotalStorageSpace()*this.min_stor equal "+
-						(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)+
-						" Total space is "+host.getStorageSystem().getTotalStorageSpace());*/
-				//System.out.println("Depleted static messages: "+ sdepleted);
-			}
-		}
-		else if (host.getStorageSystem().getProcessedMessagesSize()+
-				host.getStorageSystem().getStaleStaticMessagesSize() > 
-				(long)(host.getStorageSystem().getTotalStorageSpace()*this.max_stor)){
-			this.cloudEmptyLoop = true;
-			for (int i = 0; this.cloudBW<this.cloud_lim && this.cloudEmptyLoop && i<50; i++) {
-				
-				/* Oldest unprocessed message is depleted (as a FIFO type of storage) */
-
-				if (host.getStorageSystem().getOldestStaleStaticMessage() != null && 
-						this.cloudBW<this.cloud_lim){
-					oldestSatisfiedStaticDepletion(host);
-				}
-				
-				/*
-				 * Oldest unprocessed messages should be given priority for depletion 
-				 * at a certain point.
-				 */
-				
-				else if(host.getStorageSystem().getOldestDeplUnProcMessage() != null) {
-					oldestUnProcDepletion(host);
-				}
-				
-				/* 
-				 * Oldest processed message is depleted (as a FIFO type of storage,
-				 * and a new message for processing is processed
-				 */
-				else if (!host.getStorageSystem().isProcessedEmpty()) {
-					this.processedDepletion(host);
-				}
-				else {
-					this.cloudEmptyLoop = false;
-					//System.out.println("Depletion is at: "+ this.cloudBW);
-				}
-				//Revise:
-				this.updateCloudBW(host);
 				//System.out.println("Depletion is at: "+ deplBW);
 				this.lastDepl = curTime;
 				/*System.out.println("this.cloudBW is at " + 

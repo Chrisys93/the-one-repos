@@ -198,7 +198,7 @@ public class RepoStorage {
 				}
 			}
 			else if (((String) sm.getProperty("type")).equalsIgnoreCase("proc")) {
-				if (host.hasStorageCapability() && host.hasProcessingCapability()) {
+				if (host.hasProcessingCapability()) {
 					this.processMessages.add(sm);
 					this.processSize += sm.getSize();
 				}
