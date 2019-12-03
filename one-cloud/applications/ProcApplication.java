@@ -446,10 +446,13 @@ public class ProcApplication extends Application {
 	
 	public boolean processIncomingMessage(DTNHost host, Message procMessage) {
 		double curTime = SimClock.getTime();
+		
 		boolean ans = false;
 		double delayed = (double)procMessage.getProperty("delay");
 		double procMessageFresh = (double)procMessage.getProperty("freshPer");
 		double procMessageShelf = (double)procMessage.getProperty("shelfLife");
+		getProcMin();
+		
 		if (this.procMin-curTime+delayed <= procMessageFresh - (curTime-procMessage.getReceiveTime())) {
 			host.getStorageSystem().deleteProcMessage(procMessage.getId());
 			procMessage.addProperty("Fresh", true);
