@@ -421,6 +421,9 @@ bar([mean(oproc(:,1)), mean(ouproc(:,1)), mean(oproc(:,2)), mean(ouproc(:,2)), m
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
 ylabel('Processed/UnProcessed Messages BW (B/s)','fontsize',12)
+ylim([0 15e5]);
+
+
 OPF1 = dlmread('officeIoT/RPFR1', ' ', 0, 1);
 HPF1 = dlmread('homeIoT/RPFR1', ' ', 0, 1);
 BPF1 = dlmread('buses/RPFR1', ' ', 0, 1);
@@ -611,7 +614,7 @@ set(gca,'xtick',1:8,'XTickLabel',{'Processed', 'Fresh', 'Processed', 'Fresh', 'P
 % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 % title('Processing threads','fontsize',16)
 % xlabel('Scenario Number','fontsize',12) 
-ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
+ylabel('Satisfied Processing Message Upload (100%)','fontsize',12)
 
 groupX = [2 4 6 8]; %// central value of each group
 groupY = -0.1; %// vertical position of texts. Adjust as needed

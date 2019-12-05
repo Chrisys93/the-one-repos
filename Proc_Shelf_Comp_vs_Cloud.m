@@ -457,6 +457,42 @@ BPF6 = dlmread('one-comp/buses/RPFR6', ' ', 0, 1);
 PPF6 = dlmread('one-comp/non-proc_proc/RPFR6', ' ', 0, 1);
 
 
+COPF1 = dlmread('one-comp/officeIoT/RPFR1', ' ', 0, 1);
+CHPF1 = dlmread('one-comp/homeIoT/RPFR1', ' ', 0, 1);
+CBPF1 = dlmread('one-comp/buses/RPFR1', ' ', 0, 1);
+CPPF1 = dlmread('one-comp/non-proc_proc/RPFR1', ' ', 0, 1);
+
+
+COPF2 = dlmread('one-comp/officeIoT/RPFR2', ' ', 0, 1);
+CHPF2 = dlmread('one-comp/homeIoT/RPFR2', ' ', 0, 1);
+CBPF2 = dlmread('one-comp/buses/RPFR2', ' ', 0, 1);
+CPPF2 = dlmread('one-comp/non-proc_proc/RPFR2', ' ', 0, 1);
+
+
+COPF3 = dlmread('one-comp/officeIoT/RPFR3', ' ', 0, 1);
+CHPF3 = dlmread('one-comp/homeIoT/RPFR3', ' ', 0, 1);
+CBPF3 = dlmread('one-comp/buses/RPFR3', ' ', 0, 1);
+CPPF3 = dlmread('one-comp/non-proc_proc/RPFR3', ' ', 0, 1);
+
+
+COPF4 = dlmread('one-comp/officeIoT/RPFR4', ' ', 0, 1);
+CHPF4 = dlmread('one-comp/homeIoT/RPFR4', ' ', 0, 1);
+CBPF4 = dlmread('one-comp/buses/RPFR4', ' ', 0, 1);
+CPPF4 = dlmread('one-comp/non-proc_proc/RPFR4', ' ', 0, 1);
+
+
+COPF5 = dlmread('one-comp/officeIoT/RPFR5', ' ', 0, 1);
+CHPF5 = dlmread('one-comp/homeIoT/RPFR5', ' ', 0, 1);
+CBPF5 = dlmread('one-comp/buses/RPFR5', ' ', 0, 1);
+CPPF5 = dlmread('one-comp/non-proc_proc/RPFR5', ' ', 0, 1);
+
+
+COPF6 = dlmread('one-comp/officeIoT/RPFR6', ' ', 0, 1);
+CHPF6 = dlmread('one-comp/homeIoT/RPFR6', ' ', 0, 1);
+CBPF6 = dlmread('one-comp/buses/RPFR6', ' ', 0, 1);
+CPPF6 = dlmread('one-comp/non-proc_proc/RPFR6', ' ', 0, 1);
+
+
 [r3, c3] = size(OPF1);
 
 for repo = 1:c3
@@ -630,24 +666,6 @@ pos(2) = pos(2) + deltaY; %// vertically compress axis to make room for texts
 set(gca, 'Position', pos); %/ set corrected position for axis
 
 
-% yyaxis right
-% y = [mean(nonzeros(oproc_up(:,1))), mean(nonzeros(oproc_up(:,2))), mean(nonzeros(oproc_up(:,3))), mean(nonzeros(oproc_up(:,4))), mean(nonzeros(oproc_up(:,5))), mean(nonzeros(oproc_up(:,6)));
-%     mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(nonzeros(ofresh_perc(:,3))), mean(nonzeros(ofresh_perc(:,4))), mean(nonzeros(ofresh_perc(:,5))), mean(nonzeros(ofresh_perc(:,6)));
-%     mean(nonzeros(hproc_up(:,1))), mean(nonzeros(hproc_up(:,2))), mean(nonzeros(hproc_up(:,3))), mean(nonzeros(hproc_up(:,4))), mean(nonzeros(hproc_up(:,5))), mean(nonzeros(hproc_up(:,6)));
-%     mean(nonzeros(hfresh_perc(:,1))), mean(nonzeros(hfresh_perc(:,2))), mean(nonzeros(hfresh_perc(:,3))), mean(nonzeros(hfresh_perc(:,4))), mean(nonzeros(hfresh_perc(:,5))), mean(nonzeros(hfresh_perc(:,6)));
-%     mean(nonzeros(bproc_up(:,1))), mean(nonzeros(bproc_up(:,2))), mean(nonzeros(bproc_up(:,3))), mean(nonzeros(bproc_up(:,4))), mean(nonzeros(bproc_up(:,5))), mean(nonzeros(bproc_up(:,6)));
-%     mean(nonzeros(bfresh_perc(:,1))), mean(nonzeros(bfresh_perc(:,2))), mean(nonzeros(bfresh_perc(:,3))), mean(nonzeros(bfresh_perc(:,4))), mean(nonzeros(bfresh_perc(:,5))), mean(nonzeros(bfresh_perc(:,6)));
-%     mean(nonzeros(pproc_up(:,1))), mean(nonzeros(pproc_up(:,2))), mean(nonzeros(pproc_up(:,3))), mean(nonzeros(pproc_up(:,4))), mean(nonzeros(pproc_up(:,5))), mean(nonzeros(pproc_up(:,6)))
-%     mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))];
-% bar([1:8],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :); 0,0,0,0,0,0; y(6, :); 0,0,0,0,0,0; y(8, :)],'group')
-% % set(gca,'xtick',1:8)
-% % xt= [2-0.34, 2-0.2, 2-0.07, 2.07, 2.2, 2.34, 4-0.34, 4-0.2, 4-0.07, 4.07, 4.2, 4.34, 6-0.34, 6-0.2, 6-0.07, 6.07, 6.2, 6.34, 8-0.34, 8-0.2, 8-0.07, 8.07, 8.2, 8.34];
-% % yt=[y(2,:), y(4,:), y(6,:), y(8,:)]-50;
-% %xt=[1, 3, 5, 7]-0.25;
-% %yt=[y(1,1); y(3,1); y(5,1); y(7,1)]+50;
-% % ytxt=num2str([y(2, :)'; y(4, :)'; y(6, :)'; y(8, :)'],'%.1f');
-% % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
-% % title('Processing threads','fontsize',16)
-% ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
+% Maybe try and get some comparisons on: BW, goodput
 
 
