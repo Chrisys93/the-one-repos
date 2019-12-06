@@ -701,7 +701,7 @@ public class ProcApplication extends Application {
 				(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)){
 			this.cloudEmptyLoop = true;
 			
-			for (int i = 0; this.cloudEmptyLoop && i<50; i++) {
+			for (int i = 0; this.cloudBW<this.cloud_lim && this.cloudEmptyLoop && i<50; i++) {
 				/* 
 				 * Oldest processed message is depleted (as a FIFO type of storage,
 				 * and a new message for processing is processed
@@ -739,6 +739,20 @@ public class ProcApplication extends Application {
 						(long)(host.getStorageSystem().getTotalStorageSpace()*this.min_stor)+
 						" Total space is "+host.getStorageSystem().getTotalStorageSpace());*/
 				//System.out.println("Depleted static messages: "+ sdepleted);
+			}
+			this.cloudEmptyLoop = true;
+			for (int i = 0; this.cloudBW>this.cloud_lim && 
+					!host.getStorageSystem().isProcessingEmpty() && 
+					this.cloudEmptyLoop && i<50; i++) {
+				if (!host.getStorageSystem().isProcessedEmpty()) {
+					this.processedDepletion(host);
+				}
+				else if (!host.getStorageSystem().isProcessingEmpty())
+					host.getStorageSystem().deleteProcMessage(host.getStorageSystem().getOldestProcessMessage().getId());
+				else {	
+					this.cloudEmptyLoop = false;
+					//System.out.println("Depletion is at: "+ this.cloudBW);
+				}
 			}
 		}
 	}
