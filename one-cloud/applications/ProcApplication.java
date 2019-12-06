@@ -66,6 +66,7 @@ public class ProcApplication extends Application {
 
 	private boolean cloudEmptyLoop = true;
 	private boolean deplEmptyLoop = true;
+	private boolean upEmptyLoop = true;
 	private boolean passive = false;
 	private boolean storMode;
 	private double	lastCloudStaticUpload = 0;
@@ -740,17 +741,17 @@ public class ProcApplication extends Application {
 						" Total space is "+host.getStorageSystem().getTotalStorageSpace());*/
 				//System.out.println("Depleted static messages: "+ sdepleted);
 			}
-			this.cloudEmptyLoop = true;
+			this.upEmptyLoop = true;
 			for (int i = 0; this.cloudBW>this.cloud_lim && 
 					!host.getStorageSystem().isProcessingEmpty() && 
-					this.cloudEmptyLoop && i<50; i++) {
+					this.upEmptyLoop && i<50; i++) {
 				if (!host.getStorageSystem().isProcessedEmpty()) {
 					this.processedDepletion(host);
 				}
 				else if (!host.getStorageSystem().isProcessingEmpty())
 					host.getStorageSystem().deleteProcMessage(host.getStorageSystem().getOldestProcessMessage().getId());
 				else {	
-					this.cloudEmptyLoop = false;
+					this.upEmptyLoop = false;
 					//System.out.println("Depletion is at: "+ this.cloudBW);
 				}
 			}
