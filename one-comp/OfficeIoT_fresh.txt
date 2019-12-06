@@ -121,7 +121,7 @@ Group2.interface1 = wlanCarInterface
 
 # group3 cars specific settings
 Group3.groupID = i
-Group3.movementModel = officeIoTStationaryMovement
+Group3.movementModel = OfficeIoTStationaryMovement
 Group3.officeLocationsFile = data/HelsinkiMedium/A_offices_mod.wkt
 # Max distance from main office coordinate - needs tweaking.
 Group3.officeSize = 100
@@ -134,7 +134,7 @@ Group3.nrofHosts = 250
 
 # group3 cars specific settings
 Group4.groupID = i
-Group4.movementModel = officeIoTStationaryMovement
+Group4.movementModel = OfficeIoTStationaryMovement
 Group4.officeLocationsFile = data/HelsinkiMedium/F_offices_mod.wkt
 # Max distance from main office coordinate - needs tweaking.
 Group4.officeSize = 100
