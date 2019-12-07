@@ -311,9 +311,10 @@ Report.reportDir = reports/
 # Report classes to load
 Report.report1 = RepoIncomingSpeedsReport
 Report.report2 = MobileDeletedMessagesReport
+Report.report3 = RepoDeletedMessagesReport
 
-Report.report3 = RepoProcessingMessageLocationReport
-Report.report4 = RepoStoredMessageLocationReport
+Report.report4 = RepoProcessingMessageLocationReport
+# Report.report4 = RepoStoredMessageLocationReport
 
 Report.report5 = RepoProcessedMessageLocationReport
 Report.report6 = RepoAllMessagesLocationReport

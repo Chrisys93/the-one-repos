@@ -624,16 +624,12 @@ ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 figure
 
 % yyaxis left
-y = [mean(nonzeros(ostor_fill(:,1))), mean(nonzeros(ostor_fill(:,2))), mean(nonzeros(ostor_fill(:,3))), mean(nonzeros(ostor_fill(:,4))), mean(nonzeros(ostor_fill(:,5))), mean(nonzeros(ostor_fill(:,6)));
-    mean(osat_up(:,1)), mean(osat_up(:,2)), mean(osat_up(:,3)), mean(osat_up(:,4)), mean(osat_up(:,5)), mean(osat_up(:,6));
-    mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
+y = [mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
     mean(hsat_up(:,1)), mean(hsat_up(:,2)), mean(hsat_up(:,3)), mean(hsat_up(:,4)), mean(hsat_up(:,5)), mean(hsat_up(:,6));
-    mean(nonzeros(bstor_fill(:,1))), mean(nonzeros(bstor_fill(:,2))), mean(nonzeros(bstor_fill(:,3))), mean(nonzeros(bstor_fill(:,4))), mean(nonzeros(bstor_fill(:,5))), mean(nonzeros(bstor_fill(:,6)));
-    mean(bsat_up(:,1)), mean(bsat_up(:,2)), mean(bsat_up(:,3)), mean(bsat_up(:,4)), mean(bsat_up(:,5)), mean(bsat_up(:,6));
     mean(nonzeros(pstor_fill(:,1))), mean(nonzeros(pstor_fill(:,2))), mean(nonzeros(pstor_fill(:,3))), mean(nonzeros(pstor_fill(:,4))), mean(nonzeros(pstor_fill(:,5))), mean(nonzeros(pstor_fill(:,6)));
     mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6))];
 bar(y,'group')
-set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfaction', 'Usage', 'Satisfaction', 'Usage', 'Satisfaction'})
+set(gca,'xtick',1:4,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfaction'})
 % xt= [1-0.34, 1-0.2, 1-0.07, 1.07, 1.2, 1.34, 3-0.34, 3-0.2, 3-0.07, 3.07, 3.2, 3.34, 5-0.34, 5-0.2, 5-0.07, 5.07, 5.2, 5.34, 7-0.34, 7-0.2, 7-0.07, 7.07, 7.2, 7.34];
 % yt=[y(1,:), y(3,:), y(5,:), y(7,:)]+50;
 %xt=[1, 3, 5, 7]-0.25;
@@ -644,10 +640,10 @@ set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfactio
 % xlabel('Scenario Number','fontsize',12) 
 ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 
-groupX = [2 4 6 8]; %// central value of each group
+groupX = [2 4]; %// central value of each group
 groupY = -5; %// vertical position of texts. Adjust as needed
 deltaY = .03; %// controls vertical compression of axis. Adjust as needed
-groupNames = {'Offices', 'Homes', 'Buses' 'Cars'}; %// note different lengths to test centering
+groupNames = {'Homes', 'Cars'}; %// note different lengths to test centering
 for g = 1:numel(groupX)
     h = text(groupX(g), groupY, groupNames(g), 'Fontsize', 13, 'Fontweight', 'bold');
         %// create text for group with appropriate font size and weight
@@ -662,15 +658,11 @@ set(gca, 'Position', pos); %/ set corrected position for axis
 
 
 yyaxis right
-y = [mean(nonzeros(ostor_fill(:,1))), mean(nonzeros(ostor_fill(:,2))), mean(nonzeros(ostor_fill(:,3))), mean(nonzeros(ostor_fill(:,4))), mean(nonzeros(ostor_fill(:,5))), mean(nonzeros(ostor_fill(:,6)));
-    mean(osat_up(:,1)), mean(osat_up(:,2)), mean(osat_up(:,3)), mean(osat_up(:,4)), mean(osat_up(:,5)), mean(osat_up(:,6));
-    mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
+y = [mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
     mean(hsat_up(:,1)), mean(hsat_up(:,2)), mean(hsat_up(:,3)), mean(hsat_up(:,4)), mean(hsat_up(:,5)), mean(hsat_up(:,6));
-    mean(nonzeros(bstor_fill(:,1))), mean(nonzeros(bstor_fill(:,2))), mean(nonzeros(bstor_fill(:,3))), mean(nonzeros(bstor_fill(:,4))), mean(nonzeros(bstor_fill(:,5))), mean(nonzeros(bstor_fill(:,6)));
-    mean(bsat_up(:,1)), mean(bsat_up(:,2)), mean(bsat_up(:,3)), mean(bsat_up(:,4)), mean(bsat_up(:,5)), mean(bsat_up(:,6));
     mean(nonzeros(pstor_fill(:,1))), mean(nonzeros(pstor_fill(:,2))), mean(nonzeros(pstor_fill(:,3))), mean(nonzeros(pstor_fill(:,4))), mean(nonzeros(pstor_fill(:,5))), mean(nonzeros(pstor_fill(:,6)));
     mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6))];
-bar([1:8],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :); 0,0,0,0,0,0; y(6, :); 0,0,0,0,0,0; y(8, :)],'group')
+bar([1:4],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :)],'group')
 % set(gca,'xtick',1:8)
 % xt= [2-0.34, 2-0.2, 2-0.07, 2.07, 2.2, 2.34, 4-0.34, 4-0.2, 4-0.07, 4.07, 4.2, 4.34, 6-0.34, 6-0.2, 6-0.07, 6.07, 6.2, 6.34, 8-0.34, 8-0.2, 8-0.07, 8.07, 8.2, 8.34];
 % yt=[y(2,:), y(4,:), y(6,:), y(8,:)]-50;
@@ -679,7 +671,7 @@ bar([1:8],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :); 0,0,0,0,0,0; y(6, :); 0,0
 % ytxt=num2str([y(2, :)'; y(4, :)'; y(6, :)'; y(8, :)'],'%.1f');
 % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 % title('Processing threads','fontsize',16)
-ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
+ylabel('Storage usage (B)','fontsize',12)
 
 
 

@@ -199,52 +199,52 @@ for repo = 1:c3
     end
     
     
-    coproc_up(repo, 1) = mean(COPB1(:, repo))/(mean(OUB1(:, repo))+mean(COPB1(:, repo)));
-    if (isnan(mean(COPB1(:, repo))/(mean(OUB1(:, repo))+mean(COPB1(:, repo)))))
+    coproc_up(repo, 1) = mean(COPB1(:, repo))/(mean(COUB1(:, repo))+mean(COPB1(:, repo)));
+    if (isnan(mean(COPB1(:, repo))/(mean(COUB1(:, repo))+mean(COPB1(:, repo)))))
         coproc_up(repo, 1) = 0;
     end
-    coproc_up(repo, 2) = mean(COPB2(:, repo))/(mean(OUB2(:, repo))+mean(COPB2(:, repo)));
-    if (isnan(mean(COPB2(:, repo))/(mean(OUB2(:, repo))+mean(COPB2(:, repo)))))
+    coproc_up(repo, 2) = mean(COPB2(:, repo))/(mean(COUB2(:, repo))+mean(COPB2(:, repo)));
+    if (isnan(mean(COPB2(:, repo))/(mean(COUB2(:, repo))+mean(COPB2(:, repo)))))
        coproc_up(repo, 2) = 0;
     end
-    coproc_up(repo, 3) = mean(COPB3(:, repo))/(mean(OUB3(:, repo))+mean(COPB3(:, repo)));
-    if (isnan(mean(COPB3(:, repo))/(mean(OUB3(:, repo))+mean(COPB3(:, repo)))))
+    coproc_up(repo, 3) = mean(COPB3(:, repo))/(mean(COUB3(:, repo))+mean(COPB3(:, repo)));
+    if (isnan(mean(COPB3(:, repo))/(mean(COUB3(:, repo))+mean(COPB3(:, repo)))))
         coproc_up(repo, 3) = 0;
     end
-    coproc_up(repo, 4) = mean(COPB4(:, repo))/(mean(OUB4(:, repo))+mean(COPB4(:, repo)));
-    if (isnan(mean(COPB4(:, repo))/(mean(OUB4(:, repo))+mean(COPB4(:, repo)))))
+    coproc_up(repo, 4) = mean(COPB4(:, repo))/(mean(COUB4(:, repo))+mean(COPB4(:, repo)));
+    if (isnan(mean(COPB4(:, repo))/(mean(COUB4(:, repo))+mean(COPB4(:, repo)))))
         coproc_up(repo, 4) = 0;
     end
-    coproc_up(repo, 5) = mean(COPB5(:, repo))/(mean(OUB5(:, repo))+mean(COPB5(:, repo)));
-    if (isnan(mean(COPB5(:, repo))/(mean(OUB5(:, repo))+mean(COPB5(:, repo)))))
+    coproc_up(repo, 5) = mean(COPB5(:, repo))/(mean(COUB5(:, repo))+mean(COPB5(:, repo)));
+    if (isnan(mean(COPB5(:, repo))/(mean(COUB5(:, repo))+mean(COPB5(:, repo)))))
         coproc_up(repo, 5) = 0;
     end
-    coproc_up(repo, 6) =  mean(COPB6(:, repo))/(mean(OUB6(:, repo))+mean(COPB6(:, repo)));
-    if (isnan(mean(COPB6(:, repo))/(mean(OUB6(:, repo))+mean(COPB6(:, repo)))))
+    coproc_up(repo, 6) =  mean(COPB6(:, repo))/(mean(COUB6(:, repo))+mean(COPB6(:, repo)));
+    if (isnan(mean(COPB6(:, repo))/(mean(COUB6(:, repo))+mean(COPB6(:, repo)))))
         coproc_up(repo, 6) = 0;
     end
-    cpproc_up(repo, 1) = mean(CPPB1(:, repo))/(mean(PUB1(:, repo))+mean(CPPB1(:, repo)));
-    if (isnan(mean(CPPB1(:, repo))/(mean(PUB1(:, repo))+mean(CPPB1(:, repo)))))
+    cpproc_up(repo, 1) = mean(CPPB1(:, repo))/(mean(CPUB1(:, repo))+mean(CPPB1(:, repo)));
+    if (isnan(mean(CPPB1(:, repo))/(mean(CPUB1(:, repo))+mean(CPPB1(:, repo)))))
         cpproc_up(repo, 1) = 0;
     end
-    cpproc_up(repo, 2) = mean(CPPB2(:, repo))/(mean(PUB2(:, repo))+mean(CPPB2(:, repo)));
-    if (isnan(mean(CPPB2(:, repo))/(mean(PUB2(:, repo))+mean(CPPB2(:, repo)))))
+    cpproc_up(repo, 2) = mean(CPPB2(:, repo))/(mean(CPUB2(:, repo))+mean(CPPB2(:, repo)));
+    if (isnan(mean(CPPB2(:, repo))/(mean(CPUB2(:, repo))+mean(CPPB2(:, repo)))))
         cpproc_up(repo, 2) = 0;
     end
-    cpproc_up(repo, 3) = mean(CPPB3(:, repo))/(mean(PUB3(:, repo))+mean(CPPB3(:, repo)));
-    if (isnan(mean(CPPB3(:, repo))/(mean(PUB3(:, repo))+mean(CPPB3(:, repo)))))
+    cpproc_up(repo, 3) = mean(CPPB3(:, repo))/(mean(CPUB3(:, repo))+mean(CPPB3(:, repo)));
+    if (isnan(mean(CPPB3(:, repo))/(mean(CPUB3(:, repo))+mean(CPPB3(:, repo)))))
         cpproc_up(repo, 3) = 0;
     end
-    cpproc_up(repo, 4) = mean(CPPB4(:, repo))/(mean(PUB4(:, repo))+mean(CPPB4(:, repo)));
-    if (isnan(mean(CPPB4(:, repo))/(mean(PUB4(:, repo))+mean(CPPB4(:, repo)))))
+    cpproc_up(repo, 4) = mean(CPPB4(:, repo))/(mean(CPUB4(:, repo))+mean(CPPB4(:, repo)));
+    if (isnan(mean(CPPB4(:, repo))/(mean(CPUB4(:, repo))+mean(CPPB4(:, repo)))))
         cpproc_up(repo, 4) = 0;
     end
-    cpproc_up(repo, 5) = mean(CPPB5(:, repo))/(mean(PUB5(:, repo))+mean(CPPB5(:, repo)));
-    if (isnan(mean(CPPB5(:, repo))/(mean(PUB5(:, repo))+mean(CPPB5(:, repo)))))
+    cpproc_up(repo, 5) = mean(CPPB5(:, repo))/(mean(CPUB5(:, repo))+mean(CPPB5(:, repo)));
+    if (isnan(mean(CPPB5(:, repo))/(mean(CPUB5(:, repo))+mean(CPPB5(:, repo)))))
         cpproc_up(repo, 5) = 0;
     end
-    cpproc_up(repo, 6) =  mean(CPPB6(:, repo))/(mean(PUB6(:, repo))+mean(CPPB6(:, repo)));
-    if (isnan(mean(CPPB6(:, repo))/(mean(PUB6(:, repo))+mean(CPPB6(:, repo)))))
+    cpproc_up(repo, 6) =  mean(CPPB6(:, repo))/(mean(CPUB6(:, repo))+mean(CPPB6(:, repo)));
+    if (isnan(mean(CPPB6(:, repo))/(mean(CPUB6(:, repo))+mean(CPPB6(:, repo)))))
         cpproc_up(repo, 6) = 0;
     end
     
@@ -604,29 +604,29 @@ for repo = 1:c3
     if (isnan(COPF6(1, repo)/sum(COPF6(:, repo))))
         cofresh_perc(repo, 6) = 0;
     end
-    pfresh_perc(repo, 1) = CPPF1(1, repo)/sum(CPPF1(:, repo));
+    cpfresh_perc(repo, 1) = CPPF1(1, repo)/sum(CPPF1(:, repo));
     if (isnan(CPPF1(1, repo)/sum(CPPF1(:, repo))))
-        pfresh_perc(repo, 1) = 0;
+        cpfresh_perc(repo, 1) = 0;
     end
-    pfresh_perc(repo, 2) = CPPF2(1, repo)/sum(CPPF2(:, repo));
+    cpfresh_perc(repo, 2) = CPPF2(1, repo)/sum(CPPF2(:, repo));
     if (isnan(CPPF2(1, repo)/sum(CPPF2(:, repo))))
-        pfresh_perc(repo, 2) = 0;
+        cpfresh_perc(repo, 2) = 0;
     end
-    pfresh_perc(repo, 3) = CPPF3(1, repo)/sum(CPPF3(:, repo));
+    cpfresh_perc(repo, 3) = CPPF3(1, repo)/sum(CPPF3(:, repo));
     if (isnan(CPPF3(1, repo)/sum(CPPF3(:, repo))))
-        pfresh_perc(repo, 3) = 0;
+        cpfresh_perc(repo, 3) = 0;
     end
-    pfresh_perc(repo, 4) = CPPF4(1, repo)/sum(CPPF4(:, repo));
+    cpfresh_perc(repo, 4) = CPPF4(1, repo)/sum(CPPF4(:, repo));
     if (isnan(CPPF4(1, repo)/sum(CPPF4(:, repo))))
-        pfresh_perc(repo, 4) = 0;
+        cpfresh_perc(repo, 4) = 0;
     end
-    pfresh_perc(repo, 5) = CPPF5(1, repo)/sum(CPPF5(:, repo));
+    cpfresh_perc(repo, 5) = CPPF5(1, repo)/sum(CPPF5(:, repo));
     if (isnan(CPPF5(1, repo)/sum(CPPF5(:, repo))))
-        pfresh_perc(repo, 5) = 0;
+        cpfresh_perc(repo, 5) = 0;
     end
-    pfresh_perc(repo, 6) =  CPPF6(1, repo)/sum(CPPF6(:, repo));
+    cpfresh_perc(repo, 6) =  CPPF6(1, repo)/sum(CPPF6(:, repo));
     if (isnan(CPPF6(1, repo)/sum(CPPF6(:, repo))))
-        pfresh_perc(repo, 6) = 0;
+        cpfresh_perc(repo, 6) = 0;
     end
 end
 
@@ -652,8 +652,6 @@ figure
 % subplot(2,1,1);
 % yyaxis left
 bar([mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(nonzeros(ofresh_perc(:,3))), mean(nonzeros(ofresh_perc(:,4))), mean(nonzeros(ofresh_perc(:,5))), mean(nonzeros(ofresh_perc(:,6)));
-    mean(nonzeros(hfresh_perc(:,1))), mean(nonzeros(hfresh_perc(:,2))), mean(nonzeros(hfresh_perc(:,3))), mean(nonzeros(hfresh_perc(:,4))), mean(nonzeros(hfresh_perc(:,5))), mean(nonzeros(hfresh_perc(:,6)));
-    mean(nonzeros(bfresh_perc(:,1))), mean(nonzeros(bfresh_perc(:,2))), mean(nonzeros(bfresh_perc(:,3))), mean(nonzeros(bfresh_perc(:,4))), mean(nonzeros(bfresh_perc(:,5))), mean(nonzeros(bfresh_perc(:,6)));
     mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))]);
 % title('Processing threads','fontsize',16)
 xlabel('Scenario Number','fontsize',12) 
@@ -668,9 +666,13 @@ figure
 y = [mean(nonzeros(oproc_up(:,1))), mean(nonzeros(oproc_up(:,2))), mean(nonzeros(oproc_up(:,3))), mean(nonzeros(oproc_up(:,4))), mean(nonzeros(oproc_up(:,5))), mean(nonzeros(oproc_up(:,6)));
     mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(nonzeros(ofresh_perc(:,3))), mean(nonzeros(ofresh_perc(:,4))), mean(nonzeros(ofresh_perc(:,5))), mean(nonzeros(ofresh_perc(:,6)));
     mean(nonzeros(pproc_up(:,1))), mean(nonzeros(pproc_up(:,2))), mean(nonzeros(pproc_up(:,3))), mean(nonzeros(pproc_up(:,4))), mean(nonzeros(pproc_up(:,5))), mean(nonzeros(pproc_up(:,6)))
-    mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))];
+    mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)));
+    mean(nonzeros(coproc_up(:,1))), mean(nonzeros(coproc_up(:,2))), mean(nonzeros(coproc_up(:,3))), mean(nonzeros(coproc_up(:,4))), mean(nonzeros(coproc_up(:,5))), mean(nonzeros(coproc_up(:,6)));
+    mean(nonzeros(cofresh_perc(:,1))), mean(nonzeros(cofresh_perc(:,2))), mean(nonzeros(cofresh_perc(:,3))), mean(nonzeros(cofresh_perc(:,4))), mean(nonzeros(cofresh_perc(:,5))), mean(nonzeros(cofresh_perc(:,6)));
+    mean(nonzeros(cpproc_up(:,1))), mean(nonzeros(cpproc_up(:,2))), mean(nonzeros(cpproc_up(:,3))), mean(nonzeros(cpproc_up(:,4))), mean(nonzeros(cpproc_up(:,5))), mean(nonzeros(cpproc_up(:,6)))
+    mean(nonzeros(cpfresh_perc(:,1))), mean(nonzeros(cpfresh_perc(:,2))), mean(nonzeros(cpfresh_perc(:,3))), mean(nonzeros(cpfresh_perc(:,4))), mean(nonzeros(cpfresh_perc(:,5))), mean(nonzeros(cpfresh_perc(:,6)))];
 bar(y,'group')
-set(gca,'xtick',1:4,'XTickLabel',{'Processed', 'Fresh', 'Processed', 'Fresh'}, 'fontsize', 10)
+set(gca,'xtick',1:8,'XTickLabel',{'Processed', 'Fresh', 'Processed', 'Fresh', 'Processed', 'Fresh', 'Processed', 'Fresh'}, 'fontsize', 10)
 % xt= [1-0.34, 1-0.2, 1-0.07, 1.07, 1.2, 1.34, 3-0.34, 3-0.2, 3-0.07, 3.07, 3.2, 3.34, 5-0.34, 5-0.2, 5-0.07, 5.07, 5.2, 5.34, 7-0.34, 7-0.2, 7-0.07, 7.07, 7.2, 7.34];
 % yt=[y(1,:), y(3,:), y(5,:), y(7,:)]+50;
 %xt=[1, 3, 5, 7]-0.25;
@@ -681,10 +683,10 @@ set(gca,'xtick',1:4,'XTickLabel',{'Processed', 'Fresh', 'Processed', 'Fresh'}, '
 % xlabel('Scenario Number','fontsize',12) 
 ylabel('Satisfied Processing Message Upload (100%)','fontsize',12)
 
-groupX = [2 4]; %// central value of each group
+groupX = [2 4 6 8]; %// central value of each group
 groupY = -0.1; %// vertical position of texts. Adjust as needed
 deltaY = .03; %// controls vertical compression of axis. Adjust as needed
-groupNames = {'Offices', 'Cars'}; %// note different lengths to test centering
+groupNames = {'Offices IP', 'Cars IP', 'Offices EDR', 'Cars EDR'}; %// note different lengths to test centering
 for g = 1:numel(groupX)
     h = text(groupX(g), groupY, groupNames(g), 'Fontsize', 13, 'Fontweight', 'bold');
         %// create text for group with appropriate font size and weight
