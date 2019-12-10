@@ -317,7 +317,8 @@ Report.report4 = RepoProcessingMessageLocationReport
 # Report.report4 = RepoStoredMessageLocationReport
 
 Report.report5 = RepoProcessedMessageLocationReport
-Report.report6 = RepoAllMessagesLocationReport
+#Report.report6 = RepoAllMessagesLocationReport
+Report.report6 = RepoDeletedMessageSizeReport
 Report.report7 = RepoDepletedProcBWReport
 Report.report8 = RepoDepletedUnProcBWReport
 Report.report9 = RepoDepletedStorageBWReport
@@ -329,7 +330,8 @@ Report.report14 = RepoUnProcessedReport
 Report.report15 = RepoOvertimeReport
 
 RepoIncomingSpeedsReport.output = [officeIoT/RISR1;officeIoT/RISR2;officeIoT/RISR3; officeIoT/RISR4; officeIoT/RISR5; officeIoT/RISR6]
-RepoDeletedMessagesReport.output = [officeIoT/RDMR1;officeIoT/RDMR2;officeIoT/RDMR3; reports/RDMR4; officeIoT/RDMR5; officeIoT/RDMR6]
+RepoDeletedMessageSizeReport.output = [officeIoT/RDMSR1;officeIoT/RDMSR2;officeIoT/RDMSR3; officeIoT/RDMSR4; officeIoT/RDMSR5; officeIoT/RDMSR6]
+RepoDeletedMessagesReport.output = [officeIoT/RDMR1;officeIoT/RDMR2;officeIoT/RDMR3; officeIoT/RDMR4; officeIoT/RDMR5; officeIoT/RDMR6]
 MobileDeletedMessagesReport.output = [officeIoT/MDMR1;officeIoT/MDMR2;officeIoT/MDMR3; officeIoT/MDMR4; officeIoT/MDMR5; officeIoT/MDMR6]
 RepoProcessingMessageLocationReport.output = [officeIoT/RPrMR1;officeIoT/RPrMR2;officeIoT/RPrMR3; officeIoT/RPrMR4; officeIoT/RPrMR5; officeIoT/RPrMR6]
 RepoStoredMessageLocationReport.output = [officeIoT/RSMR1;officeIoT/RSMR2;officeIoT/RSMR3; officeIoT/RSMR4; officeIoT/RSMR5; officeIoT/RSMR6]

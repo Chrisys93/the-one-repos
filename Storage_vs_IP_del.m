@@ -4,229 +4,229 @@
 
 clear
 
-SS1 = dlmread('officeIoT/RSMR1', ' ', 0, 1);
-HS1 = dlmread('homeIoT/RSMR1', ' ', 0, 1);
-BS1 = dlmread('buses/RSMR1', ' ', 0, 1);
-PS1 = dlmread('non-proc_proc/RSMR1', ' ', 0, 1);
+SS1 = dlmread('one-comp/officeIoT/RSMR1', ' ', 0, 1);
+HS1 = dlmread('one-comp/homeIoT/RSMR1', ' ', 0, 1);
+BS1 = dlmread('one-comp/buses/RSMR1', ' ', 0, 1);
+PS1 = dlmread('one-comp/non-proc_proc/RSMR1', ' ', 0, 1);
 
 
-SS2 = dlmread('officeIoT/RSMR2', ' ', 0, 1);
-HS2 = dlmread('homeIoT/RSMR2', ' ', 0, 1);
-BS2 = dlmread('buses/RSMR2', ' ', 0, 1);
-PS2 = dlmread('non-proc_proc/RSMR2', ' ', 0, 1);
+SS2 = dlmread('one-comp/officeIoT/RSMR2', ' ', 0, 1);
+HS2 = dlmread('one-comp/homeIoT/RSMR2', ' ', 0, 1);
+BS2 = dlmread('one-comp/buses/RSMR2', ' ', 0, 1);
+PS2 = dlmread('one-comp/non-proc_proc/RSMR2', ' ', 0, 1);
 
 
-SS3 = dlmread('officeIoT/RSMR3', ' ', 0, 1);
-HS3 = dlmread('homeIoT/RSMR3', ' ', 0, 1);
-BS3 = dlmread('buses/RSMR3', ' ', 0, 1);
-PS3 = dlmread('non-proc_proc/RSMR3', ' ', 0, 1);
+SS3 = dlmread('one-comp/officeIoT/RSMR3', ' ', 0, 1);
+HS3 = dlmread('one-comp/homeIoT/RSMR3', ' ', 0, 1);
+BS3 = dlmread('one-comp/buses/RSMR3', ' ', 0, 1);
+PS3 = dlmread('one-comp/non-proc_proc/RSMR3', ' ', 0, 1);
 
 
-SS4 = dlmread('officeIoT/RSMR4', ' ', 0, 1);
-HS4 = dlmread('homeIoT/RSMR4', ' ', 0, 1);
-BS4 = dlmread('buses/RSMR4', ' ', 0, 1);
-PS4 = dlmread('non-proc_proc/RSMR4', ' ', 0, 1);
+SS4 = dlmread('one-comp/officeIoT/RSMR4', ' ', 0, 1);
+HS4 = dlmread('one-comp/homeIoT/RSMR4', ' ', 0, 1);
+BS4 = dlmread('one-comp/buses/RSMR4', ' ', 0, 1);
+PS4 = dlmread('one-comp/non-proc_proc/RSMR4', ' ', 0, 1);
 
 
-SS5 = dlmread('officeIoT/RSMR5', ' ', 0, 1);
-HS5 = dlmread('homeIoT/RSMR5', ' ', 0, 1);
-BS5 = dlmread('buses/RSMR5', ' ', 0, 1);
-PS5 = dlmread('non-proc_proc/RSMR5', ' ', 0, 1);
+SS5 = dlmread('one-comp/officeIoT/RSMR5', ' ', 0, 1);
+HS5 = dlmread('one-comp/homeIoT/RSMR5', ' ', 0, 1);
+BS5 = dlmread('one-comp/buses/RSMR5', ' ', 0, 1);
+PS5 = dlmread('one-comp/non-proc_proc/RSMR5', ' ', 0, 1);
 
 
-SS6 = dlmread('officeIoT/RSMR6', ' ', 0, 1);
-HS6 = dlmread('homeIoT/RSMR6', ' ', 0, 1);
-BS6 = dlmread('buses/RSMR6', ' ', 0, 1);
-PS6 = dlmread('non-proc_proc/RSMR6', ' ', 0, 1);
+SS6 = dlmread('one-comp/officeIoT/RSMR6', ' ', 0, 1);
+HS6 = dlmread('one-comp/homeIoT/RSMR6', ' ', 0, 1);
+BS6 = dlmread('one-comp/buses/RSMR6', ' ', 0, 1);
+PS6 = dlmread('one-comp/non-proc_proc/RSMR6', ' ', 0, 1);
 
 
 
 
 
-OCB1 = dlmread('officeIoT/RCSBWR1', ' ', 0, 1);
-HCB1 = dlmread('homeIoT/RCSBWR1', ' ', 0, 1);
-BCB1 = dlmread('buses/RCSBWR1', ' ', 0, 1);
-PCB1 = dlmread('non-proc_proc/RCSBWR1', ' ', 0, 1);
+OCB1 = dlmread('one-comp/officeIoT/RCSBWR1', ' ', 0, 1);
+HCB1 = dlmread('one-comp/homeIoT/RCSBWR1', ' ', 0, 1);
+BCB1 = dlmread('one-comp/buses/RCSBWR1', ' ', 0, 1);
+PCB1 = dlmread('one-comp/non-proc_proc/RCSBWR1', ' ', 0, 1);
 
 
-OCB2 = dlmread('officeIoT/RCSBWR2', ' ', 0, 1);
-HCB2 = dlmread('homeIoT/RCSBWR2', ' ', 0, 1);
-BCB2 = dlmread('buses/RCSBWR2', ' ', 0, 1);
-PCB2 = dlmread('non-proc_proc/RCSBWR2', ' ', 0, 1);
+OCB2 = dlmread('one-comp/officeIoT/RCSBWR2', ' ', 0, 1);
+HCB2 = dlmread('one-comp/homeIoT/RCSBWR2', ' ', 0, 1);
+BCB2 = dlmread('one-comp/buses/RCSBWR2', ' ', 0, 1);
+PCB2 = dlmread('one-comp/non-proc_proc/RCSBWR2', ' ', 0, 1);
 
 
-OCB3 = dlmread('officeIoT/RCSBWR3', ' ', 0, 1);
-HCB3 = dlmread('homeIoT/RCSBWR3', ' ', 0, 1);
-BCB3 = dlmread('buses/RCSBWR3', ' ', 0, 1);
-PCB3 = dlmread('non-proc_proc/RCSBWR3', ' ', 0, 1);
+OCB3 = dlmread('one-comp/officeIoT/RCSBWR3', ' ', 0, 1);
+HCB3 = dlmread('one-comp/homeIoT/RCSBWR3', ' ', 0, 1);
+BCB3 = dlmread('one-comp/buses/RCSBWR3', ' ', 0, 1);
+PCB3 = dlmread('one-comp/non-proc_proc/RCSBWR3', ' ', 0, 1);
 
 
-OCB4 = dlmread('officeIoT/RCSBWR4', ' ', 0, 1);
-HCB4 = dlmread('homeIoT/RCSBWR4', ' ', 0, 1);
-BCB4 = dlmread('buses/RCSBWR4', ' ', 0, 1);
-PCB4 = dlmread('non-proc_proc/RCSBWR4', ' ', 0, 1);
+OCB4 = dlmread('one-comp/officeIoT/RCSBWR4', ' ', 0, 1);
+HCB4 = dlmread('one-comp/homeIoT/RCSBWR4', ' ', 0, 1);
+BCB4 = dlmread('one-comp/buses/RCSBWR4', ' ', 0, 1);
+PCB4 = dlmread('one-comp/non-proc_proc/RCSBWR4', ' ', 0, 1);
 
 
-OCB5 = dlmread('officeIoT/RCSBWR5', ' ', 0, 1);
-HCB5 = dlmread('homeIoT/RCSBWR5', ' ', 0, 1);
-BCB5 = dlmread('buses/RCSBWR5', ' ', 0, 1);
-PCB5 = dlmread('non-proc_proc/RCSBWR5', ' ', 0, 1);
+OCB5 = dlmread('one-comp/officeIoT/RCSBWR5', ' ', 0, 1);
+HCB5 = dlmread('one-comp/homeIoT/RCSBWR5', ' ', 0, 1);
+BCB5 = dlmread('one-comp/buses/RCSBWR5', ' ', 0, 1);
+PCB5 = dlmread('one-comp/non-proc_proc/RCSBWR5', ' ', 0, 1);
 
 
-OCB6 = dlmread('officeIoT/RCSBWR6', ' ', 0, 1);
-HCB6 = dlmread('homeIoT/RCSBWR6', ' ', 0, 1);
-BCB6 = dlmread('buses/RCSBWR6', ' ', 0, 1);
-PCB6 = dlmread('non-proc_proc/RCSBWR6', ' ', 0, 1);
+OCB6 = dlmread('one-comp/officeIoT/RCSBWR6', ' ', 0, 1);
+HCB6 = dlmread('one-comp/homeIoT/RCSBWR6', ' ', 0, 1);
+BCB6 = dlmread('one-comp/buses/RCSBWR6', ' ', 0, 1);
+PCB6 = dlmread('one-comp/non-proc_proc/RCSBWR6', ' ', 0, 1);
 
-OSB1 = dlmread('officeIoT/RSBWR1', ' ', 0, 1);
-HSB1 = dlmread('homeIoT/RSBWR1', ' ', 0, 1);
-BSB1 = dlmread('buses/RSBWR1', ' ', 0, 1);
-PSB1 = dlmread('non-proc_proc/RSBWR1', ' ', 0, 1);
-
-
-OSB2 = dlmread('officeIoT/RSBWR2', ' ', 0, 1);
-HSB2 = dlmread('homeIoT/RSBWR2', ' ', 0, 1);
-BSB2 = dlmread('buses/RSBWR2', ' ', 0, 1);
-PSB2 = dlmread('non-proc_proc/RSBWR2', ' ', 0, 1);
+OSB1 = dlmread('one-comp/officeIoT/RSBWR1', ' ', 0, 1);
+HSB1 = dlmread('one-comp/homeIoT/RSBWR1', ' ', 0, 1);
+BSB1 = dlmread('one-comp/buses/RSBWR1', ' ', 0, 1);
+PSB1 = dlmread('one-comp/non-proc_proc/RSBWR1', ' ', 0, 1);
 
 
-OSB3 = dlmread('officeIoT/RSBWR3', ' ', 0, 1);
-HSB3 = dlmread('homeIoT/RSBWR3', ' ', 0, 1);
-BSB3 = dlmread('buses/RSBWR3', ' ', 0, 1);
-PSB3 = dlmread('non-proc_proc/RSBWR3', ' ', 0, 1);
+OSB2 = dlmread('one-comp/officeIoT/RSBWR2', ' ', 0, 1);
+HSB2 = dlmread('one-comp/homeIoT/RSBWR2', ' ', 0, 1);
+BSB2 = dlmread('one-comp/buses/RSBWR2', ' ', 0, 1);
+PSB2 = dlmread('one-comp/non-proc_proc/RSBWR2', ' ', 0, 1);
 
 
-OSB4 = dlmread('officeIoT/RSBWR4', ' ', 0, 1);
-HSB4 = dlmread('homeIoT/RSBWR4', ' ', 0, 1);
-BSB4 = dlmread('buses/RSBWR4', ' ', 0, 1);
-PSB4 = dlmread('non-proc_proc/RSBWR4', ' ', 0, 1);
+OSB3 = dlmread('one-comp/officeIoT/RSBWR3', ' ', 0, 1);
+HSB3 = dlmread('one-comp/homeIoT/RSBWR3', ' ', 0, 1);
+BSB3 = dlmread('one-comp/buses/RSBWR3', ' ', 0, 1);
+PSB3 = dlmread('one-comp/non-proc_proc/RSBWR3', ' ', 0, 1);
 
 
-OSB5 = dlmread('officeIoT/RSBWR5', ' ', 0, 1);
-HSB5 = dlmread('homeIoT/RSBWR5', ' ', 0, 1);
-BSB5 = dlmread('buses/RSBWR5', ' ', 0, 1);
-PSB5 = dlmread('non-proc_proc/RSBWR5', ' ', 0, 1);
+OSB4 = dlmread('one-comp/officeIoT/RSBWR4', ' ', 0, 1);
+HSB4 = dlmread('one-comp/homeIoT/RSBWR4', ' ', 0, 1);
+BSB4 = dlmread('one-comp/buses/RSBWR4', ' ', 0, 1);
+PSB4 = dlmread('one-comp/non-proc_proc/RSBWR4', ' ', 0, 1);
 
 
-OSB6 = dlmread('officeIoT/RSBWR6', ' ', 0, 1);
-HSB6 = dlmread('homeIoT/RSBWR6', ' ', 0, 1);
-BSB6 = dlmread('buses/RSBWR6', ' ', 0, 1);
-PSB6 = dlmread('non-proc_proc/RSBWR6', ' ', 0, 1);
+OSB5 = dlmread('one-comp/officeIoT/RSBWR5', ' ', 0, 1);
+HSB5 = dlmread('one-comp/homeIoT/RSBWR5', ' ', 0, 1);
+BSB5 = dlmread('one-comp/buses/RSBWR5', ' ', 0, 1);
+PSB5 = dlmread('one-comp/non-proc_proc/RSBWR5', ' ', 0, 1);
+
+
+OSB6 = dlmread('one-comp/officeIoT/RSBWR6', ' ', 0, 1);
+HSB6 = dlmread('one-comp/homeIoT/RSBWR6', ' ', 0, 1);
+BSB6 = dlmread('one-comp/buses/RSBWR6', ' ', 0, 1);
+PSB6 = dlmread('one-comp/non-proc_proc/RSBWR6', ' ', 0, 1);
 
 
 
 % deleted size for deleted BW and deleted service perc.
-OD1 = dlmread('officeIoT/RDMSR1', ' ', 0, 1);
-HD1 = dlmread('homeIoT/RDMSR1', ' ', 0, 1);
-BD1 = dlmread('buses/RDMSR1', ' ', 0, 1);
-PD1 = dlmread('non-proc_proc/RDMSR1', ' ', 0, 1);
+OD1 = dlmread('one-cloud/officeIoT/RSBWR1', ' ', 0, 1);
+HD1 = dlmread('one-cloud/homeIoT/RSBWR1', ' ', 0, 1);
+BD1 = dlmread('one-cloud/buses/RSBWR1', ' ', 0, 1);
+PD1 = dlmread('one-cloud/non-proc_proc/RSBWR1', ' ', 0, 1);
 
 
-OD2 = dlmread('officeIoT/RDMSR2', ' ', 0, 1);
-HD2 = dlmread('homeIoT/RDMSR2', ' ', 0, 1);
-BD2 = dlmread('buses/RDMSR2', ' ', 0, 1);
-PD2 = dlmread('non-proc_proc/RDMSR2', ' ', 0, 1);
+OD2 = dlmread('one-cloud/officeIoT/RSBWR2', ' ', 0, 1);
+HD2 = dlmread('one-cloud/homeIoT/RSBWR2', ' ', 0, 1);
+BD2 = dlmread('one-cloud/buses/RSBWR2', ' ', 0, 1);
+PD2 = dlmread('one-cloud/non-proc_proc/RSBWR2', ' ', 0, 1);
 
 
-OD3 = dlmread('officeIoT/RDMSR3', ' ', 0, 1);
-HD3 = dlmread('homeIoT/RDMSR3', ' ', 0, 1);
-BD3 = dlmread('buses/RDMSR3', ' ', 0, 1);
-PD3 = dlmread('non-proc_proc/RDMSR3', ' ', 0, 1);
+OD3 = dlmread('one-cloud/officeIoT/RSBWR3', ' ', 0, 1);
+HD3 = dlmread('one-cloud/homeIoT/RSBWR3', ' ', 0, 1);
+BD3 = dlmread('one-cloud/buses/RSBWR3', ' ', 0, 1);
+PD3 = dlmread('one-cloud/non-proc_proc/RSBWR3', ' ', 0, 1);
 
 
-OD4 = dlmread('officeIoT/RDMSR4', ' ', 0, 1);
-HD4 = dlmread('homeIoT/RDMSR4', ' ', 0, 1);
-BD4 = dlmread('buses/RDMSR4', ' ', 0, 1);
-PD4 = dlmread('non-proc_proc/RDMSR4', ' ', 0, 1);
+OD4 = dlmread('one-cloud/officeIoT/RSBWR4', ' ', 0, 1);
+HD4 = dlmread('one-cloud/homeIoT/RSBWR4', ' ', 0, 1);
+BD4 = dlmread('one-cloud/buses/RSBWR4', ' ', 0, 1);
+PD4 = dlmread('one-cloud/non-proc_proc/RSBWR4', ' ', 0, 1);
 
 
-OD5 = dlmread('officeIoT/RDMSR5', ' ', 0, 1);
-HD5 = dlmread('homeIoT/RDMSR5', ' ', 0, 1);
-BD5 = dlmread('buses/RDMSR5', ' ', 0, 1);
-PD5 = dlmread('non-proc_proc/RDMSR5', ' ', 0, 1);
+OD5 = dlmread('one-cloud/officeIoT/RSBWR5', ' ', 0, 1);
+HD5 = dlmread('one-cloud/homeIoT/RSBWR5', ' ', 0, 1);
+BD5 = dlmread('one-cloud/buses/RSBWR5', ' ', 0, 1);
+PD5 = dlmread('one-cloud/non-proc_proc/RSBWR5', ' ', 0, 1);
 
 
-OD6 = dlmread('officeIoT/RDMSR6', ' ', 0, 1);
-HD6 = dlmread('homeIoT/RDMSR6', ' ', 0, 1);
-BD6 = dlmread('buses/RDMSR6', ' ', 0, 1);
-PD6 = dlmread('non-proc_proc/RDMSR6', ' ', 0, 1);
+OD6 = dlmread('one-cloud/officeIoT/RSBWR6', ' ', 0, 1);
+HD6 = dlmread('one-cloud/homeIoT/RSBWR6', ' ', 0, 1);
+BD6 = dlmread('one-cloud/buses/RSBWR6', ' ', 0, 1);
+PD6 = dlmread('one-cloud/non-proc_proc/RSBWR6', ' ', 0, 1);
 
 
 
 
 %Input BW for deleted service perc.
-OIB1 = dlmread('officeIoT/RISR1', ' ', 0, 1);
-HIB1 = dlmread('homeIoT/RISR1', ' ', 0, 1);
-BIB1 = dlmread('buses/RISR1', ' ', 0, 1);
-PIB1 = dlmread('non-proc_proc/RISR1', ' ', 0, 1);
+OIB1 = dlmread('one-cloud/officeIoT/RISR1', ' ', 0, 1);
+HIB1 = dlmread('one-cloud/homeIoT/RISR1', ' ', 0, 1);
+BIB1 = dlmread('one-cloud/buses/RISR1', ' ', 0, 1);
+PIB1 = dlmread('one-cloud/non-proc_proc/RISR1', ' ', 0, 1);
 
 
-OIB2 = dlmread('officeIoT/RISR2', ' ', 0, 1);
-HIB2 = dlmread('homeIoT/RISR2', ' ', 0, 1);
-BIB2 = dlmread('buses/RISR2', ' ', 0, 1);
-PIB2 = dlmread('non-proc_proc/RISR2', ' ', 0, 1);
+OIB2 = dlmread('one-cloud/officeIoT/RISR2', ' ', 0, 1);
+HIB2 = dlmread('one-cloud/homeIoT/RISR2', ' ', 0, 1);
+BIB2 = dlmread('one-cloud/buses/RISR2', ' ', 0, 1);
+PIB2 = dlmread('one-cloud/non-proc_proc/RISR2', ' ', 0, 1);
 
 
-OIB3 = dlmread('officeIoT/RISR3', ' ', 0, 1);
-HIB3 = dlmread('homeIoT/RISR3', ' ', 0, 1);
-BIB3 = dlmread('buses/RISR3', ' ', 0, 1);
-PIB3 = dlmread('non-proc_proc/RISR3', ' ', 0, 1);
+OIB3 = dlmread('one-cloud/officeIoT/RISR3', ' ', 0, 1);
+HIB3 = dlmread('one-cloud/homeIoT/RISR3', ' ', 0, 1);
+BIB3 = dlmread('one-cloud/buses/RISR3', ' ', 0, 1);
+PIB3 = dlmread('one-cloud/non-proc_proc/RISR3', ' ', 0, 1);
 
 
-OIB4 = dlmread('officeIoT/RISR4', ' ', 0, 1);
-HIB4 = dlmread('homeIoT/RISR4', ' ', 0, 1);
-BIB4 = dlmread('buses/RISR4', ' ', 0, 1);
-PIB4 = dlmread('non-proc_proc/RISR4', ' ', 0, 1);
+OIB4 = dlmread('one-cloud/officeIoT/RISR4', ' ', 0, 1);
+HIB4 = dlmread('one-cloud/homeIoT/RISR4', ' ', 0, 1);
+BIB4 = dlmread('one-cloud/buses/RISR4', ' ', 0, 1);
+PIB4 = dlmread('one-cloud/non-proc_proc/RISR4', ' ', 0, 1);
 
 
-OIB5 = dlmread('officeIoT/RISR5', ' ', 0, 1);
-HIB5 = dlmread('homeIoT/RISR5', ' ', 0, 1);
-BIB5 = dlmread('buses/RISR5', ' ', 0, 1);
-PIB5 = dlmread('non-proc_proc/RISR5', ' ', 0, 1);
+OIB5 = dlmread('one-cloud/officeIoT/RISR5', ' ', 0, 1);
+HIB5 = dlmread('one-cloud/homeIoT/RISR5', ' ', 0, 1);
+BIB5 = dlmread('one-cloud/buses/RISR5', ' ', 0, 1);
+PIB5 = dlmread('one-cloud/non-proc_proc/RISR5', ' ', 0, 1);
 
 
-OIB6 = dlmread('officeIoT/RISR6', ' ', 0, 1);
-HIB6 = dlmread('homeIoT/RISR6', ' ', 0, 1);
-BIB6 = dlmread('buses/RISR6', ' ', 0, 1);
-PIB6 = dlmread('non-proc_proc/RISR6', ' ', 0, 1);
+OIB6 = dlmread('one-cloud/officeIoT/RISR6', ' ', 0, 1);
+HIB6 = dlmread('one-cloud/homeIoT/RISR6', ' ', 0, 1);
+BIB6 = dlmread('one-cloud/buses/RISR6', ' ', 0, 1);
+PIB6 = dlmread('one-cloud/non-proc_proc/RISR6', ' ', 0, 1);
 
 
 %deleted message numbers, to compare to storage usage...? OR deleted
 %messages size to compare to used storage
-ODT1 = dlmread('officeIoT/RDMR1', ' ', 0, 1);
-HDT1 = dlmread('homeIoT/RDMR1', ' ', 0, 1);
-BDT1 = dlmread('buses/RDMR1', ' ', 0, 1);
-PDT1 = dlmread('non-proc_proc/RDMR1', ' ', 0, 1);
+ODT1 = dlmread('one-cloud/officeIoT/RDMR1', ' ', 0, 1);
+HDT1 = dlmread('one-cloud/homeIoT/RDMR1', ' ', 0, 1);
+BDT1 = dlmread('one-cloud/buses/RDMR1', ' ', 0, 1);
+PDT1 = dlmread('one-cloud/non-proc_proc/RDMR1', ' ', 0, 1);
 
 
-ODT2 = dlmread('officeIoT/RDMR2', ' ', 0, 1);
-HDT2 = dlmread('homeIoT/RDMR2', ' ', 0, 1);
-BDT2 = dlmread('buses/RDMR2', ' ', 0, 1);
-PDT2 = dlmread('non-proc_proc/RDMR2', ' ', 0, 1);
+ODT2 = dlmread('one-cloud/officeIoT/RDMR2', ' ', 0, 1);
+HDT2 = dlmread('one-cloud/homeIoT/RDMR2', ' ', 0, 1);
+BDT2 = dlmread('one-cloud/buses/RDMR2', ' ', 0, 1);
+PDT2 = dlmread('one-cloud/non-proc_proc/RDMR2', ' ', 0, 1);
 
 
-ODT3 = dlmread('officeIoT/RDMR3', ' ', 0, 1);
-HDT3 = dlmread('homeIoT/RDMR3', ' ', 0, 1);
-BDT3 = dlmread('buses/RDMR3', ' ', 0, 1);
-PDT3 = dlmread('non-proc_proc/RDMR3', ' ', 0, 1);
+ODT3 = dlmread('one-cloud/officeIoT/RDMR3', ' ', 0, 1);
+HDT3 = dlmread('one-cloud/homeIoT/RDMR3', ' ', 0, 1);
+BDT3 = dlmread('one-cloud/buses/RDMR3', ' ', 0, 1);
+PDT3 = dlmread('one-cloud/non-proc_proc/RDMR3', ' ', 0, 1);
 
 
-ODT4 = dlmread('officeIoT/RDMR4', ' ', 0, 1);
-HDT4 = dlmread('homeIoT/RDMR4', ' ', 0, 1);
-BDT4 = dlmread('buses/RDMR4', ' ', 0, 1);
-PDT4 = dlmread('non-proc_proc/RDMR4', ' ', 0, 1);
+ODT4 = dlmread('one-cloud/officeIoT/RDMR4', ' ', 0, 1);
+HDT4 = dlmread('one-cloud/homeIoT/RDMR4', ' ', 0, 1);
+BDT4 = dlmread('one-cloud/buses/RDMR4', ' ', 0, 1);
+PDT4 = dlmread('one-cloud/non-proc_proc/RDMR4', ' ', 0, 1);
 
 
-ODT5 = dlmread('officeIoT/RDMR5', ' ', 0, 1);
-HDT5 = dlmread('homeIoT/RDMR5', ' ', 0, 1);
-BDT5 = dlmread('buses/RDMR5', ' ', 0, 1);
-PDT5 = dlmread('non-proc_proc/RDMR5', ' ', 0, 1);
+ODT5 = dlmread('one-cloud/officeIoT/RDMR5', ' ', 0, 1);
+HDT5 = dlmread('one-cloud/homeIoT/RDMR5', ' ', 0, 1);
+BDT5 = dlmread('one-cloud/buses/RDMR5', ' ', 0, 1);
+PDT5 = dlmread('one-cloud/non-proc_proc/RDMR5', ' ', 0, 1);
 
 
-ODT6 = dlmread('officeIoT/RDMR6', ' ', 0, 1);
-HDT6 = dlmread('homeIoT/RDMR6', ' ', 0, 1);
-BDT6 = dlmread('buses/RDMR6', ' ', 0, 1);
-PDT6 = dlmread('non-proc_proc/RDMR6', ' ', 0, 1);
+ODT6 = dlmread('one-cloud/officeIoT/RDMR6', ' ', 0, 1);
+HDT6 = dlmread('one-cloud/homeIoT/RDMR6', ' ', 0, 1);
+BDT6 = dlmread('one-cloud/buses/RDMR6', ' ', 0, 1);
+PDT6 = dlmread('one-cloud/non-proc_proc/RDMR6', ' ', 0, 1);
 
 
 
@@ -387,7 +387,7 @@ text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 
 
 
-for repo = 1:c3
+for repo = 1:c3-1
     
     osat(repo, 1) = mean(OCB1(:, repo));
     if (isnan(mean(OCB1(:, repo))))
@@ -683,30 +683,30 @@ for repo = 1:c3
     
     
     
-    odel(repo, 1) = max(ODT1(:, repo));
-    odel(repo, 2) = max(ODT2(:, repo));
-    odel(repo, 3) = max(ODT3(:, repo));
-    odel(repo, 4) = max(ODT4(:, repo));
-    odel(repo, 5) = max(ODT5(:, repo));
-    odel(repo, 6) =  max(ODT6(:, repo));
-    hdel(repo, 1) = max(HDT1(:, repo));
-    hdel(repo, 2) = max(HDT2(:, repo));
-    hdel(repo, 3) = max(HDT3(:, repo));
-    hdel(repo, 4) = max(HDT4(:, repo));
-    hdel(repo, 5) = max(HDT5(:, repo));
-    hdel(repo, 6) = max(HDT6(:, repo));
-    bdel(repo, 1) = max(BDT1(:, repo));
-    bdel(repo, 2) = max(BDT2(:, repo));
-    bdel(repo, 3) = max(BDT3(:, repo));
-    bdel(repo, 4) = max(BDT4(:, repo));
-    bdel(repo, 5) = max(BDT5(:, repo));
-    bdel(repo, 6) =  max(BDT6(:, repo));
-    pdel(repo, 1) = max(PDT1(:, repo));
-    pdel(repo, 2) = max(PDT2(:, repo));
-    pdel(repo, 3) = max(PDT3(:, repo));
-    pdel(repo, 4) = max(PDT4(:, repo));
-    pdel(repo, 5) = max(PDT5(:, repo));
-    pdel(repo, 6) =  max(PDT6(:, repo));
+    odel(repo, 1) = mean(OD1(:, repo))*10800;
+    odel(repo, 2) = mean(OD2(:, repo))*10800;
+    odel(repo, 3) = mean(OD3(:, repo))*10800;
+    odel(repo, 4) = mean(OD4(:, repo))*10800;
+    odel(repo, 5) = mean(OD5(:, repo))*10800;
+    odel(repo, 6) =  mean(OD6(:, repo))*10800;
+    hdel(repo, 1) = mean(HD1(:, repo))*10800;
+    hdel(repo, 2) = mean(HD2(:, repo))*10800;
+    hdel(repo, 3) = mean(HD3(:, repo))*10800;
+    hdel(repo, 4) = mean(HD4(:, repo))*10800;
+    hdel(repo, 5) = mean(HD5(:, repo))*10800;
+    hdel(repo, 6) = mean(HD6(:, repo))*10800;
+    bdel(repo, 1) = mean(BD1(:, repo))*10800;
+    bdel(repo, 2) = mean(BD2(:, repo))*10800;
+    bdel(repo, 3) = mean(BD3(:, repo))*10800;
+    bdel(repo, 4) = mean(BD4(:, repo))*10800;
+    bdel(repo, 5) = mean(BD5(:, repo))*10800;
+    bdel(repo, 6) =  mean(BD6(:, repo))*10800;
+    pdel(repo, 1) = mean(PD1(:, repo))*10800;
+    pdel(repo, 2) = mean(PD2(:, repo))*10800;
+    pdel(repo, 3) = mean(PD3(:, repo))*10800;
+    pdel(repo, 4) = mean(PD4(:, repo))*10800;
+    pdel(repo, 5) = mean(PD5(:, repo))*10800;
+    pdel(repo, 6) =  mean(PD6(:, repo))*10800;
     
     
     
@@ -809,31 +809,31 @@ for repo = 1:c3
     
     
     
-    odel_up(repo, 1) = (OD(repo)/10800)/oin(repo, 1);
-    odel_up(repo, 2) = OD(repo)/10800/oin(repo, 2);
-    odel_up(repo, 3) = OD(repo)/10800/oin(repo, 3);
-    odel_up(repo, 4) = OD(repo)/10800/oin(repo, 4);
-    odel_up(repo, 5) = OD(repo)/10800/oin(repo, 5);
-    odel_up(repo, 6) = OD(repo)/10800/oin(repo, 6);
-    hdel_up(repo, 1) = HD(repo)/10800/hin(repo, 1);
-    hdel_up(repo, 2) = HD(repo)/10800/hin(repo, 2);
-    hdel_up(repo, 3) = HD(repo)/10800/hin(repo, 3);
-    hdel_up(repo, 4) = HD(repo)/10800/hin(repo, 4);
-    hdel_up(repo, 5) = HD(repo)/10800/hin(repo, 5);
-    hdel_up(repo, 6) = HD(repo)/10800/hin(repo, 6);
-    bdel_up(repo, 1) = BD(repo)/10800/bin(repo, 1);
-    bdel_up(repo, 2) = BD(repo)/10800/bin(repo, 2);
-    bdel_up(repo, 3) = BD(repo)/10800/bin(repo, 3);
-    bdel_up(repo, 4) = BD(repo)/10800/bin(repo, 4);
-    bdel_up(repo, 5) = BD(repo)/10800/bin(repo, 5);
-    bdel_up(repo, 6) = BD(repo)/10800/bin(repo, 6);
-    pdel_up(repo, 1) = PD(repo)/10800/pin(repo, 1);
-    pdel_up(repo, 2) = PD(repo)/10800/pin(repo, 2);
-    pdel_up(repo, 3) = PD(repo)/10800/pin(repo, 3);
-    pdel_up(repo, 4) = PD(repo)/10800/pin(repo, 4);
-    pdel_up(repo, 5) = PD(repo)/10800/pin(repo, 5);
-    pdel_up(repo, 6) = PD(repo)/10800/pin(repo, 6);
-    
+    odel_up(repo, 1) = (mean(OD1(repo, :)))/(mean(OD1(repo, :))+oin(repo, 1));
+    odel_up(repo, 2) = (mean(OD2(repo, :)))/(mean(OD2(repo, :))+oin(repo, 2));
+    odel_up(repo, 3) = (mean(OD3(repo, :)))/(mean(OD3(repo, :))+oin(repo, 3));
+    odel_up(repo, 4) = (mean(OD4(repo, :)))/(mean(OD4(repo, :))+oin(repo, 4));
+    odel_up(repo, 5) = (mean(OD5(repo, :)))/(mean(OD5(repo, :))+oin(repo, 5));
+    odel_up(repo, 6) = (mean(OD6(repo, :)))/(mean(OD6(repo, :))+oin(repo, 6));
+    hdel_up(repo, 1) = (mean(OD1(repo, :)))/(mean(HD1(repo, :))+oin(repo, 1));
+    hdel_up(repo, 2) = (mean(HD2(repo, :)))/(mean(HD2(repo, :))+oin(repo, 2));
+    hdel_up(repo, 3) = (mean(HD3(repo, :)))/(mean(HD3(repo, :))+oin(repo, 3));
+    hdel_up(repo, 4) = (mean(HD4(repo, :)))/(mean(HD4(repo, :))+oin(repo, 4));
+    hdel_up(repo, 5) = (mean(HD5(repo, :)))/(mean(HD5(repo, :))+oin(repo, 5));
+    hdel_up(repo, 6) = (mean(HD6(repo, :)))/(mean(HD6(repo, :))+oin(repo, 6));
+    bdel_up(repo, 1) = (mean(BD1(repo, :)))/(mean(BD1(repo, :))+oin(repo, 1));
+    bdel_up(repo, 2) = (mean(BD2(repo, :)))/(mean(BD2(repo, :))+oin(repo, 2));
+    bdel_up(repo, 3) = (mean(BD3(repo, :)))/(mean(BD3(repo, :))+oin(repo, 3));
+    bdel_up(repo, 4) = (mean(BD4(repo, :)))/(mean(BD4(repo, :))+oin(repo, 4));
+    bdel_up(repo, 5) = (mean(BD5(repo, :)))/(mean(BD5(repo, :))+oin(repo, 5));
+    bdel_up(repo, 6) = (mean(BD6(repo, :)))/(mean(OD6(repo, :))+oin(repo, 6));
+    pdel_up(repo, 1) = (mean(PD1(repo, :)))/(mean(PD1(repo, :))+oin(repo, 1));
+    pdel_up(repo, 2) = (mean(PD2(repo, :)))/(mean(PD2(repo, :))+oin(repo, 2));
+    pdel_up(repo, 3) = (mean(PD3(repo, :)))/(mean(PD3(repo, :))+oin(repo, 3));
+    pdel_up(repo, 4) = (mean(PD4(repo, :)))/(mean(PD4(repo, :))+oin(repo, 4));
+    pdel_up(repo, 5) = (mean(PD5(repo, :)))/(mean(PD5(repo, :))+oin(repo, 5));
+    pdel_up(repo, 6) = (mean(PD6(repo, :)))/(mean(PD6(repo, :))+oin(repo, 6));
+   
 end
 
 
@@ -889,7 +889,7 @@ ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 
 figure
 
-% yyaxis left
+yyaxis left
 y = [mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
     mean(hsat_up(:,1)), mean(hsat_up(:,2)), mean(hsat_up(:,3)), mean(hsat_up(:,4)), mean(hsat_up(:,5)), mean(hsat_up(:,6));
     mean(nonzeros(pstor_fill(:,1))), mean(nonzeros(pstor_fill(:,2))), mean(nonzeros(pstor_fill(:,3))), mean(nonzeros(pstor_fill(:,4))), mean(nonzeros(pstor_fill(:,5))), mean(nonzeros(pstor_fill(:,6)));
@@ -910,7 +910,7 @@ set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfactio
 % xlabel('Scenario Number','fontsize',12) 
 ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 
-groupX = [2 4]; %// central value of each group
+groupX = [2 4 6 8]; %// central value of each group
 groupY = -5; %// vertical position of texts. Adjust as needed
 deltaY = .03; %// controls vertical compression of axis. Adjust as needed
 groupNames = {'Homes Repos', 'Cars Repos', 'Homes IP', 'Cars IP'}; %// note different lengths to test centering
@@ -931,8 +931,12 @@ yyaxis right
 y = [mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonzeros(hstor_fill(:,3))), mean(nonzeros(hstor_fill(:,4))), mean(nonzeros(hstor_fill(:,5))), mean(nonzeros(hstor_fill(:,6)));
     mean(hsat_up(:,1)), mean(hsat_up(:,2)), mean(hsat_up(:,3)), mean(hsat_up(:,4)), mean(hsat_up(:,5)), mean(hsat_up(:,6));
     mean(nonzeros(pstor_fill(:,1))), mean(nonzeros(pstor_fill(:,2))), mean(nonzeros(pstor_fill(:,3))), mean(nonzeros(pstor_fill(:,4))), mean(nonzeros(pstor_fill(:,5))), mean(nonzeros(pstor_fill(:,6)));
-    mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6))];
-bar([1:4],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :)],'group')
+    mean(psat_up(:,1)), mean(psat_up(:,2)), mean(psat_up(:,3)), mean(psat_up(:,4)), mean(psat_up(:,5)), mean(psat_up(:,6));
+    mean(nonzeros(hdel(:,1))), mean(nonzeros(hdel(:,2))), mean(nonzeros(hdel(:,3))), mean(nonzeros(hdel(:,4))), mean(nonzeros(hdel(:,5))), mean(nonzeros(hdel(:,6)));
+    mean(hdel_up(:,1)), mean(hdel_up(:,2)), mean(hdel_up(:,3)), mean(hdel_up(:,4)), mean(hdel_up(:,5)), mean(hdel_up(:,6));
+    mean(nonzeros(pdel(:,1))), mean(nonzeros(pdel(:,2))), mean(nonzeros(pdel(:,3))), mean(nonzeros(pdel(:,4))), mean(nonzeros(pdel(:,5))), mean(nonzeros(pdel(:,6)));
+    mean(pdel_up(:,1)), mean(pdel_up(:,2)), mean(pdel_up(:,3)), mean(pdel_up(:,4)), mean(pdel_up(:,5)), mean(pdel_up(:,6))];
+bar(1:8,[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :); 0,0,0,0,0,0; y(6, :); 0,0,0,0,0,0; y(8, :)],'group')
 % set(gca,'xtick',1:8)
 % xt= [2-0.34, 2-0.2, 2-0.07, 2.07, 2.2, 2.34, 4-0.34, 4-0.2, 4-0.07, 4.07, 4.2, 4.34, 6-0.34, 6-0.2, 6-0.07, 6.07, 6.2, 6.34, 8-0.34, 8-0.2, 8-0.07, 8.07, 8.2, 8.34];
 % yt=[y(2,:), y(4,:), y(6,:), y(8,:)]-50;
@@ -942,6 +946,7 @@ bar([1:4],[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :)],'group')
 % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 % title('Processing threads','fontsize',16)
 ylabel('Storage usage (B)','fontsize',12)
+ylim([0 1])
 
 
 

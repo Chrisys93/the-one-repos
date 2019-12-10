@@ -302,7 +302,8 @@ Report.report4 = RepoProcessingMessageLocationReport
 # Report.report4 = RepoStoredMessageLocationReport
 
 Report.report5 = RepoProcessedMessageLocationReport
-Report.report6 = RepoAllMessagesLocationReport
+#Report.report6 = RepoAllMessagesLocationReport
+Report.report6 = RepoDeletedMessageSizeReport
 Report.report7 = RepoDepletedProcBWReport
 Report.report8 = RepoDepletedUnProcBWReport
 Report.report9 = RepoDepletedStorageBWReport
@@ -315,6 +316,7 @@ Report.report15 = RepoOvertimeReport
 
 RepoIncomingSpeedsReport.output = [non-proc_proc/RISR1;non-proc_proc/RISR2;non-proc_proc/RISR3; non-proc_proc/RISR4; non-proc_proc/RISR5; non-proc_proc/RISR6]
 RepoDeletedMessagesReport.output = [non-proc_proc/RDMR1;non-proc_proc/RDMR2;non-proc_proc/RDMR3; non-proc_proc/RDMR4; non-proc_proc/RDMR5; non-proc_proc/RDMR6]
+RepoDeletedMessageSizeReport.output = [non-proc_proc/RDMSR1;non-proc_proc/RDMSR2;non-proc_proc/RDMSR3; non-proc_proc/RDMSR4; non-proc_proc/RDMSR5; non-proc_proc/RDMSR6]
 MobileDeletedMessagesReport.output = [non-proc_proc/MDMR1;non-proc_proc/MDMR2;non-proc_proc/MDMR3; non-proc_proc/MDMR4; non-proc_proc/MDMR5; non-proc_proc/MDMR6]
 RepoProcessingMessageLocationReport.output = [non-proc_proc/RPrMR1;non-proc_proc/RPrMR2;non-proc_proc/RPrMR3; non-proc_proc/RPrMR4; non-proc_proc/RPrMR5; non-proc_proc/RPrMR6]
 RepoStoredMessageLocationReport.output = [non-proc_proc/RSMR1;non-proc_proc/RSMR2;non-proc_proc/RSMR3; non-proc_proc/RSMR4; non-proc_proc/RSMR5; non-proc_proc/RSMR6]

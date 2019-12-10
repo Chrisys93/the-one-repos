@@ -36,6 +36,7 @@ public class RepoStorage {
 	private long staticSize;
 	private long processedSize;
 	private long nrofDeletedMessages;
+	private long deletedMessagesSize;
 	private long depletedProcMessages;
 	private long oldDepletedProcMessagesSize;
 	private long depletedProcMessagesSize;
@@ -102,6 +103,7 @@ public class RepoStorage {
 		this.mStorTimeMax = 0;
 		this.mStorTime = 0;
 		this.nrofDeletedMessages = 0;
+		this.deletedMessagesSize = 0;
 		this.totalReceivedMessages = 0;
 		this.totalReceivedMessagesSize = 0;
 		this.depletedProcMessages = 0;
@@ -607,6 +609,10 @@ public class RepoStorage {
 			else if (((String)m.getProperty("type")).equalsIgnoreCase("unprocessed") && deleteStaticMessage(MessageId)) {
 				return true;
 			}
+			if (!this.getHost().hasStorageCapability()) {
+				this.nrofDeletedMessages ++;
+				this.deletedMessagesSize += m.getSize();
+			}
 		}
 		return false;
 	}
@@ -652,6 +658,10 @@ public class RepoStorage {
 	
 	public long getNrofDeletedMessages() {
 		return this.nrofDeletedMessages;
+	}
+	
+	public long getSizeofDeletedMessages() {
+		return this.deletedMessagesSize;
 	}
 	
 	public long getNrofDepletedCloudProcMessages() {

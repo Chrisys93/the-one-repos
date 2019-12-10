@@ -749,7 +749,7 @@ public class ProcApplication extends Application {
 					this.processedDepletion(host);
 				}
 				else if (!host.getStorageSystem().isProcessingEmpty())
-					host.getStorageSystem().deleteProcMessage(host.getStorageSystem().getOldestProcessMessage().getId());
+					host.getStorageSystem().deleteMessage(host.getStorageSystem().getOldestProcessMessage().getId());
 				else {	
 					this.upEmptyLoop = false;
 					//System.out.println("Depletion is at: "+ this.cloudBW);

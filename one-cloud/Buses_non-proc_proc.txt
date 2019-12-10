@@ -315,7 +315,8 @@ Report.report4 = RepoProcessingMessageLocationReport
 # Report.report4 = RepoStoredMessageLocationReport
 
 Report.report5 = RepoProcessedMessageLocationReport
-Report.report6 = RepoAllMessagesLocationReport
+#Report.report6 = RepoAllMessagesLocationReport
+Report.report6 = RepoDeletedMessageSizeReport
 Report.report7 = RepoDepletedProcBWReport
 Report.report8 = RepoDepletedUnProcBWReport
 Report.report9 = RepoDepletedStorageBWReport
@@ -327,6 +328,7 @@ Report.report14 = RepoUnProcessedReport
 Report.report15 = RepoOvertimeReport
 
 RepoIncomingSpeedsReport.output = [buses/RISR1;buses/RISR2;buses/RISR3; buses/RISR4; buses/RISR5; buses/RISR6]
+RepoDeletedMessageSizeReport.output = [buses/RDMSR1;buses/RDMSR2;buses/RDMSR3; buses/RDMSR4; buses/RDMSR5; buses/RDMSR6]
 RepoDeletedMessagesReport.output = [buses/RDMR1;buses/RDMR2;buses/RDMR3; buses/RDMR4; buses/RDMR5; buses/RDMR6]
 MobileDeletedMessagesReport.output = [buses/MDMR1;buses/MDMR2;buses/MDMR3; buses/MDMR4; buses/MDMR5; buses/MDMR6]
 RepoProcessingMessageLocationReport.output = [buses/RPrMR1;buses/RPrMR2;buses/RPrMR3; buses/RPrMR4; buses/RPrMR5; buses/RPrMR6]

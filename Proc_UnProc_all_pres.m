@@ -663,14 +663,14 @@ ylim([0 1]);
 figure
 
 % yyaxis left
-y = [mean(nonzeros(oproc_up(:,1))), mean(nonzeros(oproc_up(:,2))), mean(nonzeros(oproc_up(:,3))), mean(nonzeros(oproc_up(:,4))), mean(nonzeros(oproc_up(:,5))), mean(nonzeros(oproc_up(:,6)));
+y = [mean(nonzeros(coproc_up(:,1))), mean(nonzeros(coproc_up(:,2))), mean(nonzeros(coproc_up(:,3))), mean(nonzeros(coproc_up(:,4))), mean(nonzeros(coproc_up(:,5))), mean(nonzeros(coproc_up(:,6)));
+    mean(nonzeros(cofresh_perc(:,1))), mean(nonzeros(cofresh_perc(:,2))), mean(nonzeros(cofresh_perc(:,3))), mean(nonzeros(cofresh_perc(:,4))), mean(nonzeros(cofresh_perc(:,5))), mean(nonzeros(cofresh_perc(:,6)));
+    mean(nonzeros(cpproc_up(:,1))), mean(nonzeros(cpproc_up(:,2))), mean(nonzeros(cpproc_up(:,3))), mean(nonzeros(cpproc_up(:,4))), mean(nonzeros(cpproc_up(:,5))), mean(nonzeros(cpproc_up(:,6)));
+    mean(nonzeros(cpfresh_perc(:,1))), mean(nonzeros(cpfresh_perc(:,2))), mean(nonzeros(cpfresh_perc(:,3))), mean(nonzeros(cpfresh_perc(:,4))), mean(nonzeros(cpfresh_perc(:,5))), mean(nonzeros(cpfresh_perc(:,6)))
+    mean(nonzeros(oproc_up(:,1))), mean(nonzeros(oproc_up(:,2))), mean(nonzeros(oproc_up(:,3))), mean(nonzeros(oproc_up(:,4))), mean(nonzeros(oproc_up(:,5))), mean(nonzeros(oproc_up(:,6)));
     mean(nonzeros(ofresh_perc(:,1))), mean(nonzeros(ofresh_perc(:,2))), mean(nonzeros(ofresh_perc(:,3))), mean(nonzeros(ofresh_perc(:,4))), mean(nonzeros(ofresh_perc(:,5))), mean(nonzeros(ofresh_perc(:,6)));
     mean(nonzeros(pproc_up(:,1))), mean(nonzeros(pproc_up(:,2))), mean(nonzeros(pproc_up(:,3))), mean(nonzeros(pproc_up(:,4))), mean(nonzeros(pproc_up(:,5))), mean(nonzeros(pproc_up(:,6)))
-    mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)));
-    mean(nonzeros(coproc_up(:,1))), mean(nonzeros(coproc_up(:,2))), mean(nonzeros(coproc_up(:,3))), mean(nonzeros(coproc_up(:,4))), mean(nonzeros(coproc_up(:,5))), mean(nonzeros(coproc_up(:,6)));
-    mean(nonzeros(cofresh_perc(:,1))), mean(nonzeros(cofresh_perc(:,2))), mean(nonzeros(cofresh_perc(:,3))), mean(nonzeros(cofresh_perc(:,4))), mean(nonzeros(cofresh_perc(:,5))), mean(nonzeros(cofresh_perc(:,6)));
-    mean(nonzeros(cpproc_up(:,1))), mean(nonzeros(cpproc_up(:,2))), mean(nonzeros(cpproc_up(:,3))), mean(nonzeros(cpproc_up(:,4))), mean(nonzeros(cpproc_up(:,5))), mean(nonzeros(cpproc_up(:,6)))
-    mean(nonzeros(cpfresh_perc(:,1))), mean(nonzeros(cpfresh_perc(:,2))), mean(nonzeros(cpfresh_perc(:,3))), mean(nonzeros(cpfresh_perc(:,4))), mean(nonzeros(cpfresh_perc(:,5))), mean(nonzeros(cpfresh_perc(:,6)))];
+    mean(nonzeros(pfresh_perc(:,1))), mean(nonzeros(pfresh_perc(:,2))), mean(nonzeros(pfresh_perc(:,3))), mean(nonzeros(pfresh_perc(:,4))), mean(nonzeros(pfresh_perc(:,5))), mean(nonzeros(pfresh_perc(:,6)))];
 bar(y,'group')
 set(gca,'xtick',1:8,'XTickLabel',{'Processed', 'Fresh', 'Processed', 'Fresh', 'Processed', 'Fresh', 'Processed', 'Fresh'}, 'fontsize', 10)
 % xt= [1-0.34, 1-0.2, 1-0.07, 1.07, 1.2, 1.34, 3-0.34, 3-0.2, 3-0.07, 3.07, 3.2, 3.34, 5-0.34, 5-0.2, 5-0.07, 5.07, 5.2, 5.34, 7-0.34, 7-0.2, 7-0.07, 7.07, 7.2, 7.34];
