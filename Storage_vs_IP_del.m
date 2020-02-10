@@ -899,7 +899,7 @@ y = [mean(nonzeros(hstor_fill(:,1))), mean(nonzeros(hstor_fill(:,2))), mean(nonz
     mean(nonzeros(pdel(:,1))), mean(nonzeros(pdel(:,2))), mean(nonzeros(pdel(:,3))), mean(nonzeros(pdel(:,4))), mean(nonzeros(pdel(:,5))), mean(nonzeros(pdel(:,6)));
     mean(pdel_up(:,1)), mean(pdel_up(:,2)), mean(pdel_up(:,3)), mean(pdel_up(:,4)), mean(pdel_up(:,5)), mean(pdel_up(:,6))];
 bar(y,'group')
-set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfaction', 'Drop BW', 'Drop Total', 'Drop BW', 'Drop Total'})
+set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfaction', 'Drop Total', 'Drop BW', 'Drop Total', 'Drop BW'})
 % xt= [1-0.34, 1-0.2, 1-0.07, 1.07, 1.2, 1.34, 3-0.34, 3-0.2, 3-0.07, 3.07, 3.2, 3.34, 5-0.34, 5-0.2, 5-0.07, 5.07, 5.2, 5.34, 7-0.34, 7-0.2, 7-0.07, 7.07, 7.2, 7.34];
 % yt=[y(1,:), y(3,:), y(5,:), y(7,:)]+50;
 %xt=[1, 3, 5, 7]-0.25;
@@ -908,7 +908,7 @@ set(gca,'xtick',1:8,'XTickLabel',{'Usage', 'Satisfaction', 'Usage', 'Satisfactio
 % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 % title('Processing threads','fontsize',16)
 % xlabel('Scenario Number','fontsize',12) 
-ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
+ylabel('Storage usage (B)','fontsize',12)
 
 groupX = [2 4 6 8]; %// central value of each group
 groupY = -5; %// vertical position of texts. Adjust as needed
@@ -945,7 +945,7 @@ bar(1:8,[0,0,0,0,0,0; y(2, :); 0,0,0,0,0,0; y(4, :); 0,0,0,0,0,0; y(6, :); 0,0,0
 % ytxt=num2str([y(2, :)'; y(4, :)'; y(6, :)'; y(8, :)'],'%.1f');
 % text(xt,yt,ytxt,'rotation',90,'fontsize',8,'fontweight','bold')
 % title('Processing threads','fontsize',16)
-ylabel('Storage usage (B)','fontsize',12)
+ylabel('Non-processing Message Satisfied Upload (100%)','fontsize',12)
 ylim([0 1])
 
 

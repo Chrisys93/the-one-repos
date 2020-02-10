@@ -249,52 +249,52 @@ for repo = 1:c3
     end
     
     
-    couproc_up(repo, 1) = mean(COUB1(:, repo))/(mean(COUB1(:, repo))+mean(OPB1(:, repo)));
-    if (isnan(mean(COUB1(:, repo))/(mean(COUB1(:, repo))+mean(OPB1(:, repo)))))
+    couproc_up(repo, 1) = mean(COUB1(:, repo))/(mean(COUB1(:, repo))+mean(COPB1(:, repo)));
+    if (isnan(mean(COUB1(:, repo))/(mean(COUB1(:, repo))+mean(COPB1(:, repo)))))
         couproc_up(repo, 1) = 0;
     end
-    couproc_up(repo, 2) = mean(COUB2(:, repo))/(mean(COUB2(:, repo))+mean(OPB2(:, repo)));
-    if (isnan(mean(COUB2(:, repo))/(mean(COUB2(:, repo))+mean(OPB2(:, repo)))))
+    couproc_up(repo, 2) = mean(COUB2(:, repo))/(mean(COUB2(:, repo))+mean(COPB2(:, repo)));
+    if (isnan(mean(COUB2(:, repo))/(mean(COUB2(:, repo))+mean(COPB2(:, repo)))))
         couproc_up(repo, 2) = 0;
     end
-    couproc_up(repo, 3) = mean(COUB3(:, repo))/(mean(COUB3(:, repo))+mean(OPB3(:, repo)));
-    if (isnan(mean(COUB3(:, repo))/(mean(COUB3(:, repo))+mean(OPB3(:, repo)))))
+    couproc_up(repo, 3) = mean(COUB3(:, repo))/(mean(COUB3(:, repo))+mean(COPB3(:, repo)));
+    if (isnan(mean(COUB3(:, repo))/(mean(COUB3(:, repo))+mean(COPB3(:, repo)))))
         couproc_up(repo, 3) = 0;
     end
-    couproc_up(repo, 4) = mean(COUB4(:, repo))/(mean(COUB4(:, repo))+mean(OPB4(:, repo)));
-    if (isnan(mean(COUB4(:, repo))/(mean(COUB4(:, repo))+mean(OPB4(:, repo)))))
+    couproc_up(repo, 4) = mean(COUB4(:, repo))/(mean(COUB4(:, repo))+mean(COPB4(:, repo)));
+    if (isnan(mean(COUB4(:, repo))/(mean(COUB4(:, repo))+mean(COPB4(:, repo)))))
         couproc_up(repo, 4) = 0;
     end
-    couproc_up(repo, 5) = mean(COUB5(:, repo))/(mean(COUB5(:, repo))+mean(OPB5(:, repo)));
-    if (isnan(mean(COUB5(:, repo))/(mean(COUB5(:, repo))+mean(OPB5(:, repo)))))
+    couproc_up(repo, 5) = mean(COUB5(:, repo))/(mean(COUB5(:, repo))+mean(COPB5(:, repo)));
+    if (isnan(mean(COUB5(:, repo))/(mean(COUB5(:, repo))+mean(COPB5(:, repo)))))
         couproc_up(repo, 5) = 0;
     end
-    couproc_up(repo, 6) =  mean(COUB6(:, repo))/(mean(COUB6(:, repo))+mean(OPB6(:, repo)));
-    if (isnan(mean(COUB6(:, repo))/(mean(COUB6(:, repo))+mean(OPB6(:, repo)))))
+    couproc_up(repo, 6) =  mean(COUB6(:, repo))/(mean(COUB6(:, repo))+mean(COPB6(:, repo)));
+    if (isnan(mean(COUB6(:, repo))/(mean(COUB6(:, repo))+mean(COPB6(:, repo)))))
         couproc_up(repo, 6) = 0;
     end
-    cpuproc_up(repo, 1) = mean(CPUB1(:, repo))/(mean(CPUB1(:, repo))+mean(PPB1(:, repo)));
-    if (isnan(mean(CPUB1(:, repo))/(mean(CPUB1(:, repo))+mean(PPB1(:, repo)))))
+    cpuproc_up(repo, 1) = mean(CPUB1(:, repo))/(mean(CPUB1(:, repo))+mean(CPPB1(:, repo)));
+    if (isnan(mean(CPUB1(:, repo))/(mean(CPUB1(:, repo))+mean(CPPB1(:, repo)))))
         cpuproc_up(repo, 1) = 0;
     end
-    cpuproc_up(repo, 2) = mean(CPUB2(:, repo))/(mean(CPUB2(:, repo))+mean(PPB2(:, repo)));
-    if (isnan(mean(CPUB2(:, repo))/(mean(CPUB2(:, repo))+mean(PPB2(:, repo)))))
+    cpuproc_up(repo, 2) = mean(CPUB2(:, repo))/(mean(CPUB2(:, repo))+mean(CPPB2(:, repo)));
+    if (isnan(mean(CPUB2(:, repo))/(mean(CPUB2(:, repo))+mean(CPPB2(:, repo)))))
         cpuproc_up(repo, 2) = 0;
     end
-    cpuproc_up(repo, 3) = mean(CPUB3(:, repo))/(mean(CPUB3(:, repo))+mean(PPB3(:, repo)));
-    if (isnan(mean(CPUB3(:, repo))/(mean(CPUB3(:, repo))+mean(PPB3(:, repo)))))
+    cpuproc_up(repo, 3) = mean(CPUB3(:, repo))/(mean(CPUB3(:, repo))+mean(CPPB3(:, repo)));
+    if (isnan(mean(CPUB3(:, repo))/(mean(CPUB3(:, repo))+mean(CPPB3(:, repo)))))
         cpuproc_up(repo, 3) = 0;
     end
-    cpuproc_up(repo, 4) = mean(CPUB4(:, repo))/(mean(CPUB4(:, repo))+mean(PPB4(:, repo)));
-    if (isnan(mean(CPUB4(:, repo))/(mean(CPUB4(:, repo))+mean(PPB4(:, repo)))))
+    cpuproc_up(repo, 4) = mean(CPUB4(:, repo))/(mean(CPUB4(:, repo))+mean(CPPB4(:, repo)));
+    if (isnan(mean(CPUB4(:, repo))/(mean(CPUB4(:, repo))+mean(CPPB4(:, repo)))))
         cpuproc_up(repo, 4) = 0;
     end
-    cpuproc_up(repo, 5) = mean(CPUB5(:, repo))/(mean(CPUB5(:, repo))+mean(PPB5(:, repo)));
-    if (isnan(mean(CPUB5(:, repo))/(mean(CPUB5(:, repo))+mean(PPB5(:, repo)))))
+    cpuproc_up(repo, 5) = mean(CPUB5(:, repo))/(mean(CPUB5(:, repo))+mean(CPPB5(:, repo)));
+    if (isnan(mean(CPUB5(:, repo))/(mean(CPUB5(:, repo))+mean(CPPB5(:, repo)))))
         cpuproc_up(repo, 5) = 0;
     end
-    cpuproc_up(repo, 6) =  mean(CPUB6(:, repo))/(mean(CPUB6(:, repo))+mean(PPB6(:, repo)));
-    if (isnan(mean(CPUB6(:, repo))/(mean(CPUB6(:, repo))+mean(PPB6(:, repo)))))
+    cpuproc_up(repo, 6) =  mean(CPUB6(:, repo))/(mean(CPUB6(:, repo))+mean(CPPB6(:, repo)));
+    if (isnan(mean(CPUB6(:, repo))/(mean(CPUB6(:, repo))+mean(CPPB6(:, repo)))))
         cpuproc_up(repo, 6) = 0;
     end
     
