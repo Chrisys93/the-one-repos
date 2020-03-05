@@ -631,23 +631,21 @@ public class RepoStorage {
 			if(processedMessages.get(i).getId() == MessageId){
 				this.depletedCloudProcMessages++;
 				this.depletedCloudProcMessagesSize += this.processedMessages.get(i).getSize();
-				if(report) {
-					if(this.processedMessages.get(i).getProperty("overtime")!=null) {
-						if ((Boolean)this.processedMessages.get(i).getProperty("overtime"))
-							this.mOvertime ++;
-					}
-					if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
-						if ((Boolean)this.processedMessages.get(i).getProperty("satisfied"))
-							this.mSatisfied ++;
-						else
-							this.mUnSatisfied ++;
-					}
-					if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
-						if ((Boolean)processedMessages.get(i).getProperty("Fresh"))
-							this.mFresh++;
-						else if (!(Boolean)processedMessages.get(i).getProperty("Fresh"))
-							this.mStale++;
-					}
+				if(this.processedMessages.get(i).getProperty("overtime")!=null) {
+					if ((Boolean)this.processedMessages.get(i).getProperty("overtime"))
+						this.mOvertime ++;
+				}
+				if(this.processedMessages.get(i).getProperty("satisfied")!=null) {
+					if ((Boolean)this.processedMessages.get(i).getProperty("satisfied"))
+						this.mSatisfied ++;
+					else
+						this.mUnSatisfied ++;
+				}
+				if(this.processedMessages.get(i).getProperty("Fresh")!=null) {
+					if ((Boolean)processedMessages.get(i).getProperty("Fresh"))
+						this.mFresh++;
+					else if (!(Boolean)processedMessages.get(i).getProperty("Fresh"))
+						this.mStale++;
 				}
 				this.processedMessages.remove(i);
 				return true;
