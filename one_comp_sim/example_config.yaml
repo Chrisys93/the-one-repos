@@ -1,0 +1,182 @@
+# Example configuration: Edge Data Repository simulation
+# Equivalent to one-comp/non-proc_proc.txt (CoNEXT 2019 paper)
+#
+# 635 urban nodes on Helsinki map:
+#   - 80 EDRs (stationary repositories with storage+processing)
+#   - 40 pedestrians
+#   - 500 cars
+#   - 15 buses (3 routes x 5 buses)
+
+scenario:
+  name: "non-proc_proc"
+  world_size: [4500, 3400]
+  end_time: 10800
+  update_interval: 0.1
+  simulate_connections: true
+  warmup: 1000
+  repo_offset: [500, 200]
+
+interfaces:
+  btInterface:
+    type: SimpleBroadcastInterface
+    transmit_speed: 250000   # 250 kB/s
+    transmit_range: 10
+    scan_interval: 1.0
+  wlanInterface:
+    type: DistanceCapacityInterface
+    transmit_speeds: [10000000, 5000000, 1000000]   # 10/5/1 MB/s tiers
+    transmit_range: 100
+    scan_interval: 1.0
+
+node_groups:
+  # Group 1: EDR repositories (stationary, storage+processing)
+  - group_id: "r"
+    count: 80
+    role: edr
+    movement: RepoStationaryMovement
+    router: RepoDirectDeliveryRouter
+    buffer_size: 5000000000   # 5 GB buffer
+    msg_ttl: 300
+    interfaces: [wlanInterface]
+    storage:
+      enabled: true
+      processing: true
+      size: 5000000000        # 5 GB storage
+      compression_rate: 2.0
+    applications: [procApp]
+
+  # Group 2: Pedestrians
+  - group_id: "p"
+    count: 40
+    role: ped
+    movement: ShortestPathMapBasedMovement
+    router: ReposFirstContactRouter
+    buffer_size: 50000000     # 50 MB
+    msg_ttl: 300
+    speed: [0.5, 1.5]
+    wait_time: [0, 120]
+    interfaces: [btInterface]
+    applications: [genApp]
+
+  # Group 3: Cars
+  - group_id: "c"
+    count: 500
+    role: car
+    movement: ShortestPathMapBasedMovement
+    router: ReposFirstContactRouter
+    buffer_size: 50000000
+    msg_ttl: 300
+    speed: [2.7, 13.9]
+    wait_time: [0, 120]
+    interfaces: [btInterface]
+    applications: [genApp]
+
+  # Group 4: Bus route - tram3
+  - group_id: "t"
+    count: 5
+    role: bus
+    movement: MapRouteMovement
+    router: ReposFirstContactRouter
+    buffer_size: 50000000
+    msg_ttl: 300
+    speed: [7, 10]
+    wait_time: [10, 30]
+    route_file: "data/tram3.wkt"
+    route_type: 2
+    interfaces: [btInterface]
+    applications: [genApp]
+
+  # Group 5: Bus route - tram4
+  - group_id: "t"
+    count: 5
+    role: bus
+    movement: MapRouteMovement
+    router: ReposFirstContactRouter
+    buffer_size: 50000000
+    msg_ttl: 300
+    speed: [7, 10]
+    wait_time: [10, 30]
+    route_file: "data/tram4.wkt"
+    route_type: 2
+    interfaces: [btInterface]
+    applications: [genApp]
+
+  # Group 6: Bus route - tram10
+  - group_id: "t"
+    count: 5
+    role: bus
+    movement: MapRouteMovement
+    router: ReposFirstContactRouter
+    buffer_size: 50000000
+    msg_ttl: 300
+    speed: [7, 10]
+    wait_time: [10, 30]
+    route_file: "data/tram10.wkt"
+    route_type: 2
+    interfaces: [btInterface]
+    applications: [genApp]
+
+applications:
+  procApp:
+    type: ProcApplication
+    passive: false
+    storage_mode: true
+    max_storage_time: 2000
+    max_storage: 0.95
+    min_storage: 0.001
+    depletion_rate: 20000000    # 20 MB/s
+    cloud_rate: 10000000        # 10 MB/s
+    core_count: 10
+  genApp:
+    type: ProcGenApplication
+    interval: 2.0
+    delay: 0.1
+    fresh_period: 1.0
+    proc_shelf: 2.0
+    nonproc_shelf: 3.0
+    passive: false
+    passive_rate: [1, 0]
+    compress_rate: [1, 0]
+    message_size: 1000000       # 1 MB
+    destination_name: "r"
+    seed: 0
+
+maps:
+  files:
+    - "data/roads.wkt"
+    - "data/main_roads.wkt"
+
+reports:
+  output_dir: "reports"
+  granularity: 1.0
+  warmup: 1000
+  metrics:
+    - incoming_speed
+    - stored_messages
+    - processing_messages
+    - processed_messages
+    - all_messages
+    - depl_proc_bw
+    - depl_unproc_bw
+    - depl_storage_bw
+    - depl_cloud_storage_bw
+    - satisfaction
+    - freshness
+    - overtime
+    - unprocessed
+    - storage_times
+
+# --- Optional extension hooks (disabled by default) ---
+
+# management:
+#   enabled: true
+#   stats_interval: 60
+#   placement_strategy: HybridPlacement
+
+# k8s:
+#   enabled: true
+#   namespace_prefix: "edr-sim"
+
+# ai:
+#   enabled: true
+#   export_format: "parquet"

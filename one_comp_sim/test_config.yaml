@@ -1,0 +1,89 @@
+# Small test config: 5 EDRs + 10 mobiles in a tiny world
+# All use the same interface so connections can form
+# Small world (200x200) ensures nodes are within range
+
+scenario:
+  name: "storage_test"
+  world_size: [200, 200]
+  end_time: 300
+  update_interval: 0.1
+  simulate_connections: true
+  warmup: 0
+  repo_offset: [20, 20]
+
+interfaces:
+  sharedRadio:
+    type: SimpleBroadcastInterface
+    transmit_speed: 2500000    # 2.5 MB/s
+    transmit_range: 100        # 100m range -- covers most of 200x200 world
+    scan_interval: 1.0
+
+node_groups:
+  # 5 stationary EDR repos with storage + processing
+  - group_id: "r"
+    count: 5
+    role: edr
+    movement: RepoStationaryMovement
+    router: RepoDirectDeliveryRouter
+    buffer_size: 500000000     # 500 MB
+    msg_ttl: 300
+    interfaces: [sharedRadio]
+    storage:
+      enabled: true
+      processing: true
+      size: 500000000          # 500 MB
+      compression_rate: 2.0
+    applications: [procApp]
+
+  # 10 mobile nodes generating data
+  - group_id: "m"
+    count: 10
+    role: ped
+    movement: RepoStationaryMovement   # stationary but scattered in the world
+    router: ReposFirstContactRouter
+    buffer_size: 50000000      # 50 MB
+    msg_ttl: 300
+    speed: [0.5, 1.5]
+    wait_time: [0, 10]
+    interfaces: [sharedRadio]
+    applications: [genApp]
+
+applications:
+  procApp:
+    type: ProcApplication
+    passive: false
+    storage_mode: true
+    max_storage_time: 2000
+    max_storage: 0.95
+    min_storage: 0.001
+    depletion_rate: 20000000
+    cloud_rate: 10000000
+    core_count: 4
+  genApp:
+    type: ProcGenApplication
+    interval: 5.0              # generate a message every 5s
+    delay: 0.1
+    fresh_period: 30.0
+    proc_shelf: 60.0
+    nonproc_shelf: 90.0
+    passive: false
+    passive_rate: [1, 1]
+    compress_rate: [1, 0]
+    message_size: 1000000      # 1 MB messages
+    destination_name: "r"
+    seed: 42
+
+reports:
+  output_dir: "test_reports"
+  granularity: 10.0
+  warmup: 0
+  metrics:
+    - incoming_speed
+    - stored_messages
+    - processing_messages
+    - processed_messages
+    - all_messages
+    - satisfaction
+    - freshness
+    - overtime
+    - unprocessed

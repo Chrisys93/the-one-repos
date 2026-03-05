@@ -1,0 +1,95 @@
+# Stress test: deliberately tiny storage, short shelf-lives, low BW rates
+# Goal: force every depletion path in ProcApplication + RepoStorage to trigger
+#
+# - 5 MB storage fills in ~4s with 5 mobiles generating 500KB msgs every 1s
+# - 50% max_storage triggers forced depletion after just 5 messages
+# - 10% min_storage triggers cloud depletion after 1 processed message
+# - Short shelf-lives (5s/8s) → messages go stale fast → stale depletion fires
+# - Short freshness (3s) → some messages miss fresh window → stale processing
+# - compress_rate [1,1] → 50% compressed, 50% deleted → tests both paths
+# - max_storage_time=20 → storage mode timeout triggers within sim time
+# - Low BW caps → depletion cycling over multiple ticks
+
+scenario:
+  name: "storage_stress"
+  world_size: [100, 100]
+  end_time: 200
+  update_interval: 0.1
+  simulate_connections: true
+  warmup: 0
+  repo_offset: [10, 10]
+
+interfaces:
+  sharedRadio:
+    type: SimpleBroadcastInterface
+    transmit_speed: 10000000    # 10 MB/s (fast transfers so delivery isn't bottleneck)
+    transmit_range: 200         # covers entire 100x100 world
+    scan_interval: 0.5
+
+node_groups:
+  # 2 EDRs with TINY storage
+  - group_id: "r"
+    count: 2
+    role: edr
+    movement: RepoStationaryMovement
+    router: RepoDirectDeliveryRouter
+    buffer_size: 10000000       # 10 MB router buffer
+    msg_ttl: 300
+    interfaces: [sharedRadio]
+    storage:
+      enabled: true
+      processing: true
+      size: 5000000             # 5 MB - deliberately tiny!
+      compression_rate: 2.0
+    applications: [procApp]
+
+  # 5 mobile nodes flooding the EDRs
+  - group_id: "m"
+    count: 5
+    role: ped
+    movement: RepoStationaryMovement
+    router: RepoDirectDeliveryRouter
+    buffer_size: 50000000       # 50 MB
+    msg_ttl: 300
+    interfaces: [sharedRadio]
+    applications: [genApp]
+
+applications:
+  procApp:
+    type: ProcApplication
+    passive: false
+    storage_mode: true
+    max_storage_time: 20        # 20s → storage mode timeout triggers early
+    max_storage: 0.50           # 50% → forced depletion at 2.5 MB
+    min_storage: 0.10           # 10% → cloud depletion at 500 KB
+    depletion_rate: 500000      # 500 KB/tick → low BW, forces cycling
+    cloud_rate: 300000          # 300 KB/tick → low BW
+    core_count: 2               # fewer cores → more queuing → invalid proc msgs
+  genApp:
+    type: ProcGenApplication
+    interval: 1.0               # every 1s (5 msgs/s across 5 mobiles)
+    delay: 0.5                  # 0.5s processing time per message
+    fresh_period: 3.0           # 3s freshness → messages go stale quickly
+    proc_shelf: 5.0             # 5s shelf life for proc msgs
+    nonproc_shelf: 8.0          # 8s shelf life for nonproc msgs
+    passive: false
+    passive_rate: [1, 1]        # 50/50 nonproc/proc
+    compress_rate: [1, 1]       # 50/50 compress/delete → tests both paths
+    message_size: 500000        # 500 KB → 10 msgs fill 5 MB storage
+    destination_name: "r"
+    seed: 42
+
+reports:
+  output_dir: "stress_reports"
+  granularity: 5.0
+  warmup: 0
+  metrics:
+    - incoming_speed
+    - stored_messages
+    - processing_messages
+    - processed_messages
+    - all_messages
+    - satisfaction
+    - freshness
+    - overtime
+    - unprocessed
